@@ -295,7 +295,7 @@ export default {
             setTimeout(function () {
               that.sequence = false
             }, 2000);
-            wx.setStorageSync('game-cid', res.data.id);
+            uni.setStorageSync('game-cid', res.data.id);
           }
         }
       });
@@ -366,7 +366,7 @@ export default {
       this.topicList();
     },
     exit: function () {
-      // wx.navigateTo({
+      // uni.navigateTo({
       //   url: '/pages/brain/brain',
       // })
       uni.navigateBack({
@@ -411,40 +411,35 @@ export default {
         isLevel= false,
         ans= '',
         currentId= '-1'
-      wx.setStorageSync('game-cid', e.currentTarget.dataset.id);
+      uni.setStorageSync('game-cid', e.currentTarget.dataset.id);
       this.topicList();
     },
 
     next() {
       if (this.next_id == 0) {
-        this.setData({
-          is_succ: false,
-          is_last: true
-        }); // wx.navigateTo({
+        this.is_succ= false,
+        this.is_last= true
+        // uni.navigateTo({
         //   url: '/pages/brain/brain',
         // })
-        //  wx.navigateBack({
+        //  uni.navigateBack({
         //    delta: 1
         //  })
 
         return false;
       }
 
-      this.setData({
-        id: this.next_id
-      });
-      wx.setStorageSync('game-cid', this.next_id);
+      this.id = this.next_id
+      uni.setStorageSync('game-cid', this.next_id);
       this.topicList();
-      this.setData({
-        is_succ: false,
-        ans: '',
-        currentId: '-1'
-      });
+      this.is_succ = false,
+      this.ans = '',
+      this.currentId = '-1'
     },
 
     getAudio() {
       let that = this;
-      wx.request({
+      uni.request({
         url: 'https://kxsx.kaifadanao.cn/api/index/getSystem',
         method: 'post',
         data: {
@@ -452,17 +447,15 @@ export default {
         },
         header: {
           'content-type': 'application/json',
-          'token': wx.getStorageSync("token")
+          'token': uni.getStorageSync("token")
         },
         success: function (res) {
-          wx.hideLoading();
-          that.setData({
-            audio: res.data.data
-          });
+          uni.hideLoading();
+          this.audio=  res.data.data
         },
         fail: function () {
-          wx.hideLoading();
-          wx.showModal({
+          uni.hideLoading();
+          uni.showModal({
             title: '网络错误',
             content: '网络出错，请刷新重试',
             showCancel: false,
@@ -484,16 +477,12 @@ export default {
 
       if (that.action.method == "pause") {
         //若当前是暂停，则点击后播放
-        that.setData({
-          action: actionPlay,
-          is_p: true
-        });
+        this.action=actionPlay,
+        this.is_p=true
       } else {
         //若当前是播放，则点击后暂停
-        that.setData({
-          action: actionPause,
-          is_p: false
-        });
+        this.action= actionPause,
+        this.is_p= false
       }
     },
 
@@ -503,29 +492,25 @@ export default {
         method: "pause"
       }; //定义暂停
 
-      that.setData({
-        action: actionPause,
-        is_p: false
-      });
+      this.action= actionPause,
+      this.is_p =false
 
       if (this.toIndex == 1) {
-        wx.switchTab({
+        uni.switchTab({
           url: '/pages/index/index'
         });
       } else {
-        wx.navigateBack({
+        uni.navigateBack({
           delta: 1
         });
-      } // wx.navigateTo({
+      } // uni.navigateTo({
       //   url: '/pages/brain/brain',
       // })
 
     },
 
     touchstart(e) {
-      this.setData({
-        startX: e.changedTouches[0].clientX
-      });
+      this.startX= e.changedTouches[0].clientX
     },
 
     touchend(e) {
@@ -535,45 +520,33 @@ export default {
       // 下一页(左滑距离大于30)
 
       if (startX - endX > 30) {
-        this.setData({
-          slider: true
-        }); //尾页(当前页 等于 总页数)
+        this.slider= true
 
         if (this.page == this.c) {
-          this.setData({
-            slider: false
-          }); // wx.showToast({ title: '已经是最后一张了', icon: 'none' });
+          this.slider= false
 
           return;
         }
 
         ;
-        this.setData({
-          page: this.page + 1,
-          pageId: this.pageId + 1
-        });
+        this.page= this.page + 1,
+        this.pageId= this.pageId + 1
         this.getLevel();
       } // 上一页
 
 
       if (endX - startX > 30) {
-        this.setData({
-          slider: true
-        }); //首页
+        this.slider= true
 
         if (this.page == 1) {
-          this.setData({
-            slider: false
-          }); // wx.showToast({ title: '已经到第一张了', icon: 'none' })
+          this.slider= false // uni.showToast({ title: '已经到第一张了', icon: 'none' })
 
           return;
         }
 
         ;
-        this.setData({
-          page: this.page - 1,
-          pageId: this.pageId - 1
-        });
+        this.page= this.page - 1,
+        this.pageId= this.pageId - 1
         this.getLevel();
       }
     },
@@ -585,10 +558,8 @@ export default {
       }
 
       ;
-      this.setData({
-        page: this.page + 1,
-        pageId: this.pageId + 1
-      });
+      this.page= this.page + 1,
+      this.pageId= this.pageId + 1
       this.getLevel();
     },
 
@@ -599,10 +570,8 @@ export default {
       }
 
       ;
-      this.setData({
-        page: this.page - 1,
-        pageId: this.pageId - 1
-      });
+      this.page= this.page - 1,
+      this.pageId= this.pageId - 1
       this.getLevel();
     },
 
@@ -611,9 +580,7 @@ export default {
       util.ajax('/api/index/getSystem', {
         type: 11
       }, res => {
-        that.setData({
-          failImg: res.data
-        });
+        this.failImg= res.data
       });
     },
 
@@ -622,9 +589,7 @@ export default {
       util.ajax('/api/index/getSystem', {
         type: 10
       }, res => {
-        that.setData({
-          succImg: res.data
-        });
+        this.succImg= res.data
       });
     },
 
@@ -633,9 +598,7 @@ export default {
       util.ajax('/api/index/getSystem', {
         type: 12
       }, res => {
-        that.setData({
-          limitImg: res.data
-        });
+        this.limitImg= res.data
       });
     },
 
@@ -644,9 +607,7 @@ export default {
       util.ajax('/api/index/getSystem', {
         type: 13
       }, res => {
-        that.setData({
-          lastImg: res.data
-        });
+        this.lastImg= res.data
       });
     }
 
