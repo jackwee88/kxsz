@@ -291,17 +291,7 @@
 				}
 			}
 		},
-		{
-			"path": "pages/my/activeCode/activeCode",
-			"style": {
-				"navigationBarTitleText": "激活码",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		}, {
+	  {
 			"path": "pages/message/message",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -412,6 +402,13 @@
            	}
            }
         }
+        
+        ,{
+            "path" : "pages/my/videolist/videolist",
+            "style" : {
+							"navigationBarTitleText":"我的视频"
+						}
+        }
     ],
 
 
@@ -419,7 +416,8 @@
 		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#ffffff",
-		"navigationBarTextStyle": "#000000"
+		"navigationBarTextStyle": "black"
+		
 	},
 	"tabBar": {
 		"selectedColor": "#008800",

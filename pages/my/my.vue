@@ -266,14 +266,14 @@
 		<view class="block"></view>
 		
 		<view class="panel">
-			<navigator url="activeCode/activeCode">
+			<navigator url="videoGift/videoGift">
 				<view class="left_side">
 					<image src="../../static/my/jhm2.png" mode=""></image>
 					<text>激活码</text>
 				</view>
 				<image src="../../static/index/qj.png" class="icon_more"></image>
 			</navigator>
-			<navigator url="videoGift/videoGift">
+			<navigator url="videolist/videolist">
 				<view class="left_side">
 					<image src="../../static/my/wdsp.png" mode=""></image>
 					<text>我的视频</text>
