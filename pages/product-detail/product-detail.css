@@ -9,6 +9,9 @@ page {
 	align-items: center;
 	padding: 0rpx 20rpx 0rpx 36rpx;
 	background-color: #ffffff;
+	position: fixed;
+	width: 750rpx;
+	box-sizing: border-box;
 }
 .product-title {
 	display: flex;
@@ -21,7 +24,22 @@ page {
 	padding-bottom: 28rpx;
 	background-color: #FFFFFF;
 }
-
+.team-num{
+	background-color: #3fae2a;
+	color: #ffffff;
+	font-size: 20rpx;
+	width:72rpx;
+	display: flex;
+	align-items: center;
+	}
+.team-total{
+	background-color: #ffffff;
+	color: #3FAE2A;
+	font-size: 20rpx;
+	display: flex;
+	align-items: center;
+	width: 92rpx;
+}
 .product-banner {
 	background-color: pink;
 	width: 750rpx;
@@ -75,7 +93,57 @@ page {
 .productTxt {
 	width: 524rpx;
 }
-
+.team-position{
+	position: fixed;
+	right: 0;
+	top: 926rpx;
+	display: flex;
+	flex-direction: row;
+	height: 56rpx;
+	border: 1rpx solid #3FAE2A;
+	border-right: none;
+	border-radius: 28rpx 0 0 28rpx;
+	box-sizing: border-box;
+}
+.team-buy{
+	margin-bottom: 12rpx;
+}
+.team-buy-detail{
+	display: flex;
+	flex-direction: row;
+	background-color: #ffffff;
+	padding: 24rpx 16rpx 24rpx 30rpx;
+}
+.timeSetting{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.circle-avator{
+	width: 80rpx;
+	height: 80rpx;
+	border-radius: 40rpx;
+	background-color: pink;
+}
+.team-user{
+	color: #333333;
+	font-size: 28rpx;
+}
+.pingtuan{
+	color:#333333 ;
+	font-size: 28rpx;
+}
+.team-btn{
+	width: 140rpx;
+	height: 70rpx;
+	border-radius: 35rpx;
+	color: #ffffff;
+	background-color:#B8E0B0 ;
+	border: 1rpx solid #b8e0b0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+}
 .btn-share {
 	width: 164rpx;
 	height: 60rpx;
