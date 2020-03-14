@@ -406,13 +406,47 @@
         ,{
             "path" : "pages/product-detail/product-detail",
            "style": {
-           	"navigationStyle": "custom",
-           	"app-plus": {
-           		"titleNView": false
-           	}
+			"navigationStyle": "custom",
+			"app-plus": {
+				"titleNView": false
+			}
            }
         }
         ,{
+            "path" : "pages/brain/brain",
+            "style": {
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/brain/poetry/poetry",
+            "style": {
+				"navigationStyle":"custom",
+				"navigationBarTextStyle": ""
+			}
+        }
+        ,{
+            "path" : "pages/brain/choice/choice",
+            "style": {
+				"navigationStyle":"custom",
+				"navigationBarTextStyle": ""
+			}
+        }
+        ,{
+            "path" : "pages/brain/fillBlanks/fillBlanks",
+            "style": {
+				"navigationStyle":"custom",
+				"navigationBarTextStyle": ""
+			}
+		}
+		,{
+            "path" : "pages/gexingname/gexingname",
+            "style": {
+				"navigationStyle":"custom",
+				"navigationBarTextStyle": ""
+			}
+		}
+		,{
             "path" : "pages/studySquare/studySquare",
             "style" : {
 				"navigationBarTitleText":"成长小广场"
@@ -424,8 +458,8 @@
 	"globalStyle": {
 		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#ffffff",
-		"navigationBarTextStyle": "black"
+		"navigationBarBackgroundColor": "#008800",
+		"navigationBarTextStyle": "#ffffff"
 	},
 	"tabBar": {
 		"selectedColor": "#008800",
