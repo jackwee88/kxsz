@@ -197,11 +197,9 @@
 		{
 			"path": "pages/reg/reg",
 			"style": {
-				"navigationBarTitleText": "开心书写",
+				"navigationStyle": "custom",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					"titleNView": false
 				}
 			}
 		},
@@ -408,10 +406,9 @@
         ,{
             "path" : "pages/product-detail/product-detail",
            "style": {
-           	"navigationBarBackgroundColor":"#FFFFFF",
-           	"navigationBarTextStyle":"black",
-           	"app-plus":{
-           		
+           	"navigationStyle": "custom",
+           	"app-plus": {
+           		"titleNView": false
            	}
            }
         }
@@ -421,8 +418,8 @@
 	"globalStyle": {
 		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#008800",
-		"navigationBarTextStyle": "#ffffff"
+		"navigationBarBackgroundColor": "#ffffff",
+		"navigationBarTextStyle": "#000000"
 	},
 	"tabBar": {
 		"selectedColor": "#008800",
