@@ -31,6 +31,9 @@
 </template>
 
 <script>
+// const app = getApp().globalData;
+var util = require("../../utils/util.js");
+console.log(util)
 export default {
   data() {
     return {
@@ -43,7 +46,211 @@ export default {
       is_p: false
     };
   },
+  components: {},
+  props: {},
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {},
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {},
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.backGroundImg();
+
+    var _this = this;
+
+    uni.getSystemInfo({
+      success: function (res) {
+        let nav_top = res.statusBarHeight;
+
+        if (res.platform.toLowerCase() == 'android') {
+          nav_top += 4;
+        }
+      }
+    });
+    this.getAudio();
+    this.playorpause();
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {},
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {},
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {},
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {},
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (e) {
+    
+  },
+  methods: {
+    getData: function () {
+      let pramp = {
+        answer: _this.answer
+      };
+    },
+    playorpause: function (e) {
+      var that = this;
+      var actionPlay = {
+        method: "play"
+      }; //定义播放
+
+      var actionPause = {
+        method: "pause"
+      }; //定义暂停
+
+      if (that.action.method == "pause") {
+        //若当前是暂停，则点击后播放
+        that.action = actionPlay
+        that.is_p = true
+      } else {
+        //若当前是播放，则点击后暂停
+        that.action = actionPause
+        that.is_p = false
+      }
+    },
+
+    getAudio() {
+      let that = this;
+      uni.request({
+        url: 'https://kxsx.kaifadanao.cn/api/index/getSystem',
+        method: 'post',
+        data: {
+          type: 8
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': uni.getStorageSync("token")
+        },
+        success: function (res) {
+          uni.hideLoading();
+          that.audio = res.data.data
+        },
+        fail: function () {
+          uni.hideLoading();
+          uni.showModal({
+            title: '网络错误',
+            content: '网络出错，请刷新重试',
+            showCancel: false,
+            mask: true
+          });
+        }
+      });
+    },
+
+    goBack() {
+      var that = this;
+      var actionPause = {
+        method: "pause"
+      }; //定义暂停
+
+      this.action= actionPause,
+        this.is_p=false
+      uni.navigateBack({
+          delta: 1
+      });
+    },
+
+    to(e) {
+      util.ajax('/api/index/getProfile', '', res => {
+        var that = this;
+        var actionPause = {
+          method: "pause"
+        }; //定义暂停
+
+        this.action= actionPause,
+        this.is_p= false
+        let url = e.currentTarget.dataset.url;
+        wx.navigateTo({
+          url: url
+        });
+      });
+    },
+
+    backGroundImg: function () {
+      var that = this;
+      uni.request({
+        url: 'https://kxsx.kaifadanao.cn/api/index/getSystem',
+        method: 'post',
+        data: {
+          type: 8
+        },
+        success: function (res) {
+          this.backgroundImg = res.data
+        },
+        fail: function () {
+          uni.showModal({
+            title: '网络错误',
+            content: '网络出错，请刷新重试',
+            showCancel: false,
+            mask: true
+          });
+        }
+      });
+    },
+    setStorageSync: function (k, v, time) {
+      uni.setStorageSync(k, v);
+      var t = time ? time : 24;
+      var seconds = parseInt(t * 3600);
+
+      if (seconds > 0) {
+        var timestamp = Date.parse(new Date());
+        timestamp = timestamp / 1000 + seconds;
+        uni.setStorageSync(k + postfix, timestamp + "");
+      } else {
+        uni.removeStorageSync(k + postfix);
+      }
+    },
+    getStorageSync: function (k, def) {
+      var deadtime = parseInt(uni.getStorageSync(k + postfix));
+
+      if (deadtime) {
+        if (parseInt(deadtime) < Date.parse(new Date()) / 1000) {
+          uni.removeStorageSync(k);
+          uni.removeStorageSync(k + postfix);
+
+          if (def) {
+            return def;
+          } else {
+            return;
+          }
+        }
+      }
+
+      var res = uni.getStorageSync(k);
+
+      if (res) {
+        return res;
+      } else if (def) {
+        return def;
+      } else {
+        return;
+      }
+    }
+  }
 };
 </script>
 <style>

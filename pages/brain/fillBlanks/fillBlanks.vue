@@ -1,7 +1,7 @@
 <template>
 <view>
 <view class="page" :style="'background-image: url(' + backgroundImg + ')'">
-  <image src="/static/img/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:0rpx;" @tap.stop="goBack"></image>
+  <image src="/static/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:0rpx;" @tap.stop="goBack"></image>
   <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
   <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
   <audio controls loop :src="audio" id="audioID" :action="action"></audio>
@@ -259,7 +259,9 @@ export default {
     },
 
     goBack() {
-
+      uni.navigateBack({
+          delta: 1
+      });
     },
 
     touchstart(e) {
