@@ -23,7 +23,7 @@
 				</navigator>
 			</view>
 			<view class="module_item">
-				<navigator url="pen/pen">
+				<navigator url="/pages/hncjiaoxue_mulu/hncjiaoxue_mulu">
 					<view class="itemcont">
 						<image class="icon" src="../../static/freeTeaching/bihua.png" mode="widthFix"></image>
 					</view>
@@ -31,7 +31,7 @@
 				</navigator>
 			</view>
 			<view class="module_item">
-				<navigator url="sitting-posture/setting-posture">
+				<navigator url="/pages/hncjiaoxue_mulu/hncjiaoxue_mulu">
 					<view class="itemcont">
 						<image class="icon" src="../../static/freeTeaching/zuozi.png" mode="widthFix"></image>
 					</view>

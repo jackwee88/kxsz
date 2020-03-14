@@ -1,13 +1,14 @@
 <template>
 	<view>
+		<view class="top_title">
+						<navigator url="../index/index"><image src="../../static/onlineStore/back.png" mode="" style="width: 18rpx;height: 32rpx;"></image></navigator>
+						<navigator url=""><image src="../../static/index/gwc.png" mode="" style="width: 44rpx;height: 44rpx;"></image></navigator>
+					</view>
+		<!-- 商品详情 -->
 		<cover-view class="team-position">
 			<view class="team-num">2人团</view>
 			<view class="team-total">已拼26件</view>
 		</cover-view>
-		<view class="top_title">
-			<navigator url="../index/index"><image src="../../static/onlineStore/back.png" mode="" style="width: 18rpx;height: 32rpx;"></image></navigator>
-			<navigator url=""><image src="../../static/index/gwc.png" mode="" style="width: 44rpx;height: 44rpx;"></image></navigator>
-		</view>
 		<!-- 商品详情 -->
 		<view class="product-banner">
 			<swiper></swiper>
@@ -33,28 +34,28 @@
 			<view class="beij">
 				<text style="color: #e33944;font-size: 24rpx;">¥</text>
 				<text style="color: #e33944;">488</text>
-				<view style="color: #A1A4A5;font-size: 28rpx;" class="origin-price">¥588</view>
+				<text style="color: #A1A4A5;font-size: 28rpx;">¥588</text>
 			</view>
-			<view class="beij">
+			<view>
 				<text style="color: #A1A4A5;font-size: 28rpx;">已售277</text>
-				<view style="color: #A1A4A5;font-size: 28rpx;" class="save">库存59</view>
+				<text style="color: #A1A4A5;font-size: 28rpx;">库存59</text>
 			</view>
 		</view>
-		<!-- title -->
+
 		<view class="product-title">
 			<view class="productTxt">
-				<text
-					style="font-size: 30rpx;
-	color: #333333;font-weight: bolder;"
-				>
-					一年级上册第一课《秋天》课文配套书法学习尺子
-				</text>
-			</view>
-
-			<navigator class="btn-share">
-				<image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;"></image>
-				<text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
-			</navigator>
+							<text
+								style="font-size: 30rpx;
+				color: #333333;font-weight: bolder;"
+							>
+								一年级上册第一课《秋天》课文配套书法学习尺子
+							</text>
+						</view>
+			
+						<navigator class="btn-share">
+							<image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;"></image>
+							<text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
+						</navigator>
 		</view>
 		<!-- 拼团 -->
 		<view class="team-buy">
@@ -83,6 +84,7 @@
 			</view>
 		</view>
 		<!-- 优惠券 -->
+		<view></view>
 		<view class="youhuiquan" url="">
 			<view><text style="color: #666666;font-size:26rpx ;">优惠券</text></view>
 			<navigator url="">
@@ -156,6 +158,7 @@
 export default {
 	data() {
 		return {
+			swiperImages: [],
 			teamlist:[{
 				name:'与女无瓜',
 				num:'1'
@@ -170,5 +173,5 @@ export default {
 </script>
 
 <style>
-@import './product-detail.css';
+	@import './product-detail.css';
 </style>

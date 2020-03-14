@@ -18,9 +18,13 @@
 		</swiper>
 
 		<view class="menu_wrap">
-			<navigator url="../myPublished/myPublished">
+			<navigator url="../publishedDiary/publishedDiary">
 				<image src="../../static/index/daka.png" mode=""></image>
 				<text>打卡</text>
+			</navigator>
+			<navigator url="../studySquare/studySquare">
+				<image src="../../static/index" mode=""></image>
+				<text>成长广场</text>
 			</navigator>
 			<navigator url="../freeTeaching/freeTeaching">
 				<image src="../../static/index/mfkc.png" mode=""></image>
@@ -42,6 +46,7 @@
 				<image src="../../static/index/dnkf.png" mode=""></image>
 				<text>大脑开发</text>
 			</navigator>
+			
 		</view>
 
 		<view class="section_title">
@@ -84,7 +89,7 @@
 			</navigator>
 		</view>
 <!-- 点击进入我的发表页 请求所有用户数据-->
-		<view class="works_list">
+		<navigator class="works_list" url="../myPublished/myPublished">
 			<view class="work_item">
 				<view class="user_info">
 					<view class="left_side">
@@ -122,7 +127,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</navigator>
 
 		<!-- 在线教程 -->
 		<!-- <view class="const-list">

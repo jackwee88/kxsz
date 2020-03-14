@@ -412,6 +412,12 @@
            	}
            }
         }
+        ,{
+            "path" : "pages/studySquare/studySquare",
+            "style" : {
+				"navigationBarTitleText":"成长小广场"
+			}
+        }
     ],
 
 
@@ -419,7 +425,7 @@
 		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#ffffff",
-		"navigationBarTextStyle": "#000000"
+		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {
 		"selectedColor": "#008800",
