@@ -4,7 +4,7 @@
 		<view class="status_bar"><!-- 这里是状态栏 --></view>
 		<view class="top_title">
 			<text>开心书写</text>
-			<navigator url=""><image src="../../static/index/gwc.png" mode=""></image></navigator>
+			<navigator url="../gexingname/gexingname"><image src="../../static/index/gwc.png" mode=""></image></navigator>
 		</view>
 		<!-- 轮播 -->
 		<swiper class="swiper" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">

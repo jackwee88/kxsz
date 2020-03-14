@@ -441,6 +441,13 @@
 				"navigationStyle":"custom",
 				"navigationBarTextStyle": ""
 			}
+		}
+		,{
+            "path" : "pages/gexingname/gexingname",
+            "style": {
+				"navigationStyle":"custom",
+				"navigationBarTextStyle": ""
+			}
         }
     ],
 
