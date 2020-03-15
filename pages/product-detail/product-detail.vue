@@ -12,7 +12,7 @@
 		<!-- 商品详情 -->
 		<view class="product-banner">
 			<swiper></swiper>
-			<image src="" style="width: 750rpx;height: 650rpx;" mode="aspectFit"></image>
+			<image :src="banner.title" style="width: 750rpx;height: 650rpx;" mode="aspectFit"></image>
 		</view>
 		<!-- 限时秒杀 判断商品是否为秒杀商品-->
 		<view class="xsms" v-if="true">
@@ -48,7 +48,7 @@
 								style="font-size: 30rpx;
 				color: #333333;font-weight: bolder;"
 							>
-								一年级上册第一课《秋天》课文配套书法学习尺子
+								{{banner.title}}
 							</text>
 						</view>
 			
@@ -167,6 +167,16 @@ export default {
 				num:'1'
 			},]
 		};
+	},
+	onLoad(event) {
+		console.log(event);
+		this.banner = JSON.parse(decodeURIComponent(event.detailDate));
+		uni.setNavigationBarTitle({
+		title:this.banner.title
+		})
+	},
+	mounted() {
+		
 	},
 	methods: {}
 };

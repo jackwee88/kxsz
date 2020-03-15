@@ -51,7 +51,7 @@
 
 		<view class="section_title">
 			<text class="recommend_title">推荐用品</text>
-			<navigator url="">
+			<navigator url="../onlinestore/onlinestore">
 				更多
 				<image src="../../static/index/qj.png" mode=""></image>
 			</navigator>
@@ -237,7 +237,19 @@ export default {
 	components: {
 		uniLoadMore
 	},
+	
 	onLoad() {
+		// uni.showModal({
+		//     title: '提示',
+		//     content: '这是一个模态弹窗',
+		//     success: function (res) {
+		//         if (res.confirm) {
+		//             console.log('用户点击确定');
+		//         } else if (res.cancel) {
+		//             console.log('用户点击取消');
+		//         }
+		//     }
+		// });
 		// 			uni.$on('login', (usnerinfo) => {
 		// 				//this.usnerinfo = usnerinfo;
 		// 				console.log(usnerinfo);
