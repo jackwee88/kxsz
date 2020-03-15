@@ -404,6 +404,56 @@
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": ""
 			}
+		}
+	    ,{
+            "path" : "pages/jifen-shop/jifen-shop",
+            "style" : {
+							"navigationBarTitleText":"积分商城",
+							"navigationBarBackgroundColor":"#FFFFFF",
+							"navigationBarTextStyle":"black",
+							"app-plus":{
+								
+							}
+						}
+        }
+        ,{
+            "path" : "pages/product-detail/product-detail",
+           "style": {
+			"navigationStyle": "custom",
+			"app-plus": {
+				"titleNView": false
+			}
+           }
+        }
+        ,{
+            "path" : "pages/brain/brain",
+            "style": {
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/brain/poetry/poetry",
+            "style": {
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/brain/choice/choice",
+            "style": {
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/brain/fillBlanks/fillBlanks",
+            "style": {
+				"navigationStyle":"custom"
+			}
+		}
+		,{
+            "path" : "pages/gexingname/gexingname",
+            "style": {
+				"navigationStyle":"custom"
+			}
 		}, {
 			"path": "pages/studySquare/studySquare",
 			"style": {
@@ -425,7 +475,25 @@
 			"path": "pages/commonMulu/commonMulu",
 			"style": {}
 		}
-	],
+        ,{
+            "path" : "pages/shoppingcart/shoppingcart",
+            "style" : {
+				"navigationBarTitleText":"购物车"
+			}
+        }
+        ,{
+            "path" : "pages/shoppingcart/sureorder/sureorder",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/onlinestore/myScoreOrder/myScoreOrder",
+            "style" : {
+				"navigationBarTitleText":"我的积分订单"
+			}
+        }
+    ],
 
 
 	"globalStyle": {
