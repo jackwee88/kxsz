@@ -19,10 +19,12 @@
 				目录
 			</view>
 			<view class="cataloguelist">
+				<navigator url="../hncjiaoxue_intro/hncjiaoxue_intro">
 				<view class="catalogueitem">
 					<text class="itemtitle">第一课 功能尺使用说明视频</text>
 					<image class="linkrighticon" src="../../static/hncjiaoxue_mulu/xin.png" mode="widthFix"></image>
 				</view>
+				</navigator>
 				<view class="catalogueitem">
 					<text class="itemtitle">第一课 功能尺使用说明视频</text>
 					<image class="linkrighticon" src="../../static/hncjiaoxue_mulu/xin.png" mode="widthFix"></image>

@@ -330,47 +330,7 @@
 			"style": {
 				"navigationBarTitleText": "拼团详情"
 			}
-		}, {
-			"path": "pages/freeTeaching/pen/pen",
-			"style": {
-				"navigationBarTitleText": "笔画+思政",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		}, {
-			"path": "pages/freeTeaching/sitting-posture/setting-posture",
-			"style": {
-				"navigationBarTitleText": "坐姿握笔",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		}, {
-			"path": "pages/freeTeaching/text-decoding/text-decoding",
-			"style": {
-				"navigationBarTextStyle": "文字解码",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		}, {
-			"path": "pages/freeTeaching/expanded-teach/expanded-teach",
-			"style": {
-				"navigationBarTitleText": "扩展教学",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		}, {
+		},{
 			"path": "pages/ruler-buy/ruler-buy",
 			"style": {
 				"navigationBarTitleText": "书法尺购买",
@@ -412,7 +372,11 @@
 				"navigationBarTitleText": "成长小广场"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/modal/modal",
+            "style" : {}
+        }
+    ],
 
 
 	"globalStyle": {

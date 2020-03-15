@@ -243,7 +243,7 @@
 		</view>
 		
 		<view class="base_info">
-			<navigator class="item">
+			<navigator class="item" url="../studySquare/studySquare">
 				<view>
 					20
 				</view>
