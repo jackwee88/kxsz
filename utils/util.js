@@ -13,14 +13,14 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-
+const requestUrl = 'https://kxsx.kaifadanao.cn/'
 function ajax(url, params, cb) {
   wx.showLoading({
     title: '加载中',
     mask: true,
   })
   wx.request({
-    url: getApp().globalData.requestUrl + url,
+    url: requestUrl + url,
     method: 'post',
     data: params,
     header: {

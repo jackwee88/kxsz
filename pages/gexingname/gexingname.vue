@@ -59,66 +59,65 @@ export default {
    */
   onLoad: function (options) {
     var that = this;
-    // uni.getSystemInfo({
-    //   success: function (res) {
-    //     console.log(res); // 可使用窗口宽度、高度
+    uni.getSystemInfo({
+      success: function (res) {
 
-    //     console.log('height=' + res.windowHeight); // 计算主体部分高度,单位为px
+        console.log('height=' + res.windowHeight); // 计算主体部分高度,单位为px
 
-    //     this.second_height= res.windowHeight - res.windowWidth / 750 * 300
-    //   }
-    // });
-    // uni.request({ //1已申请，未设计签名,2:已申请，已设计签名，3未申请
-    //     url: 'https://kxsx.kaifadanao.cn/api/index/getProfile',
-    //     method: 'post',
-    //     header: {
-    //       'content-type': 'application/json',
-    //       'token': uni.getStorageSync("token")
-    //     },
-    //     success: function (res) {
-    //       this.avatar= res.data.avatar
-    //     },
-    //     fail: function () {
-    //       uni.hideLoading();
-    //       uni.showModal({
-    //         title: '网络错误',
-    //         content: '网络出错，请刷新重试',
-    //         showCancel: false,
-    //         mask: true
-    //       });
-    //     }
-    //   });
-    // uni.request({ //1已申请，未设计签名,2:已申请，已设计签名，3未申请
-    //     url: 'https://kxsx.kaifadanao.cn/api/videoPacks/getSignature',
-    //     method: 'post',
-    //     header: {
-    //       'content-type': 'application/json',
-    //       'token': uni.getStorageSync("token")
-    //     },
-    //     success: function (res) {
-    //       if (res.data.status == 1) {
-    //         this.userinfo= res.data.data,
-    //         this.status= res.data.status,
-    //         this.tips= '签名正在努力设计中...'
-    //       } else if (res.data.status == 2) {
-    //         this.userinfo= res.data.data,
-    //         this.status= res.data.status,
-    //         this.tips= res.msg
-    //       } else {
-    //         this.userinfo= res.data.data,
-    //         this.status= res.data.status
-    //       }
-    //     },
-    //     fail: function () {
-    //       uni.hideLoading();
-    //       uni.showModal({
-    //         title: '网络错误',
-    //         content: '网络出错，请刷新重试',
-    //         showCancel: false,
-    //         mask: true
-    //       });
-    //     }
-    //   });
+        this.second_height= res.windowHeight - res.windowWidth / 750 * 300
+      }
+    });
+    uni.request({ //1已申请，未设计签名,2:已申请，已设计签名，3未申请
+        url: 'https://kxsx.kaifadanao.cn/api/index/getProfile',
+        method: 'post',
+        header: {
+          'content-type': 'application/json',
+          'token': uni.getStorageSync("token")
+        },
+        success: function (res) {
+          this.avatar= res.data.avatar
+        },
+        fail: function () {
+          uni.hideLoading();
+          uni.showModal({
+            title: '网络错误',
+            content: '网络出错，请刷新重试',
+            showCancel: false,
+            mask: true
+          });
+        }
+      });
+    uni.request({ //1已申请，未设计签名,2:已申请，已设计签名，3未申请
+        url: 'https://kxsx.kaifadanao.cn/api/videoPacks/getSignature',
+        method: 'post',
+        header: {
+          'content-type': 'application/json',
+          'token': uni.getStorageSync("token")
+        },
+        success: function (res) {
+          if (res.data.status == 1) {
+            this.userinfo= res.data.data,
+            this.status= res.data.status,
+            this.tips= '签名正在努力设计中...'
+          } else if (res.data.status == 2) {
+            this.userinfo= res.data.data,
+            this.status= res.data.status,
+            this.tips= res.msg
+          } else {
+            this.userinfo= res.data.data,
+            this.status= res.data.status
+          }
+        },
+        fail: function () {
+          uni.hideLoading();
+          uni.showModal({
+            title: '网络错误',
+            content: '网络出错，请刷新重试',
+            showCancel: false,
+            mask: true
+          });
+        }
+      });
   },
 
   /**

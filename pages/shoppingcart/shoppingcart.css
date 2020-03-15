@@ -1,0 +1,186 @@
+/* pages/onlinestore/shopcart/shopcart.wxss */
+
+.shopcartlist {
+  width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.shopcartitem {
+  width: 100%;
+  min-height: 290rpx;
+  height:auto;
+  border-bottom: 1rpx solid #f1f1f1;
+  padding: 40rpx 30rpx 40rpx;
+  position: relative;
+}
+/* 每个商品右侧信息 */
+.sahngpin {
+  width: 85%;
+  position: absolute;
+  left: 75rpx;
+  top: 40rpx;
+  display: flex;
+}
+.sahngpin .right{
+  width:90%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.cart-thumb {
+  width: 211rpx;
+  height: 211rpx;
+  border-radius: 8rpx;
+  background-size: 100% 100%;
+}
+
+.floctcont {
+  float: left;
+}
+
+.rodio {
+  width: 38rpx;
+  height: 100%;
+  margin-right: 20rpx;
+  line-height:222rpx;
+}
+
+.left {
+  margin-right: 35rpx;
+}
+
+.itemtitle {
+  font-size: 32rpx;
+  margin-bottom: 20rpx;
+  display: block;
+  width: 90%;
+  overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+word-break: break-all;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2; 
+}
+
+.haoping {
+  font-size: 32rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 70rpx;
+}
+
+.deleteimg {
+  width: 31rpx;
+  height: 31rpx;
+  background-size: 100% 100%;
+  position: absolute;
+  right: 0;
+  top: 50rpx;
+}
+
+.numbtn {
+  width: 240rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 32rpx;
+  border: 1rpx solid #E5E5E5;
+  border-radius:4rpx;
+  position: absolute;
+  right: 0;
+  bottom: 10rpx;
+}
+.jiannun{
+width: 75rpx;
+display: block;
+border-right: 1rpx solid #E5E5E5;
+font-size: 32rpx;
+}
+.addnum {
+width: 75rpx;
+display: block;
+border-left: 1rpx solid #E5E5E5;
+font-size: 32rpx;
+}
+.numbtncont {
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+.num {
+  width: 85rpx;
+}
+
+.shopcart_bottom {
+  width: 100%;
+  height: 95rpx;
+  padding: 15rpx 25rpx;
+  position: fixed;
+  bottom:0;
+  background:white;
+  z-index:999;
+}
+.quanxuanicon {
+  margin-right: 15rpx;
+  position: relative;
+  top: 10rpx;
+}
+.quanxuan {
+  font-size: 32rpx;
+  color: #666666;
+  margin-right: 160rpx;
+}
+.zongjia {
+  color: #FC3D42;
+  font-size: 32rpx;
+}
+.jiesuanbtn {
+  width: 178rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  background-color: #48DB8D;
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
+  border: 0;
+  outline: none;
+  position: absolute;
+  right: 25rpx;
+  top: 18rpx;
+}
+
+.price{
+  font-size: 32rpx;
+  color: #48DB8D;
+}
+.whiteView{
+  height: 100rpx;
+}
+
+.wujieguo{
+  margin-top: 30%;
+  width:200rpx;
+  height:200rpx;
+}
+
+.none{
+  text-align: center
+}
+
+.none-text{
+  margin-top:28rpx;
+  font-size: 32rpx;
+  color:#b5b5b5
+}
+
+/* 规格 */
+.sku{
+overflow:hidden;
+text-overflow:ellipsis;
+display:-webkit-box;
+word-break:break-all;
+-webkit-box-orient:vertical;
+-webkit-line-clamp:2;
+
+}

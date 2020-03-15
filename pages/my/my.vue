@@ -287,6 +287,13 @@
 				</view>
 				<image src="../../static/index/qj.png" class="icon_more"></image>
 			</navigator>
+			<navigator url="../onlinestore/myScoreOrder/myScoreOrder">
+				<view class="left_side">
+					<image src="../../static/my/wddd.png" mode=""></image>
+					<text>我的积分订单</text>
+				</view>
+				<image src="../../static/index/qj.png" class="icon_more"></image>
+			</navigator>
 			<navigator url="mydiscount/mydiscount">
 				<view class="left_side">
 					<image src="../../static/my/wdyhq.png" mode=""></image>
