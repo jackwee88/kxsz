@@ -6,12 +6,24 @@
 		</view>
 		<!-- 一些功能 -->
 		<view class="module">
+			<navigator class="module_item" url="../online_Teach/onlineTeach">
+				<view class="itemcont">
+					<image class="icon" src="../../static/freeTeaching/tongbuxuexi.png" mode="widthFix"></image>
+				</view>
+				<text>教材同步教学视频</text>
+			</navigator>
 			<view class="module_item" v-for="(item,index) in moduleList" @click="gotoCommonMulu(item)">
 				<view class="itemcont">
 					<image class="icon" :src="item.img" mode="widthFix"></image>
 				</view>
 				<text>{{item.title}}</text>
 			</view>
+			<navigator class="module_item" url="../ruler-buy/ruler-buy">
+				<view class="itemcont">
+					<image class="icon" src="../../static/freeTeaching/goumai.png" mode="widthFix"></image>
+				</view>
+				<text>书法尺购买</text>
+			</navigator>
 			<navigator class="module_item" url="../Copyright/Copyright">
 				<view class="itemcont">
 					<image class="icon" src="../../static/freeTeaching/banquan.png" mode="widthFix"></image>
@@ -43,10 +55,6 @@
 			return{
 				moduleList:[
 					{
-						title:'教材同步教学视频',
-						img:'../../static/freeTeaching/tongbuxuexi.png'
-					},
-					{
 						title:'功能尺教学',
 						img:'../../static/freeTeaching/shiyongjiaoxue.png'
 					},
@@ -65,10 +73,6 @@
 					{
 						title:'扩展教学',
 						img:'../../static/freeTeaching/kuozhan.png'
-					},
-					{
-						title:'书法尺购买',
-						img:'../../static/freeTeaching/goumai.png'
 					},
 				]
 			}

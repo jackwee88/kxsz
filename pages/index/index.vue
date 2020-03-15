@@ -34,7 +34,7 @@
 				<image src="../../static/index/jxkc.png" mode=""></image>
 				<text>精选课程</text>
 			</navigator>
-			<navigator url="">
+			<navigator url="../study-product/study-product">
 				<image src="../../static/index/xxyp.png" mode=""></image>
 				<text>学习用品</text>
 			</navigator>

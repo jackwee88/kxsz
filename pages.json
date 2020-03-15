@@ -22,12 +22,12 @@
 			"path": "pages/my/jifenguize/jifenguize",
 			"style": {
 				"navigationBarTitleText": "积分规则",
-				"navigationBarBackgroundColor": "#008800",
+				"navigationBarBackgroundColor": "#008f00",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -35,12 +35,12 @@
 			"path": "pages/my/huiyuantequan/huiyuantequan",
 			"style": {
 				"navigationBarTitleText": "我的特权",
-				"navigationBarBackgroundColor": "#008800",
-				"navigationBarTextStyle": "white",
+				// "navigationBarBackgroundColor": "#008800",
+				// "navigationBarTextStyle": "white",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -50,9 +50,9 @@
 				"navigationBarTitleText": "教材同步学习教学",
 				"enablePullDownRefresh": false,
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -70,9 +70,9 @@
 			"style": {
 				"navigationBarTitleText": "我的发表",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -81,9 +81,9 @@
 			"style": {
 				"navigationBarTitleText": "每日签到",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -92,9 +92,9 @@
 			"style": {
 				"navigationBarTitleText": "我的订单",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -103,9 +103,9 @@
 			"style": {
 				"navigationBarTitleText": "会员信息",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -114,9 +114,9 @@
 			"style": {
 				"navigationBarTitleText": "会员积分",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -125,9 +125,9 @@
 			"style": {
 				"navigationBarTitleText": "我的收藏",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -136,9 +136,9 @@
 			"style": {
 				"navigationBarTitleText": "历史投稿记录",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -147,9 +147,9 @@
 			"style": {
 				"navigationBarTitleText": "发表记录",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -179,9 +179,9 @@
 			"style": {
 				"navigationBarTitleText": "在线教学",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -208,9 +208,9 @@
 			"style": {
 				"navigationBarTitleText": "版权声明",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -219,9 +219,9 @@
 			"style": {
 				"navigationBarTitleText": "升级会员",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -230,9 +230,9 @@
 			"style": {
 				"navigationBarTitleText": "个人日记",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -241,9 +241,9 @@
 			"style": {
 				"navigationBarTitleText": "金木水火土",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -252,9 +252,9 @@
 			"style": {
 				"navigationBarTitleText": "优惠券",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -274,9 +274,9 @@
 			"style": {
 				"navigationBarTitleText": "视频礼包",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -324,9 +324,7 @@
 			"style": {
 				"navigationBarTitleText": "书法尺购买",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+
 				}
 			}
 
@@ -368,6 +366,12 @@
             "path" : "pages/commonMulu/commonMulu",
             "style" : {}
         }
+        ,{
+            "path" : "pages/study-product/study-product",
+            "style" : {
+							"navigationBarTitleText":"学习用品"
+						}
+        }
     ],
 
 
@@ -376,6 +380,7 @@
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#ffffff",
 		"navigationBarTextStyle": "black"
+		
 
 	},
 	"tabBar": {
