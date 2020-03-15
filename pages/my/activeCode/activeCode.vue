@@ -1,6 +1,5 @@
 <template>
 	<view class="wrap">
-	  <view class="title">点击下方激活码即可复制，发送给好友，共享视频吧</view>
 	  <view class="item-box">
 	    <text class="item item.status==0?'':'dis'" v-for="(item,index) in dataList" :key="index" selectable="true">{{item.code}}</text>
 	    

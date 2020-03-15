@@ -292,16 +292,6 @@
 			}
 		},
 		{
-			"path": "pages/my/activeCode/activeCode",
-			"style": {
-				"navigationBarTitleText": "激活码",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		}, {
 			"path": "pages/message/message",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -391,6 +381,36 @@
 				}
 			}
 
+		}, {
+			"path": "pages/jifen-shop/jifen-shop",
+			"style": {
+				"navigationBarTitleText": "积分商城",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+
+				}
+			}
+		}, {
+			"path": "pages/product-detail/product-detail",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}
+
+		, {
+			"path": "pages/my/videolist/videolist",
+			"style": {
+				"navigationBarTitleText": "我的视频"
+			}
+		}, {
+			"path": "pages/studySquare/studySquare",
+			"style": {
+				"navigationBarTitleText": "成长小广场"
+			}
 		}
 	    ,{
             "path" : "pages/jifen-shop/jifen-shop",
@@ -453,13 +473,15 @@
 			}
         }
     ],
+	
 
 
 	"globalStyle": {
 		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#008800",
-		"navigationBarTextStyle": "#ffffff"
+		"navigationBarBackgroundColor": "#ffffff",
+		"navigationBarTextStyle": "black"
+
 	},
 	"tabBar": {
 		"selectedColor": "#008800",
