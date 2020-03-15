@@ -1,7 +1,8 @@
 <template>
 	<view class="container">
 		<view class="top_title">
-			<navigator open-type="navigateBack"><image src="/static/onlineStore/back@2x.png" mode="" class="icon1"></image></navigator>
+			<navigator open-type="navigateBack">
+				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
 			<view class="input-wrap flex">
 				<image class="search" src="/static/onlineStore/ss@2x.png" />
 				<input placeholder="一年级上册…" placeholder-class="placeholder-class" class="input" />
@@ -32,7 +33,6 @@
 				</scroll-view>
 				<image class="more" src="/static/onlineStore/more@2x.png" />
 			</view>
-<<<<<<< HEAD
 		</view>
 		<!-- 根据tab不同加载不同内容 -->
 		<!--内容区-->
@@ -73,25 +73,6 @@
 <!--							<navigator url="">-->
 <!--								<view class="ellipsis" style="font-size: 28rpx;">{{item.title}}</view>-->
 <!--							</navigator>-->
-=======
-			<!--内容区-->
-			<view class="uni-tab-content">
-				<swiper :current="tabIndex" @change="tabChange">
-					<swiper-item v-for="(content, index) in contentList" :key="index">
-						<view class="swiper-item">
-							<!-- 轮播 -->
-							<swiper class="swiper" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" indicator-active-color="#008800">
-								<block v-for="(data, index) in swiperImges" :key="index">
-									<swiper-item>
-										<view class="swiper-item">
-											<navigator :url="data.to_url" open-type="navigate">
-												<image :src="data.pic_url" class="banner" style="width: 718rpx;height: 332rpx;" mode="aspectFit"></image>
-											</navigator>
-										</view>
-									</swiper-item>
-								</block>
-							</swiper>
->>>>>>> developLyy
 						</view>
 					</view>
 					<!-- 广告链接 -->
@@ -148,7 +129,6 @@
 						</block>
 					</swiper>
 
-<<<<<<< HEAD
 					<view class="banner-title"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
 					<!-- 商品推荐 -->
 					<view class="recommend-footer">
@@ -174,86 +154,13 @@
 												</view>
 											</view>
 										</view>
-=======
-			<!-- 新品上市 -->
-			<view class="new-goods">
-				<image src="../../static/onlineStore/xpss.png" style="width:182rpx;height: 78rpx;" mode="aspectFit"></image>
-				<view class="recommend">推荐</view>
-				<view class="recommend-product" v-for="(item, index) in productList.slice(0, 1)" :key="index">
-					<navigator url="../product-detail/product-detail">
-						<text style="font-size: 28rpx;">{{ item.title }}</text>
-					</navigator>
-				</view>
-			</view>
-			<!-- 广告链接 -->
-			<navigator url="">
-				<view class="adversity"><image src="../../static/onlineStore/gg@2x.png" mode="aspectFit" style="width: 722rpx;height: 196rpx;"></image></view>
-			</navigator>
-			<!-- 限时秒杀 -->
-			<view class="limitedTime">
-				<image src="../../static/onlineStore/xsms.png" style="width: 150rpx;height: 98rpx;" mode="aspectFit"></image>
-				<view class="limitedTime">
-					<text style="font-size: 28rpx;color: #e02020;">时间仅剩</text>
-					<uni-countdown :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
-				</view>
-			</view>
-		</view>
-		<!-- 商品推荐 -->
-		<view class="recommend-banner">
-			<scroll-view scroll-x="true" show-scrollbar="true">
-				<view class="goods-box" v-for="item in productList" :key="index">
-					<navigator url="../product-detail/product-detail"><image src="" style="width:262rpx ;height: 244rpx;" mode="aspectFit"></image></navigator>
-					<view class="goods-price">¥{{ item.originalPrice }}</view>
-				</view>
-			</scroll-view>
-		</view>
-		<!-- 商品广告图 -->
-		<navigator url="">
-			<view class="goods-adverse">
-				<!-- 请求后台数据 -->
-				<cover-image src="" style="width:750rpx ;height: 220rpx;"></cover-image>
-			</view>
-		</navigator>
-		<view class="banner-title"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
-		<!-- 商品推荐 -->
-		<view class="recommend-footer">
-			<view class="recommend-list">
-				<view v-for="(item, index) in productList" :key="index" @click="goDetail(value)">
-						<view class="uni-product">
-							<view class="image-view">
-								<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-								<image src="item.cover" style="width:220rpx ;height: 200rpx;" mode="aspectFit"></image>
-							</view>
-							<view class="goods-detail">
-								<view class="uni-product-title">{{ item.title }}</view>
-								<view class="uni-product-price">
-									<view style="font-size:28rpx ;">
-										团购价:
-										<text class="goods-price" style="font-size: 32rpx;">￥{{ item.originalPrice }}</text>
-									</view>
-									<view style="font-size: 28rpx;">
-										团购价:
-										<text class="goods-price" style="font-size: 32rpx;">￥{{ item.teamPrice }}</text>
->>>>>>> developLyy
 									</view>
 								</navigator>
 							</view>
 						</view>
-<<<<<<< HEAD
 						<!-- 为您推荐 -->
 						<view class="recommend-image">
 							<image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image>
-=======
-				</view>
-			</view>
-			<!-- 为您推荐 -->
-			<view class="recommend-image"><image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
-			<view class="recommend-ruler">
-				<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
-						<view class="image-ruler">
-							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-							<image src="" style="width:330rpx ;height: 350rpx;" mode="aspectFit"></image>
->>>>>>> developLyy
 						</view>
 						<view class="recommend-ruler">
 							<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
@@ -269,7 +176,6 @@
 								</navigator>
 							</view>
 						</view>
-<<<<<<< HEAD
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -277,8 +183,8 @@
 	</view>
 </template>
 <script>
-	import screenTextScroll from '@/components/p-screenTextScroll/screenTextScroll.vue';
 	import uniCountdown from '@/components/uni-countdown/uni-countdown.vue';
+	import screenTextScroll from '@/components/p-screenTextScroll/screenTextScroll.vue';
 	export default {
 		data() {
 			return {
@@ -293,48 +199,26 @@
 				// productList: [],
 				// recommendList:[],
 				recommendList: [{
-=======
-				</view>
-			</view>
-		</view>
-	</view>
-</template>
-<script>
-import uniCountdown from '@/components/uni-countdown/uni-countdown.vue';
-export default {
-	data() {
-		return {
-			tabindex: 1,
-			tabIndex: 0, //选中标签栏的序列
-			contentList: ['分类', '分类', '分类', '分类', '分类'],
-			swiperImges: [],
-			// productList: [],
-			// recommendList:[],
-			recommendList: [
-				{
->>>>>>> developLyy
 					title: '1'
-				},
-				{
+				}, {
 					title: '2'
-<<<<<<< HEAD
 				}],
 				productList: [{
-						title: ['商品标题商品标题商品标题商品标题商品标题'],
+						title: '商品标题商品标题商品标题商品标题商品标题',
 						originalPrice: '320',
 						teamPrice: '620',
 						name: '书法尺',
 						describtion: '练习书法常备用品'
 					},
 					{
-						title: ['商品标题商品标题商品标题商品标题商品标题'],
+						title: '商品标题商品标题商品标题商品标题商品标题',
 						originalPrice: '320',
 						teamPrice: '620',
 						name: '书法尺',
 						describtion: '练习书法常备用品'
 					},
 					{
-						title: ['商品标题商品标题商品标题商品标题商品标题'],
+						title: '商品标题商品标题商品标题商品标题商品标题',
 						originalPrice: '320',
 						teamPrice: '620',
 						name: '书法尺',
@@ -363,8 +247,6 @@ export default {
 						id: 'caijing'
 					}
 				],
-				swiperHeight: 0,
-				// 两张图片的轮播图
 				bannerList:[
 					{
 						item:[
@@ -397,157 +279,41 @@ export default {
 						]
 					},
 				],
-				// 广告隐藏
-				isClose:false,
-=======
-				}
-			],
-			productList: [
-				{
-					id:'1',
-					title: '商品标题商品标题商品标题商品标题商品标题',
-					originalPrice: '320',
-					teamPrice: '620',
-					name: '书法尺',
-					describtion: '练习书法常备用品',
-					cover: ''
-				},
-				{
-					id:'2',
-					title: '商品标题商品标题商品标题商品标题商品标题',
-					originalPrice: '320',
-					teamPrice: '620',
-					name: '书法尺',
-					describtion: '练习书法常备用品',
-					cover: ''
-				},
-				{
-					id:'3',
-					title: '商品标题商品标题商品标题商品标题商品标题',
-					originalPrice: '320',
-					teamPrice: '620',
-					name: '书法尺',
-					describtion: '练习书法常备用品',
-					cover: ''
-				}
-			],
-			renderImage: false,
-			tabBars: [
-				{
-					name: '分类',
-					id: 'guanzhu'
-				},
-				{
-					name: '分类',
-					id: 'tuijian'
-				},
-				{
-					name: '分类',
-					id: 'redian'
-				},
-				{
-					name: '分类',
-					id: 'tiyu'
-				},
-				{
-					name: '分类',
-					id: 'caijing'
-				}
-			],
-			swiperHeight: 0
-		};
-	},
-	components: {
-		uniCountdown
-	},
-	mounted() {
-		// 换地址
-		uni.request({
-			url: 'https://kxsx.kaifadanao.cn/api/index/index',
-			method: 'POST',
-			data: {},
-			header: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			success: res => {
-				if (res.data.status == 1) {
-					//轮播图片数据
-					this.swiperImges = res.data.data.banner;
-					//在线教学数据
-					this.onlineTeaching = res.data.data.smodel;
-				}
-			},
-			fail: () => {}
-		});
-		// 请求商品列表
-		uni.request({
-			url: '',
-			method: 'POST',
-			data: {},
-			header: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			success: res => {
-				if (res.data.status == 1) {
-					//轮播图片数据
-					this.productList = res.data;
-					//在线教学数据
-					
-				}
-			},
-			fail: () => {}
-		})
-		//请求
-		// uni.request({
-		//                     url: 'http://localhost:3000/goods',
-		//                     success: (res) => {
-		//                         console.log(res.data);
-		//                         this.productList = res.data.goodslist;
-		//                     }
-		//                 });
-	},
-	methods: {
-		goDetail: function(e) {
-			let detail = {
-				name: e.name,
-				cover: e.cover,
-				id: e.id,
-				title: e.title
->>>>>>> developLyy
+				swiperHeight: 0
 			};
-			uni.navigateTo({
-				url: '../product-detail/product-detail?detailDate=' + encodeURIComponent(JSON.stringify(detail))
-			});
 		},
-<<<<<<< HEAD
 		components: {
-			uniCountdown,screenTextScroll,
-=======
-		toggleTab(index) {
-			console.log(index);
-			this.tabIndex = index;
->>>>>>> developLyy
+			uniCountdown,screenTextScroll
 		},
-		tabChange(e) {
-			console.log(e.detail);
-			const tabIndex = e.detail.current;
-			this.tabIndex = tabIndex;
-		},
-		getList() {
+		mounted() {
+			// 换地址
 			uni.request({
-				url: 'http://localhost:3000/goods',
+				url: 'https://kxsx.kaifadanao.cn/api/index/index',
+				method: 'POST',
+				data: {},
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
 				success: res => {
-					console.log(res.data);
-					this.productList = res.data.goodslist;
-				}
+					if (res.data.status == 1) {
+						//轮播图片数据
+						this.swiperImges = res.data.data.banner;
+						//在线教学数据
+						this.onlineTeaching = res.data.data.smodel;
+					}
+				},
+				fail: () => {}
 			});
+			//请求
+			// uni.request({
+			//                     url: 'http://localhost:3000/goods',
+			//                     success: (res) => {
+			//                         console.log(res.data);
+			//                         this.productList = res.data.goodslist;
+			//                     }
+			//                 });
 		},
-<<<<<<< HEAD
 		methods: {
-			// 关闭广告
-			close(){
-				this.isClose=true;
-			},
 			toggleTab(index) {
 				console.log(index);
 				this.tabIndex = index;
@@ -556,10 +322,6 @@ export default {
 				console.log(e.detail);
 				const tabIndex = e.detail.current;
 				this.tabIndex = tabIndex;
-			},
-			changeTab(e){
-				console.log(e);
-				this.tabIndex=e.detail.current;
 			},
 			getList() {
 				uni.request({
@@ -574,19 +336,12 @@ export default {
 				this.getList();
 				this.renderImage = true;
 			}
-=======
-		onLoad() {
-			this.getList();
-			this.renderImage = true;
->>>>>>> developLyy
 		}
-	}
-};
+	};
 </script>
 
-<<<<<<< HEAD
-<style lang="less" scoped>
-	@import './onlinestore.css';
+<style style lang="less" scoped>
+@import './onlinestore.css';
 	page, .container{
 		min-height: 100%;
 		height: 100%;
@@ -725,8 +480,4 @@ export default {
 			}
 		}
 	}
-=======
-<style>
-@import './onlinestore.css';
->>>>>>> developLyy
 </style>

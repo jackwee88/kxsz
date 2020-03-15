@@ -24,14 +24,13 @@
 	align-items: center;
 	margin: 50rpx 16rpx 12rpx;
 }
-
 .limitedTime {
 	margin: 70rpx 16rpx 16rpx 40rpx;
 	display: flex;
 	align-items: center;
-		justify-content: space-between;
+	justify-content: space-between;
+	height: 358rpx;
 }
-
 .recommend-banner {
 	height: 358rpx;
 }
