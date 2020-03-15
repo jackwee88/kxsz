@@ -349,7 +349,15 @@
 		</view>
 		
 		<view class="block"></view>
-		
+		<view class="panel">
+			<navigator url="../feedback/feedback">
+				<view class="left_side">
+					<image src="../../static/my/gywm.png" mode=""></image>
+					<text>意见反馈</text>
+				</view>
+				<image src="../../static/index/qj.png" class="icon_more"></image>
+			</navigator>
+		</view>
 		<view class="panel">
 			<navigator url="../about/about">
 				<view class="left_side">
@@ -391,7 +399,8 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 34rpx 28rpx;
+	padding: 20rpx 32rpx;
+	margin-bottom: 26rpx;
 	text {
 		font-size: 36rpx;
 		font-weight: 500;
