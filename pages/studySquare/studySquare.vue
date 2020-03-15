@@ -89,7 +89,7 @@
           <view>
             <view style="position:relative;display:inline">
               <image v-if="item.video_ids" style="width:30%;height:200rpx;margin-right:10rpx" :hidden="item.fullScreen" class="acticleimg" :src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'" mode="scaleToFill"></image>
-              <image v-if="item.video_ids" :data-fullScreen="item.fullScreen" class="bt" mode="scaleToFill" :data-src="item.video_ids" :data-index="index" @tap="playVideo" src="/static/img/index/play3.png" style="width:60rpx;height:60rpx;position:absolute;top:-118rpx;left:78rpx;"></image>
+              <image v-if="item.video_ids" :data-fullScreen="item.fullScreen" class="bt" mode="scaleToFill" :data-src="item.video_ids" :data-index="index" @tap="playVideo" src="../../static/studySquare/play3.png" style="width:60rpx;height:60rpx;position:absolute;top:-118rpx;left:78rpx;"></image>
             </view>
             <image v-for="(items, index2) in item.picture_arr" :key="index2" class="acticleimg" :src="items" :data-src="items" :data-pic_arr="item.picture_arr" @tap="previewImg" mode="aspectFill"></image>
             <audio v-if="item.voice_ids" :src="item.voice_ids" controls loop class="audio" :poster="item.poster" :name="item.name" :author="item.author" :data-index="index" @tap.stop="playorpause" :action="item.action"></audio>
@@ -131,15 +131,15 @@
     </view>
   </view>
   <view class="fixedbottom">
-    <navigator class="dakaleft dakablock" url="/pages/phblist/phblist">
-      <image class="phbimg" src="/static/img/studySquare/paihangbang.png"></image>
+    <navigator class="dakaleft dakablock" url="./phpublish/phpublish">
+      <image class="phbimg" src="../../static/studySquare/paihangbang.png"></image>
       <text>排行榜</text>
     </navigator>
 
-    <view class="dakaright dakablock" @tap="getoShop">
-      <image class="sfcgmimg" src="/static/img/index/weizaixianshangcheng.png"></image>
+    <navigator class="dakaright dakablock" url="../onlinestore/onlinestore">
+      <image class="sfcgmimg" src="../../static/studySquare/weizaixianshangcheng.png"></image>
       <text>在线商城</text>
-    </view>
+    </navigator>
 
     <view class="dakaciclecont">
       <navigator class="dakatext" :url="'/pages/publishedDiary/publishedDiary?type=' + type" v-if="type!=4">打卡</navigator>

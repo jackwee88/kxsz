@@ -37,10 +37,28 @@
 		</view>
 	</view>
 </template>
+</template>
 
 <script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		onLoad(event) {
+			console.log(event);
+			this.banner = JSON.parse(decodeURIComponent(event.name));
+			uni.setNavigationBarTitle({
+			title:this.banner.title
+			})
+		},
+		methods: {
+			
+		}
+	}
 </script>
 
 <style>
-	@import "./hncjiaoxue_mulu.css";
+@import './commonMulu.css';
 </style>

@@ -204,17 +204,6 @@
 			}
 		},
 		{
-			"path": "pages/hncjiaoxue_mulu/hncjiaoxue_mulu",
-			"style": {
-				"navigationBarTitleText": "功能尺使用教学",
-				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
-				}
-			}
-		},
-		{
 			"path": "pages/Copyright/Copyright",
 			"style": {
 				"navigationBarTitleText": "版权声明",
@@ -354,10 +343,7 @@
 		}, {
 			"path": "pages/product-detail/product-detail",
 			"style": {
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": false
-				}
+				
 			}
 		}
 
@@ -372,8 +358,14 @@
 				"navigationBarTitleText": "成长小广场"
 			}
 		}
-	    ,{
-            "path" : "pages/modal/modal",
+        ,{
+            "path" : "pages/studySquare/phpublish/phpublish",
+            "style" : {
+							"navigationBarTitleText":"排行榜"
+						}
+        }
+        ,{
+            "path" : "pages/commonMulu/commonMulu",
             "style" : {}
         }
     ],

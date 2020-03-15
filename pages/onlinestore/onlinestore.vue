@@ -95,11 +95,11 @@
 		<!-- 商品推荐 -->
 		<view class="recommend-footer">
 			<view class="recommend-list">
-				<view v-for="(item, index) in productList" :key="index" @click="goDetail(value)">
+				<view v-for="(item, index) in productList" :key="index" @click="goDetail(item)">
 						<view class="uni-product">
 							<view class="image-view">
 								<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-								<image src="item.cover" style="width:220rpx ;height: 200rpx;" mode="aspectFit"></image>
+								<image :src="item.cover" style="width:220rpx ;height: 200rpx;" mode="aspectFit"></image>
 							</view>
 							<view class="goods-detail">
 								<view class="uni-product-title">{{ item.title }}</view>
