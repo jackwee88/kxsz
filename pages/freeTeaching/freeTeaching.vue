@@ -6,78 +6,24 @@
 		</view>
 		<!-- 一些功能 -->
 		<view class="module">
-			<view class="module_item">
-				<navigator url="../online_Teach/onlineTeach">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/tongbuxuexi.png" mode="widthFix"></image>
-					</view>
-					<text>教材同步学习视频</text>
-				</navigator>
+			<view class="module_item" v-for="(item,index) in moduleList" @click="gotoCommonMulu(item)">
+				<view class="itemcont">
+					<image class="icon" :src="item.img" mode="widthFix"></image>
+				</view>
+				<text>{{item.title}}</text>
 			</view>
-			<view class="module_item">
-				<navigator url="/pages/hncjiaoxue_mulu/hncjiaoxue_mulu">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/shiyongjiaoxue.png" mode="widthFix"></image>
-					</view>
-					<text>功能尺使用教学</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="/pages/hncjiaoxue_mulu/hncjiaoxue_mulu">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/bihua.png" mode="widthFix"></image>
-					</view>
-					<text>笔画+思政课教学</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="/pages/hncjiaoxue_mulu/hncjiaoxue_mulu">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/zuozi.png" mode="widthFix"></image>
-					</view>
-					<text>坐姿握笔</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="text-decoding/text-decoding">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/jiema.png" mode="widthFix"></image>
-					</view>
-					<text>文字解码</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="expanded-teach/expanded-teach">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/kuozhan.png" mode="widthFix"></image>
-					</view>
-					<text>扩展教学</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="../ruler-buy/ruler-buy">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/goumai.png" mode="widthFix"></image>
-					</view>
-					<text>书法尺购买</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="/pages/Copyright/Copyright">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/banquan.png" mode="widthFix"></image>
-					</view>
-					<text>版权声明</text>
-				</navigator>
-			</view>
-			<view class="module_item">
-				<navigator url="/pages/my/shengjihuiyuan/shengjihuiyuan">
-					<view class="itemcont">
-						<image class="icon" src="../../static/freeTeaching/huiyuan.png" mode="widthFix"></image>
-					</view>
-					<text>会员福利</text>
-				</navigator>
-			</view>
+			<navigator class="module_item" url="../Copyright/Copyright">
+				<view class="itemcont">
+					<image class="icon" src="../../static/freeTeaching/banquan.png" mode="widthFix"></image>
+				</view>
+				<text>版权声明</text>
+			</navigator>
+			<navigator class="module_item" url="../my/shengjihuiyuan/shengjihuiyuan">
+				<view class="itemcont">
+					<image class="icon" src="../../static/freeTeaching/huiyuan.png" mode="widthFix"></image>
+				</view>
+				<text>会员福利</text>
+			</navigator>
 		</view>
 		<!-- 联系客服按钮 -->
 		<view class="rightfiex">
@@ -94,13 +40,51 @@
 <script>
 	export default{
 		data(){
-			return{}
+			return{
+				moduleList:[
+					{
+						title:'教材同步教学视频',
+						img:'../../static/freeTeaching/tongbuxuexi.png'
+					},
+					{
+						title:'功能尺教学',
+						img:'../../static/freeTeaching/shiyongjiaoxue.png'
+					},
+					{
+						title:'笔画+思政教学',
+						img:'../../static/freeTeaching/bihua.png'
+					},
+					{
+						title:'坐姿握笔',
+						img:'../../static/freeTeaching/zuozi.png'
+					},
+					{
+						title:'文字解码',
+						img:'../../static/freeTeaching/jiema.png'
+					},
+					{
+						title:'扩展教学',
+						img:'../../static/freeTeaching/kuozhan.png'
+					},
+					{
+						title:'书法尺购买',
+						img:'../../static/freeTeaching/goumai.png'
+					},
+				]
+			}
 		},
 		onLoad() {
 			
 		},
 		methods:{
-			
+			gotoCommonMulu: function(e) {
+				let param = {
+					title:e.title
+				};
+				uni.navigateTo({
+					url: '../commonMulu/commonMulu?name=' + encodeURIComponent(JSON.stringify(param))
+				});
+			},
 		},
 		mounted() {
 			// uni.request({

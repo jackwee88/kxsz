@@ -70,9 +70,6 @@
 						<view class="recommend">推荐</view>
 						<view class="recommend-product">
 							<screenTextScroll :list="item.title" />
-<!--							<navigator url="">-->
-<!--								<view class="ellipsis" style="font-size: 28rpx;">{{item.title}}</view>-->
-<!--							</navigator>-->
 						</view>
 					</view>
 					<!-- 广告链接 -->
@@ -93,14 +90,6 @@
 					</view>
 					<!-- 商品推荐 -->
 					<view class="recommend-banner">
-<!--						<scroll-view scroll-x="true" show-scrollbar="true">-->
-<!--							<view class="goods-box">-->
-<!--								<navigator>-->
-<!--									<image src="" style="width:262rpx ;height: 244rpx;" mode="aspectFit"></image>-->
-<!--								</navigator>-->
-<!--								<view class="goods-price">¥{{ item.originalPrice }}</view>-->
-<!--							</view>-->
-<!--						</scroll-view>-->
 						<swiper previous-margin="96rpx" circular="true" next-margin="96rpx">
 							<swiper-item class="flex" v-for="(item,index) in bannerList" :key="index">
 								<view class="banner-item" v-for="(titem,tindex) in item.item">
@@ -110,13 +99,6 @@
 							</swiper-item>
 						</swiper>
 					</view>
-					<!-- 商品广告图 -->
-<!--					<navigator url="">-->
-<!--						<view class="goods-adverse">-->
-<!--							&lt;!&ndash; 请求后台数据 &ndash;&gt;-->
-<!--							<cover-image src="" style="width:750rpx ;height: 220rpx;"></cover-image>-->
-<!--						</view>-->
-<!--					</navigator>-->
 					<swiper class="goods-adverse" :autoplay="true" :interval="3000" :duration="1000">
 						<block v-for="(data, index) in swiperImges" :key="index">
 							<swiper-item>
@@ -133,7 +115,6 @@
 					<!-- 商品推荐 -->
 					<view class="recommend-footer">
 						<view class="recommend-list">
-
 							<view>
 								<navigator url="">
 									<view class="uni-product">

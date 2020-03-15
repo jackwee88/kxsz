@@ -1,0 +1,184 @@
+/**app.wxss**/
+page {
+  background: #fff;
+}
+view, text, input, scroll-view, navigator {
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+  box-sizing: border-box;
+  word-wrap: break-word;
+  -webkit-appearance: none;
+          appearance: none;
+  -webkit-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.textCenter {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.between {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+image {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+view {
+  box-sizing: border-box;
+  /* ios 滑动卡顿解决*/
+  -webkit-overflow-scrolling: touch;
+}
+.container {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+.navigator-hover {
+  background-color: initial !important;
+  opacity: 1 !important;
+}
+.mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 101;
+}
+
+/*客服和返回顶部图标*/
+.kefuFix {
+  position: fixed;
+  right: 6rpx;
+  bottom: 320rpx;
+  width: 100rpx;
+  z-index: 99;
+}
+.kefuFix image {
+  width: 56rpx;
+  height: 56rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+.kefuFix view {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(205, 205, 205, 0.5);
+  position: relative;
+  margin-top: 16rpx;
+}
+.kefuFix button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  height: 100%;
+}
+.kefuFix button::after {
+  border: 0;
+}
+button::after {
+  border: none;
+}
+.button-hover {
+  /* color:rgba(0, 0, 0, 0.6); */
+  background-color: transparent;
+}
+.over {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+@font-face {
+  font-family: "Alibaba-light";
+  src: url("https://video.kaifadanao.cn/activity/fonts/ALIBABA-PUHUITI-LIGHT.ttf");
+}
+@font-face {
+  font-family: "Alibaba-Regular";
+  src: url("https://video.kaifadanao.cn/activity/fonts/ALIBABA-PUHUITI-REGULAR.ttf"); /* IE9+,可以是具体的实际链接 */
+}
+@font-face {
+  font-family: 'Alibaba-bold';
+  src: url("https://video.kaifadanao.cn/activity/fonts/ALIBABA-PUHUITI-BOLD.ttf"); /* IE9+,可以是具体的实际链接 */
+}
+@font-face {
+  font-family: "Alibaba-heavy";
+  src: url("https://video.kaifadanao.cn/activity/fonts/ALIBABA-PUHUITI-HEAVY.ttf"); /* IE9+,可以是具体的实际链接 */
+}
+@font-face {
+  font-family: "Alibaba-medium";
+  src: url("https://video.kaifadanao.cn/activity/fonts/ALIBABA-PUHUITI-MEDIUM.ttf"); /* IE9+,可以是具体的实际链接 */
+}
+@font-face {
+  font-family: 'roboto-medium';
+  /* font-style: bolder; */
+  src: url("https://video.kaifadanao.cn/activity/fonts/roboto-medium-webfont.woff");
+}
+@font-face {
+  font-family: 'roboto-regular';
+  /* font-style: bolder; */
+  src: url("https://video.kaifadanao.cn/activity/fonts/roboto-regular-webfont.woff");
+}
+@font-face {
+  font-family: 'roboto-bold';
+  font-weight: bolder;
+  /* font-style: bolder; */
+  src: url("https://video.kaifadanao.cn/activity/fonts/roboto-bold-webfont.woff");
+}
+
