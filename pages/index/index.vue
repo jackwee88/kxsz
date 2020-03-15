@@ -80,14 +80,14 @@
 				</view>
 			</navigator>
 		</view>
-
+<!-- 
 		<view class="section_title">
 			<text>作品赏析</text>
 			<navigator url="">
 				更多
 				<image src="../../static/index/qj.png" mode=""></image>
 			</navigator>
-		</view>
+		</view> -->
 <!-- 点击进入我的发表页 请求所有用户数据-->
 		<navigator class="works_list" url="../myPublished/myPublished">
 			<view class="work_item">
@@ -510,9 +510,8 @@ export default {
 }
 
 .works_list {
+	margin-top: 30rpx;
 	.work_item {
-		margin-bottom: 20rpx;
-
 		.user_info {
 			display: flex;
 			align-items: center;

@@ -28,8 +28,7 @@
 							{{item.title}}
 							</view>
 							<view class="tabright-footer" v-on:click="collect">
-								<text style="font-size: 28rpx;
-		color: #3FAE2A;">¥{{item.price}}</text>
+								<text style="font-size: 28rpx;color: #3FAE2A;">¥{{item.price}}</text>
 								<image class="collectimg" :src="collectClick.img" mode="widthFix"></image>
 							</view>
 						</view>
