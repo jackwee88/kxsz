@@ -372,6 +372,14 @@
 							"navigationBarTitleText":"学习用品"
 						}
         }
+        ,{
+            "path" : "pages/common/imageView",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/common/imageParent",
+            "style" : {}
+        }
     ],
 
 

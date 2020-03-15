@@ -107,7 +107,7 @@
 				</view>
 				
 				<view class="gallery">
-					<image src="../../static/index/dnkf.png" mode=""></image>
+					<image src="../../static/index/dnkf.png" mode="" @click="getUperPicture()"></image>
 					<image src="../../static/index/dnkf.png" mode=""></image>
 					<image src="../../static/index/dnkf.png" mode=""></image>
 				</view>
@@ -292,6 +292,11 @@ export default {
 		this.load();
 	},
 	methods: {
+		getUperPicture:function(e){
+			
+		},
+		// uni.showModal(
+		// )
 		load: function() {
 			let index = this.recomItem.length;
 			let id = this.recomItem[index - 1].id;
