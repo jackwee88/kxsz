@@ -497,6 +497,12 @@
 							"navigationBarTitleText":"学习用品"
 						}
         }
+        ,{
+            "path" : "pages/dakaLog/dakaLog",
+            "style" : {
+							"navigationBarTitleText":"打卡记录"
+						}
+        }
     ],
 
 
