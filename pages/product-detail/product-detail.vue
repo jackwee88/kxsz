@@ -1,9 +1,10 @@
 <template>
 	<view>
 		<view class="top_title">
-						<navigator url="../index/index"><image src="../../static/onlineStore/back.png" mode="" style="width: 18rpx;height: 32rpx;"></image></navigator>
-						<navigator url=""><image src="../../static/index/gwc.png" mode="" style="width: 44rpx;height: 44rpx;"></image></navigator>
-					</view>
+			<navigator open-type="navigateBack">
+				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
+			<navigator url=""><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
+		</view>
 		<!-- 商品详情 -->
 		<cover-view class="team-position">
 			<view class="team-num">2人团</view>
@@ -12,7 +13,7 @@
 		<!-- 商品详情 -->
 		<view class="product-banner">
 			<swiper></swiper>
-			<image :src="banner.title" style="width: 750rpx;height: 650rpx;" mode="aspectFit"></image>
+			<!-- <image :src="banner.title" style="width: 750rpx;height: 650rpx;" mode="aspectFit"></image> -->
 		</view>
 		<!-- 限时秒杀 判断商品是否为秒杀商品-->
 		<view class="xsms" v-if="true">
@@ -33,29 +34,29 @@
 		<view class="product-detail">
 			<view class="beij">
 				<text style="color: #e33944;font-size: 24rpx;">¥</text>
-				<text style="color: #e33944;">488</text>
-				<text style="color: #A1A4A5;font-size: 28rpx;">¥588</text>
+				<text style="color: #e33944;margin-right: 12rpx;">488</text>
+				<text style="color: #A1A4A5;font-size: 28rpx;text-decoration: line-through;">¥588</text>
 			</view>
 			<view>
-				<text style="color: #A1A4A5;font-size: 28rpx;">已售277</text>
+				<text style="color: #A1A4A5;font-size: 28rpx;margin-right: 12rpx;">已售277</text>
 				<text style="color: #A1A4A5;font-size: 28rpx;">库存59</text>
 			</view>
 		</view>
-
 		<view class="product-title">
 			<view class="productTxt">
-							<text
-								style="font-size: 30rpx;
+				<text
+					style="font-size: 30rpx;
 				color: #333333;font-weight: bolder;"
-							>
-								{{banner.title}}
-							</text>
-						</view>
-			
-						<navigator class="btn-share">
-							<image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;"></image>
-							<text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
-						</navigator>
+				>
+					<!-- 			{{ banner.title }} -->
+					雨女无瓜雨女无瓜雨女无瓜雨女无瓜雨女无瓜
+				</text>
+			</view>
+
+			<navigator class="btn-share">
+				<image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;"></image>
+				<text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
+			</navigator>
 		</view>
 		<!-- 拼团 -->
 		<view class="team-buy">
@@ -66,21 +67,21 @@
 					<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 				</navigator>
 			</view>
-			<view class="team-buy-detail" v-for="(data,index) in teamlist" :key="index">
-							<view class="circle-avator">
-								<image src="" mode="aspectFit"></image>
-							</view>
-							<view class="team-user">{{data.name}}</view>
-							<view>
-								<view class="pingtuan">差<text style="font-size: 28rpx;color:#E02020;">{{data.num}}</text>人拼成</view>
-							<view class="timeSetting">
-								<text style="font-size: 28rpx;color: #999999;">剩余</text>
-								<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
-							</view>
-							</view>
-							<button class="team-btn">
-								<text style="color: #ffffff;font-size:28rpx ;">参团&nbsp;></text>
-								</button>
+			<view class="team-buy-detail" v-for="(data, index) in teamlist" :key="index">
+				<view class="circle-avator"><image src="" mode="aspectFit"></image></view>
+				<view class="team-user">{{ data.name }}</view>
+				<view>
+					<view class="pingtuan">
+						差
+						<text style="font-size: 28rpx;color:#E02020;">{{ data.num }}</text>
+						人拼成
+					</view>
+					<view class="timeSetting">
+						<text style="font-size: 28rpx;color: #999999;">剩余</text>
+						<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+					</view>
+				</view>
+				<button class="team-btn"><text style="color: #ffffff;font-size:28rpx ;">参团&nbsp;></text></button>
 			</view>
 		</view>
 		<!-- 优惠券 -->
@@ -110,14 +111,14 @@
 		</navigator>
 		<!-- 地址 -->
 		<navigator url="" class="address">
-			<view class="txt-address">地址</view>
-			<view class="choose-address">选择收货地址</view>
-			<view style="margin-left: 376rpx;"><image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image></view>
+			<text class="txt-address">地址</text>
+			<text class="choose-address">选择收货地址</text>
+				<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 		</navigator>
 		<navigator url="" class="address">
-			<view class="txt-address">参数</view>
-			<view class="choose-address">生产日期 年级 （一年级）</view>
-			<view style="margin-left: 376rpx;"><image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image></view>
+			<text class="txt-address">参数</text>
+			<text class="choose-address">选择收货地址地址</text>
+			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 		</navigator>
 		<navigator url="" class="comment">
 			<view class="choose-address">评价(999+)</view>
@@ -159,29 +160,59 @@ export default {
 	data() {
 		return {
 			swiperImages: [],
-			teamlist:[{
-				name:'与女无瓜',
-				num:'1'
-			},{
-				name:'与女无瓜',
-				num:'1'
-			},]
+			teamlist: [
+				{
+					name: '与女无瓜',
+					num: '1'
+				},
+				{
+					name: '与女无瓜',
+					num: '1'
+				}
+			]
 		};
 	},
-	onLoad(event) {
-		console.log(event);
-		this.banner = JSON.parse(decodeURIComponent(event.detailDate));
-		uni.setNavigationBarTitle({
-		title:this.banner.title
-		})
-	},
-	mounted() {
-		
-	},
+	// onLoad(event) {
+	// 	console.log(event);
+	// 	this.banner = JSON.parse(decodeURIComponent(event.detailDate));
+	// 	uni.setNavigationBarTitle({
+	// 	title:this.banner.title
+	// 	})
+	// },
+	mounted() {},
 	methods: {}
 };
 </script>
 
-<style>
-	@import './product-detail.css';
+<style style lang="less" scoped>
+@import './product-detail.css';
+	.top_title{
+		.input-wrap{
+			height:60rpx;
+			background:rgba(239,239,239,1);
+			border-radius:34rpx;
+			width: 70%;
+			.search{
+				width: 32rpx;
+				height: 34rpx;
+				margin-left: 50rpx;
+				margin-right: 22rpx;
+			}
+			.input{
+				font-size:28rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:#333;
+				line-height:60rpx;
+			}
+		}
+		.icon1{
+			width: 18rpx;
+			height: 32rpx;
+		}
+		.icon2{
+			height: 44rpx;
+			width: 44rpx;
+		}
+	}
 </style>

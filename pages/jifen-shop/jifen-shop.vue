@@ -14,7 +14,7 @@
 			<view class="product-hot">
 				
 				<view class="uni-product" v-for="(item, index) in productList" :key="index">
-					<navigator url="">
+					<navigator url="jifen-detail/jifen-detail" @click="gotoDetails()">
 					<view class="image-view">
 						<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
 						<image src="../../static/freeTeaching/bihua.png" style="width:200rpx ;height: 180rpx;" mode="aspectFit"></image>
@@ -37,6 +37,9 @@
 </template>
 
 <script>
+	import {
+	  ajax
+	 } from '../../utils/public.js'
 export default {
 	data() {
 		return {
@@ -47,10 +50,42 @@ export default {
 				{ jifen: '2999', title: '小米智能', num: '190' },
 				{ jifen: '2999', title: '小米智能', num: '190' },
 				{ jifen: '2999', title: '小米智能', num: '190' },
-				]
+				],
+		 // goodsList:[],
 		};
 	},
-	methods: {}
+	mounted() {
+		ajax({
+		     url: 'integral/goodsList',
+		     data: {
+		      // type:that.type,
+		      // platform_type:that.index,
+		      // page:page,
+		      // page_size:that.page_size,
+		      // access_token:uni.getStorageSync('access_token')
+		     },
+		     method: 'POST',
+		     success: function(res) {
+		      // res.data.data.list.forEach(item=>{
+		      //  that.list.push(item)
+				// 	 console.log(res)
+		  //     })
+		  
+		  // //     that.count = res.data.data.count
+		  // //     that.page = page
+		     },
+		     error: function() {}
+		    })
+	},
+	methods: {
+		gotoDetails:function(e){
+			let goods_id = e.id
+			uni.navigateTo({
+				url: '../product-detail/product-datail?name=' + encodeURIComponent(JSON.stringify(goods_id))
+			});
+			
+		}
+	}
 };
 </script>
 

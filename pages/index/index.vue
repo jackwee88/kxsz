@@ -46,6 +46,10 @@
 				<image src="../../static/index/dnkf.png" mode=""></image>
 				<text>大脑开发</text>
 			</navigator>
+			<navigator url="../jifen-shop/jifen-shop">
+				<image src="../../static/index/dnkf.png" mode=""></image>
+				<text>积分商城</text>
+			</navigator>
 
 		</view>
 
