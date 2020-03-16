@@ -80,54 +80,44 @@
 				</view>
 			</navigator>
 		</view>
-<!-- 
+
 		<view class="section_title">
 			<text>作品赏析</text>
 			<navigator url="">
 				更多
 				<image src="../../static/index/qj.png" mode=""></image>
 			</navigator>
-		</view> -->
+		</view>
 <!-- 点击进入我的发表页 请求所有用户数据-->
-		<navigator class="works_list" url="../myPublished/myPublished">
-			<view class="work_item">
+		<view class="works_list">
+			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
 				<view class="user_info">
-					<view class="left_side">
-						<image src="../../static/index/dnkf.png" class="avatar"></image>
-						<view class="name_n_date">
-							<view class="name">asd</view>
-							<view class="date">2020-02-02 08:32:23</view>
-						</view>
-					</view>
-
-					<text class="view_count">浏览999次</text>
+					<view class="left_side"><view class="date">{{item.date}}</view></view>
+		
+					<text class="view_count">浏览{{item.logNum}}次</text>
 				</view>
-				<view class="msg">
-					打卡打卡打卡打卡打
-				</view>
-				
+				<view class="msg">{{item.msg}}</view>
 				<view class="gallery">
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
+					<view v-for="(imageItem,imageIndex) in item.imageList" :key="imageIndex" class="imageList">
+						<image :src="imageItem.imageUrl" mode=""></image>
+					</view>
 				</view>
-				
 				<view class="actions">
 					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
-						<text>345</text>
+						<text>{{item.shareNum}}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/pl.png" mode=""></image>
-						<text>345</text>
+						<text>{{item.commentNum}}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/sc.png" mode=""></image>
-						<text>345</text>
+						<text>{{item.likeNum}}</text>
 					</view>
 				</view>
-			</view>
-		</navigator>
+			</navigator>
+		</view>
 
 		<!-- 在线教程 -->
 		<!-- <view class="const-list">
@@ -204,6 +194,27 @@ export default {
 		return {
 			//轮播图片
 			swiperImges: [],
+			logList:[
+				{
+					date:"2020-02-02 08:32:23",
+					logNum:'99',
+					msg:'打卡',
+					imageList:[
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+					],
+					likeNum:'345',
+					shareNum:'345',
+					commentNum:'345',
+				}
+			],
 			//在线教学图标
 			onlineTeaching: [],
 			status: 'more',
@@ -309,6 +320,11 @@ export default {
 		},
 		getUserDetail:function(){
 			
+		},
+		gotoPublished:function(e){
+			uni.navigateTo({
+				url:'../myPublished/myPublished'
+			})
 		}
 	},
 	mounted() {
@@ -426,6 +442,75 @@ export default {
 		border-radius: 8rpx;
 	}
 }
+.works_list {
+	.work_item {
+		padding-bottom: 50rpx;
+		margin: 30rpx 0 50rpx;
+		border-bottom: 1rpx solid #ddd;
+		&:last-of-type {
+			border: 0;
+		}
+		.user_info {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			.left_side {
+				display: flex;
+				align-items: center;
+
+				.date {
+					font-size: 20rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 1;
+				}
+			}
+
+			.view_count {
+				font-size: 20rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 28rpx;
+			}
+		}
+
+		.msg {
+			margin-top: 20rpx;
+			margin-bottom: 10rpx;
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(50, 50, 50, 1);
+			line-height: 34rpx;
+		}
+
+		.gallery {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.actions {
+			display: flex;
+			justify-content: space-around;
+			margin-top: 38rpx;
+
+			.item {
+				display: flex;
+				align-items: center;
+
+				image {
+					width: 30rpx;
+					height: 28rpx;
+					margin-right: 10rpx;
+				}
+
+				text {
+					font-size: 24rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 34rpx;
+				}
+			}
+		}
+	}
+}
 
 .menu_wrap {
 	width: 100%;
@@ -510,7 +595,7 @@ export default {
 }
 
 .works_list {
-	margin-top: 30rpx;
+	margin-top: 20rpx;
 	.work_item {
 		.user_info {
 			display: flex;

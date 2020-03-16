@@ -29,64 +29,34 @@
 		<view class="section_title"><text>最近打卡</text></view>
 
 		<view class="works_list">
-			<view class="work_item">
+			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
 				<view class="user_info">
-					<view class="left_side"><view class="date">2020-02-02 08:32:23</view></view>
-
-					<text class="view_count">浏览999次</text>
+					<view class="left_side"><view class="date">{{item.date}}</view></view>
+		
+					<text class="view_count">浏览{{item.logNum}}次</text>
 				</view>
-				<view class="msg">打卡打卡打卡打卡打</view>
-
+				<view class="msg">{{item.msg}}</view>
+		
 				<view class="gallery">
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
+					<view v-for="(imageItem,imageIndex) in item.imageList" :key="imageIndex" class="imageList">
+						<image :src="imageItem.imageUrl" mode=""></image>
+					</view>
 				</view>
-
 				<view class="actions">
 					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
-						<text>345</text>
+						<text>{{item.shareNum}}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/pl.png" mode=""></image>
-						<text>345</text>
+						<text>{{item.commentNum}}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/sc.png" mode=""></image>
-						<text>345</text>
+						<text>{{item.likeNum}}</text>
 					</view>
 				</view>
-			</view>
-			<view class="work_item">
-				<view class="user_info">
-					<view class="left_side"><view class="date">2020-02-02 08:32:23</view></view>
-
-					<text class="view_count">浏览999次</text>
-				</view>
-				<view class="msg">打卡打卡打卡打卡打</view>
-
-				<view class="gallery">
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
-				</view>
-
-				<view class="actions">
-					<view class="item">
-						<image src="../../static/index/zf.png" mode=""></image>
-						<text>345</text>
-					</view>
-					<view class="item">
-						<image src="../../static/index/pl.png" mode=""></image>
-						<text>345</text>
-					</view>
-					<view class="item">
-						<image src="../../static/index/sc.png" mode=""></image>
-						<text>345</text>
-					</view>
-				</view>
-			</view>
+			</navigator>
 		</view>
 
 		<view class="talk_btn">聊天</view>
@@ -95,8 +65,38 @@
 
 <script>
 export default {
+	methods:({
+		//传参 打卡数据id
+		gotoPublished:function(e){
+			uni.navigateTo({
+				url:'../myPublished/myPublished'
+			})
+		}
+	}),
 	data() {
-		return {};
+		return {
+			logList:[
+				{
+					date:"2020-02-02 08:32:23",
+					logNum:'99',
+					msg:'打卡',
+					imageList:[
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+					],
+					likeNum:'345',
+					shareNum:'345',
+					commentNum:'345',
+				}
+			]
+		};
 	}
 };
 </script>

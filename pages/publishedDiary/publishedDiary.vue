@@ -496,13 +496,7 @@ export default {
           title: '您已发表',
           icon: 'none'
         });
-      } else // if (!that.data.title) {
-        //   wx.showToast({
-        //     title: '您还没输入日记标题哦',
-        //     icon: 'none'
-        //   })
-        // }
-        if (!that.content) {
+      } else if (!that.content) {
           wx.showToast({
             title: '说说今天的感想和收获吧！',
             icon: 'none'
@@ -523,7 +517,8 @@ export default {
               title: '选择是否公开',
               icon: 'none'
             });
-          } // else if (!that.data.address || !that.data.lgt || !that.data.lat) {
+          } 
+					// else if (!that.data.address || !that.data.lgt || !that.data.lat) {
           //   wx.showToast({
           //     title: '请选择所在位置',
           //     icon: 'none'
@@ -549,32 +544,51 @@ export default {
                 type: that.type
               };
               console.log(param);
-              util.ajax('/api/study/diaryUpload', param, res => {
-                wx.showToast({
-                  title: res.msg,
-                  icon: 'none'
-                }); // wx.showToast({
-                //   title: '正在生成海报，请耐心等待...',
-                //   icon: 'none',
-                //   duration: 1000
-                // })
+							uni.request({
+								// uni.navigateTo({
+								// 	url:'../growthDiary/growthDiary',
+								// })
+								url: 'https://kxsx.kaifadanao.cn/api/index/index',
+								method: 'POST',
+								data: 'param',
+								header: {
+									'Content-Type': 'application/x-www-form-urlencoded'
+								},
+								success: res => {
+									if (res.data.status == 1) {
+										uni.navigateTo({
+											url:'../growthDiary/growthDiary',
+											// ?dy_id=' + res.data.dy_id
+										})
+									}
+								},
+								fail: () => {}
+							});
+         //      util.ajax('/api/study/diaryUpload', param, res => {
+         //        wx.showToast({
+         //          title: res.msg,
+         //          icon: 'none'
+         //        }); // wx.showToast({
+         //        //   title: '正在生成海报，请耐心等待...',
+         //        //   icon: 'none',
+         //        //   duration: 1000
+         //        // })
 
-                that.setData({
-                  // isCan:true,
-                  dy_id: res.data.dy_id
-                });
-                var pages = getCurrentPages();
-                var beforePage = pages[pages.length - 2];
-                beforePage.onLoad(); // that.canvas(res.data)
+         //        that.setData({
+         //          // isCan:true,
+         //          dy_id: res.data.dy_id
+         //        });
+         //        var pages = getCurrentPages();
+         //        var beforePage = pages[pages.length - 2];
+         //        beforePage.onLoad(); // that.canvas(res.data)
 
-                setTimeout(function () {
-                  wx.navigateTo({
-                    url: '/pages/growthDiary/growthDiary?dy_id=' + res.data.dy_id
-                  }); // wx.navigateBack({
-                  //   delta: 1,
-                  // })
-                }, 2000); //uploadimg
-              });
+         //        setTimeout(function () {
+         //          // wx.navigateTo({
+         //          //   url: '/pages/growthDiary/growthDiary?dy_id=' + res.data.dy_id
+         //          // }); 
+
+         //        }, 2000); //uploadimg
+         //      });
             }
     },
 

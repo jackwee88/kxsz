@@ -29,20 +29,18 @@
 		<view class="section_title"><text>最近打卡</text></view>
 
 		<view class="works_list">
-			<navigator class="work_item" v-for="(item,index) in logList" :key="index">
+			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
 				<view class="user_info">
 					<view class="left_side"><view class="date">{{item.date}}</view></view>
 
 					<text class="view_count">浏览{{item.logNum}}次</text>
 				</view>
 				<view class="msg">{{item.msg}}</view>
-
 				<view class="gallery">
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
-					<image src="../../static/index/dnkf.png" mode=""></image>
+					<view v-for="(imageItem,imageIndex) in item.imageList" :key="imageIndex" class="imageList">
+						<image :src="imageItem.imageUrl" mode=""></image>
+					</view>
 				</view>
-
 				<view class="actions">
 					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
@@ -73,18 +71,67 @@ export default {
 					date:"2020-02-02 08:32:23",
 					logNum:'99',
 					msg:'打卡',
-					imageUrl:'../../static/index/dnkf.png',
+					imageList:[
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+						{
+							imageUrl:'../../static/index/dnkf.png'
+						},
+					],
 					likeNum:'345',
 					shareNum:'345',
 					commentNum:'345',
 				}
 			]
 		};
+	},
+	methods:({
+		//传参 打卡数据id
+		gotoPublished:function(e){
+			uni.navigateTo({
+				url:'../myPublished/myPublished'
+			})
+		}
+	}),
+	mounted() {
+		//请求接口数据  
+		uni.request({
+			url: 'https://kxsx.kaifadanao.cn/api/index/index',
+			method: 'POST',
+			data: {},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			success: res => {
+				if (res.data.status == 1) {
+					//轮播图片数据
+					// this.logList = res.data;
+				}
+			},
+			fail: () => {}
+		});
 	}
 };
 </script>
 
 <style lang="less" scoped>
+.imageList{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	image {
+		width: 220rpx;
+		height: 220rpx;
+		margin-right: 14rpx;
+		&:nth-of-type(3n) {
+			margin-right: 0;
+		}
+	}
+}
 .info_wrap {
 	display: flex;
 	align-items: center;
@@ -169,11 +216,9 @@ export default {
 		padding-bottom: 50rpx;
 		margin: 30rpx 0 50rpx;
 		border-bottom: 1rpx solid #ddd;
-
 		&:last-of-type {
 			border: 0;
 		}
-
 		.user_info {
 			display: flex;
 			align-items: center;
@@ -208,16 +253,7 @@ export default {
 
 		.gallery {
 			display: flex;
-
-			image {
-				width: 220rpx;
-				height: 220rpx;
-				margin-right: 14rpx;
-
-				&:nth-of-type(3n) {
-					margin-right: 0;
-				}
-			}
+			flex-direction: row;
 		}
 
 		.actions {
