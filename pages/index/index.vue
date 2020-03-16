@@ -96,8 +96,16 @@
 		<view class="works_list">
 			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
 				<view class="user_info">
-					<view class="left_side"><view class="date">{{item.date}}</view></view>
-		
+					<view class="left_side">
+						<view class="avatar">
+							<image src="../../static/index/dnkf.png" class="avatar">							
+							</image>
+							</view>
+						<view class="date">
+							<view class="username">{{item.name}}</view>
+							<view>{{item.date}}</view>
+						</view>
+						</view>
 					<text class="view_count">浏览{{item.logNum}}次</text>
 				</view>
 				<view class="msg">{{item.msg}}</view>
@@ -203,6 +211,7 @@ export default {
 					date:"2020-02-02 08:32:23",
 					logNum:'99',
 					msg:'打卡',
+					name:'asd',
 					imageList:[
 						{
 							imageUrl:'../../static/index/dnkf.png'
@@ -411,6 +420,11 @@ export default {
 
 <style lang="less">
 @import './index.css';
+.username{
+	color: #323232;
+	font-size: 28rpx;
+	padding: 5rpx 0rpx;
+}
 .status_bar {  
     height: var(--status-bar-height);  
     width: 100%;  

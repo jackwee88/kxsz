@@ -2,7 +2,9 @@
 	<view>
 		<view class="list">
 			<view class="item">
-				<image src="../../../static/reg/log.png" mode=""></image>
+				<navigator url="../../userInfo/userInfo">
+					<image src="../../../static/reg/log.png" mode=""></image>
+				</navigator>	
 				<view class="info_wrap">
 					<view class="left_side">
 						<view class="name">小朋友</view>

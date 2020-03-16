@@ -66,13 +66,7 @@ export default {
 		     },
 		     method: 'POST',
 		     success: function(res) {
-		      // res.data.data.list.forEach(item=>{
-		      //  that.list.push(item)
-				// 	 console.log(res)
-		  //     })
-		  
-		  // //     that.count = res.data.data.count
-		  // //     that.page = page
+
 		     },
 		     error: function() {}
 		    })

@@ -512,7 +512,11 @@ export default {
 		}
 	}
 }
-
+.username{
+	color: #323232;
+	font-size: 28rpx;
+	padding: 5rpx 0rpx;
+}
 .base_info {
 	display: flex;
 	align-items: center;

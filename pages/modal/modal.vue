@@ -2,6 +2,7 @@
 
 <template>
 	<view class="containerModal">
+		<view class="modalTitle">恭喜您获得新人礼包</view>
 		<view class="youhuiquan" >
 			<view class="youhuiNum">
 				<text>¥10</text>
@@ -26,10 +27,18 @@
 </script>
 
 <style>
+.modalTitle{
+	color: #ffffff;
+	font-weight: 600;
+	font-size: 52rpx;
+}
 .containerModal{
 	width: 602rpx;
 	height: 660rpx;
 	background-color: #2F881E;
+	padding:30rpx 20rpx 15rpx 20rpx;
+	text-align: center;
+	margin: 328rpx auto;
 }
 .youhuiquan{
 	display: flex;

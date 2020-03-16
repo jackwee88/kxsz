@@ -31,6 +31,14 @@
 								<text style="font-size: 28rpx;color: #3FAE2A;">¥{{item.price}}</text>
 								<image class="collectimg" :src="collectClick.img" mode="widthFix"></image>
 							</view>
+							<!-- <view style="position:relative;margin-top:10rpx;height:60rpx;">
+							  <text class="price">￥{{item.goods_sku.goods_price}}</text>
+							  <view class="numbtn">
+							    <text @tap="minusCount" class="jiannun numbtncont" :data-ct_id="item.ct_id" :data-index="index">-</text>
+							    <input class="numbtncont num" type="number" :data-ct_id="item.ct_id" :value="item.quantity" @input="changeNum" :data-index="index" :data-coupon_price="item.coupon_price" min="1">{{item.quantity}}</input>
+							    <text @tap="addCount" catchlongtap="addnum" class="addnum numbtncont" :data-ct_id="item.ct_id" :data-index="index">+</text>
+							  </view>
+							</view> -->
 						</view>
 					</view>
 </navigator>

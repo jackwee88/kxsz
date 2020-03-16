@@ -2,12 +2,13 @@
 	<view>
 		<view class="search_box">
 			<image src="../../../static/jctbxzjx/search.png" class="icon"></image>
+
 			<input type="text" :value="search_txt" placeholder="搜索关注" />
 		</view>
 
 		<view class="list">
 			<view class="item">
-				<image src="../../../static/reg/log.png" mode=""></image>
+				<navigator url="../../userInfo/userInfo"><image src="../../../static/reg/log.png" mode=""></image></navigator>
 				<view class="info_wrap">
 					<view class="left_side">
 						<view class="name">小朋友</view>
@@ -28,7 +29,7 @@
 						<view class="name">小朋友</view>
 						<view class="account">开心号：kx23232323</view>
 					</view>
-			
+
 					<view class="btn">
 						<!-- <image src="../../../static/my/ygz.png" class="ygz"></image> -->
 						<image src="../../../static/my/hxgz.png" class="hxgz"></image>
@@ -87,7 +88,7 @@ export default {
 		align-items: center;
 		padding: 30rpx 0;
 		border-bottom: 1rpx solid #ddd;
-		
+
 		&:last-of-type {
 			border: 0;
 		}
