@@ -15,24 +15,19 @@
 						<view class="account">开心号：kx23232323</view>
 					</view>
 
-					<view class="btn">
+					<view class="btn" v-if="item.type==only">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
 						<!-- <image src="../../../static/my/hxgz.png" class="hxgz"></image> -->
 						已关注
 					</view>
-				</view>
-			</view>
-			<view class="item">
-				<image src="../../../static/reg/log.png" mode=""></image>
-				<view class="info_wrap">
-					<view class="left_side">
-						<view class="name">小朋友</view>
-						<view class="account">开心号：kx23232323</view>
+					<view class="btn" v-if="item.type==only">
+						<image src="../../../static/my/ygz.png" class="ygz"></image>
+						<!-- <image src="../../../static/my/hxgz.png" class="hxgz"></image> -->
+						关注
 					</view>
-
-					<view class="btn">
-						<!-- <image src="../../../static/my/ygz.png" class="ygz"></image> -->
-						<image src="../../../static/my/hxgz.png" class="hxgz"></image>
+					<view class="btn" v-if="item.type==mutual">
+						<image src="../../../static/my/ygz.png" class="ygz"></image>
+						<!-- <image src="../../../static/my/hxgz.png" class="hxgz"></image> -->
 						互相关注
 					</view>
 				</view>
@@ -42,6 +37,7 @@
 </template>
 
 <script>
+	import{ajax} from '../../../utils/public.js'
 export default {
 	data() {
 		return {
@@ -49,7 +45,22 @@ export default {
 		};
 	},
 
-	methods: {}
+	methods: {},
+	mounted:{
+		// ajax({
+		//      url: 'friend/myFriendList',
+		//      data: {
+		//      },
+		//      method: 'POST',
+		//      success: function(res) {
+		// 			 const{count,list}=res.data.data
+		// 			 // console.log(list)
+		// 			 this.goodsList = list
+		// 			 console.log(this.goodsList)
+		//      },
+		//      error: function() {}
+		//     })
+	}
 };
 </script>
 

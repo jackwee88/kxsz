@@ -1,14 +1,13 @@
 <template>
 	<view>
 		<view class="list">
-			<view class="item">
+			<view class="item" v-for="(item,index) in fansList" :key="index">
 				<navigator url="../../userInfo/userInfo">
-					<image src="../../../static/reg/log.png" mode=""></image>
-				</navigator>	
+					<image :src="item.avatar" mode=""></image></navigator>
 				<view class="info_wrap">
 					<view class="left_side">
-						<view class="name">小朋友</view>
-						<view class="account">开心号：kx23232323</view>
+						<view class="name">{{item.nickname}}</view>
+						<view class="account">{{item.frend_uid}}</view>
 					</view>
 
 					<view class="btn">
@@ -22,9 +21,31 @@
 </template>
 
 <script>
+import { ajax } from '../../../utils/public.js';
 export default {
 	data() {
-		return {};
+		return { fansList: [] };
+	},
+	mounted() {
+		ajax({
+			url: 'friend/myFansList',
+			data: {
+				// type:that.type,
+				// platform_type:that.index,
+				// page:page,
+				// page_size:that.page_size,
+				// access_token:uni.getStorageSync('access_token')
+				keyword:''
+			},
+			method: 'POST',
+			success: function(res) {
+				const { count, list } = res.data.data;
+				// console.log(list)
+				this.fansList = list;
+				console.log(this.fansList);
+			},
+			error: function() {}
+		});
 	}
 };
 </script>
@@ -76,7 +97,7 @@ export default {
 				padding: 0 18rpx;
 				font-size: 24rpx;
 				color: #fff;
-				background:rgba(63,174,42,1);
+				background: rgba(63, 174, 42, 1);
 				border-radius: 26rpx;
 
 				image {

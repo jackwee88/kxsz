@@ -204,6 +204,15 @@
 			}
 		},
 		{
+			"path": "pages/login/register/register",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/Copyright/Copyright",
 			"style": {
 				"navigationBarTitleText": "版权声明",

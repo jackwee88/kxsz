@@ -4,7 +4,7 @@
 			登录
 		</view>
 		<view class="register">
-			<navigator url="" style="display: inline-block;">
+			<navigator url="register/register" style="display: inline-block;">
 				还没有账号，立即注册
 			</navigator>
 		</view>
@@ -16,8 +16,8 @@
 				<text v-if="second==''" class="yzmBtn" @click="yzmBtn">获取验证码</text>
 				<text v-else class="yzmTime">{{second}}s</text>
 			</view>
-			<button v-if="msgLogin=='isMsgLogin'" :class="phone==''||password==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password==''?true:false">登录</button>
-			<button v-else :class="phone==''||yzm==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||yzm==''?true:false">登录</button>
+			<button v-if="msgLogin=='isMsgLogin'" :class="phone==''||password==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password==''?true:false" @submit="login()">登录</button>
+			<button v-else :class="phone==''||yzm==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||yzm==''?true:false" @submit="login()">登录</button>
 			<view class="orderLogin">
 				<text v-if="msgLogin=='isMsgLogin'" @click="orderLogin(msgLogin)">短信登录</text>
 				<text v-else @click="orderLogin(msgLogin)">账号密码登录</text>
@@ -36,6 +36,9 @@
 </template>
 
 <script>
+	import {
+		ajax
+	}from '../../utils/public.js'
 	export default{
 		data(){
 			return{
@@ -56,6 +59,21 @@
 					this.msgLogin='isMsgLogin'
 				}
 			},
+			login(){
+				ajax({
+				     url: 'integral/goodsList',
+				     data: {
+							 username:this.phone,
+							 password:this.password
+				     },
+				     method: 'POST',
+				     success: function(res) {
+							 uni.setStorageSync('access_token')
+						console.log(res)
+				     },
+				     error: function() {}
+				    })
+			},
 			//获取验证码点击
 			yzmBtn(){
 				console.log(1);
@@ -74,8 +92,9 @@
 			
 		},
 		mounted() {
-			
+
 		}
+		
 	}
 </script>
 

@@ -78,6 +78,7 @@ export default {
 	data() {
 		return {
 			swiperImages: [],
+			goods_id:'',
 			teamlist: [
 				{
 					name: '与女无瓜',
@@ -90,13 +91,10 @@ export default {
 			]
 		};
 	},
-	// onLoad(event) {
-	// 	console.log(event);
-	// 	this.banner = JSON.parse(decodeURIComponent(event.detailDate));
-	// 	uni.setNavigationBarTitle({
-	// 	title:this.banner.title
-	// 	})
-	// },
+	onLoad(event) {
+		console.log(event);
+		this.goods_id = JSON.parse(decodeURIComponent(event.productName));
+	},
 	mounted() {},
 	methods: {}
 };

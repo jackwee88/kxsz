@@ -64,6 +64,9 @@
 </template>
 
 <script>
+	import {
+	  ajax
+	 } from '../../utils/public.js'
 export default {
 	methods:({
 		//传参 打卡数据id
@@ -73,6 +76,27 @@ export default {
 			})
 		}
 	}),
+	created(){
+		ajax({
+		     url: 'friend/userDetail',
+		     data: {
+		      // type:that.type,
+		      // platform_type:that.index,
+		      // page:page,
+		      // page_size:that.page_size,
+		      // access_token:uni.getStorageSync('access_token')
+					
+		     },
+		     method: 'POST',
+		     success: function(res) {
+					 const{count,list}=res.data.data
+					 // console.log(list)
+					 this.goodsList = list
+					 console.log(this.goodsList)
+		     },
+		     error: function() {}
+		    })
+	},
 	data() {
 		return {
 			logList:[
