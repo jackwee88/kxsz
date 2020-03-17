@@ -263,6 +263,9 @@ export default {
 	},
 	
 	onLoad() {
+		
+		var value = uni.getStorageInfoSync('access_token')
+		console.log(value)
 		// uni.showModal({
 		//     title: '提示',
 		//     content: '这是一个模态弹窗',

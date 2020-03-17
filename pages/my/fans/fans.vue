@@ -1,18 +1,21 @@
 <template>
 	<view>
 		<view class="list">
-			<view class="item" v-for="(item,index) in fansList" :key="index">
-				<navigator url="../../userInfo/userInfo">
-					<image :src="item.avatar" mode=""></image></navigator>
+			<view class="item" v-for="(item, index) in fansList" :key="index">
+				<navigator url="../../userInfo/otherInfo"><image :src="item.avatar" mode=""></image></navigator>
 				<view class="info_wrap">
 					<view class="left_side">
-						<view class="name">{{item.nickname}}</view>
-						<view class="account">{{item.frend_uid}}</view>
+						<view class="name">{{ item.nickname }}</view>
+						<view class="account">{{ item.frend_uid }}</view>
 					</view>
 
 					<view class="btn">
 						<image src="../../../static/my/add.png" class="addhao"></image>
 						关注
+					</view>
+					<view class="btn">
+						<image src="../../../static/my/add.png" class="addhao"></image>
+						相互关注
 					</view>
 				</view>
 			</view>
@@ -35,14 +38,12 @@ export default {
 				// page:page,
 				// page_size:that.page_size,
 				// access_token:uni.getStorageSync('access_token')
-				keyword:''
+				keyword: ''
 			},
 			method: 'POST',
-			success: function(res) {
+			success: res => {
 				const { count, list } = res.data.data;
-				// console.log(list)
 				this.fansList = list;
-				console.log(this.fansList);
 			},
 			error: function() {}
 		});

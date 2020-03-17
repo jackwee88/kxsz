@@ -16,8 +16,8 @@
 				<text v-if="second==''" class="yzmBtn" @click="yzmBtn">获取验证码</text>
 				<text v-else class="yzmTime">{{second}}s</text>
 			</view>
-			<button v-if="msgLogin=='isMsgLogin'" :class="phone==''||password==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password==''?true:false" @submit="login()">登录</button>
-			<button v-else :class="phone==''||yzm==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||yzm==''?true:false" @submit="login()">登录</button>
+			<button v-if="msgLogin=='isMsgLogin'" :class="phone==''||password==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password==''?true:false" type="submit" @tap="phoneLogin">登录</button>
+			<button v-else :class="phone==''||yzm==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||yzm==''?true:false" type="submit" @tap="phoneSmsLogin">登录</button>
 			<view class="orderLogin">
 				<text v-if="msgLogin=='isMsgLogin'" @click="orderLogin(msgLogin)">短信登录</text>
 				<text v-else @click="orderLogin(msgLogin)">账号密码登录</text>
@@ -59,24 +59,60 @@
 					this.msgLogin='isMsgLogin'
 				}
 			},
-			login(){
+			phoneLogin(){
 				ajax({
-				     url: 'integral/goodsList',
+				     url: 'index/phoneLogin',
 				     data: {
-							 username:this.phone,
-							 password:this.password
+							 phone:this.phone,
+							 password:this.password,
+							 // code
 				     },
 				     method: 'POST',
 				     success: function(res) {
-							 uni.setStorageSync('access_token')
-						console.log(res)
+							 console.log(res.data.data)
+							 uni.setStorageSync('access_token',res.data.data)
+							 uni.switchTab({
+							          url: '../index/index'
+							 });
+				     },
+				     error: function() {}
+				    })
+			},
+			phoneSmsLogin(){
+				ajax({
+				     url: 'index/phoneSmsLogin',
+				     data: {
+							 phone:this.phone,
+							 code:this.yzm,
+							 // code
+				     },
+				     method: 'POST',
+				     success: function(res) {
+							 console.log(res.data.data)
+							uni.setStorageSync('access_token',res.data.data)
+							uni.switchTab({
+							         url: '../index/index'
+							});
 				     },
 				     error: function() {}
 				    })
 			},
 			//获取验证码点击
 			yzmBtn(){
-				console.log(1);
+				ajax({
+				     url: 'index/appCode',
+				     data: {
+							 phone:this.phone,							 // code
+				     },
+				     method: 'POST',
+				     success: function(res) {
+							 // uni.navigateTo({
+							 // 	url:'../index/index'
+							 // })
+						console.log(res)
+				     },
+				     error: function() {}
+				    })
 				let _self=this
 				let s=60
 				let stime=setInterval(function(){
@@ -88,8 +124,7 @@
 						_self.second=s
 					}
 				},1000)
-			}
-			
+			},
 		},
 		mounted() {
 

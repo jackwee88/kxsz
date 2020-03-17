@@ -311,7 +311,7 @@
 		}, {
 			"path": "pages/userInfo/userInfo",
 			"style": {
-				"navigationBarTitleText": "用户信息"
+				"navigationBarTitleText": "个人信息"
 			}
 		}, {
 			"path": "pages/feedback/feedback",
@@ -494,12 +494,30 @@
 			"style": {
 				"navigationBarTitleText": "打卡记录"
 			}
+		},
+		{
+			"path": "pages/onlinestore/newaddress/newaddress",
+			"style": {
+				"navigationBarTitleText": "新增地址"
+			}
 		}
 	    ,{
             "path" : "pages/jifen-shop/jifen-detail/jifen-detail",
             "style": {
 
             }
+        }
+        ,{
+            "path" : "pages/onlinestore/shaddress/shaddress",
+            "style" : {
+							"navigationBarTitleText":"管理收货地址"
+						}
+        }
+        ,{
+            "path" : "pages/userInfo/otherInfo",
+            "style" : {
+							"navigationBarTitleText":"用户信息"
+						}
         }
     ],
 

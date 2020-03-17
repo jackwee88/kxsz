@@ -1,23 +1,28 @@
 <template>
 	<view>
 		<view class="info_wrap">
-			<image src="../../static/reg/log.png" class="avatar"></image>
+			<image :src="userinfo.avatar" class="avatar"></image>
 
 			<view class="info_text">
 				<view class="top">
 					<view class="name">{{userinfo.nickname}}</view>
-					<!-- <view class="btn had_btn">
-						<image src="../../static/my/add.png" class="addhao"></image>
+					<view class="btn had_btn" v-if="userinfo.type==='none'">
+						<image src="../../static/my/add.png" class="addhao" @click="follow()"></image>
 						关注
-					</view> -->
+					</view>
 
-					<!-- <view class="btn">
+					<view class="btn" v-if="userinfo.type==='only'" @click="follow()">
 						<image src="../../static/my/ygz.png" class="ygz"></image>
-						已关注
-					</view> -->
+						取消关注
+					</view>
+
+					<view class="btn" v-if="userinfo.type==='mutual'" @click="follow()" >
+						<image src="../../static/my/hxgz.png" class="hxgz"></image>
+						互相关注
+					</view>
 				</view>
-				<view class="sub">开心号：kx12345</view>
-				<view class="sub">男</view>
+				<view class="sub">开心号：{{userinfo.number}}</view>
+				<!-- <view class="sub">男</view> -->
 			</view>
 		</view>
 
@@ -105,18 +110,35 @@ export default {
 		      // platform_type:that.index,
 		      // page:page,
 		      // page_size:that.page_size,
-		      token:uni.getStorageSync('access_token'),
+		      // token:uni.getStorageSync('access_token'),
 					friend_uid :'366'
 		     },
 		     method: 'POST',
 		     success: (res) =>{
 					 const details = res.data.data
 					 this.userinfo  = details
-					 console.log(this.userinfo)
 		     },
 		     error: function() {}
 		    })
 	},
+	methods:{
+		follow(){
+			ajax({
+			     url: 'friend/follow',
+			     data: {
+			      // token:uni.getStorageSync('access_token'),
+						friend_uid :'366'
+			     },
+			     method: 'POST',
+			     success: (res) =>{
+						 console.log(res)
+			     },
+			     error: function() {
+						 console.log("111")
+					 }
+			    })
+		}
+	}
 
 };
 </script>
@@ -296,3 +318,4 @@ export default {
 	border-top: 1rpx solid #ddd;
 }
 </style>
+

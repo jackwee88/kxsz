@@ -1,17 +1,20 @@
-.banner{
+.banner {
 	width: 750rpx;
 	height: 260rpx;
 	background-color: #EBEEF5;
 }
-.jifen{
+
+.jifen {
 	display: flex;
 	align-items: center;
 	padding: 28rpx;
 }
-.jifenTxt{
+
+.jifenTxt {
 	margin-left: 32rpx;
 }
-.product-hot{
+
+.product-hot {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -19,33 +22,55 @@
 	justify-content: space-between;
 	margin-top: 68rpx;
 }
-.uni-product{
+
+.jifen_product {
+	width: 300rpx;
+	margin-right: 30rpx;
+}
+
+.uni-product {
 	justify-content: center;
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-	flex-direction: column;
+	flex-direction: row;
 	margin-bottom: 10rpx;
 }
-.uni-product-title{
+
+.uni-product-title {
 	color: #333333;
 	font-size: 28rpx;
 	padding-bottom: 6rpx;
+	height: 75rpx;
+	width: 300rpx;
+	max-height: 130upx;
+	overflow: hidden;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
 }
-.title{
+
+.title {
 	text-align: center;
 }
-.goods-price{
+
+.goods-price {
 	color: #f7b500;
 	font-size: 22rpx;
 }
-.goods-detail{
+
+.goods-detail {
 	padding: 30rpx 0;
 }
-.uni-product-price{
+
+.uni-product-price {
 	justify-content: space-between;
 	display: flex;
-	width:282rpx;
-	}
-.image-view{
+	width: 282rpx;
+}
+
+.image-view {
 	text-align: center;
 }

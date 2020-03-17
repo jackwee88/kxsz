@@ -16,7 +16,7 @@ const ajax = (opt) => {
         data: opt.data,
         method: opt.method,
         header: {
-					"token":'',
+					"token":'access_token',
 			'content-type': 'application/x-www-form-urlencoded', 
 		},
         dataType: 'json',

@@ -2,32 +2,29 @@
 	<view>
 		<view class="search_box">
 			<image src="../../../static/jctbxzjx/search.png" class="icon"></image>
-
 			<input type="text" :value="search_txt" placeholder="搜索关注" />
 		</view>
 
 		<view class="list">
-			<view class="item">
-				<navigator url="../../userInfo/userInfo"><image src="../../../static/reg/log.png" mode=""></image></navigator>
+			<view class="item" v-for="(item,index) in myFriendList" :key="index">
+				<view @click="gotoOtherInfo(item)">
+					<image src="../../../static/reg/log.png" mode=""></image>
+				</view>
 				<view class="info_wrap">
 					<view class="left_side">
-						<view class="name">小朋友</view>
-						<view class="account">开心号：kx23232323</view>
+						<view class="name">{{item.nickName}}</view>
+						<view class="account">开心号：{{userinfo.number}}</view>
 					</view>
-
-					<view class="btn" v-if="item.type==only">
+					<view class="btn" v-if="item.type === 'only'">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
-						<!-- <image src="../../../static/my/hxgz.png" class="hxgz"></image> -->
 						已关注
 					</view>
-					<view class="btn" v-if="item.type==only">
+					<view class="btn" v-if="item.type === 'none'">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
-						<!-- <image src="../../../static/my/hxgz.png" class="hxgz"></image> -->
 						关注
 					</view>
-					<view class="btn" v-if="item.type==mutual">
+					<view class="btn" v-if="item.type === 'mutual'">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
-						<!-- <image src="../../../static/my/hxgz.png" class="hxgz"></image> -->
 						互相关注
 					</view>
 				</view>
@@ -37,30 +34,27 @@
 </template>
 
 <script>
-	import{ajax} from '../../../utils/public.js'
+import { ajax } from '../../../utils/public.js';
 export default {
 	data() {
 		return {
-			search_txt: ''
+			search_txt: '',
+			myFriendList:[]
 		};
 	},
-
-	methods: {},
-	mounted:{
-		// ajax({
-		//      url: 'friend/myFriendList',
-		//      data: {
-		//      },
-		//      method: 'POST',
-		//      success: function(res) {
-		// 			 const{count,list}=res.data.data
-		// 			 // console.log(list)
-		// 			 this.goodsList = list
-		// 			 console.log(this.goodsList)
-		//      },
-		//      error: function() {}
-		//     })
-	}
+	mounted() {
+		ajax({
+			url: 'friend/myFriendList',
+			data: {},
+			method: 'POST',
+			success: (res)=> {
+				const{count,list} = res.data.data
+				this.myFriendList = list
+			},
+			error: function() {}
+		});
+	},
+	methods: {}
 };
 </script>
 

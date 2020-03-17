@@ -13,8 +13,8 @@
 				<image src="../../static/jifenshop/meirirexiao.png" style="width: 230rpx;height: 32rpx;"></image></view>
 			<view class="product-hot">
 				
-				<view class="uni-product" v-for="(item,index) in goodsList" :key="index">
-					<navigator url="jifen-detail/jifen-detail" @click="gotoDetails()">
+				<view class="uni-product" v-for="(item,index) in goodsList" :key="index"  @click="gotoDetails(item)">
+					<view  class="jifen_product">
 					<view class="image-view">
 						<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
 						<image :src="item.icon" style="width:200rpx ;height: 180rpx;" mode="aspectFit"></image>
@@ -29,7 +29,7 @@
 							<view style="font-size: 22rpx;color: #999999;">{{ item.see_time }}人兑换</view>
 						</view>
 					</view>
-					</navigator>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -52,20 +52,21 @@ export default {
 		     data: {
 		     },
 		     method: 'POST',
-		     success: function(res) {
+		     success: (res) =>{
 					 const{count,list}=res.data.data
-					 // console.log(list)
 					 this.goodsList = list
-					 console.log(this.goodsList)
 		     },
 		     error: function() {}
 		    })
 	},
 	methods: {
 		gotoDetails:function(e){
-			let goods_id = e.id
+			let param ={
+				goods_id:e.id,
+				}
+				console.log(param)
 			uni.navigateTo({
-				url: '../product-detail/product-datail?productName=' + encodeURIComponent(JSON.stringify(goods_id))
+				url: './jifen-detail/jifen-detail?productName=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
 	}

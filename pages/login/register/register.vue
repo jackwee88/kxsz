@@ -12,7 +12,7 @@
 			<input type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password" />
 			<input type="password" class="passwordInput loginInput" value="" placeholder="请再次输入登录密码（6-18位字符）" placeholder-class="pla" v-model="rePassword" />
 			<button
-				@click="register()"
+				type="submit" @tap="submit"
 				:class="phone == '' || password == '' || yzm == '' || rePassword == '' ? 'loginBtn loginnBtNo' : 'loginBtn loginnBtnYes'"
 				:disabled="phone == '' || password == '' || yzm == '' || rePassword == '' ? true : false"
 			>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+	import {ajax} from '../../../utils/public.js'
 export default {
 	data() {
 		return {
@@ -42,22 +43,25 @@ export default {
 	},
 	methods: {
 		//获取验证码点击
-		yzmBtn() {
-			let _self = this;
-			let s = 60;
-			let stime = setInterval(function() {
-				s--;
-				if (s == 0) {
-					_self.second = '';
-					clearInterval(stime);
-				} else {
-					_self.second = s;
-				}
-			}, 1000);
-		},
-		register() {
+		yzmBtn(){
 			ajax({
-				url: 'integral/goodsList',
+			     url: 'index/appCode',
+			     data: {
+						 phone:this.phone,							 // code
+			     },
+			     method: 'POST',
+			     success: function(res) {
+						 // uni.navigateTo({
+						 // 	url:'../index/index'
+						 // })
+					console.log(res)
+			     },
+			     error: function() {}
+			    })
+		},
+		submit() {
+			ajax({
+				url: 'index/appRegister',
 				data: {
 					phone: this.phone,
 					password: this.password,
@@ -69,6 +73,10 @@ export default {
 					// // console.log(list)
 					// this.goodsList = list
 					// console.log(this.goodsList)
+					console.log(res)
+					// uni.navigateTo({
+					// 	url: '../../index/index'
+					// })
 				},
 				error: function() {}
 			});
