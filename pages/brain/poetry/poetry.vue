@@ -1,7 +1,7 @@
 <template>
 <view>
 <view class="page" :style="'background-image: url(' + backgroundImg + ')'">
-  <image src="/static/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:6rpx;" @tap.stop="goBack"></image>
+  <image src="/static/img/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:6rpx;" @tap.stop="goBack"></image>
   <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
   <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
   <audio controls loop :src="audio" id="audioID" :action="action"></audio>
@@ -118,6 +118,14 @@
 </template>
 
 <script>
+var util = require("../../../utils/util.js");
+function unique(arr) {
+  if (!Array.isArray(arr)) {
+    return;
+  }
+
+  return [...new Set(arr)];
+}
 
 export default {
   data() {
@@ -177,7 +185,7 @@ export default {
       }],
       toIndex: '',
       select: false,
-      backgroundImg: "https://kxsx.kaifadanao.cn/assets/img/gamebackground.png",
+      backgroundImg: "",
       is_wrong: false,
       currentId: "",
       isLevel: false,
@@ -188,102 +196,775 @@ export default {
   components: {},
   props: {},
   onShow: function () {
+    var ctx = wx.createCanvasContext('customCanvas');
+    this.setData({
+      ctx: ctx
+    });
   },
 
   onLoad(options) {
-    
+    this.getAudio();
+    this.playorpause();
+    this.backGroundImgFun();
+    this.succImgFun();
+    this.failImgFun();
+    this.limitImgFun();
+    this.lastImgFun();
+
+    if (options.is_share) {
+      this.setData({
+        toIndex: 1
+      });
+    }
+
+    var myCanvasWidth = '';
+    var myCanvasHeight = '';
+    wx.getSystemInfo({
+      success: function (res) {
+        myCanvasWidth = res.windowWidth - 56;
+        myCanvasHeight = res.windowHeight - 200;
+      }
+    });
+    this.setData({
+      canvasWidth: myCanvasWidth,
+      canvasHeight: myCanvasHeight
+    });
+    this.setData({
+      l: '',
+      r: '',
+      ansList: [],
+      curTarL: '',
+      curTarR: '',
+      list: '',
+      objs: {},
+      beginX: 0,
+      beginY: 0,
+      endX: 0,
+      endY: 0
+    });
+    this.topicList();
+    this.getLevel();
   },
 
   onShareAppMessage: function () {
-   
+    return {
+      title: '发现一个很好玩的文字游戏，快来跟我一起玩吧！',
+      path: '/pages/brain/poetry/poetry?is_share=1',
+      success: function (res) {}
+    };
   },
   methods: {
+    //   //绑定出没开始事件，记录起点
+    //  canvasBindStart:function(e){
+    //   var that = this;
+    //   that.setData({
+    //     startX:e.touches[0].x,
+    //     startY:e.touches[0].y
+    //   });
+    // },
     beginCanvas: function () {
+      var that = this;
+
+      if (this.ansList.length > 4) {
+        return false;
+      }
+
+      this.ctx.beginPath();
+      this.list.forEach(function (item, index) {
+        that.ctx.moveTo(item.beginX, item.beginY);
+        that.ctx.lineTo(item.endX, item.endY);
+      });
+      this.ctx.strokeStyle = "#F9D322";
+      this.ctx.stroke();
+      this.ctx.draw();
+
+      if (this.ansList.length == 4) {
+        this.answer();
+      }
     },
+
+    // canvasBindMove:function(e){
+    //   var that = this;
+    //   that.setData({
+    //     endX:e.touches[0].x,//重点touches后边一定要加索引[0],不然读取不到坐标
+    //     endY:e.touches[0].y,//重点touches后边一定要加索引[0],不然读取不到坐标
+    //   });
+    //   console.log(e.touches[0].x);//重点touches后边一定要加索引[0],不然读取不到坐标
+    //   //记录上下文
+    //   var context = wx.createContext();
+    //   //设置线条粗细
+    //   context.setLineWidth(4);
+    //   //设置直线的起点
+    //   context.lineTo(that.data.startX, that.data.startY)
+    //   //设置直线的终点
+    //   context.lineTo(that.data.endX, that.data.endY)
+    //   //设置描边，记住画直线一定要设置描边，否则没有图像
+    //   context.stroke()
+    //    wx.drawCanvas({
+    //     canvasId: 1,
+    //     actions: context.getActions()
+    //   });
+    // },
     clickLeft(e) {
-    },
+      let that = this;
+      this.setData({
+        beginX: 0,
+        beginY: e.currentTarget.offsetTop,
+        l: e.currentTarget.dataset.name
+      });
+      let index = e.currentTarget.dataset.index;
+      let select = e.currentTarget.dataset.select;
+      const topicLeft = that.topicLeft;
+      let ansLis = this.ansList;
 
-    clickRight(e) {
-    },
+      if (ansLis.length == 0) {
+        topicLeft.forEach(function (item, index) {
+          item.select = false;
+        });
+        that.setData({
+          topicLeft: topicLeft
+        });
+      }
 
-    backGroundImgFun: function () {
-      
-    },
-    reset: function (e) {
-      
-    },
-    exit: function () {
-    },
-    topicList: function () {
-    },
-    answer: function () {
-      
-    },
+      if (select == false) {
+        ansLis.forEach(function (k, i) {
+          if (k[0] != e.currentTarget.dataset.k) {
+            let selectLis = that.topicLeft;
+            selectLis.forEach(function (key, item) {
+              if (k[0] != key.key) {
+                key.select = false;
+              }
+            });
+            that.setData({
+              topicLeft: selectLis
+            });
+          }
+        });
 
-    getLevel() {
-    },
+        if (this.curTarL == e.currentTarget.dataset.k) {
+          const select = 'topicLeft[' + index + '].select';
+          that.setData({
+            [select]: true
+          });
+        } else {
+          const select = 'topicLeft[' + index + '].select';
+          that.setData({
+            [select]: !topicLeft[index].select
+          });
+        }
+      } else {
+        var flag = false;
+        ansLis.forEach(function (k, i) {
+          if (k[0] == e.currentTarget.dataset.k) {
+            flag = true;
+          }
+        });
 
-    closeLevel() {
-      
-    },
+        if (flag == false) {
+          const select = 'topicLeft[' + index + '].select';
+          that.setData({
+            [select]: !topicLeft[index].select
+          });
+        } else {
+          const select = 'topicLeft[' + index + '].select';
+          that.setData({
+            [select]: true
+          });
+          return;
+        }
+      }
 
-    showLevel() {
-     
-    },
+      if (this.curTarR === e.currentTarget.dataset.k) {
+        let list = [];
+        list.push({
+          beginX: this.beginX,
+          beginY: this.beginY,
+          endX: this.endX,
+          endY: this.endY
+        });
+        let ans = e.currentTarget.dataset.k + '' + this.r;
+        var ansList = [];
+        ansList.push(ans);
+        this.setData({
+          list: list.concat(this.list),
+          ansList: ansList.concat(this.ansList)
+        });
+        ansList = unique(this.ansList);
+        this.setData({
+          ansList: ansList
+        });
+        this.beginCanvas();
+      }
 
-    toDetail(e) {
-      
-    },
-
-    next() {
-      
-    },
-
-    toGetLevel(e) {
-    },
-
-    getAudio() {
-    },
-
-    playorpause: function (e) {
-      
-    },
-
-    goBack() {
-     uni.navigateBack({
-          delta: 1
+      this.setData({
+        curTarL: e.currentTarget.dataset.k
       });
     },
 
+    clickRight(e) {
+      let that = this;
+      let index = e.currentTarget.dataset.index;
+      let select = e.currentTarget.dataset.select;
+      const topicRight = that.topicRight;
+      let ansLis = this.ansList;
+
+      if (ansLis.length == 0) {
+        topicRight.forEach(function (item, index) {
+          item.select = false;
+        });
+        that.setData({
+          topicRight: topicRight
+        });
+      }
+
+      if (select == false) {
+        // ansLis.forEach(function (k, i) {
+        //   if (k[0] != e.currentTarget.dataset.k) {
+        //     const select = 'topicRight[' + index + '].select'
+        //     that.setData({
+        //       [select]: false,
+        //     })
+        //   }
+        // })
+        ansLis.forEach(function (k, i) {
+          if (k[0] != e.currentTarget.dataset.k) {
+            let selectLis = that.topicRight;
+            selectLis.forEach(function (key, item) {
+              if (k[0] != key.key) {
+                key.select = false;
+              }
+            });
+            that.setData({
+              topicRight: selectLis
+            });
+          }
+        });
+
+        if (this.curTarL == e.currentTarget.dataset.k) {
+          const select = 'topicRight[' + index + '].select';
+          that.setData({
+            [select]: true
+          });
+        } else {
+          const select = 'topicRight[' + index + '].select';
+          that.setData({
+            [select]: !topicRight[index].select
+          });
+        }
+      } else {
+        var flag = false;
+        ansLis.forEach(function (k, i) {
+          if (k[0] == e.currentTarget.dataset.k) {
+            flag = true;
+          }
+        });
+
+        if (flag == false) {
+          const select = 'topicRight[' + index + '].select';
+          that.setData({
+            [select]: !topicRight[index].select
+          });
+        } else {
+          const select = 'topicRight[' + index + '].select';
+          that.setData({
+            [select]: true
+          });
+          return;
+        }
+      }
+
+      this.setData({
+        endX: e.currentTarget.offsetLeft - 70,
+        endY: e.currentTarget.offsetTop,
+        r: e.currentTarget.dataset.name
+      });
+
+      if (this.curTarL === e.currentTarget.dataset.k) {
+        let list = [];
+        list.push({
+          beginX: this.beginX,
+          beginY: this.beginY,
+          endX: this.endX,
+          endY: this.endY
+        });
+        let ans = this.l + '' + e.currentTarget.dataset.k;
+        var ansList = [];
+        ansList.push(ans);
+        this.setData({
+          list: list.concat(this.list),
+          ansList: ansList.concat(this.ansList)
+        });
+        ansList = unique(this.ansList);
+        this.setData({
+          ansList: ansList
+        });
+        this.beginCanvas();
+      }
+
+      this.setData({
+        curTarR: e.currentTarget.dataset.k
+      });
+    },
+
+    backGroundImgFun: function () {
+      var that = this;
+      util.ajax('/api/index/getSystem', {
+        type: 9
+      }, res => {
+        that.setData({
+          backgroundImg: res.data
+        });
+      });
+    },
+    reset: function (e) {
+      let id = e.currentTarget.dataset.id;
+      this.topicList();
+      this.setData({
+        is_wrong: false,
+        currentId: '-1',
+        is_succ: false
+      });
+      this.ctx.draw();
+    },
+    exit: function () {
+      // wx.navigateTo({
+      //   url: '/pages/brain/brain',
+      // })
+      wx.navigateBack({
+        delta: 1
+      });
+    },
+    topicList: function () {
+      let that = this;
+
+      if (wx.getStorageSync('game-pid')) {
+        this.setData({
+          id: wx.getStorageSync('game-pid')
+        });
+      }
+
+      var param = {
+        id: that.id
+      };
+      util.ajax('/api/game/ligature', param, res => {
+        if (res.status == 2) {
+          if (res.msg == '今日答题数量已达上限') {
+            that.setData({
+              is_limit: true
+            });
+            return;
+          } else {
+            wx.showToast({
+              title: res.msg,
+              icon: "none",
+              mask: true
+            });
+            let pages = getCurrentPages();
+            let prevPage = pages[pages.length - 2];
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1
+              });
+            }, 1000);
+            return;
+          }
+        } else if (res.status == 3) {
+          that.setData({
+            sequence: true,
+            id: that.ids
+          });
+          setTimeout(function () {
+            that.setData({
+              sequence: false
+            });
+          }, 2000);
+          wx.setStorageSync('game-pid', that.id);
+          return;
+        }
+
+        if (res.status == 1) {
+          that.setData({
+            topicLeft: res.data.arr1,
+            next_id: res.data.next_id,
+            topicRight: res.data.arr2,
+            id: res.data.id,
+            ids: res.data.id
+          });
+          wx.setStorageSync('game-pid', res.data.id);
+        }
+      });
+    },
+    answer: function () {
+      let that = this;
+      var param = {
+        is_canvas: false,
+        id: this.id,
+        answer: that.ansList
+      };
+      util.ajax('/api/game/ligatureAnswer', param, res => {
+        if (res.status == 1) {
+          that.setData({
+            is_succ: true
+          }); // that.topicList()
+
+          that.setData({
+            l: '',
+            r: '',
+            ansList: [],
+            curTarL: '',
+            curTarR: '',
+            list: '',
+            objs: {},
+            beginX: 0,
+            beginY: 0,
+            endX: 0,
+            endY: 0
+          });
+          this.ctx.draw();
+        } else {
+          that.setData({
+            is_wrong: true,
+            l: '',
+            r: '',
+            ansList: [],
+            curTarL: '',
+            curTarR: '',
+            list: '',
+            objs: {},
+            beginX: 0,
+            beginY: 0,
+            endX: 0,
+            endY: 0
+          });
+          this.ctx.draw();
+        }
+      });
+    },
+
+    getLevel() {
+      var that = this;
+      let param = {
+        type: 3,
+        page: this.page,
+        page_size: this.pagesize
+      };
+      util.ajax('/api/game/guanqia', param, res => {
+        var counts = [];
+
+        if (res.status == 1) {
+          that.setData({
+            levelList: res.data.list
+          });
+
+          for (var i = 0; i < res.data.count; i++) {
+            counts.push(i + 1);
+          }
+
+          that.setData({
+            counts: counts,
+            c: res.data.count
+          });
+        } else {}
+      });
+    },
+
+    closeLevel() {
+      this.setData({
+        isLevel: false,
+        is_canvas: true,
+        list: [],
+        ansList: [],
+        curTarL: '',
+        curTarR: '',
+        objs: {},
+        beginX: 0,
+        beginY: 0,
+        endX: 0,
+        endY: 0
+      });
+      this.topicList();
+      this.ctx.draw(); // this.beginCanvas()
+    },
+
+    showLevel() {
+      this.setData({
+        isLevel: true,
+        is_canvas: false
+      });
+      this.getLevel();
+    },
+
+    toDetail(e) {
+      this.setData({
+        id: e.currentTarget.dataset.id,
+        isLevel: false,
+        ans: '',
+        currentId: '-1',
+        list: [],
+        ansList: [],
+        curTarL: '',
+        curTarR: '',
+        objs: {},
+        beginX: 0,
+        beginY: 0,
+        endX: 0,
+        endY: 0,
+        is_canvas: true
+      });
+      wx.setStorageSync('game-pid', e.currentTarget.dataset.id);
+      this.topicList();
+      this.ctx.draw();
+    },
+
+    next() {
+      if (this.next_id == 0) {
+        this.setData({
+          is_succ: false,
+          is_last: true
+        }); // wx.navigateTo({
+        //   url: '/pages/brain/brain',
+        // })
+        //  wx.navigateBack({
+        //    delta: 1
+        //  })
+
+        return false;
+      }
+
+      this.setData({
+        id: this.next_id
+      });
+      wx.setStorageSync('game-pid', this.id);
+      this.topicList();
+      this.setData({
+        is_succ: false,
+        ans: '',
+        currentId: '-1',
+        list: [],
+        ansList: [],
+        curTarL: '',
+        curTarR: '',
+        objs: {},
+        beginX: 0,
+        beginY: 0,
+        endX: 0,
+        endY: 0
+      });
+      this.ctx.draw();
+    },
+
+    toGetLevel(e) {
+      var index = e.currentTarget.dataset.index;
+      this.setData({
+        page: e.currentTarget.dataset.page,
+        pageId: index
+      });
+      this.getLevel();
+    },
+
+    getAudio() {
+      let that = this;
+      wx.request({
+        url: getApp().globalData.requestUrl + '/api/index/getSystem',
+        method: 'post',
+        data: {
+          type: 8
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': wx.getStorageSync("token")
+        },
+        success: function (res) {
+          wx.hideLoading();
+          that.setData({
+            audio: res.data.data
+          });
+        },
+        fail: function () {
+          wx.hideLoading();
+          wx.showModal({
+            title: '网络错误',
+            content: '网络出错，请刷新重试',
+            showCancel: false,
+            mask: true
+          });
+        }
+      });
+    },
+
+    playorpause: function (e) {
+      var that = this;
+      var actionPlay = {
+        method: "play"
+      }; //定义播放
+
+      var actionPause = {
+        method: "pause"
+      }; //定义暂停
+
+      if (that.action.method == "pause") {
+        //若当前是暂停，则点击后播放
+        that.setData({
+          action: actionPlay,
+          is_p: true
+        });
+      } else {
+        //若当前是播放，则点击后暂停
+        that.setData({
+          action: actionPause,
+          is_p: false
+        });
+      }
+    },
+
+    goBack() {
+      var that = this;
+      var actionPause = {
+        method: "pause"
+      }; //定义暂停
+
+      that.setData({
+        action: actionPause,
+        is_p: false
+      });
+
+      if (this.toIndex == 1) {
+        wx.switchTab({
+          url: '/pages/index/index'
+        });
+      } else {
+        wx.navigateBack({
+          delta: 1
+        });
+      }
+    },
+
     touchstart(e) {
-      
+      this.setData({
+        startX: e.changedTouches[0].clientX
+      });
     },
 
     touchend(e) {
+      let that = this;
+      let startX = this.startX;
+      let endX = e.changedTouches[0].clientX; // if (this.data.slider) return;
+      // 下一页(左滑距离大于30)
+
+      if (startX - endX > 30) {
+        this.setData({
+          slider: true
+        }); //尾页(当前页 等于 总页数)
+
+        if (this.page == this.c) {
+          this.setData({
+            slider: false
+          }); // wx.showToast({ title: '已经是最后一张了', icon: 'none' });
+
+          return;
+        }
+
+        ;
+        this.setData({
+          page: this.page + 1,
+          pageId: this.pageId + 1
+        });
+        this.getLevel();
+      } // 上一页
+
+
+      if (endX - startX > 30) {
+        this.setData({
+          slider: true
+        }); //首页
+
+        if (this.page == 1) {
+          this.setData({
+            slider: false
+          }); // wx.showToast({ title: '已经到第一张了', icon: 'none' })
+
+          return;
+        }
+
+        ;
+        this.setData({
+          page: this.page - 1,
+          pageId: this.pageId - 1
+        });
+        this.getLevel();
+      }
     },
 
     nextPage() {
-      
+      //尾页(当前页 等于 总页数)
+      if (this.page == this.c) {
+        return;
+      }
+
+      ;
+      this.setData({
+        page: this.page + 1,
+        pageId: this.pageId + 1
+      });
+      this.getLevel();
     },
 
     prevPage() {
-      
+      //首页
+      if (this.page == 1) {
+        return;
+      }
+
+      ;
+      this.setData({
+        page: this.page - 1,
+        pageId: this.pageId - 1
+      });
+      this.getLevel();
     },
 
     failImgFun() {
-      
+      var that = this;
+      util.ajax('/api/index/getSystem', {
+        type: 11
+      }, res => {
+        that.setData({
+          failImg: res.data
+        });
+      });
     },
 
     succImgFun() {
-      
+      var that = this;
+      util.ajax('/api/index/getSystem', {
+        type: 10
+      }, res => {
+        that.setData({
+          succImg: res.data
+        });
+      });
     },
 
     limitImgFun() {
-      
+      var that = this;
+      util.ajax('/api/index/getSystem', {
+        type: 12
+      }, res => {
+        that.setData({
+          limitImg: res.data
+        });
+      });
     },
 
     lastImgFun() {
-      
+      var that = this;
+      util.ajax('/api/index/getSystem', {
+        type: 13
+      }, res => {
+        that.setData({
+          lastImg: res.data
+        });
+      });
     }
 
   }
