@@ -9,7 +9,7 @@
 				<text v-if="second == ''" class="yzmBtn" @click="yzmBtn">获取验证码</text>
 				<text v-else class="yzmTime">{{ second }}s</text>
 			</view>
-			<input type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password" />
+			<input type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password" maxlength="16"/>
 			<input type="password" class="passwordInput loginInput" value="" placeholder="请再次输入登录密码（6-18位字符）" placeholder-class="pla" v-model="rePassword" />
 			<button
 				type="submit" @tap="submit"
@@ -43,7 +43,34 @@ export default {
 	},
 	methods: {
 		//获取验证码点击
+		// yzmBtn(){
+		// 	ajax({
+		// 	     url: 'index/appCode',
+		// 	     data: {
+		// 				 phone:this.phone,							 // code
+		// 	     },
+		// 	     method: 'POST',
+		// 	     success: function(res) {
+		// 			console.log(res)
+		// 	     },
+		// 	     error: function() {}
+		// 	    })
+		// },
 		yzmBtn(){
+			if(this.phone===''){
+				
+			}else{
+			let _self=this
+			let s=60
+			let stime=setInterval(function(){
+				s--;
+				if(s==0){
+					_self.second=''
+					clearInterval(stime)
+				}else{
+					_self.second=s
+				}
+			},1000)
 			ajax({
 			     url: 'index/appCode',
 			     data: {
@@ -51,36 +78,50 @@ export default {
 			     },
 			     method: 'POST',
 			     success: function(res) {
-						 // uni.navigateTo({
-						 // 	url:'../index/index'
-						 // })
 					console.log(res)
 			     },
 			     error: function() {}
 			    })
+}
 		},
 		submit() {
-			ajax({
-				url: 'index/appRegister',
-				data: {
-					phone: this.phone,
-					password: this.password,
-					code: this.yzm
-				},
-				method: 'POST',
-				success: function(res) {
-					// const{count,list}=res.data.data
-					// // console.log(list)
-					// this.goodsList = list
-					// console.log(this.goodsList)
-					console.log(res)
-					// uni.navigateTo({
-					// 	url: '../../index/index'
-					// })
-				},
-				error: function() {}
-			});
-		}
+			if(this.password===this.rePassword){
+				ajax({
+					url: 'index/appRegister',
+					data: {
+						phone: this.phone,
+						password: this.password,
+						code: this.yzm
+					},
+					method: 'POST',
+					success: function(res) {
+						// const{count,list}=res.data.data
+						// // console.log(list)
+						// this.goodsList = list
+						// console.log(this.goodsList)
+						uni.setStorageSync('acess_token',res.data.data)
+						console.log(res)
+						// uni.navigateTo({
+						// 	url: '../../index/index'
+						// })
+					},
+					error: function() {}
+				});
+			}else{
+				uni.showModal({
+					// title: '提示',
+					    content: '您两次输入的密码不一致，请重新输入',
+					    success: function (res) {
+					        if (res.confirm) {
+					            console.log('用户点击确定');
+					        } else if (res.cancel) {
+					            console.log('用户点击取消');
+					        }
+					    }
+				})
+			}
+			
+		},
 	}
 };
 </script>

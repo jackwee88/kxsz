@@ -166,6 +166,7 @@
 <script>
 	import uniCountdown from '@/components/uni-countdown/uni-countdown.vue';
 	import screenTextScroll from '@/components/p-screenTextScroll/screenTextScroll.vue';
+	import ajax from '../../utils/public.js'
 	export default {
 		data() {
 			return {
@@ -228,6 +229,7 @@
 						id: 'caijing'
 					}
 				],
+				joinAssembleList:[],
 				bannerList:[
 					{
 						item:[
@@ -279,20 +281,23 @@
 					if (res.data.status == 1) {
 						//轮播图片数据
 						this.swiperImges = res.data.data.banner;
-						//在线教学数据
-						this.onlineTeaching = res.data.data.smodel;
 					}
 				},
 				fail: () => {}
 			});
-			//请求
-			// uni.request({
-			//                     url: 'http://localhost:3000/goods',
-			//                     success: (res) => {
-			//                         console.log(res.data);
-			//                         this.productList = res.data.goodslist;
-			//                     }
-			//                 });
+			ajax({
+				url:'assemble/joinAssemble',
+				data:'',
+				method:'POST',
+				success:(res)=>{
+					console.log(res)
+					const {count,list}= res.data.data
+					this.joinAssembleList = list
+				},
+				error:function(){
+					
+				}
+			})
 		},
 		methods: {
 			toggleTab(index) {

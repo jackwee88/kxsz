@@ -17,6 +17,13 @@
 			</block>
 		</swiper>
 
+<!-- 			<view class="menu_wrap" v-for="(item,index) in indexList">
+				<navigator :url="item.to_url">
+					<image :src="item.pic_url" mode=""></image>
+					<text>{{item.content}}</text>
+				</navigator>
+			</view> -->
+
 		<view class="menu_wrap">
 			<navigator url="../publishedDiary/publishedDiary">
 				<image src="../../static/index/daka.png" mode=""></image>
@@ -30,9 +37,13 @@
 				<image src="../../static/index/mfkc.png" mode=""></image>
 				<text>免费课程</text>
 			</navigator>
-			<navigator url="">
+<!-- 			<navigator url="">
 				<image src="../../static/index/jxkc.png" mode=""></image>
 				<text>精选课程</text>
+			</navigator> -->
+			<navigator url="../jifen-shop/jifen-shop">
+				<image src="../../static/index/jxkc.png" mode=""></image>
+				<text>积分商城</text>
 			</navigator>
 			<navigator url="../study-product/study-product">
 				<image src="../../static/index/xxyp.png" mode=""></image>
@@ -46,10 +57,7 @@
 				<image src="../../static/index/dnkf.png" mode=""></image>
 				<text>大脑开发</text>
 			</navigator>
-			<navigator url="../jifen-shop/jifen-shop">
-				<image src="../../static/index/dnkf.png" mode=""></image>
-				<text>积分商城</text>
-			</navigator>
+
 
 		</view>
 
@@ -201,11 +209,13 @@
 <script>
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import '../public/rongyun.js';
+import {ajax} from '../../utils/public.js'
 export default {
 	data() {
 		return {
 			//轮播图片
 			swiperImges: [],
+			indexList:[],
 			logList:[
 				{
 					date:"2020-02-02 08:32:23",
@@ -231,6 +241,7 @@ export default {
 			//在线教学图标
 			onlineTeaching: [],
 			status: 'more',
+			banner:'',
 			statusTypes: [
 				{
 					value: 'more',
@@ -263,8 +274,7 @@ export default {
 	},
 	
 	onLoad() {
-		
-		var value = uni.getStorageInfoSync('access_token')
+		var value = uni.getStorageSync('loginToken')
 		console.log(value)
 		// uni.showModal({
 		//     title: '提示',
@@ -364,23 +374,20 @@ export default {
 			fail: () => {},
 			complete: () => {}
 		});
-		// 请求用户作品列表 得到用户id
-		uni.request({
-			url:'',
-			method:'POST',
+		ajax({
+			url:'index/app',
 			data:{},
-			header:{
-				'Content-Type': 'application/x-www-form-urlencoded'
+			method:'POST',
+			success:(res)=>{
+				const{banner,smodel} = res.data.data
+				this.indexList =  smodel
+				this.banner = banner
 			},
-			success:res=>{
-				
-			},fail:()=>{
-				
-			},
-			complete: () => {
+			error:function(){
 				
 			}
 		})
+
 		//主体内容
 		// uni.request({
 		// 	url: 'https://kxsx.kaifadanao.cn/api/index/daily',
@@ -537,7 +544,8 @@ export default {
 	width: 100%;
 	white-space: nowrap;
 	overflow-x: scroll;
-
+	display: flex;
+	flex-direction: row;
 	navigator {
 		display: inline-flex;
 		flex-direction: column;

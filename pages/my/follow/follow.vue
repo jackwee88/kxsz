@@ -8,7 +8,7 @@
 		<view class="list">
 			<view class="item" v-for="(item,index) in myFriendList" :key="index">
 				<view @click="gotoOtherInfo(item)">
-					<image src="../../../static/reg/log.png" mode=""></image>
+					<image :src="item.avatar" mode=""></image>
 				</view>
 				<view class="info_wrap">
 					<view class="left_side">
@@ -54,7 +54,15 @@ export default {
 			error: function() {}
 		});
 	},
-	methods: {}
+	methods: {
+		gotoOtherInfo:function(e){
+			let param ={id:e.id,	}
+				console.log(param)
+			uni.navigateTo({
+				url: '../../userInfo/otherInfo?userInfo=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
+	}
 };
 </script>
 

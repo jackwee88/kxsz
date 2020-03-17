@@ -70,7 +70,7 @@
 				     method: 'POST',
 				     success: function(res) {
 							 console.log(res.data.data)
-							 uni.setStorageSync('access_token',res.data.data)
+							 uni.setStorageSync('loginToken',res.data.data)
 							 uni.switchTab({
 							          url: '../index/index'
 							 });
@@ -89,7 +89,8 @@
 				     method: 'POST',
 				     success: function(res) {
 							 console.log(res.data.data)
-							uni.setStorageSync('access_token',res.data.data)
+							uni.setStorageSync('loginToken',res.data.data)
+							console.log(res.data.data)
 							uni.switchTab({
 							         url: '../index/index'
 							});
@@ -99,32 +100,33 @@
 			},
 			//获取验证码点击
 			yzmBtn(){
-				ajax({
-				     url: 'index/appCode',
-				     data: {
-							 phone:this.phone,							 // code
-				     },
-				     method: 'POST',
-				     success: function(res) {
-							 // uni.navigateTo({
-							 // 	url:'../index/index'
-							 // })
-						console.log(res)
-				     },
-				     error: function() {}
-				    })
-				let _self=this
-				let s=60
-				let stime=setInterval(function(){
-					s--;
-					if(s==0){
-						_self.second=''
-						clearInterval(stime)
-					}else{
-						_self.second=s
-					}
-				},1000)
-			},
+				if(this.phone===''){
+					
+				}else{
+					let _self=this
+					let s=60
+					let stime=setInterval(function(){
+						s--;
+						if(s==0){
+							_self.second=''
+							clearInterval(stime)
+						}else{
+							_self.second=s
+						}
+					},1000)
+					ajax({
+					     url: 'index/sendMobileCode',
+					     data: {
+								 phone:this.phone,							 // code
+					     },
+					     method: 'POST',
+					     success: function(res) {
+							console.log(res)
+					     },
+					     error: function() {}
+					    })
+				}				
+			}
 		},
 		mounted() {
 

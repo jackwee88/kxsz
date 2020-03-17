@@ -2,7 +2,7 @@
 	<view>
 		<view class="list">
 			<view class="item" v-for="(item, index) in fansList" :key="index">
-				<navigator url="../../userInfo/otherInfo"><image :src="item.avatar" mode=""></image></navigator>
+				<view @click="gotoOtherInfo()"><image :src="item.avatar" mode=""></image></view>
 				<view class="info_wrap">
 					<view class="left_side">
 						<view class="name">{{ item.nickname }}</view>
@@ -47,6 +47,15 @@ export default {
 			},
 			error: function() {}
 		});
+	},
+	methods:{
+		gotoOtherInfo:function(e){
+			let param ={id:e.id,	}
+				console.log(param)
+			uni.navigateTo({
+				url: '../../userInfo/otherInfo?userInfo=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
 	}
 };
 </script>

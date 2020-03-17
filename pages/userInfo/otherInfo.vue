@@ -91,7 +91,8 @@ export default {
 					commentNum:'345',
 				}
 			],
-		 userinfo:''
+		 userinfo:'',
+		 id:'',
 		};
 	},
 	methods:({
@@ -102,16 +103,16 @@ export default {
 			})
 		}
 	}),
+	onLoad(event) {
+		this.userinfo = JSON.parse(decodeURIComponent(event.userInfo));
+		this.id = this.userinfo.id;
+	},
 	mounted(){
 		ajax({
 		     url: 'friend/userDetail',
 		     data: {
-		      // type:that.type,
-		      // platform_type:that.index,
-		      // page:page,
-		      // page_size:that.page_size,
-		      // token:uni.getStorageSync('access_token'),
 					friend_uid :'366'
+					// friend_uid :this.id
 		     },
 		     method: 'POST',
 		     success: (res) =>{
@@ -127,7 +128,7 @@ export default {
 			     url: 'friend/follow',
 			     data: {
 			      // token:uni.getStorageSync('access_token'),
-						friend_uid :'366'
+						// friend_uid :'366'
 			     },
 			     method: 'POST',
 			     success: (res) =>{
