@@ -31,9 +31,7 @@
 </template>
 
 <script>
-// const app = getApp().globalData;
-var util = require("../../utils/util.js");
-console.log(util)
+var utils = require("../../utils/util.js");
 export default {
   data() {
     return {
@@ -135,28 +133,14 @@ export default {
 
     getAudio() {
       let that = this;
-      uni.request({
-        url: 'https://kxsx.kaifadanao.cn/api/index/getSystem',
-        method: 'post',
+      utils.ajax({
+        url: 'index/getSystem',
         data: {
           type: 8
-        },
-        header: {
-          'content-type': 'application/json',
-          'token': uni.getStorageSync("token")
         },
         success: function (res) {
           uni.hideLoading();
           that.audio = res.data.data
-        },
-        fail: function () {
-          uni.hideLoading();
-          uni.showModal({
-            title: '网络错误',
-            content: '网络出错，请刷新重试',
-            showCancel: false,
-            mask: true
-          });
         }
       });
     },
@@ -175,39 +159,34 @@ export default {
     },
 
     to(e) {
-      util.ajax('/api/index/getProfile', '', res => {
-        var that = this;
-        var actionPause = {
-          method: "pause"
-        }; //定义暂停
+      util.ajax({
+        url:'index/getProfile', 
+        data:{}, 
+        success:res => {
+          var that = this;
+          var actionPause = {
+            method: "pause"
+          }; //定义暂停
 
-        this.action= actionPause,
-        this.is_p= false
-        let url = e.currentTarget.dataset.url;
-        wx.navigateTo({
-          url: url
-        });
+          this.action= actionPause,
+          this.is_p= false
+          let url = e.currentTarget.dataset.url;
+          wx.navigateTo({
+            url: url
+          });
+        }
       });
     },
 
     backGroundImg: function () {
       var that = this;
-      uni.request({
-        url: 'https://kxsx.kaifadanao.cn/api/index/getSystem',
-        method: 'post',
+      utils.ajax({
+        url: 'index/getSystem',
         data: {
           type: 8
         },
         success: function (res) {
           this.backgroundImg = res.data
-        },
-        fail: function () {
-          uni.showModal({
-            title: '网络错误',
-            content: '网络出错，请刷新重试',
-            showCancel: false,
-            mask: true
-          });
         }
       });
     },

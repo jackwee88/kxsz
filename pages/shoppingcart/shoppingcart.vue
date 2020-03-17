@@ -29,7 +29,7 @@
             <text class="price">￥{{item.goods_sku.goods_price}}</text>
             <view class="numbtn">
               <text @tap="minusCount" class="jiannun numbtncont" :data-ct_id="item.ct_id" :data-index="index">-</text>
-              <input class="numbtncont num" type="number" :data-ct_id="item.ct_id" :value="item.quantity" @input="changeNum" :data-index="index" :data-coupon_price="item.coupon_price" min="1">{{item.quantity}}</input>
+              <input class="numbtncont num" type="number" :data-ct_id="item.ct_id" :value="item.quantity" @input="changeNum" :data-index="index" :data-coupon_price="item.coupon_price" min="1"></input>
               <text @tap="addCount" catchlongtap="addnum" class="addnum numbtncont" :data-ct_id="item.ct_id" :data-index="index">+</text>
             </view>
           </view>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-var util = require("../../utils/util.js");
+const util = require('../../utils/util')
 
 export default {
   data() {
@@ -181,11 +181,15 @@ export default {
         is_check: 1,
         quantity: quantity
       };
-      util.ajax('/api/cart/edit', param, res => {
-        carts[index].quantity = quantity;
-        that.carts= carts
-        that.getTotalPrice();
-      });
+      util.ajax({
+		  url:'cart/edit', 
+		  data: param, 
+		  success: res => {
+		    carts[index].quantity = quantity;
+		    that.carts= carts
+		    that.getTotalPrice();
+		  }
+	  });
     },
 
     // 减少数量
@@ -206,11 +210,15 @@ export default {
         is_check: 1,
         quantity: quantity
       };
-      util.ajax('/api/cart/edit', param, res => {
-        carts[index].quantity = quantity;
-        that.carts= carts
-        that.getTotalPrice();
-      });
+      util.ajax({
+		  url: 'cart/edit', 
+		  data:param,
+		  success: res => {
+		    carts[index].quantity = quantity;
+		    that.carts= carts
+		    that.getTotalPrice();
+		  }
+	  });
     },
 
     deleteList(e) {
@@ -222,15 +230,19 @@ export default {
         ct_id: ct_id
       }; ///api/cart/del
 
-      util.ajax('/api/cart/del', param, res => {
-        carts.splice(index, 1); // 删除购物车列表里这个商品
-
-        uni.showToast({
-          title: '删除成功'
-        });
-        that.carts= carts
-        this.getTotalPrice();
-      });
+      util.ajax({
+		  url:'cart/del', 
+		  data:param,
+		  success:res => {
+		    carts.splice(index, 1); // 删除购物车列表里这个商品
+		  
+		    uni.showToast({
+		      title: '删除成功'
+		    });
+		    that.carts= carts
+		    this.getTotalPrice();
+		  }
+	  });
       this.getTotalPrice(); // if (!carts.length) { // 如果购物车为空
       //   this.setData({
       //     hasList: false // 修改标识为false，显示购物车为空页面
@@ -252,12 +264,16 @@ export default {
           title: '暂无更多信息'
         });
       } else {
-        util.ajax('/api/cart/index', param, res => {
-          var carts = that.carts;
-          that.page= that.page + 1,
-          that.count= res.data.count > 1 ? res.data.count : 1,
-          that.carts= carts.concat(res.data.list)
-          uni.stopPullDownRefresh();
+        util.ajax({
+          url:'cart/index', 
+          data:param,
+          success:res => {
+            var carts = that.carts;
+            that.page= that.page + 1,
+            that.count= res.data.count > 1 ? res.data.count : 1,
+            that.carts= carts.concat(res.data.list)
+            uni.stopPullDownRefresh();
+          }
         });
       }
     },
@@ -290,7 +306,9 @@ export default {
         is_check: 1,
         quantity: e.detail.value
       };
-      util.ajax('/api/cart/edit', param, res => {});
+      util.ajax({
+		  url:'cart/edit', data:param,success:res => {}
+	  });
       that.getTotalPrice(); // util.ajax('/api/cart/edit', param, res => {
       // })
     },
@@ -321,7 +339,7 @@ export default {
 
       if (ct_id) {
         uni.navigateTo({
-          url: '/pages/onlinestore/sureorder/sureorder?type=2&ids=' + ct_id
+          url: './sureorder/sureorder?type=2&ids=' + ct_id
         });
       } else {
         uni.showToast({

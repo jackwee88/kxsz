@@ -519,6 +519,34 @@
 							"navigationBarTitleText":"用户信息"
 						}
         }
+        ,{
+            "path" : "pages/shoppingcart/orderdetails/orderdetails",
+            "style": {
+				"navigationBarTitleText": "订单详情"
+			}
+        }
+        ,{
+            "path" : "pages/dzxy/dzxy",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/invoice/invoice",
+            "style": {
+				"navigationBarTitleText": "发票信息"
+			}
+        }
+        ,{
+            "path" : "pages/shoppingcart/shaddress/shaddress",
+            "style": {
+				"navigationBarTitleText": "收货地址"
+			}
+        }
+        ,{
+            "path" : "pages/shoppingcart/newaddress/newaddress",
+            "style": {
+				"navigationBarTitleText": "新增地址"
+			}
+        }
     ],
 
 

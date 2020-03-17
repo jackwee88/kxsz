@@ -13,128 +13,83 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-const requestUrl = 'https://kxsx.kaifadanao.cn/'
-function ajax(url, params, cb) {
-  wx.showLoading({
-    title: '加载中',
-    mask: true,
-  })
-  wx.request({
-    url: requestUrl + url,
-    method: 'post',
-    data: params,
-    header: {
-      'content-type': 'application/json',
-      'token': wx.getStorageSync("token")
-    },
-    success: function(res) {
-      wx.hideLoading();
-      // wx.navigateTo({
-      //   url: '/pages/logo/logo',
-      // })
-
-      if (res.data.status == 0) {
-
-        wx.hideLoading();
-        wx.showToast({
-          title: res.data.msg,
-          icon: 'none',
-          mask: true
-        })
-      } else if (res.data.status == -1) {
-
-        //未登录，登录授权
-        wx.navigateTo({
-          url: '/pages/login/login',
-        })
-
-      }
-      //  else if (res.data.status == 7) {
-
-      //   //未登录，登录授权
-      //   wx.redirectTo({
-      //     url: '/pages/reg/reg',
-      //   })
-
-      // }
-      else if (res.data.status == 1 || res.data.status == 2 || res.data.status == 3) {
-
-        return typeof cb == "function" && cb(res.data)
-      }
-    },
-    fail: function() {
-      wx.hideLoading();
-      wx.showModal({
-        title: '网络错误',
-        content: '网络出错，请刷新重试',
-        showCancel: false,
-        mask: true
-      })
-      return typeof cb == "function" && cb(false)
-    }
-  })
+let requestUrl
+if(process.env.NODE_ENV === 'development'){
+    requestUrl = '/api/'
+}else{
+	requestUrl = 'http://kxsx.zcycs.com/api/'
 }
+const ajax = (opt) => {
+	opt = opt || {};
+	opt.url = opt.url || '';
+	opt.data = opt.data || null;
+	opt.method = opt.method || 'POST';
+	opt.header = opt.header || {
+		'content-type': 'application/x-www-form-urlencoded',
+	};
+	opt.success = opt.success || function() {};
+	uni.showLoading({
+		title: '加载中'
+	});
+	uni.request({
+		url: requestUrl + opt.url,
+		//url: "http://www.mt.com/com/" + opt.url,
+		data: opt.data,
+		method: opt.method,
+		header: {
+			"token": uni.getStorageSync('loginToken'),
+			'content-type': 'application/x-www-form-urlencoded',
+		},
+		dataType: 'json',
+		success: function(res) {
+			uni.hideLoading();
+			console.log(res.data.status)
+			if (res.data.status == 0) {
+				// uni.showToast({
+				//     title: res.data.msg
+				// });
+				uni.showModal({
+					title: '提示',
+					content: res.data.msg,
+					showCancel: false,
+					duration: 1000,
+					success: function(res) {}
+				})
+			} else if (res.data.status == 1) {
+				opt.success(res.data);
+			} else if (res.data.status == -10086) {
+				uni.navigateTo({
+					url: '/pages/loginapp/loginapp',
+				});
+			} else if (res.data.status == -10087) { //用户被拉黑
+				uni.navigateTo({
+					url: '/pages/first/first?msg=' + res.data.msg,
+				});
+			} else if (res.data.status == -10088) { //未通过 1:通过中，2：认证通过，3：认证失败,未审核通过,4:禁用',
+				uni.navigateTo({
+					url: '/pages/first/first?real_status=' + res.data.data.real_status + '&msg=' + res.data.msg,
+				});
+			} else if (res.data.status == -10089) { //未提交 -1未审核
+				uni.navigateTo({
+					url: '/pages/first/first?real_status=' + res.data.data.real_status + '&msg=' + res.data.msg,
+				});
+			} else {
+				uni.showToast({
+					title: '请稍后重试,staus:000001'
+				});
+			}
+		},
+		fail: function() {
+			uni.hideLoading();
+			uni.showToast({
+				title: '请稍后重试'
+			});
+		},
+		complete: function() {
 
-
-
-
-
-
-// const fetch(url, data, method = 'post') {
-//   if (url == this.url && (+new Date() - this.fetchTime < 300)) {
-//     return
-//   }
-//   this.lastUrl = url;
-//   this.fetchTime = +new Date();
-//   wx.showLoading({
-//     title: '加载中',
-//     mask: true
-//   })
-//   return new Promise((resolve, reject) => {
-//     wx.request({
-//       url: `${this.serverUrl}${url}`,
-//       method: method,
-//       header: {
-//         'content-type': 'application/json',
-//         'token': this.token,
-//         'role': this.isUser ? 1 : 2
-//       },
-//       data: data,
-//       success: (res) => {
-//         // wx.hideLoading();
-//         if (this.disableHideLoding(url)) {
-//           wx.hideLoading();
-//         }
-//         wx.stopPullDownRefresh();
-//         if (res.data.code == 0) {
-//           resolve(res.data)
-//         }
-//         else {
-//           this.tip(res.data.msg)
-//           if (res.data.msg == '登录过期' || res.data.msg == '无效token') {
-//             this.token = '';
-//             wx.setStorage({
-//               key: "token",
-//               data: ''
-//             })
-
-//             wx.navigateTo({
-//               url: "/pages/logins/login"
-//             });
-
-
-//           }
-//           reject(res.data)
-//         }
-//       },
-//       fail: (err) => {
-//         wx.hideLoading();
-//         wx.stopPullDownRefresh();
-//         reject(err)
-//       }
-//     })
-//   })
-// },
+		}
+	})
+}
 
 function throttle(fn, gapTime) {
   if (gapTime == null || gapTime == undefined) {

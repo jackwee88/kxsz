@@ -17,7 +17,7 @@
           <view>
             <text class="title" style="overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;">{{item.p_name}}</text>
             <text class="guankan" style="margin-bottom:5rpx">{{item.goods_sku.goods_attr}}</text>
-            <text class="guankan" v-if="item.goods.p_detail">{{item.goods.p_detail}}</text>
+            <text class="guankan" v-if="item.p_detail">{{item.p_detail}}</text>
           </view>
           <view class="store-flex-right">
             <text class="flex-price">￥{{item.goods_sku.goods_price}}</text>
@@ -298,6 +298,7 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
+      index: 0,
       invoiceArr: {},
       is_fp: "不开发票",
       dzxy: '',
@@ -387,21 +388,23 @@ export default {
       goods_num: that.goods_num,
       goods_spec_id: that.goods_spec_id
     };
-    util.ajax('/api/goods/settlement', param, res => {
-      if (res.data.send_status == false) {
-        uni.showToast({
-          title: '当前地址不在配送范围哦 ~',
-          icon: 'none'
-        });
-      }
+    util.ajax({
+      url:'goods/settlement', data:param, success:res => {
+        if (res.data.send_status == false) {
+          uni.showToast({
+            title: '当前地址不在配送范围哦 ~',
+            icon: 'none'
+          });
+        }
 
-      that.goods= res.data.goods,
-      that.address= res.data.address,
-      that.total= res.data.total,
-      that.totals= res.data.total.toFixed(2),
-      that.integral= res.data.score,
-      that.transport_total= res.data.transport_total,
-      that.price= res.data.total
+        that.goods= res.data.goods,
+        that.address= res.data.address,
+        that.total= res.data.total,
+        that.totals= res.data.total.toFixed(2),
+        that.integral= res.data.score,
+        that.transport_total= res.data.transport_total,
+        that.price= res.data.total
+      }
     }); // util.ajax('/api/index/getSystem', {type:5}, res => {
     //   console.log()
     //   that.setData({
@@ -504,72 +507,87 @@ export default {
       }
 
       if (this.selected_other == true) {
-        util.ajax('/api/goods/downOrder', param, res => {
-          that.order_id= res.data.order_id
-          util.ajax('/api/goods/repay_other', {
-            order_id: res.data.order_id
-          }, ress => {
-            that.ewm= ress.data.code,
-            that.is_ewm= true
-            var aa = uni.getFileSystemManager();
-            aa.writeFile({
-              filePath: uni.env.USER_DATA_PATH + '/test.png',
-              data: that.ewm.slice(22),
-              encoding: 'base64',
-              success: res => {
-                uni.saveImageToPhotosAlbum({
+        util.ajax({
+          url:'goods/downOrder', 
+          data:param, 
+          success:res => {
+            that.order_id= res.data.order_id
+            util.ajax({
+              url:'goods/repay_other', 
+              data:{
+                order_id: res.data.order_id
+              },
+              success: ress => {
+                that.ewm= ress.data.code,
+                that.is_ewm= true
+                var aa = uni.getFileSystemManager();
+                aa.writeFile({
                   filePath: uni.env.USER_DATA_PATH + '/test.png',
-                  success: function (res) {
-                    // uni.showToast({
-                    //   title: '保存成功',
-                    // })
-                    that.is_save= true
+                  data: that.ewm.slice(22),
+                  encoding: 'base64',
+                  success: res => {
+                    uni.saveImageToPhotosAlbum({
+                      filePath: uni.env.USER_DATA_PATH + '/test.png',
+                      success: function (res) {
+                        // uni.showToast({
+                        //   title: '保存成功',
+                        // })
+                        that.is_save= true
+                      },
+                      fail: function (err) {}
+                    });
                   },
-                  fail: function (err) {}
+                  fail: err => {}
                 });
-              },
-              fail: err => {}
-            });
-          });
-        });
-      } else {
-        util.ajax('/api/goods/downOrder', param, res => {
-          if (res.status == 2) {
-            uni.showToast({
-              title: res.msg,
-              icon: 'none'
-            });
-            return;
-          }
-
-          util.ajax('/api/paygoods/pay', {
-            order_id: res.data.order_id
-          }, ress => {
-            uni.requestPayment({
-              timeStamp: String(ress.data.timeStamp),
-              nonceStr: ress.data.nonceStr,
-              package: ress.data.package,
-              signType: ress.data.signType,
-              paySign: ress.data.paySign,
-              success: function (payres) {
-                uni.redirectTo({
-                  url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
-                });
-              },
-              fail: function () {
-                // uni.showModal({
-                //   title: '错误提示',
-                //   content: '支付失败',
-                //   showCancel: false
-                // })
-                uni.redirectTo({
-                  url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
-                });
-              },
-              complete: function () {// complete
               }
             });
-          });
+          }
+        });
+      } else {
+        util.ajax({
+          url:'goods/downOrder', 
+          data:param,
+          success: res => {
+            if (res.status == 2) {
+              uni.showToast({
+                title: res.msg,
+                icon: 'none'
+              });
+              return;
+            }
+            util.ajax({
+              url:'paygoods/pay',
+              data: {
+                order_id: res.data.order_id
+              }, 
+              success:ress => {
+                uni.requestPayment({
+                  timeStamp: String(ress.data.timeStamp),
+                  nonceStr: ress.data.nonceStr,
+                  package: ress.data.package,
+                  signType: ress.data.signType,
+                  paySign: ress.data.paySign,
+                  success: function (payres) {
+                    uni.redirectTo({
+                      url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
+                    });
+                  },
+                  fail: function () {
+                    // uni.showModal({
+                    //   title: '错误提示',
+                    //   content: '支付失败',
+                    //   showCancel: false
+                    // })
+                    uni.redirectTo({
+                      url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
+                    });
+                  },
+                  complete: function () {// complete
+                  }
+                });
+              }
+            });
+          }
         });
       } // }
 
@@ -686,50 +704,46 @@ export default {
         goods_sku_id: this.goods_sku_id
       };
       var that = this;
-      util.ajax('/api/goods/OrderMoney', param, res => {
-        that.integral= res.data.use_integral,
-        that.totals= res.data.amount.toFixed(2),
-        that.price= res.data.prices,
-        that.transport_total= res.data.transport
+      util.ajax({
+        url:'goods/OrderMoney', 
+        data:param, 
+        success:res => {
+          that.integral= res.data.use_integral,
+          that.totals= res.data.amount.toFixed(2),
+          that.price= res.data.prices,
+          that.transport_total= res.data.transport
+        }
       });
     },
     selectListOther: function (e) {
-      this.setData({
-        selected_other: !this.selected_other
-      });
+      this.selected_other= !this.selected_other
     },
     closeEwm: function () {
-      this.setData({
-        is_ewm: false
-      });
+      this.is_ewm= false
       uni.redirectTo({
         url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + this.order_id
       });
     },
     selectExplain: function (e) {
-      this.setData({
-        selected_explain: !this.selected_explain
-      });
+      this.selected_explain= !this.selected_explain
     },
     explainFun: function () {
-      this.setData({
-        is_dzxy: true
-      });
+      this.is_dzxy= true
     },
     hideExplain: function () {
-      this.setData({
-        is_dzxy: false
-      });
+      this.is_dzxy= false
     },
 
     dzxyFun() {
       var that = this;
-      util.ajax('/api/index/getSystemDesc', {
-        type: 5
-      }, res => {
-        that.setData({
-          dzxy: res.data
-        });
+      util.ajax({
+        url:'index/getSystemDesc', 
+        data:{
+          type: 5
+        }, 
+        success:res => {
+          that.dzxy= res.data
+        }
       });
     },
 
@@ -754,9 +768,7 @@ export default {
     },
 
     bindRemarksAreaBlur(e) {
-      this.setData({
-        remarks: e.detail.value
-      });
+      this.remarks= e.detail.value
     }
 
   }

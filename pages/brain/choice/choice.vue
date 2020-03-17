@@ -125,8 +125,6 @@
 </template>
 
 <script>
-// pages/choiceQuestion/choiceQuestion.js
-// const app = getApp().globalData;
 var util = require("../../../utils/util.js");
 
 export default {
@@ -233,10 +231,12 @@ export default {
   methods: {
     backGroundImgFun: function () {
       var that = this;
-      util.ajax('/api/index/getSystem', {
-        type: 9
-      }, res => {
-        that.backgroundImg= res.data
+      util.ajax({
+        url:'/api/index/getSystem', data:{
+          type: 9
+        }, success:res => {
+          that.backgroundImg= res.data
+        }
       });
     },
 
@@ -258,44 +258,48 @@ export default {
         type: 1,
         id: that.id
       };
-      util.ajax('/api/game/choiceList', param, res => {
-        if (res.status == 1) {
-          this.topic= res.data.title,
-          this.id= res.data.id,
-          this.ids= res.data.id,
-          this.answerList= res.data.array,
-          this.next_id= res.data.next_id,
-          this.rightAns= res.data.right
-          uni.setStorageSync('game-cid', res.data.id);
-        } else {
-          if (res.status == 2) {
-            if (res.msg == '今日答题数量已达上限') {
-              setTimeout(function () {
-                that.is_limit = true
-              }, 500);
-              return;
-            } else {
-              uni.showToast({
-                title: res.msg,
-                icon: "none",
-                mask: true
-              });
-              let pages = getCurrentPages();
-              let prevPage = pages[pages.length - 2];
-              setTimeout(function () {
-                uni.navigateBack({
-                  delta: 1
-                });
-              }, 1000);
-              return;
-            }
-          } else if (res.status == 3) {
-            that.sequence= true,
-            that.id= that.ids
-            setTimeout(function () {
-              that.sequence = false
-            }, 2000);
+      util.ajax({
+        url:'game/choiceList', 
+        data:param, 
+        success:res => {
+          if (res.status == 1) {
+            this.topic= res.data.title,
+            this.id= res.data.id,
+            this.ids= res.data.id,
+            this.answerList= res.data.array,
+            this.next_id= res.data.next_id,
+            this.rightAns= res.data.right
             uni.setStorageSync('game-cid', res.data.id);
+          } else {
+            if (res.status == 2) {
+              if (res.msg == '今日答题数量已达上限') {
+                setTimeout(function () {
+                  that.is_limit = true
+                }, 500);
+                return;
+              } else {
+                uni.showToast({
+                  title: res.msg,
+                  icon: "none",
+                  mask: true
+                });
+                let pages = getCurrentPages();
+                let prevPage = pages[pages.length - 2];
+                setTimeout(function () {
+                  uni.navigateBack({
+                    delta: 1
+                  });
+                }, 1000);
+                return;
+              }
+            } else if (res.status == 3) {
+              that.sequence= true,
+              that.id= that.ids
+              setTimeout(function () {
+                that.sequence = false
+              }, 2000);
+              uni.setStorageSync('game-cid', res.data.id);
+            }
           }
         }
       });
@@ -307,23 +311,27 @@ export default {
         id: this.ids,
         answer: that.answer
       };
-      util.ajax('/api/game/answer', param, res => {
-        if (res.status == 1) {
-          // that.setData({
-          //   id: res.data.id
-          // })
-          setTimeout(function () {
-            that.is_succ= true
-          }, 500); // that.topicList()
-        } else {
-          if (res.msg == '回答错误') {
+      util.ajax({
+        url:'game/answer', 
+        data:param, 
+        success:res => {
+          if (res.status == 1) {
+            // that.setData({
+            //   id: res.data.id
+            // })
             setTimeout(function () {
-              that.is_wrong= true
-            }, 500);
-          } else if (res.msg = "今日答错数量已达上限") {
-            that.is_limit= true
+              that.is_succ= true
+            }, 500); // that.topicList()
           } else {
-            that.is_limit= true
+            if (res.msg == '回答错误') {
+              setTimeout(function () {
+                that.is_wrong= true
+              }, 500);
+            } else if (res.msg = "今日答错数量已达上限") {
+              that.is_limit= true
+            } else {
+              that.is_limit= true
+            }
           }
         }
       });
@@ -333,9 +341,9 @@ export default {
       let index = e.currentTarget.dataset.index;
 
       if (answer == this.rightAns) {
-        that.is_ok= true
+        this.is_ok= true
       } else {
-        that.is_ok= false
+        this.is_ok= false
       }
 
 
@@ -381,19 +389,23 @@ export default {
         page: this.page,
         page_size: this.pagesize
       };
-      util.ajax('/api/game/guanqia', param, res => {
-        var counts = [];
+      util.ajax({
+        url:'game/guanqia', 
+        data:param,
+        success: res => {
+          var counts = [];
 
-        if (res.status == 1) {
-          that.levelList= res.data.list
+          if (res.status == 1) {
+            that.levelList= res.data.list
 
-          for (var i = 0; i < res.data.count; i++) {
-            counts.push(i + 1);
-          }
+            for (var i = 0; i < res.data.count; i++) {
+              counts.push(i + 1);
+            }
 
-          that.counts= counts,
-          that.c= res.data.count
-        } else {}
+            that.counts= counts,
+            that.c= res.data.count
+          } else {}
+        }
       });
     },
 
@@ -440,27 +452,13 @@ export default {
     getAudio() {
       let that = this;
       uni.request({
-        url: 'https://kxsx.kaifadanao.cn/api/index/getSystem',
-        method: 'post',
+        url: 'index/getSystem',
         data: {
           type: 8
-        },
-        header: {
-          'content-type': 'application/json',
-          'token': uni.getStorageSync("token")
         },
         success: function (res) {
           uni.hideLoading();
           this.audio=  res.data.data
-        },
-        fail: function () {
-          uni.hideLoading();
-          uni.showModal({
-            title: '网络错误',
-            content: '网络出错，请刷新重试',
-            showCancel: false,
-            mask: true
-          });
         }
       });
     },
@@ -577,37 +575,51 @@ export default {
 
     failImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
-        type: 11
-      }, res => {
-        this.failImg= res.data
+      util.ajax({
+        url:'index/getSystem', data:{
+          type: 11
+        }, success: res => {
+          this.failImg= res.data
+        }
       });
     },
 
     succImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
-        type: 10
-      }, res => {
-        this.succImg= res.data
+      util.ajax({
+        url:'index/getSystem', 
+        data:{
+          type: 10
+        }, 
+        success:res => {
+          this.succImg= res.data
+        }
       });
     },
 
     limitImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
-        type: 12
-      }, res => {
-        this.limitImg= res.data
+      util.ajax({
+        url:'index/getSystem', 
+        data:{
+          type: 12
+        }, 
+        success:res => {
+          this.limitImg= res.data
+        }
       });
     },
 
     lastImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
-        type: 13
-      }, res => {
-        this.lastImg= res.data
+      util.ajax({
+        url:'index/getSystem',
+        data: {
+          type: 13
+        },
+        success: res => {
+          this.lastImg= res.data
+        }
       });
     }
 
