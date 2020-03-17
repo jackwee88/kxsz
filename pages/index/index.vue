@@ -274,8 +274,8 @@ export default {
 	},
 	
 	onLoad() {
-		var value = uni.getStorageSync('loginToken')
-		console.log(value)
+		// var value = uni.getStorageSync('loginToken')
+		// console.log(value)
 		// uni.showModal({
 		//     title: '提示',
 		//     content: '这是一个模态弹窗',

@@ -518,7 +518,13 @@
             "style" : {
 							"navigationBarTitleText":"用户信息"
 						}
-        }
+        },
+		{
+		    "path" : "pages/login/bindPhone/bindPhone",
+		    "style" : {
+							"navigationBarTitleText":"用户信息"
+						}
+		}
     ],
 
 

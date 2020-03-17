@@ -99,7 +99,7 @@ export default {
 						// // console.log(list)
 						// this.goodsList = list
 						// console.log(this.goodsList)
-						uni.setStorageSync('acess_token',res.data.data)
+						uni.setStorageSync('loginToken',res.data.data)
 						console.log(res)
 						// uni.navigateTo({
 						// 	url: '../../index/index'

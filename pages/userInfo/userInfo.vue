@@ -16,8 +16,8 @@
 						已关注
 					</view> -->
 				</view>
-				<view class="sub">开心号：kx12345</view>
-				<view class="sub">男</view>
+				<view class="sub">开心号：{{userinfo.number}}</view>
+				<!-- <view class="sub">男</view> -->
 			</view>
 		</view>
 
@@ -89,6 +89,11 @@ export default {
 		 userinfo:''
 		};
 	},
+	onload(){
+		var value = uni.getStorageSync('loginToken')
+		console.log(value+'123456');
+		
+	},
 	methods:({
 		//传参 打卡数据id
 		gotoPublished:function(e){
@@ -105,7 +110,7 @@ export default {
 		      // platform_type:that.index,
 		      // page:page,
 		      // page_size:that.page_size,
-		      token:uni.getStorageSync('access_token'),
+		      token:uni.getStorageSync('loginToken'),
 					friend_uid :'366'
 		     },
 		     method: 'POST',
