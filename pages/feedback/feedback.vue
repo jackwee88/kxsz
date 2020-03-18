@@ -5,63 +5,84 @@
 		<view class="section_title"><text>请选择您要反馈的意见类型：</text></view>
 
 		<view class="feedback_types">
-			<view :class="{item: true, active: activeIndex == index}" v-for="(item, index) in typeList" :key="index" @click="selectType(index)">{{item.name}}</view>
+			<view :class="{item: true, active: activeIndex == index}" v-for="(item, index) in typeList" :key="index" @click="selectType(index)">
+			{{item.name}}
+			</view>
 		</view>
 
-		<view class="section_title">
+<!-- 		<view class="section_title">
 			<text>请选择问题订单</text>
 			<navigator url=""><image src="../../static/index/qj.png" mode=""></image></navigator>
-		</view>
+		</view> -->
 
 		<form>
 			<textarea class="content_input" :value="content" placeholder="请填写意见描述(500字以内)" />
 			<input type="text" :value="qq" class="qq_input" placeholder="请填写联系QQ" />
 			<input type="text" :value="mobile" placeholder="请填写联系电话" />
+			<view class="uploadbtn">
+			  <button class="btn" type="submit" @tap="submit">发表</button>
+			</view>
 		</form>
 	</view>
 </template>
 
 <script>
+	import {
+	  ajax
+	 } from '../../utils/public.js'
 export default {
 	data() {
 		return {
 			typeList: [
-				{
-					id: 1,
-					name: '产品质量'
-				},
-				{
-					id: 2,
-					name: '物流速度'
-				},
-				{
-					id: 3,
-					name: '售后服务'
-				},
-				{
-					id: 4,
-					name: '购买流程'
-				},
-				{
-					id: 5,
-					name: '优惠力度'
-				},
-				{
-					id: 6,
-					name: '其他'
-				},
 			],
 			activeIndex: null,
 			content: '',
 			qq: '',
-			mobile: ''
+			mobile: '',
 		};
 	},
 	
 	methods: {
 		selectType(i) {
 			this.activeIndex = i
-		}
+		},
+		submit(){
+			ajax({
+				url:'feedback/upload',
+				data:{
+					cate:this.activeIndex,
+					content:this.content,
+					qq:this.qq,
+					mobile:this.mobile
+				},
+				method:'POST',
+				success:(res)=>{
+					uni.showModal({
+						title:"提示",
+						content:"感谢您的反馈",
+						confirmColor:this.themeColor
+					});
+				},
+				error:function(){
+					
+				}
+			})
+	},
+	},
+	mounted() {
+		ajax({
+			url:'feedback/cate',
+			data:{},
+			method:'POST',
+			success:(res)=>{
+				console.log(res)
+				const{list} = res.data.data
+				this.typeList = list
+			},
+			error:function(){
+				
+			}
+		})
 	}
 };
 </script>
@@ -78,7 +99,21 @@ export default {
 	line-height: 38rpx;
 	text-align: center;
 }
-
+.uploadbtn {
+  width: 100%;
+  height: 90rpx;
+	margin-top: 60rpx;
+}
+.btn {
+  width: 70%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #008800;
+  color: #fff;
+  font-size: 36rpx;
+  border-radius: 10rpx;
+  margin: 0 auto;
+}
 .section_title {
 	display: flex;
 	align-items: center;
