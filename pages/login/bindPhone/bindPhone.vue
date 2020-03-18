@@ -10,8 +10,9 @@
 				<text v-if="second==''" class="yzmBtn" @click="yzmBtn">获取验证码</text>
 				<text v-else class="yzmTime">{{second}}s</text>
 			</view>
-			<!-- <input  type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password"/> -->
-			<!-- <input  type="password" class="passwordInput loginInput" value="" placeholder="请再次输入登录密码（6-18位字符）" placeholder-class="pla" v-model="rePassword"/> -->
+			<input  type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password"/>
+			<input  type="password" class="passwordInput loginInput" value="" placeholder="请再次输入登录密码（6-18位字符）" placeholder-class="pla" v-model="rePassword"/>
+			
 			<button  :class="phone==''||password=='' || yzm=='' || rePassword==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password=='' || yzm=='' || rePassword==''?true:false" type="submit" @tap="bindPhone">绑定</button>
 		</form>
 	</view>
@@ -60,17 +61,37 @@
 			}
 		},
 	bindPhone(){
-		ajax({
-			url:'index/bindPhone',
-			method:'POST',
-			data:{phone:'this.phone',code:'this.yzm'},
-			success:(res)=>{
-				console.log('success')
-			},
-			error:function(){
-				
-			}
-		})
+		if(this.password===this.rePassword){
+			ajax({
+				url: 'index/bindPhone',
+				data: {
+					phone: this.phone,
+					code: this.yzm,
+					// code: this.yzm
+				},
+				method: 'POST',
+				success: function(res) {
+					uni.setStorageSync('loginToken',res.data.data)
+					console.log(res)
+					// uni.navigateTo({
+					// 	url: '../../index/index'
+					// })
+				},
+				error: function() {}
+			});
+		}else{
+			uni.showModal({
+				// title: '提示',
+				    content: '您两次输入的密码不一致，请重新输入',
+				    success: function (res) {
+				        if (res.confirm) {
+				            console.log('用户点击确定');
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+			})
+		}
 	}
 	},
 	}
