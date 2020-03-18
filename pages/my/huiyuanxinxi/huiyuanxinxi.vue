@@ -6,12 +6,12 @@
 					<!-- 头像 -->
 					<view class="touxiang">
 						<text class="itemtitle">头像</text>
-						<image class="huiyuanimg" src="" mode="widthFix"></image>
+						<image class="huiyuanimg" :src="uploadInfo.avatar" mode="widthFix"></image>
 					</view>
 					<!-- 昵称 -->
 					<view class="form-item">
 						<text class="itemtitle">昵称</text>
-						<input type="text" value="" class="input" maxlength="140" />
+						<input type="text" v-model="uploadInfo.nickname" class="input" maxlength="140" />
 					</view>
 					<!-- 性别 -->
 					<view class="form-item">
@@ -37,7 +37,7 @@
 					<!-- 联系方式 -->
 					<view class="form-item">
 						<text class="itemtitle">联系方式</text>
-						<input class="input" type="number" value="" maxlength="11" />
+						<input class="input" type="number" v-model="uploadInfo.mobile" maxlength="11" />
 					</view>
 					<!-- 年级 -->
 					<view class="form-item">
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+	var util = require("../../../utils/util.js");
 	import wPicker from "@/components/w-picker/w-picker.vue";
 	export default {
 		components: {
@@ -95,20 +96,50 @@
 					area: '', //地区
 					region: [],
 					classes: []
-				}
+				},
 			}
 		},
 		onLoad() {
+			let that = this
+			util.ajaxs('index/getProfile', '', res => {
+			let data = {
+				'nickname': res.data.nickname,
+				'avatar': res.data.avatar,
+				'gender': res.data.gender,
+				'birthday': res.data.birthday,
+				'mobile': res.data.mobile,
+				'grade': res.data.grade,
+				'province': res.data.province,
+				'city': res.data.cityname,
+				'area': res.data.areaname,
+				"region": res.data.region,
+				"type": ''
+			}
+			that.setData({
+				uploadInfo:data
+			});
 
+			console.log(res.data.province);
+
+			if (res.data.province == '' || res.data.province == null) {
+				that.uploadInfo.region= ['请选择省', '市', '区']
+			}
+			});
 		},
 		methods: {
+			setData(param) {
+				for (const key in param) {
+					const element = param[key];
+					this[key] = element
+				}
+			},
 			//性别选择点击
 			bindSexChange(e) {
 				this.uploadInfo.gender = e.target.value;
 			},
 			//生日选择点击
 			bindBirthdayChange(e) {
-				this.uploadInfo.birthday = e.target.value;
+				this.uploadInfo.birthday = String(e.target.value);
 			},
 			//年级选择点击
 			bindClassChange(e) {
@@ -120,11 +151,22 @@
 			},
 			//地区选择点击
 			bindCityChange(e) {
+				this.uploadInfo.province= e.checkArr[0];
+				this.uploadInfo.city= e.checkArr[1];
+				this.uploadInfo.area= e.checkArr[2];
 				this.uploadInfo.region=e.checkArr;
 			},
 			//保存点击
 			sengjibtn(){
-				console.log(1);
+				const uploadInfo = this.uploadInfo;
+				util.ajaxs('index/xcxProfile', uploadInfo, res => {
+					wx.showToast({
+					title: '更新成功'
+					});
+					// setTimeout(function () {
+					// 	wx.navigateBack({});
+					// }, 1000);
+				});
 			}
 		},
 		mounted() {

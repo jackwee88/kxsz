@@ -1,7 +1,7 @@
 <template>
 <view>
 <view class="page" :style="'background-image: url(' + backgroundImg + ')'">
-  <image src="/static/img/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:6rpx;" @tap.stop="goBack"></image>
+  <image src="/static/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:6rpx;" @tap.stop="goBack"></image>
   <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
   <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
   <audio controls loop :src="audio" id="audioID" :action="action"></audio>
@@ -197,9 +197,7 @@ export default {
   props: {},
   onShow: function () {
     var ctx = wx.createCanvasContext('customCanvas');
-    this.setData({
-      ctx: ctx
-    });
+    this.ctx= ctx
   },
 
   onLoad(options) {
@@ -212,9 +210,7 @@ export default {
     this.lastImgFun();
 
     if (options.is_share) {
-      this.setData({
-        toIndex: 1
-      });
+      this.toIndex= 1
     }
 
     var myCanvasWidth = '';
@@ -225,23 +221,19 @@ export default {
         myCanvasHeight = res.windowHeight - 200;
       }
     });
-    this.setData({
-      canvasWidth: myCanvasWidth,
-      canvasHeight: myCanvasHeight
-    });
-    this.setData({
-      l: '',
-      r: '',
-      ansList: [],
-      curTarL: '',
-      curTarR: '',
-      list: '',
-      objs: {},
-      beginX: 0,
-      beginY: 0,
-      endX: 0,
-      endY: 0
-    });
+    this.canvasWidth= myCanvasWidth,
+    this.canvasHeight= myCanvasHeight
+    this.l= '',
+    this.r= '',
+    this.ansList= [],
+    this.curTarL= '',
+    this.curTarR= '',
+    this.list= '',
+    this.objs= {},
+    this.beginX= 0,
+    this.beginY= 0,
+    this.endX= 0,
+    this.endY= 0
     this.topicList();
     this.getLevel();
   },
@@ -282,7 +274,12 @@ export default {
         this.answer();
       }
     },
-
+    setData(param) {
+      for (const key in param) {
+        const element = param[key];
+        this[key] = element
+      }
+    },
     // canvasBindMove:function(e){
     //   var that = this;
     //   that.setData({
@@ -307,11 +304,9 @@ export default {
     // },
     clickLeft(e) {
       let that = this;
-      this.setData({
-        beginX: 0,
-        beginY: e.currentTarget.offsetTop,
-        l: e.currentTarget.dataset.name
-      });
+      this.beginX= 0,
+      this.beginY= e.currentTarget.offsetTop,
+      this.l= e.currentTarget.dataset.name
       let index = e.currentTarget.dataset.index;
       let select = e.currentTarget.dataset.select;
       const topicLeft = that.topicLeft;
@@ -321,9 +316,7 @@ export default {
         topicLeft.forEach(function (item, index) {
           item.select = false;
         });
-        that.setData({
-          topicLeft: topicLeft
-        });
+        that.topicLeft= topicLeft
       }
 
       if (select == false) {
@@ -335,22 +328,16 @@ export default {
                 key.select = false;
               }
             });
-            that.setData({
-              topicLeft: selectLis
-            });
+            that.topicLeft= selectLis
           }
         });
 
         if (this.curTarL == e.currentTarget.dataset.k) {
           const select = 'topicLeft[' + index + '].select';
-          that.setData({
-            [select]: true
-          });
+          that[select]= true
         } else {
           const select = 'topicLeft[' + index + '].select';
-          that.setData({
-            [select]: !topicLeft[index].select
-          });
+          that[select]= !topicLeft[index].select
         }
       } else {
         var flag = false;
@@ -362,14 +349,10 @@ export default {
 
         if (flag == false) {
           const select = 'topicLeft[' + index + '].select';
-          that.setData({
-            [select]: !topicLeft[index].select
-          });
+          that[select]= !topicLeft[index].select
         } else {
           const select = 'topicLeft[' + index + '].select';
-          that.setData({
-            [select]: true
-          });
+          that[select]= true
           return;
         }
       }
@@ -385,20 +368,14 @@ export default {
         let ans = e.currentTarget.dataset.k + '' + this.r;
         var ansList = [];
         ansList.push(ans);
-        this.setData({
-          list: list.concat(this.list),
-          ansList: ansList.concat(this.ansList)
-        });
+        this.list= list.concat(this.list),
+        this.ansList= ansList.concat(this.ansList)
         ansList = unique(this.ansList);
-        this.setData({
-          ansList: ansList
-        });
+        this.ansList= ansList
         this.beginCanvas();
       }
 
-      this.setData({
-        curTarL: e.currentTarget.dataset.k
-      });
+      this.curTarL= e.currentTarget.dataset.k
     },
 
     clickRight(e) {
@@ -508,7 +485,7 @@ export default {
 
     backGroundImgFun: function () {
       var that = this;
-      util.ajax('/api/index/getSystem', {
+      util.ajaxs('index/getSystem', {
         type: 9
       }, res => {
         that.setData({
@@ -546,7 +523,7 @@ export default {
       var param = {
         id: that.id
       };
-      util.ajax('/api/game/ligature', param, res => {
+      util.ajaxs('game/ligature', param, res => {
         if (res.status == 2) {
           if (res.msg == '今日答题数量已达上限') {
             that.setData({
@@ -601,7 +578,7 @@ export default {
         id: this.id,
         answer: that.ansList
       };
-      util.ajax('/api/game/ligatureAnswer', param, res => {
+      util.ajaxs('game/ligatureAnswer', param, res => {
         if (res.status == 1) {
           that.setData({
             is_succ: true
@@ -648,7 +625,7 @@ export default {
         page: this.page,
         page_size: this.pagesize
       };
-      util.ajax('/api/game/guanqia', param, res => {
+      util.ajaxs('game/guanqia', param, res => {
         var counts = [];
 
         if (res.status == 1) {
@@ -765,7 +742,7 @@ export default {
     getAudio() {
       let that = this;
       wx.request({
-        url: getApp().globalData.requestUrl + '/api/index/getSystem',
+        url: 'index/getSystem',
         method: 'post',
         data: {
           type: 8
@@ -925,45 +902,37 @@ export default {
 
     failImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
+      util.ajaxs('index/getSystem', {
         type: 11
       }, res => {
-        that.setData({
-          failImg: res.data
-        });
+        that.failImg= res.data
       });
     },
 
     succImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
+      util.ajaxs('index/getSystem', {
         type: 10
       }, res => {
-        that.setData({
-          succImg: res.data
-        });
+        that.succImg= res.data
       });
     },
 
     limitImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
+      util.ajaxs('index/getSystem', {
         type: 12
       }, res => {
-        that.setData({
-          limitImg: res.data
-        });
+        that.limitImg= res.data
       });
     },
 
     lastImgFun() {
       var that = this;
-      util.ajax('/api/index/getSystem', {
+      util.ajaxs('index/getSystem', {
         type: 13
       }, res => {
-        that.setData({
-          lastImg: res.data
-        });
+        that.lastImg= res.data
       });
     }
 
