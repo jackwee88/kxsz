@@ -2,20 +2,19 @@
 	<view>
 		<view class="list">
 			<view class="item" v-for="(item, index) in fansList" :key="index">
-				<view @click="gotoOtherInfo()"><image :src="item.avatar" mode=""></image></view>
+				<view @click="gotoOtherInfo(item)"><image :src="item.avatar" mode=""></image></view>
 				<view class="info_wrap">
 					<view class="left_side">
 						<view class="name">{{ item.nickname }}</view>
-						<view class="account">{{ item.frend_uid }}</view>
+						<view class="account">开心号{{ item.number }}</view>
 					</view>
-
-					<view class="btn">
-						<image src="../../../static/my/add.png" class="addhao"></image>
+					<view class="btn" v-if="item.type === 'only'">
+						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
 					</view>
-					<view class="btn">
-						<image src="../../../static/my/add.png" class="addhao"></image>
-						相互关注
+					<view class="btn" v-if="item.type === 'mutual'">
+						<image src="../../../static/my/hxgz.png" class="ygz"></image>
+						互相关注
 					</view>
 				</view>
 			</view>
@@ -33,12 +32,8 @@ export default {
 		ajax({
 			url: 'friend/myFansList',
 			data: {
-				// type:that.type,
-				// platform_type:that.index,
-				// page:page,
-				// page_size:that.page_size,
-				// access_token:uni.getStorageSync('access_token')
-				keyword: ''
+				token:'60f14aca9f2b3cf023e25639d5e120e2',
+				keyword: '雨季'
 			},
 			method: 'POST',
 			success: res => {
@@ -50,7 +45,7 @@ export default {
 	},
 	methods:{
 		gotoOtherInfo:function(e){
-			let param ={id:e.id,	}
+			let param ={id:e.friend_uid,	}
 				console.log(param)
 			uni.navigateTo({
 				url: '../../userInfo/otherInfo?userInfo=' + encodeURIComponent(JSON.stringify(param))
@@ -103,6 +98,7 @@ export default {
 			.btn {
 				display: flex;
 				align-items: center;
+				text-align: center;
 				height: 48rpx;
 				padding: 0 18rpx;
 				font-size: 24rpx;

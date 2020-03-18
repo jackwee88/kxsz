@@ -16,7 +16,8 @@ const ajax = (opt) => {
 		data: opt.data,
 		method: opt.method,
 		header: {
-			"token": uni.getStorageSync('loginToken'),
+			// "token": uni.getStorageSync('loginToken'),
+			token:'60f14aca9f2b3cf023e25639d5e120e2',
 			'content-type': 'application/x-www-form-urlencoded',
 		},
 		dataType: 'json',

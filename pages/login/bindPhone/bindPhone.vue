@@ -10,40 +10,69 @@
 				<text v-if="second==''" class="yzmBtn" @click="yzmBtn">获取验证码</text>
 				<text v-else class="yzmTime">{{second}}s</text>
 			</view>
-			<input  type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password"/>
-			<input  type="password" class="passwordInput loginInput" value="" placeholder="请再次输入登录密码（6-18位字符）" placeholder-class="pla" v-model="rePassword"/>
-			<button  :class="phone==''||password=='' || yzm=='' || rePassword==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password=='' || yzm=='' || rePassword==''?true:false">注册</button>
+			<!-- <input  type="password" class="passwordInput loginInput" value="" placeholder="请输入登录密码(6-18位字符)" placeholder-class="pla" v-model="password"/> -->
+			<!-- <input  type="password" class="passwordInput loginInput" value="" placeholder="请再次输入登录密码（6-18位字符）" placeholder-class="pla" v-model="rePassword"/> -->
+			<button  :class="phone==''||password=='' || yzm=='' || rePassword==''?'loginBtn loginnBtNo':'loginBtn loginnBtnYes' "  :disabled="phone==''||password=='' || yzm=='' || rePassword==''?true:false" type="submit" @tap="bindPhone">绑定</button>
 		</form>
 	</view>
 </template>
 
 <script>
+	import {ajax} from '../../../utils/public.js'
 	export default{
 		data(){
 			return{
 				phone:'',		//电话
 				second:'',		//秒数
 				yzm:'',			//验证码
-				password:'',	//密码
-				rePassword:'',	//二次密码
+				// password:'',	//密码
+				// rePassword:'',	//二次密码
 			}
 		},
 		methods:{
 			//获取验证码点击
 			yzmBtn(){
-				let _self=this
-				let s=60
-				let stime=setInterval(function(){
-					s--;
-					if(s==0){
-						_self.second=''
-						clearInterval(stime)
-					}else{
-						_self.second=s
-					}
-				},1000)
+			if(this.phone===''){
+				
+			}else{
+			let _self=this
+			let s=60
+			let stime=setInterval(function(){
+				s--;
+				if(s==0){
+					_self.second=''
+					clearInterval(stime)
+				}else{
+					_self.second=s
+				}
+			},1000)
+			ajax({
+			     url: 'index/sendBindMobileCode',
+			     data: {
+						 phone:this.phone,							 // code
+			     },
+			     method: 'POST',
+			     success: function(res) {
+					console.log(res)
+			     },
+			     error: function() {}
+			    })
 			}
-		}
+		},
+	bindPhone(){
+		ajax({
+			url:'index/bindPhone',
+			method:'POST',
+			data:{phone:'this.phone',code:'this.yzm'},
+			success:(res)=>{
+				console.log('success')
+			},
+			error:function(){
+				
+			}
+		})
+	}
+	},
 	}
 </script>
 

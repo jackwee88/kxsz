@@ -203,11 +203,13 @@
 				<navigator url="/pages/my/daySignin/daySignin"><text>签到</text></navigator>
 			</view>
 		</view>
+		<indexModal :isVisible="true"></indexModal>
 	</view>
 </template>
 
 <script>
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+import indexModal from '@/components/indexModal.vue'
 import '../public/rongyun.js';
 import {ajax} from '../../utils/public.js'
 export default {
@@ -270,7 +272,7 @@ export default {
 		};
 	},
 	components: {
-		uniLoadMore
+		uniLoadMore,indexModal
 	},
 	
 	onLoad() {

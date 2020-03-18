@@ -111,7 +111,7 @@ export default {
 		ajax({
 		     url: 'friend/userDetail',
 		     data: {
-					friend_uid :'366'
+					friend_uid :'366',
 					// friend_uid :this.id
 		     },
 		     method: 'POST',
@@ -173,6 +173,13 @@ export default {
 		.btn {
 			display: flex;
 			align-items: center;
+			line-height: 48rpx;
+			overflow: hidden;
+			word-break: break-all;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 1;
 			height: 48rpx;
 			padding: 0 18rpx;
 			font-size: 24rpx;

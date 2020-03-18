@@ -36,23 +36,16 @@
 			</navigator>
 		</view>
 		<!-- 地址 -->
-		<navigator url="" class="address margin">
+		<navigator url="" class="address">
 			<text class="txt-address">地址</text>
-			<text class="choose-address">选择收货地址</text>
-			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
+			<view class="choose-address">选择收货地址</view>
+				<image src="../../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 		</navigator>
 		<navigator url="" class="address">
 			<text class="txt-address">参数</text>
-			<text class="choose-address">{{ goodsDetail.introduce }}</text>
-			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
+			<view class="choose-address productTxt">{{ goodsDetail.introduce }}</view>
+			<image src="../../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 		</navigator>
-		<!-- 		<navigator url="" class="comment">
-			<view class="choose-address">评价(999+)</view>
-			<view>
-				<text style="color: #A1A4A5;font-size: 28rpx;">查看全部</text>
-				<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
-			</view>
-		</navigator> -->
 		<view class="pic-txt-detail">
 			<view>图文详情</view>
 			<view v-for="(item, index) in swiperImages" :key="index" class="detailPicture"><image :src="item" style="width: 100%;height: 650rpx;"></image></view>

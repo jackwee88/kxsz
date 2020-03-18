@@ -3,20 +3,23 @@
 		<view class="top_title">
 			<navigator open-type="navigateBack">
 				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
-			<navigator url=""><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
+			<navigator url="../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
 		</view>
 		<!-- 商品详情 -->
-		<cover-view class="team-position">
+		<cover-view class="team-position" v-if="assemble!=null">
 			<view class="team-num">2人团</view>
 			<view class="team-total">已拼26件</view>
 		</cover-view>
 		<!-- 商品详情 -->
-		<view class="product-banner">
-			<swiper></swiper>
-			<!-- <image :src="banner.title" style="width: 750rpx;height: 650rpx;" mode="aspectFit"></image> -->
-		</view>
+		<swiper :autoplay="true" :interval="3000" :duration="1000" class="detailPicture">
+			<block v-for="(item, index) in swiperImages" :key="index">
+				<swiper-item>
+					<view class="detailPicture"><image :src="item" style="width: 100%;height: 660rpx;"></image></view>
+				</swiper-item>
+			</block>
+		</swiper>
 		<!-- 限时秒杀 判断商品是否为秒杀商品-->
-		<view class="xsms" v-if="true">
+		<view class="xsms" v-if="productDetail.sale_status==='2'">
 			<view class="back-red">
 				<view class="back-red-txt">
 					<text style="color: #ffffff;font-size: 32rpx;">¥</text>
@@ -59,30 +62,35 @@
 			</navigator>
 		</view>
 		<!-- 拼团 -->
-		<view class="team-buy">
-			<view class="youhuiquan" url="" v-if="true">
-				<view><text style="color: #333333;font-size:30rpx ;">10个团正在热拼，可直接参与</text></view>
-				<navigator url="">
-					<text style="color: #666666;font-size:24rpx ;">查看全部</text>
-					<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
-				</navigator>
-			</view>
-			<view class="team-buy-detail" v-for="(data, index) in teamlist" :key="index">
-				<view class="circle-avator"><image src="" mode="aspectFit"></image></view>
-				<view class="team-user">{{ data.name }}</view>
-				<view>
-					<view class="pingtuan">
-						差
-						<text style="font-size: 28rpx;color:#E02020;">{{ data.num }}</text>
-						人拼成
+		<view class="team-buy" >
+				<view class="youhuiquan">
+					<text style="color: #333333;font-size:30rpx ;">10个团正在热拼，可直接参与</text>
+					<view @click="assmbleDetail()">
+						<text style="color: #666666;font-size:24rpx ;">查看全部</text>
+						<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 					</view>
-					<view class="timeSetting">
-						<text style="font-size: 28rpx;color: #999999;">剩余</text>
-						<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+					</view>		
+				<view class="team-buy-detail" v-for="(data, index) in teamlist" :key="index">
+					<view class="assmebleleft">
+					<view class="circle-avator">
+						<image src="" mode="aspectFit"></image>
+						</view>
+					<view class="team-user">{{ data.name }}</view>
 					</view>
+						<view class="assmebleright">
+							<view>
+						<view class="pingtuan">
+							差<text style="font-size: 28rpx;color:#E02020;">{{ data.num }}</text>
+							人拼成
+						</view>
+						<view class="timeSetting">
+							<text style="font-size: 28rpx;color: #999999;">剩余</text>
+							<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+						</view>
+						</view>
+					<button class="team-btn"><text style="color: #ffffff;font-size:28rpx ;">参团&nbsp;></text></button>
 				</view>
-				<button class="team-btn"><text style="color: #ffffff;font-size:28rpx ;">参团&nbsp;></text></button>
-			</view>
+				</view>
 		</view>
 		<!-- 优惠券 -->
 		<view></view>
@@ -112,12 +120,12 @@
 		<!-- 地址 -->
 		<navigator url="" class="address">
 			<text class="txt-address">地址</text>
-			<text class="choose-address">选择收货地址</text>
+			<view class="choose-address">选择收货地址</view>
 				<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 		</navigator>
 		<navigator url="" class="address">
 			<text class="txt-address">参数</text>
-			<text class="choose-address">选择收货地址地址</text>
+			<view class="choose-address productTxt">选择收货地址地址选择收货地址地址地址选择收货地址地址择收货地址地址<<</view>
 			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 		</navigator>
 		<navigator url="" class="comment">
@@ -129,7 +137,8 @@
 		</navigator>
 		<view class="pic-txt-detail">
 			<view>图文详情</view>
-			<view><image src="" width="750rpx;height:1140rpx"></image></view>
+			<view v-for="(item, index) in swiperImages" :key="index" class="detailPicture">
+				<image :src="item" style="width: 100%;height: 650rpx;"></image></view>
 		</view>
 		<!-- 加入购物车  固定-->
 		<view class="oprate">
@@ -156,10 +165,13 @@
 </template>
 
 <script>
+	import {ajax} from '../../utils/public.js'
 export default {
 	data() {
 		return {
 			swiperImages: [],
+			productDetail:{},
+			assemble:null,
 			teamlist: [
 				{
 					name: '与女无瓜',
@@ -169,23 +181,75 @@ export default {
 					name: '与女无瓜',
 					num: '1'
 				}
-			]
+			],
+			pid:''
 		};
 	},
-	// onLoad(event) {
-	// 	console.log(event);
-	// 	this.banner = JSON.parse(decodeURIComponent(event.detailDate));
-	// 	uni.setNavigationBarTitle({
-	// 	title:this.banner.title
-	// 	})
-	// },
-	mounted() {},
-	methods: {}
+	onLoad(event) {
+		console.log(event);
+		this.banner = JSON.parse(decodeURIComponent(event.productDetail));
+		this.pid = this.banner.id
+	},
+	mounted() {
+		//请求商品详情
+		ajax({
+			url:'goods/detail',
+			data:{
+				// pid:'this.pid',
+				pid:'1201'
+			},
+			method:'POST',
+			success:(res)=>{
+				this.productDetail =  res.data.data
+				const {image_text,assmeble} = res.data.data
+				this.swiperImages =  image_text
+				this.assemble = assmeble
+				if(assmeble!=null){
+					this.assembleWait()
+				}
+			},
+			error:function(){
+				
+			}
+		})
+	},
+	methods: {
+		assembleWait:function(){
+			ajax({
+				url:'assemnle/wait',
+				method:'POST',
+				data:{goods_id:this.pid},
+				success:(res)=>{
+					const {count,list} = res.data.data
+					 this.teamlist = list
+				},
+				error:function(){
+					
+				}
+			})
+		},
+		assmbleDetail:function(){
+			console.log(this.pid)
+	  uni.navigateTo({
+				url: '../assemble/assemble',
+				success: res => {},
+				fail: () => {},
+				complete: () => {}
+			});
+			}
+	}
 };
 </script>
 
 <style style lang="less" scoped>
 @import './product-detail.css';
+.detailPicture {
+	width: 750rpx;
+	height: 660rpx;
+}
+.assmeble{
+	background-color: #ffffff;
+}
 	.top_title{
 		.input-wrap{
 			height:60rpx;

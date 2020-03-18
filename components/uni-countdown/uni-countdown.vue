@@ -168,7 +168,7 @@
 		/* #endif */
 		justify-content: center;
 		line-height: $countdown-height;
-		padding: 5rpx;
+		// padding: 5rpx;
 		font-size: $uni-font-size-sm;
 	}
 

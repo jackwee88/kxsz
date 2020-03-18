@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="info_wrap">
-			<image src="../../static/reg/log.png" class="avatar"></image>
+			<image :src="userinfo.avatar" class="avatar"></image>
 
 			<view class="info_text">
 				<view class="top">

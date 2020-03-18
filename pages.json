@@ -377,7 +377,7 @@
 
 				}
 			}
-		},  {
+		}, {
 			"path": "pages/brain/brain",
 			"style": {
 				"navigationStyle": "custom"
@@ -500,53 +500,57 @@
 			"style": {
 				"navigationBarTitleText": "新增地址"
 			}
-		}
-	    ,{
-            "path" : "pages/jifen-shop/jifen-detail/jifen-detail",
-            "style": {
+		}, {
+			"path": "pages/jifen-shop/jifen-detail/jifen-detail",
+			"style": {
 
-            }
-        }
-        ,{
-            "path" : "pages/onlinestore/shaddress/shaddress",
-            "style" : {
-							"navigationBarTitleText":"管理收货地址"
-						}
-        }
-        ,{
-            "path" : "pages/userInfo/otherInfo",
-            "style" : {
-							"navigationBarTitleText":"用户信息"
-						}
-        }
-        ,{
-            "path" : "pages/shoppingcart/orderdetails/orderdetails",
-            "style": {
+			}
+		}, {
+			"path": "pages/onlinestore/shaddress/shaddress",
+			"style": {
+				"navigationBarTitleText": "管理收货地址"
+			}
+		}, {
+			"path": "pages/userInfo/otherInfo",
+			"style": {
+				"navigationBarTitleText": "用户信息"
+			}
+		}, {
+			"path": "pages/shoppingcart/orderdetails/orderdetails",
+			"style": {
 				"navigationBarTitleText": "订单详情"
 			}
-        }
-        ,{
-            "path" : "pages/dzxy/dzxy",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/invoice/invoice",
-            "style": {
+		}, {
+			"path": "pages/dzxy/dzxy",
+			"style": {}
+		}, {
+			"path": "pages/invoice/invoice",
+			"style": {
 				"navigationBarTitleText": "发票信息"
 			}
-        }
-        ,{
-            "path" : "pages/shoppingcart/shaddress/shaddress",
-            "style": {
+		}, {
+			"path": "pages/shoppingcart/shaddress/shaddress",
+			"style": {
 				"navigationBarTitleText": "收货地址"
 			}
-        }
-        ,{
-            "path" : "pages/shoppingcart/newaddress/newaddress",
-            "style": {
+		}, {
+			"path": "pages/shoppingcart/newaddress/newaddress",
+			"style": {
 				"navigationBarTitleText": "新增地址"
 			}
-        }
+		},
+		{
+			"path": "pages/novice/novice",
+			"style": {
+				"navigationBarTitleText": "新手任务"
+			}
+		},
+		{
+			"path": "pages/login/bindPhone/bindPhone",
+			"style": {
+				"navigationBarTitleText": "绑定手机号"
+			}
+		}
     ],
 
 
