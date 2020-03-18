@@ -1,28 +1,264 @@
-/* 订单导航 */
-.myorder_tab{
-	width:100%;
-	height:88rpx;
-	line-height:88rpx;
-	background-color:#fff;
-	border-top:1rpx solid #ddd;
-	margin-bottom:10rpx;
+/* pages/onlinestore/myOrder/myOrder.wxss */
+
+page {
+	background-color: #f5f5f5;
+	box-sizing: border-box;
 }
-.navtab_item{
-	float:left;
-	width:20%;
-	height:88rpx;
-	line-height:88rpx;
-	text-align:center;
+
+.myorder_tab {
+	height: 88rpx;
+	line-height: 88rpx;
+	background-color: #fff;
+	border-top: 1rpx solid #ddd;
+	margin-bottom: 10rpx;
 }
-.navtab_item text{
-	font-size:32rpx;
+
+.navtab_item {
+	float: left;
+	width: 20%;
+	height: 88rpx;
+	line-height: 88rpx;
+	text-align: center;
+	/* margin: 0 37rpx; */
 }
-.nav-active{
-	border-bottom:5rpx solid #48db8d;
+
+.text {
+	font-size: 32rpx;
 }
-/* 订单导航结束 */
-/*订单主内容*/
-.tabcont{
-	width:100%;
+
+.nav-active {
+	border-bottom: 5rpx solid #48db8d;
 }
-/*订单主内容结束*/
+
+.tabcont {}
+
+.tabcontitem {
+	background-color: #fff;
+	margin-bottom: 10rpx;
+}
+
+.tabconttitle {
+	height: 88rpx;
+	line-height: 88rpx;
+	position: relative;
+	padding: 0 30rpx;
+	font-size: 32rpx;
+}
+
+.tabconttitle_icon {
+	width: 32rpx;
+	height: 30rpx;
+	background-size: 100% 100%;
+	margin-right: 20rpx;
+	position: relative;
+	top: 5rpx;
+}
+
+.dealstate {
+	position: absolute;
+	right: 40rpx;
+}
+
+.waitfukuan {
+	font-size: 24rpx;
+	color: #48db8d;
+}
+
+.storedetail {
+	height: 220rpx;
+	background-color: #f5f5f5;
+	padding: 20rpx 30rpx;
+}
+
+.tabfloct {
+	float: left;
+}
+
+.productimg {
+	width: 184rpx;
+	height: 184rpx;
+	background-size: 100% 100%;
+	margin-right: 20rpx;
+	border-radius: 4rpx;
+}
+
+.tabright {
+	width: 70%;
+}
+
+.title {
+	font-size: 28rpx;
+	line-height: 1.4;
+	margin-bottom: 27rpx;
+}
+
+.storemoney {
+	position: relative;
+	font-size: 30rpx;
+	margin-bottom: 20rpx;
+}
+
+.storenum {
+	position: absolute;
+	right: 0;
+	color: #999;
+}
+
+.amountmoney {
+	color: #999;
+	font-size: 24rpx;
+}
+
+.freight {
+	margin-left: 20rpx;
+}
+
+.tabcontbottom {
+	height: 100rpx;
+	background-color: #fff;
+}
+
+.tabcontbottom {
+	padding: 20rpx 35rpx 20rpx 0;
+	position: relative;
+}
+
+.deletebtn {
+	width: 180rpx;
+	height: 60rpx;
+	line-height: 60rpx;
+	text-align: center;
+	border-radius: 30rpx;
+	color: #48db8d;
+	font-size: 28rpx;
+	border: 1rpx solid #48db8d;
+	position: absolute;
+	right: 35rpx;
+}
+
+.daifukuan .storemoney,
+.daifahuo .storemoney,
+.daishouhuo .storemoney,
+.tuihuotab .storemoney {
+	margin-bottom: 0;
+}
+
+.daifukuan .baozhuang,
+.daifahuo .baozhuang,
+.daishouhuo .baozhuang,
+.tuihuotab .baozhuang {
+	color: #999;
+	font-size: 30rpx;
+	display: block;
+	margin-bottom: 30rpx;
+}
+
+.daifukuan .title,
+.daifahuo .title,
+.daishouhuo .title,
+.tuihuotab .money {
+	margin-bottom: 25rpx;
+}
+
+.daifukuan .money,
+.daifahuo .money,
+.daishouhuo .money,
+.tuihuotab .money {
+	color: #e01212;
+}
+
+.daifukuan .storenum,
+.daifahuo .storenum,
+.daishouhuo .storenum,
+.tuihuotab .storenum {
+	color: #333;
+}
+
+.daifukuan .amountmoney,
+.daifahuo .amountmoney,
+.daishouhuo .amountmoney,
+.tuihuotab .amountmoney {
+	height: 88rpx;
+	line-height: 88rpx;
+	background-color: #fff;
+}
+
+.daifukuan .amountcont,
+.daifahuo .amountcont,
+.daishouhuo .amountcont {
+	height: 88rpx;
+	border-bottom: 1rpx solid #ddd;
+	text-align: right;
+	font-size: 30rpx;
+	color: #333;
+
+	padding: 0 30rpx;
+}
+
+.tuihuotab .amountcont {
+	width: 100%;
+	height: 88rpx;
+	text-align: right;
+	font-size: 28rpx;
+	color: #333;
+}
+
+.zonggong {
+	margin-right: 37rpx;
+}
+
+.tabcontbottom {
+	position: relative;
+}
+
+.bottomlink {
+	width: 160rpx;
+	height: 60rpx;
+	line-height: 60rpx;
+	float: right;
+	border-radius: 30rpx;
+	font-size: 28rpx;
+	text-align: center;
+	/* position: absolute; */
+	border: 1rpx solid #999;
+	color: #999;
+	right: 35rpx;
+	margin: 0 10rpx;
+
+}
+
+.cancelorder {
+	border: 1rpx solid #999;
+	color: #999;
+	right: 225rpx;
+}
+
+.paymoney {
+	border: 1rpx solid #48db8d;
+	color: #48db8d;
+	right: 35rpx;
+}
+
+.cuidan {
+	border: 1rpx solid #48db8d;
+	color: #48db8d;
+	right: 225rpx;
+}
+
+.tuihuo {
+	border: 1rpx solid #999;
+	color: #999;
+	right: 35rpx;
+}
+
+.seewuliu {
+	border: 1rpx solid #999;
+	color: #999;
+	right: 225rpx;
+}
+
+.sureshouhuo {
+	border: 1rpx solid #48db8d;
+	color: #48db8d;
+	right: 35rpx;
+}

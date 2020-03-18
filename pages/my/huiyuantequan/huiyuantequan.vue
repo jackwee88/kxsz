@@ -25,8 +25,8 @@
 		</view>
 		<view class="box">
 			<view class="bottom-txt">
-				<text>会员积分</text>
-				<text>个人中心</text>
+				<text @tap="jifen">会员积分</text>
+				<text @tap="back">个人中心</text>
 				<text>联系客服</text>
 			</view>
 		</view>
@@ -34,6 +34,26 @@
 </template>
 
 <script>
+export default {
+	methods: {
+		jifen() {
+			wx.navigateTo({
+				url: '/pages/my/jifenguize/jifenguize'
+			});
+		},
+
+		toTop(e) {
+			var that = this;
+			that.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			});
+		},
+		back() {
+			wx.navigateBack({});
+		}
+	}
+}
 </script>
 
 <style>

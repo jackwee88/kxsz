@@ -377,7 +377,7 @@
 
 				}
 			}
-		},  {
+		}, {
 			"path": "pages/brain/brain",
 			"style": {
 				"navigationStyle": "custom"
@@ -494,60 +494,51 @@
 			"style": {
 				"navigationBarTitleText": "打卡记录"
 			}
-		},
-		{
-			"path": "pages/onlinestore/newaddress/newaddress",
+		}, {
+			"path": "pages/jifen-shop/jifen-detail/jifen-detail",
+			"style": {
+
+			}
+		}, {
+			"path": "pages/userInfo/otherInfo",
+			"style": {
+				"navigationBarTitleText": "用户信息"
+			}
+		}, {
+			"path": "pages/shoppingcart/orderdetails/orderdetails",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		}, {
+			"path": "pages/dzxy/dzxy",
+			"style": {}
+		}, {
+			"path": "pages/invoice/invoice",
+			"style": {
+				"navigationBarTitleText": "发票信息"
+			}
+		}, {
+			"path": "pages/shoppingcart/shaddress/shaddress",
+			"style": {
+				"navigationBarTitleText": "收货地址"
+			}
+		}, {
+			"path": "pages/shoppingcart/newaddress/newaddress",
 			"style": {
 				"navigationBarTitleText": "新增地址"
 			}
-		}
-	    ,{
-            "path" : "pages/jifen-shop/jifen-detail/jifen-detail",
-            "style": {
-
-            }
-        }
-        ,{
-            "path" : "pages/onlinestore/shaddress/shaddress",
-            "style" : {
-							"navigationBarTitleText":"管理收货地址"
-						}
-        }
-        ,{
-            "path" : "pages/userInfo/otherInfo",
-            "style" : {
-							"navigationBarTitleText":"用户信息"
-						}
-        }
-        ,{
-            "path" : "pages/shoppingcart/orderdetails/orderdetails",
-            "style": {
+		}, {
+			"path": "pages/onlinestore/orderdetails/orderdetails",
+			"style": {
 				"navigationBarTitleText": "订单详情"
 			}
-        }
-        ,{
-            "path" : "pages/dzxy/dzxy",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/invoice/invoice",
-            "style": {
-				"navigationBarTitleText": "发票信息"
+		}, {
+			"path": "pages/my/myVideo/myVideo",
+			"style": {
+				"navigationBarTitleText": "已购视频"
 			}
-        }
-        ,{
-            "path" : "pages/shoppingcart/shaddress/shaddress",
-            "style": {
-				"navigationBarTitleText": "收货地址"
-			}
-        }
-        ,{
-            "path" : "pages/shoppingcart/newaddress/newaddress",
-            "style": {
-				"navigationBarTitleText": "新增地址"
-			}
-        }
-    ],
+		}
+	],
 
 
 	"globalStyle": {

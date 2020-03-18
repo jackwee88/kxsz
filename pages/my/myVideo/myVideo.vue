@@ -1,13 +1,11 @@
 <template>
 <view>
-<!--pages/my/videoList/videoList.wxml-->
 <!--pages/my/myVideo/myVideo.wxml-->
-<view class="jhm-btn" @tap.stop="jhmShow">视频激活码兑换</view>
   <view class="tabcont" v-if="tabcontitem.length>0">
     <view class="tabcontlist">
-      <view class="tabcontitem" v-for="(item, index) in tabcontitem" :key="index" @tap="toVideoList" :data-id="item.cl_id">
+      <view class="tabcontitem" v-for="(item, index) in tabcontitem" :key="index" @tap="playVideo" :data-url="item.video" :data-vpid="item.vp_id" :data-browse="item.browse" :data-clid="item.cl_id" :data-title="item.title" :data-index="index">
         <view class="left itemfolt">
-          <image class="leftimg" :src="item.icon"></image>
+          <image class="leftimg" :src="item.image"></image>
         </view>
         <view class="right itemfolt">
           <view class="title">{{item.title}}</view>          
@@ -15,53 +13,29 @@
       </view>
     </view>
   </view>
-  <view v-if="tabcontitem.length==0" style="text-align:center;font-size:32rpx;padding-top:20rpx">暂无数据</view>
+  <view v-if="tabcontitem.length==0" style="text-align:center;font-size:32rpx;padding-top:20rpx">暂无已购视频</view>
 
 
 
   
 <template is="toTop"></template>
-
-
-<view class="bg-grey" v-if="is_code==true">
-<view class="popupback-jhm" v-if="is_code==true">
-
-    <view class="popupback_cont-jhm">
-      <view class="popupbacktitle-jhm" style="position:relative">提示<text style="position:absolute;coloe:white;top:-34rpx;right:16rpx;font-size:40rpx;display:flex;width:50rpx;justify-content:flex-end" @tap.stop="closeJhm">x</text>
-      </view>
-      <view class="popuplist-jhm">
-        <input placeholder="请输入激活码" style="font-size:32rpx;" type="text" @input="changeInput"></input>
-      </view>
-      <view class="clickbtn-jhm">
-
-        <button class="close" @tap="buyJhm" style="font-size:24rpx" :data-cl_id="cl_id" :data-vp_id="item.vp_id" :data-title="item.title">确认</button>
-
-      </view>
-    </view>
-  </view>
-  </view>
 </view>
 </template>
 
 <script>
-// pages/my/mycollect/mycollect.js
-const app = getApp().globalData;
 var util = require("../../../utils/util.js");
 
 export default {
   data() {
     return {
-      code: '',
-      currentId: '1',
+      id: 1,
       tabcontitem: [],
       goodsList: [],
-      type: 1,
       keyword: '',
       page: 1,
       page_size: 10,
       count: 1,
-      flag: false,
-      is_code: false
+      preview: false
     };
   },
 
@@ -72,18 +46,15 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.currentId) {
+    if (options.id) {
       this.setData({
-        currentId: options.currentId,
-        type: options.currentId,
+        id: options.id,
         tabcontitem: [],
         page: 1
       });
     }
 
-    if (wx.getStorageSync('token')) {
-      this.getData();
-    }
+    this.getData();
   },
   onPullDownRefresh: function () {
     var that = this;
@@ -102,16 +73,7 @@ export default {
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    this.setData({
-      page: 1,
-      tabcontitem: []
-    });
-
-    if (wx.getStorageSync('token')) {
-      this.getData();
-    }
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -130,7 +92,7 @@ export default {
     this.getData();
   },
   methods: {
-    setData(param) {
+	setData(param) {
       for (const key in param) {
         const element = param[key];
         this[key] = element
@@ -139,6 +101,7 @@ export default {
     getData() {
       var that = this;
       var param = {
+        cl_id: this.id,
         page: that.page,
         page_size: that.page_size
       };
@@ -149,7 +112,7 @@ export default {
           icon: 'none'
         });
       } else {
-        util.ajaxs('Goods/buiedVideo', param, res => {
+        util.ajaxs('goods/catalogVideoList', param, res => {
           var tabcontitem = that.tabcontitem;
 
           if (res.data.list != undefined) {
@@ -159,7 +122,6 @@ export default {
               count: res.data.count > 1 ? res.data.count : 1,
               tabcontitem: tabcontitem.concat(res.data.list)
             });
-            console.log(res.data.list);
             wx.stopPullDownRefresh();
           }
         });
@@ -172,7 +134,7 @@ export default {
     // onShareAppMessage: function () {
     //   return {
     //     title: '开心书写',
-    //     path: 'pages/index/index?myshare=1&tourl=/pages/my/videoList/videoList'  // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
+    //     path: 'pages/index/index?myshare=1&tourl=/pages/my/myVideo/myVideo'  // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
     //   }
     // },
     details(e) {
@@ -187,10 +149,38 @@ export default {
       });
     },
 
-    toVideoList(e) {
-      var id = e.currentTarget.dataset.id;
+    goodsdetails(e) {
+      console.log(e.currentTarget.dataset.p_id);
+      const p_id = e.currentTarget.dataset.p_id;
       wx.navigateTo({
-        url: '/pages/my/myVideo/myVideo?id=' + id
+        url: '/pages/onlinestore/productDetail/productDetail?p_id=' + p_id
+      });
+    },
+
+    playVideo(e) {
+      console.log(e);
+      this.setData({
+        preview: false
+      }); // var src = e.currentTarget.dataset.url;
+      // wx.navigateTo({
+      //   url: '../../my/myVideoContent/myVideoContent?vp_id=' + e.currentTarget.dataset.vpid,
+      // })
+
+      const vp_id = e.currentTarget.dataset.vpid;
+      const title = e.currentTarget.dataset.title;
+      const index = e.currentTarget.dataset.index;
+      const browse = e.currentTarget.dataset.browse;
+      var param = {
+        vp_id: vp_id
+      };
+      util.ajaxs('videopacks/videopacksLimit', param, res => {
+        if (res.status == 1) {
+          wx.navigateTo({
+            url: '/pages/hncjiaoxue_intro/hncjiaoxue_intro?vp_id=' + vp_id + '&title=' + title + '&vp_id=' + vp_id + '&index=' + index + "&browse=" + browse
+          });
+        } else if (res.status == 2) {
+          console.log("跳转购买界面");
+        }
       });
     },
 
@@ -200,48 +190,11 @@ export default {
         scrollTop: 0,
         duration: 0
       });
-    },
-
-    jhmShow() {
-      this.setData({
-        flag: true,
-        is_code: true
-      });
-    },
-
-    changeInput(e) {
-      var val = e.detail.value;
-      this.setData({
-        code: val
-      });
-    },
-
-    buyJhm(e) {
-      var that = this;
-      util.ajaxs('Goods/getShareVideoListBycode', {
-        code: this.code
-      }, res => {
-        wx.showToast({
-          title: res.msg,
-          mask: true,
-          duration: 2000
-        });
-        this.setData({
-          is_code: false
-        });
-        that.onShow();
-      });
-    },
-
-    closeJhm() {
-      this.setData({
-        is_code: false
-      });
     }
 
   }
 };
 </script>
 <style>
-@import "./videoList.css";
+@import "./myVideo.css";
 </style>
