@@ -76,7 +76,8 @@ export default {
 				}
 			],
 			goodsDetail: '',
-			id: ''
+			id: '',
+			ar_id:''
 		};
 	},
 	onLoad(event) {
@@ -93,14 +94,9 @@ export default {
 			},
 			method: 'POST',
 			success: res => {
-				// console.log(list)
 				this.goodsDetail = res.data.data;
-				console.log(res.data.data);
 				const { image_text } = res.data.data;
 				this.swiperImages = image_text;
-				console.log(this.swiperImages);
-				// const {image} = res.data.data.image_text
-				// console.log(image)
 			},
 			error: function() {}
 		});
@@ -111,22 +107,16 @@ export default {
 				url: 'integral/placeOrder',
 				data: {
 					// goods_id:this.id
-					goods_id: '1'
+					goods_id: '1',
 					// 收货地址
-					// ar_id:
+					// ar_id:this.ar_id
+					ar_id:"338"
 				},
 				method: 'POST',
 				success: res => {
-					// console.log(list)
-					this.goodsDetail = res.data.data;
-					console.log(res.data.data);
-					const { image_text } = res.data.data;
-					this.swiperImages = image_text;
-					console.log(this.swiperImages);
-					// const {image} = res.data.data.image_text
-					// console.log(image)
 				},
-				error: function() {}
+				error: function() {
+				}
 			});
 		}
 	}

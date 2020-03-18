@@ -16,9 +16,9 @@
 		</view> -->
 
 		<form>
-			<textarea class="content_input" :value="content" placeholder="请填写意见描述(500字以内)" />
-			<input type="text" :value="qq" class="qq_input" placeholder="请填写联系QQ" />
-			<input type="text" :value="mobile" placeholder="请填写联系电话" />
+			<textarea class="content_input" v-model="content" placeholder="请填写意见描述(500字以内)" />
+			<input type="text" v-model="qq" class="qq_input" placeholder="请填写联系QQ" />
+			<input type="text" v-model="mobile" placeholder="请填写联系电话" />
 			<view class="uploadbtn">
 			  <button class="btn" type="submit" @tap="submit">发表</button>
 			</view>
