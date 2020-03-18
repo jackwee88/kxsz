@@ -505,7 +505,7 @@
 
 			}
 		}, {
-			"path": "pages/onlinestore/shaddress/shaddress",
+			"path": "pages/shoppingcart/shaddress/shaddress",
 			"style": {
 				"navigationBarTitleText": "管理收货地址"
 			}
@@ -560,7 +560,13 @@
 				"navigationBarTitleText": "已购视频"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/onlinestore/searchGoods",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+    ],
 
 
 	"globalStyle": {

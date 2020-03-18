@@ -200,6 +200,7 @@ export default {
 			},
 			method:'POST',
 			success:(res)=>{
+				console.log("123")
 				this.productDetail =  res.data.data
 				const {image_text,assmeble} = res.data.data
 				this.swiperImages =  image_text

@@ -3,13 +3,13 @@
 		<view class="top_title">
 			<navigator open-type="navigateBack"><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
 			<view class="input-wrap flex">
-				<image class="search" src="/static/onlineStore/ss@2x.png" />
-				<input placeholder="一年级上册…" placeholder-class="placeholder-class" class="input" />
+				<image class="search" src="/static/onlineStore/ss@2x.png"  @click="searchGoods"/>
+				<input placeholder="一年级上册…" placeholder-class="placeholder-class" class="input" v-model="input"/>
 			</view>
 			<navigator url=""><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
 		</view>
 		<view class="recommend-header">
-			<view class="index-header">
+<!-- 			<view class="index-header">
 				<text class="address" v-if="leftWords">{{ leftWords }}</text>
 				<view class="input-wrap" v-if="input">
 					<input type="text" placeholder="请输入搜索" v-model="value" @change="inputChange" />
@@ -19,7 +19,7 @@
 					<text class="iconfont" :class="rightIcon"></text>
 					<text>{{ rightWords }}</text>
 				</view>
-			</view>
+			</view> -->
 			<!--tab-->
 			<view class="flex flex-space">
 				<scroll-view scroll-x class="tabBars-content">
@@ -104,7 +104,7 @@
 					<view class="banner-title"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
 					<!-- 商品推荐 -->
 					<view class="recommend-footer">
-						<view class="recommend-list" v-for="(item, index) in productList">
+						<view class="recommend-list" v-for="(item, index) in joinAssembleList">
 							<view class="uni-product" @click="gotoDetails(item)">
 								<view class="image-view">
 									<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
@@ -150,7 +150,7 @@
 <script>
 import uniCountdown from '@/components/uni-countdown/uni-countdown.vue';
 import screenTextScroll from '@/components/p-screenTextScroll/screenTextScroll.vue';
-import ajax from '../../utils/public.js';
+import { ajax} from '../../utils/public.js';
 export default {
 	data() {
 		return {
@@ -263,6 +263,9 @@ export default {
 		uniCountdown,
 		screenTextScroll
 	},
+	created() {
+
+	},
 	mounted() {
 		// 换地址
 		uni.request({
@@ -282,10 +285,10 @@ export default {
 		});
 		ajax({
 			url: 'assemble/joinAssemble',
-			data: '',
+			data: {},
 			method: 'POST',
 			success: res => {
-				console.log(res);
+				console.log(res+'将成团');
 				const { count, list } = res.data.data;
 				this.joinAssembleList = list;
 			},
@@ -302,6 +305,14 @@ export default {
 				url: '../product-detail/product-detail?productDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
+		searchGoods(){
+			let param={
+				input:this.input
+			}
+			uni.navigateTo({
+				url:'./searchGoods?searchInput='+ encodeURIComponent(JSON.stringify(param))
+			})
+		},
 		toggleTab(index) {
 			console.log(index);
 			this.tabIndex = index;
@@ -310,19 +321,6 @@ export default {
 			console.log(e.detail);
 			const tabIndex = e.detail.current;
 			this.tabIndex = tabIndex;
-		},
-		getList() {
-			uni.request({
-				url: 'http://localhost:3000/goods',
-				success: res => {
-					console.log(res.data);
-					this.productList = res.data.goodslist;
-				}
-			});
-		},
-		onLoad() {
-			this.getList();
-			this.renderImage = true;
 		},
 		close() {
 			this.isClose = true;
