@@ -25,7 +25,7 @@
 												    <view class="red14 m-l-9">1/1</view>
 												</view>
                     </view>
-                    <view class="right-button" v-if="item.status === '0'">
+                    <view class="right-button" v-if="item.status === '0'" @click="checkBind">
                         去完成
                     </view>
 										<view class="completed-button" v-if="item.status === '1'">
@@ -61,7 +61,7 @@
 				},
 				{
 					status:'1',
-					name:'绑定手机号码',
+					name:'观看视频',
 					score:'30',
 				}]
 			}
@@ -73,25 +73,28 @@
 			// 	method:'POST',
 			// 	success:(res)=>{
 			// 		const {count,list} = res.data.data
-					// this.tackList = list
+			// 		this.tackList = list
 			// 	},
 			// 	error:function(){
 					
 			// 	}
 			// })
-			ajax({
-				url:'index/checkBind',
-				data:{
-					
-				},
-				method:'POST',
-				success:(res)=>{
-					this.status=res.data.status
-				}
-			})
+			
 		},
 		methods:{
-			
+			checkBind(){
+				console.log('123')
+				ajax({
+					url:'index/checkBind',
+					data:{
+						
+					},
+					method:'POST',
+					success:(res)=>{
+						this.status=res.data.status
+					}
+				})
+			}
 		}
 		}
 </script>
