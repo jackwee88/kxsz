@@ -218,7 +218,7 @@ export default {
         title: "加载中",
         mask: true
       });
-      util.ajaxs("works/VideoBanner", {}, () => {
+      util.ajaxs("works/VideoBanner", {}, res => {
         this.setData({
           videolists: res.data.list
         });

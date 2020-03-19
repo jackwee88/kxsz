@@ -259,36 +259,7 @@ export default {
               });
               const timestamp = Date.parse(new Date()) / 1000;
               const filename =
-                String(timestamp) + String(Math.floor(Math.random() * 50)); // util.ajax('/api/index/checkMedia', { media_url: value, media_type:2}, res => {
-              //   wx.uploadFile({
-              //     url: that.data.host,
-              //     filePath: value,
-              //     name: 'file',
-              //     formData: {
-              //       name: value,
-              //       key: that.data.dir + '/' + filename + '.png',
-              //       policy: that.data.policy,
-              //       OSSAccessKeyId: that.data.accessid,
-              //       success_action_status: "200",
-              //       signature: that.data.signature
-              //     },
-              //     success: function (res) {
-              //       console.log(res)
-              //       var imgArr = that.data.imgArr
-              //       var imgUrl = that.data.host + '/' + that.data.dir + '/' + filename + '.png'
-              //       imgArr = imgArr.concat(imgUrl)
-              //       that.setData({
-              //         imgArr: imgArr,
-              //         num: imgArr.length
-              //       })
-              //       console.log("imgArr", imgArr)
-              //       wx.hideToast()
-              //     },
-              //     fail: function (errMsg) {
-              //       console.log(errMsg)
-              //     }
-              //   })
-              // })
+                String(timestamp) + String(Math.floor(Math.random() * 50));
 
               wx.uploadFile({
                 url: that.host,
@@ -502,20 +473,12 @@ export default {
 
     submit() {
       var that = this;
-      console.log(that.sign);
-
       if (that.sign == 0) {
         wx.showToast({
           title: "您已发表",
           icon: "none"
         });
-      } // if (!that.data.title) {
-      //   wx.showToast({
-      //     title: '您还没输入日记标题哦',
-      //     icon: 'none'
-      //   })
-      // }
-      else if (!that.content) {
+      } else if (!that.content) {
         wx.showToast({
           title: "说说今天的感想和收获吧！",
           icon: "none"
@@ -536,13 +499,7 @@ export default {
           title: "选择是否公开",
           icon: "none"
         });
-      } // else if (!that.data.address || !that.data.lgt || !that.data.lat) {
-      //   wx.showToast({
-      //     title: '请选择所在位置',
-      //     icon: 'none'
-      //   })
-      // }
-      else {
+      } else {
         that.setData({
           sign: 0
         });
@@ -590,131 +547,6 @@ export default {
         });
       }
     },
-
-    //   canvas(data){
-    //     var that = this
-    //     that.setData({
-    //       canvas: data
-    //     })
-    //     wx.downloadFile({
-    //       url: that.data.canvas.avatar,
-    //       success: function (res) {
-    //         that.setData({
-    //           avatar: res.tempFilePath
-    //         })
-    //         that.beginCanvas()
-    //       }, fail: function (fres) {
-    //       }
-    //     })
-    //     // var code = wx.base64ToArrayBuffer(that.data.canvas.code)
-    //     // const FILE_BASE_NAME = 'tmp_base64src';
-    //     // var fsm = wx.getFileSystemManager();
-    //     // const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.${that.data.canvas.code}`;
-    //     // fsm.writeFile({
-    //     //   filePath,
-    //     //   data: code,
-    //     //   encoding: 'base64',
-    //     //   success(res) {
-    //     //     console.log('111333333', res)
-    //     //     that.setData({
-    //     //       code: res
-    //     //     })
-    //     //     that.beginCanvas()
-    //     //   },
-    //     //   fail() {},
-    //     // });
-    //     /// 将base64转为二进制数据
-    //     var code = that.data.canvas.code
-    //     var fileManager = wx.getFileSystemManager()
-    //     var imgPath = wx.env.USER_DATA_PATH + '/鸭蛋评分-' + 'eeeeeeeeee' + '.jpg'
-    //     // const buffer = wx.base64ToArrayBuffer(that.data.canvas.code);
-    //     var imageData = code.replace(/^data:image\/\w+;base64,/, "")
-    //     fileManager.writeFile({
-    //       filePath: imgPath,
-    //       data: imageData,
-    //       encoding: 'base64',
-    //       success: res => {
-    //         this.setData({
-    //           code: imgPath
-    //         })
-    //       },
-    //       fail: err => {
-    //         console.log(err)
-    //       }
-    //     })
-    //     wx.downloadFile({
-    //       url: that.data.canvas.background,
-    //       success: function (res) {
-    //         that.setData({
-    //           background: res.tempFilePath
-    //         })
-    //         that.beginCanvas()
-    //       }, fail: function (fres) {
-    //       }
-    //     })
-    //   },
-    // beginCanvas:function(){
-    //   var that = this
-    //   if (that.data.background && that.data.code && that.data.avatar) {
-    //     // setTimeout(function () {
-    //       var ctx = wx.createCanvasContext('customCanvas')
-    //       ctx.drawImage(that.data.background, 0, 0, 650, 650)
-    //       // ctx.moveTo(600 / 2, 20)//画笔移动到垂直居中位置（高度20不重要，我随便写的）
-    //       // ctx.setTextAlign('center')//设置文字要垂直居中
-    //       ctx.setFillStyle('white')//字体颜色
-    //       ctx.setFontSize(32)
-    //       ctx.fillText(that.data.canvas.d, 20, 50)
-    //       ctx.setFontSize(16)
-    //       ctx.fillText(that.data.canvas.y, 20, 80)
-    //       ctx.setFontSize(16)
-    //       let arr = []
-    //       for (var a = 0; a < that.data.canvas.word.length; a++) {
-    //         let i = Math.ceil((a + 1) / 15)
-    //         if (arr[i - 1]) {
-    //           arr[i - 1] += that.data.canvas.word[a];
-    //         } else {
-    //           arr[i - 1] = that.data.canvas.word[a];
-    //         }
-    //       }
-    //       for (var b = 0; b < arr.length; b++) {
-    //         ctx.fillText(arr[b], 20, 120 + b * 20)
-    //       }
-    //       // ctx.fillStyle = "#FFF";
-    //       // ctx.fillRect(0, 0, 200, 200);  // 画了一个矩形框
-    //       that.drawRoundedRect(ctx, 20, 250, 280, 110, 8, true, false)
-    //       ctx.fillText(that.data.canvas.title, 20, 170)
-    //       ctx.drawImage(that.data.avatar, 40, 260, 50, 50)
-    //       ctx.setFillStyle('black')
-    //       ctx.setFontSize(16)
-    //       ctx.fillText(that.data.canvas.nickname, 100, 275)
-    //       ctx.setFillStyle('gray')
-    //       ctx.setFontSize(12)
-    //     ctx.fillText(that.data.canvas.where, 100, 300)
-    //       ctx.moveTo(40, 315)
-    //       // ctx.rect(10, 10, 100, 50)
-    //       ctx.lineTo(280, 315)
-    //       ctx.ineWidth = 1
-    //       ctx.strokeStyle = "#f5f5f5"
-    //       ctx.stroke()
-    //       ctx.setFontSize(16)
-    //       ctx.fillText("坚持打卡天数", 50, 340)
-    //       ctx.setFillStyle('black')
-    //       ctx.setFontSize(12)
-    //       var day = that.data.canvas.date + '天'
-    //       ctx.fillText(day, 250, 340)
-    //       ctx.setFillStyle('white')
-    //       that.drawRoundedRect(ctx, 20, 400, 280, 55, 8, true, false)
-    //       ctx.drawImage("/img/index/logo.png", 35, 408, 100, 40)
-    //       ctx.drawImage(that.data.code, 240, 408, 40, 40)
-    //       ctx.draw()
-    //       that.uploadimg()
-    //       that.setData({
-    //         isCan: true
-    //       })
-    //     // }, 3000);
-    //   }
-    // },
-    // 删除图片
     deleteImg: function(e) {
       let upload_picture_list = this.imgArr;
       let index = e.currentTarget.dataset.index;

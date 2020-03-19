@@ -283,10 +283,13 @@
 			"style": {
 				"navigationBarTitleText": "视频礼包",
 				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
 				}
+			}
+		},
+		{
+			"path": "pages/my/activeCode/activeCode",
+			"style": {
+				"navigationBarTitleText": "激活码"
 			}
 		},
 		{

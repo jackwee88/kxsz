@@ -59,7 +59,7 @@ const ajax = opt => {
           success: function(res) {}
         });
       } else if (res.data.status == 1) {
-        opt.success(res);
+        opt.success(res.data);
       } else if (res.data.status == -10086 || res.data.status == -1) {
         uni.navigateTo({
           url: '/pages/login/login'
@@ -138,7 +138,7 @@ const ajaxs = (url, data, success) => {
           success: function(res) {}
         });
       } else if (res.data.status == 1) {
-        opt.success(res);
+        opt.success(res.data);
       } else if (res.data.status == -10086 || res.data.status == -1) {
         uni.navigateTo({
           url: '/pages/login/login'

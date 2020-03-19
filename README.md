@@ -44,6 +44,7 @@ uniapp
     - [x] 激活码 /pages/my/activeCode/activeCode
   - [x] 每日签到 /pages/my/daySignin/daySignin
   - [x] 发表日记 /pages/publishedDiary/publishedDiary
+  - [x] 个人日记 /pages/growthDiary/growthDiary
   - [x] 打卡记录 /pages/dakaLog/dakaLog
   - [x] **关注** /pages/my/follow/follow
   - [x] **粉丝** /pages/my/fans/fans
