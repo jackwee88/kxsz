@@ -18,7 +18,7 @@
               <image src="/static/my/hytq.png" style="width: 166rpx" mode="widthFix" />
               <navigator url="huiyuantequan/huiyuantequan" class="huiyuan_name">
                 会员特权
-                <image src="../../static/my/jifenreturn.png" mode />
+                <image src="../../static/my/jifenreturn.png" />
               </navigator>
             </view>
           </view>
@@ -27,7 +27,7 @@
       </view>
 
       <navigator class="signin_btn" url="/pages/my/daySignin/daySignin">
-        <image src="../../static/my/dateimg.png" mode />
+        <image src="../../static/my/dateimg.png" />
         <text>签到</text>
       </navigator>
     </view>
@@ -52,35 +52,35 @@
     <view class="panel">
       <navigator url="videoGift/videoGift">
         <view class="left_side">
-          <image src="../../static/my/jhm2.png" mode />
+          <image src="../../static/my/jhm2.png" />
           <text>激活码</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="videolist/videolist">
         <view class="left_side">
-          <image src="../../static/my/wdsp.png" mode />
+          <image src="../../static/my/wdsp.png" />
           <text>我的视频</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="../onlinestore/myOrder/myOrder">
         <view class="left_side">
-          <image src="../../static/my/wddd.png" mode />
+          <image src="../../static/my/wddd.png" />
           <text>我的订单</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="../onlinestore/myScoreOrder/myScoreOrder">
         <view class="left_side">
-          <image src="../../static/my/wddd.png" mode />
+          <image src="../../static/my/wddd.png" />
           <text>我的积分订单</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="mydiscount/mydiscount">
         <view class="left_side">
-          <image src="../../static/my/wdyhq.png" mode />
+          <image src="../../static/my/wdyhq.png" />
           <text>我的优惠券</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
@@ -92,7 +92,7 @@
     <view class="panel">
       <navigator url="mycollect/mycollect">
         <view class="left_side">
-          <image src="../../static/my/wdsc.png" mode />
+          <image src="../../static/my/wdsc.png" />
           <text>我的收藏</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
@@ -104,28 +104,28 @@
     <view class="panel">
       <navigator url="huiyuanxinxi/huiyuanxinxi">
         <view class="left_side">
-          <image src="../../static/my/hyxx.png" mode />
+          <image src="../../static/my/hyxx.png" />
           <text>会员信息</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="huiyuantequan/huiyuantequan">
         <view class="left_side">
-          <image src="../../static/my/hytq2.png" mode />
+          <image src="../../static/my/hytq2.png" />
           <text>会员特权</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="huiyuanjifen/huiyuanjifen">
         <view class="left_side">
-          <image src="../../static/my/wdjf.png" mode />
+          <image src="../../static/my/wdjf.png" />
           <text>我的积分</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
       <navigator url="jifenguize/jifenguize">
         <view class="left_side">
-          <image src="../../static/my/jfgz.png" mode />
+          <image src="../../static/my/jfgz.png" />
           <text>积分规则</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
@@ -136,7 +136,7 @@
     <view class="panel">
       <navigator url="../feedback/feedback">
         <view class="left_side">
-          <image src="../../static/my/gywm.png" mode />
+          <image src="../../static/my/gywm.png" />
           <text>意见反馈</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />
@@ -145,7 +145,7 @@
     <view class="panel">
       <navigator url="../about/about">
         <view class="left_side">
-          <image src="../../static/my/gywm.png" mode />
+          <image src="../../static/my/gywm.png" />
           <text>关于我们</text>
         </view>
         <image src="../../static/index/qj.png" class="icon_more" />

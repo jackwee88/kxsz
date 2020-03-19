@@ -780,6 +780,11 @@
 		}, {
 			"path": "components/assmeble/assmeble",
 			"style": {}
+		}, {
+			"path": "pages/hncjiaoxue_mulu/hncjiaoxue_mulu",
+			"style": {
+				"navigationBarTitleText": "功能尺使用教学"
+			}
 		}
 	],
 	"globalStyle": {

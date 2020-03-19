@@ -47,7 +47,6 @@ const ajax = opt => {
     dataType: 'json',
     success: function(res) {
       uni.hideLoading();
-      console.log(res.data.status);
       if (res.data.status == 0) {
         // uni.showToast({
         //     title: res.data.msg
@@ -60,10 +59,10 @@ const ajax = opt => {
           success: function(res) {}
         });
       } else if (res.data.status == 1) {
-        opt.success(res.data);
-      } else if (res.data.status == -10086) {
+        opt.success(res);
+      } else if (res.data.status == -10086 || res.data.status == -1) {
         uni.navigateTo({
-          url: '/pages/loginapp/loginapp'
+          url: '/pages/login/login'
         });
       } else if (res.data.status == -10087) {
         //用户被拉黑
@@ -90,7 +89,7 @@ const ajax = opt => {
         });
       } else {
         uni.showToast({
-          title: '请稍后重试,staus:000001'
+          title: res.data.msg
         });
       }
     },
@@ -127,7 +126,6 @@ const ajaxs = (url, data, success) => {
     dataType: 'json',
     success: function(res) {
       uni.hideLoading();
-      console.log(res.data.status);
       if (res.data.status == 0) {
         // uni.showToast({
         //     title: res.data.msg
@@ -140,10 +138,10 @@ const ajaxs = (url, data, success) => {
           success: function(res) {}
         });
       } else if (res.data.status == 1) {
-        opt.success(res.data);
-      } else if (res.data.status == -10086) {
+        opt.success(res);
+      } else if (res.data.status == -10086 || res.data.status == -1) {
         uni.navigateTo({
-          url: '/pages/loginapp/loginapp'
+          url: '/pages/login/login'
         });
       } else if (res.data.status == -10087) {
         //用户被拉黑

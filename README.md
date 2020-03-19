@@ -26,6 +26,7 @@ uniapp
   - [x] 智慧填空(分享功能待做) /pages/brain/fillBlanks/fillBlanks
 
 - [ ] TAB-我的
+
   - [x] 我的 /pages/my/my
   - [x] 我的积分 /pages/my/huiyuanjifen/huiyuanjifen
   - [x] 积分规则 /pages/my/jifenguize/jifenguize
@@ -33,7 +34,7 @@ uniapp
   - [x] 会员信息 /pages/my/huiyuanxinxi/huiyuanxinxi
   - [x] 我的收藏 /pages/my/mycollect/mycollect
   - [x] 我的优惠券 /pages/my/mydiscount/mydiscount
-  - [ ] 我的积分订单 /pages/onlinestore/myScoreOrder/myScoreOrder
+  - [x] 我的积分订单 /pages/onlinestore/myScoreOrder/myScoreOrder
   - [x] 我的订单 /pages/onlinestore/myOrder/myOrder
   - [ ] 订单详情 (支付以及其他接口已对接，但是还没有测试) /pages/onlinestore/orderdetails/orderdetails
   - [x] 我的视频 /pages/my/videolist/videolist
@@ -46,3 +47,6 @@ uniapp
   - [x] 打卡记录 /pages/dakaLog/dakaLog
   - [x] **关注** /pages/my/follow/follow
   - [x] **粉丝** /pages/my/fans/fans
+
+- [x] 免费教学 /pages/freeTeaching/freeTeaching
+  - [x] 功能尺使用教学 /pages/hncjiaoxue_mulu/hncjiaoxue_mulu
