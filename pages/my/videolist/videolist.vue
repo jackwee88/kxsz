@@ -34,7 +34,7 @@
       </view>
       <view class="clickbtn-jhm">
 
-        <button class="close" @tap="buyJhm" style="font-size:24rpx" :data-cl_id="cl_id" :data-vp_id="item.vp_id" :data-title="item.title">确认</button>
+        <button class="close" @tap="buyJhm" style="font-size:24rpx">确认</button>
 
       </view>
     </view>
@@ -81,7 +81,7 @@ export default {
       });
     }
 
-    if (wx.getStorageSync('token')) {
+    if (wx.getStorageSync('loginToken')) {
       this.getData();
     }
   },
@@ -103,14 +103,15 @@ export default {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      page: 1,
-      tabcontitem: []
-    });
+    // alert(123)
+    // this.setData({
+    //   page: 1,
+    //   tabcontitem: []
+    // });
 
-    if (wx.getStorageSync('token')) {
-      this.getData();
-    }
+    // if (wx.getStorageSync('token')) {
+    //   this.getData();
+    // }
   },
 
   /**

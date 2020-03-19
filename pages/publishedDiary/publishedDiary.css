@@ -2,7 +2,6 @@
 
 .title {
   background-color: #f9f9f9;
-  width: 100%;
   height: 130rpx;
   padding: 25rpx;
   font-size: 24rpx;
@@ -90,7 +89,7 @@
   float: left;
   margin-right: 30rpx;
   margin-bottom: 10rpx;
-  position:relative;
+  position: relative;
 }
 
 .address {
@@ -102,13 +101,9 @@
 }
 
 .addresscont {
+  float: left;
   font-size: 24rpx;
   color: #999;
-		width:100%;
-		padding:0 20rpx;
-		position:relative;
-		display:inline-block;
-		margin-bottom:100rpx;
 }
 
 .coordinate_icon {
@@ -118,20 +113,15 @@
   margin-right: 15rpx;
   position: relative;
   top: 5rpx;
-  float:left;
+  float: left;
 }
-/* 
-.address_right {
-  position: absolute;
-} */
 
 .public_icon {
-  width: 40rpx;
-  height: 40rpx;
+  width: 28rpx;
+  height: 28rpx;
   background-size: 100% 100%;
   margin-right: 15rpx;
-   position: relative;
-  top: 5rpx;
+  position: relative;
 }
 
 .uploadbtn {
@@ -139,6 +129,7 @@
   height: 90rpx;
   margin-bottom: 50rpx;
 }
+
 .btn {
   width: 70%;
   height: 90rpx;
@@ -149,40 +140,45 @@
   border-radius: 10rpx;
   margin: 0 auto;
 }
-video{
-  width:100%;
-  height:100%;
-  border-radius:18rpx
+
+video {
+  width: 100%;
+  height: 100%;
+  border-radius: 18rpx
 }
-.addrress{
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  width:400rpx;
-  display:block;
-  float:left;
+
+.addrress {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 400rpx;
+  display: block;
+  float: left;
 }
-.dacha{
-  width:30rpx;
-  height:30rpx;
-  top:-21rpx;
-  right:-20rpx;
-  position:absolute;
+
+.dacha {
+  width: 30rpx;
+  height: 30rpx;
+  top: -21rpx;
+  right: -20rpx;
+  position: absolute;
 
 }
-.canvas{
+
+.canvas {
   position: fixed;
   width: 100%;
   height: 960rpx;
   left: 0;
   right: 0;
-  top:60rpx;
-  z-index:99;
+  top: 60rpx;
+  z-index: 99;
   border-radius: 10rpx;
   /* border:1rpx solid red; */
   /* background: "https://kxsx-front-pic.oss-cn-beijing.aliyuncs.com/pic/20190617/156076535042.png" */
 }
-canvas{
+
+canvas {
   margin: 0 auto;
   width: 640rpx;
   height: 960rpx;
@@ -190,128 +186,124 @@ canvas{
   position: relative;
   z-index: 1
 }
-.luyin{
-  width:97%;
-  height:150rpx;
-  background-color:grey;
-  align-items:center;
-  display:flex;
-  opacity:0.5;
-  margin:0 auto 20rpx;
-  border-radius:5px;
-  padding-left:20rpx;
+
+.luyin {
+  width: 97%;
+  height: 150rpx;
+  background-color: grey;
+  align-items: center;
+  display: flex;
+  opacity: 0.5;
+  margin: 0 auto 20rpx;
+  border-radius: 5px;
+  padding-left: 20rpx;
   position: relative
 }
-.luyin image{
-  width:60rpx;
-  height:60rpx;
+
+.luyin image {
+  width: 60rpx;
+  height: 60rpx;
 }
 
-.complete{
+.complete {
   position: absolute;
-  color:#008800;
-  font-weight:bolder;
-  right:20rpx;
+  color: #008800;
+  font-weight: bolder;
+  right: 20rpx;
   font-size: 32rpx
 }
 
-.close{
-  margin-right:20rpx;
+.close {
+  margin-right: 20rpx;
   font-size: 46rpx
 }
 
-.luyin .pause{
-  width:90rpx;
-  height:90rpx;
-  position:absolute;
-  top:25%;
-  right:150rpx;
+.luyin .pause {
+  width: 90rpx;
+  height: 90rpx;
+  position: absolute;
+  top: 25%;
+  right: 150rpx;
 }
 
-.publictext{
-  position:relative;
-  top:-32rpx;
-  left:45rpx
-}
+.publictext {}
 
-.button{
+.button {
   display: flex;
   justify-content: space-between;
-  margin-top:10rpx;
+  margin-top: 10rpx;
 }
-.button button{
-  background-color:white;
-  padding-right:0;
-  
-  font-size:32rpx;
-  height:70rpx;
-  line-height:70rpx;
-  color:#008800;
+
+.button button {
+  background-color: white;
+  padding-right: 0;
+
+  font-size: 32rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  color: #008800;
   font-weight: bolder
 }
 
-.button .r{
-  margin-right:54rpx;
-  background-color:rgba(0,0,0,0.1);
-  color:white;
-  height:80rpx;
-  line-height:80rpx;
-  text-align:center;
-  width:290rpx;
-  padding-left:0;
-  border-radius:70rpx;
-  margin-top:12rpx;
-  border:1rpx solid white;
+.button .r {
+  margin-right: 54rpx;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  width: 290rpx;
+  padding-left: 0;
+  border-radius: 70rpx;
+  margin-top: 12rpx;
+  border: 1rpx solid white;
 }
 
-button:after{
-  border:none;
-}
-.button .l{
-  margin-left:60rpx;
-background-color:#008800;
-color:white;
-margin-top:10rpx;
-border-radius:70rpx;
-height:80rpx;
-line-height:80rpx;
-padding-left:0;
-padding-right:0;
-width:240rpx;
-
-}
-image{
-  width:44rpx;
-height:44rpx;
-vertical-align:text-bottom;
-}
-.shares{
-  margin-left:15rpx;
+button:after {
+  border: none;
 }
 
-.close-can{
-  position:absolute;
-  top:-15rpx;
-  right:63rpx;
-  font-size:53rpx;
-  border-radius:50%;
-  font-weight:bold;
-  z-index:999;
-  color:white;
+.button .l {
+  margin-left: 60rpx;
+  background-color: #008800;
+  color: white;
+  margin-top: 10rpx;
+  border-radius: 70rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-left: 0;
+  padding-right: 0;
+  width: 240rpx;
+
 }
-.mask-layer{
+
+image {
+  width: 44rpx;
+  height: 44rpx;
+  vertical-align: text-bottom;
+}
+
+.shares {
+  margin-left: 15rpx;
+}
+
+.close-can {
+  position: absolute;
+  top: -15rpx;
+  right: 63rpx;
+  font-size: 53rpx;
+  border-radius: 50%;
+  font-weight: bold;
+  z-index: 999;
+  color: white;
+}
+
+.mask-layer {
   position: fixed;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 100%;
-  height:100%;
+  height: 100%;
   background-color: black;
   opacity: 0.7;
 }
-.public{
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-}
-
-
