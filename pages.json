@@ -566,6 +566,10 @@
 				"navigationStyle": "custom"
 			}
         }
+        ,{
+            "path" : "components/assmeble/assmeble",
+            "style" : {}
+        }
     ],
 
 

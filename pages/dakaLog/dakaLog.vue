@@ -63,29 +63,11 @@
 </template>
 
 <script>
+	import {ajax} from '../../utils/public.js'
 export default {
 	data() {
 		return {
 			logList:[
-				{
-					date:"2020-02-02 08:32:23",
-					logNum:'99',
-					msg:'打卡',
-					imageList:[
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-					],
-					likeNum:'345',
-					shareNum:'345',
-					commentNum:'345',
-				}
 			]
 		};
 	},
@@ -99,20 +81,16 @@ export default {
 	}),
 	mounted() {
 		//请求接口数据  
-		uni.request({
-			url: 'https://kxsx.kaifadanao.cn/api/index/index',
-			method: 'POST',
+		ajax({
+			url: 'index/myDaily',
 			data: {},
-			header: {
-				'Content-Type': 'application/x-www-form-urlencoded'
+			method: 'pause',
+			success: (res) => {
+				// console.log(res);
+				const{count,list} = res.data
+				this.logList=list
 			},
-			success: res => {
-				if (res.data.status == 1) {
-					//轮播图片数据
-					// this.logList = res.data;
-				}
-			},
-			fail: () => {}
+			error: function() {}
 		});
 	}
 };

@@ -62,7 +62,7 @@
 			</navigator>
 		</view>
 		<!-- 拼团 -->
-		<view class="team-buy" >
+		<view class="team-buy">
 				<view class="youhuiquan">
 					<text style="color: #333333;font-size:30rpx ;">10个团正在热拼，可直接参与</text>
 					<view @click="assmbleDetail()">
@@ -70,7 +70,7 @@
 						<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 					</view>
 					</view>		
-				<view class="team-buy-detail" v-for="(data, index) in teamlist" :key="index">
+				<view class="team-buy-detail" v-for="(data, index) in teamlist.splice(0,2)" :key="index">
 					<view class="assmebleleft">
 					<view class="circle-avator">
 						<image src="" mode="aspectFit"></image>
@@ -196,18 +196,29 @@ export default {
 			url:'goods/detail',
 			data:{
 				// pid:'this.pid',
-				pid:'1201'
+				pid:'1201',
 			},
 			method:'POST',
 			success:(res)=>{
-				console.log("123")
 				this.productDetail =  res.data.data
 				const {image_text,assmeble} = res.data.data
 				this.swiperImages =  image_text
 				this.assemble = assmeble
-				if(assmeble!=null){
-					this.assembleWait()
-				}
+			},
+			error:function(){
+				
+			}
+		}),
+		ajax({
+			url:'assemble/wait',
+			method:'POST',
+			data:{
+				// goods_id:this.pid,
+				goods_id:'1072'
+				},
+			success:(res)=>{
+				const {count,list} = res.data.data
+				 this.teamlist = list
 			},
 			error:function(){
 				
@@ -215,20 +226,6 @@ export default {
 		})
 	},
 	methods: {
-		assembleWait:function(){
-			ajax({
-				url:'assemnle/wait',
-				method:'POST',
-				data:{goods_id:this.pid},
-				success:(res)=>{
-					const {count,list} = res.data.data
-					 this.teamlist = list
-				},
-				error:function(){
-					
-				}
-			})
-		},
 		assmbleDetail:function(){
 			console.log(this.pid)
 	  uni.navigateTo({

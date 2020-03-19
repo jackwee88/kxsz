@@ -5,7 +5,7 @@
 
 			<view class="info_text">
 				<view class="top">
-					<view class="name">{{userinfo.nickname}}</view>
+					<view class="name">{{ userinfo.nickname }}</view>
 					<!-- <view class="btn had_btn">
 						<image src="../../static/my/add.png" class="addhao"></image>
 						关注
@@ -16,7 +16,7 @@
 						已关注
 					</view> -->
 				</view>
-				<view class="sub">开心号：{{userinfo.number}}</view>
+				<!-- <view class="sub">开心号：{{ userinfo.number }}</view> -->
 				<!-- <view class="sub">男</view> -->
 			</view>
 		</view>
@@ -24,105 +24,102 @@
 		<view class="section_title"><text>最近打卡</text></view>
 
 		<view class="works_list">
-			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
+			<navigator class="work_item" v-for="(item, index) in logList" :key="index" @click="gotoPublished()">
 				<view class="user_info">
-					<view class="left_side"><view class="date">{{item.date}}</view></view>
-		
-					<text class="view_count">浏览{{item.logNum}}次</text>
-				</view>
-				<view class="msg">{{item.msg}}</view>
-		
-				<view class="gallery">
-					<view v-for="(imageItem,imageIndex) in item.imageList" :key="imageIndex" class="imageList">
-						<image :src="imageItem.imageUrl" mode=""></image>
+					<view class="left_side">
+						<view class="date">{{ item.date }}</view>
 					</view>
+
+					<text class="view_count">浏览{{ item.logNum }}次</text>
+				</view>
+				<view class="msg">{{ item.msg }}</view>
+
+				<view class="gallery">
+					<view v-for="(imageItem, imageIndex) in item.imageList" :key="imageIndex" class="imageList"><image :src="imageItem.imageUrl" mode=""></image></view>
 				</view>
 				<view class="actions">
 					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
-						<text>{{item.shareNum}}</text>
+						<text>{{ item.shareNum }}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/pl.png" mode=""></image>
-						<text>{{item.commentNum}}</text>
+						<text>{{ item.commentNum }}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/sc.png" mode=""></image>
-						<text>{{item.likeNum}}</text>
+						<text>{{ item.likeNum }}</text>
 					</view>
 				</view>
 			</navigator>
 		</view>
-
-		<view class="talk_btn">聊天</view>
 	</view>
 </template>
 
 <script>
-	import {
-	  ajax
-	 } from '../../utils/public.js'
+import { ajax } from '../../utils/public.js';
 export default {
 	data() {
 		return {
-			logList:[
-				{
-					date:"2020-02-02 08:32:23",
-					logNum:'99',
-					msg:'打卡',
-					imageList:[
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-					],
-					likeNum:'345',
-					shareNum:'345',
-					commentNum:'345',
-				}
+			logList: [
 			],
-		 userinfo:''
+			userinfo: ''
 		};
 	},
-	onload(){
-		var value = uni.getStorageSync('loginToken')
-		console.log(value+'123456');
-		
+	onload() {
+		var value = uni.getStorageSync('loginToken');
+		console.log(value + '123456');
 	},
-	methods:({
+	onShow:function(){
+		// this.getuserData();
+	},
+	methods: {
 		//传参 打卡数据id
-		gotoPublished:function(e){
+		gotoPublished: function(e) {
 			uni.navigateTo({
-				url:'../myPublished/myPublished'
-			})
+				url: '../myPublished/myPublished'
+			});
+		},
+		//点赞
+		praised: function() {
+			ajax({
+				url: 'study/praiseStudy',
+				method: 'POST',
+				data: {
+					dy_id: '366'
+				},
+				success: res => {
+					console.log(res + '123456');
+				}
+			});
 		}
-	}),
-	mounted(){
-		ajax({
-		     url: 'friend/userDetail',
-		     data: {
-		      // type:that.type,
-		      // platform_type:that.index,
-		      // page:page,
-		      // page_size:that.page_size,
-		      token:uni.getStorageSync('loginToken'),
-					friend_uid :'366'
-		     },
-		     method: 'POST',
-		     success: (res) =>{
-					 const details = res.data.data
-					 this.userinfo  = details
-					 console.log(this.userinfo)
-		     },
-		     error: function() {}
-		    })
 	},
-
+	mounted() {
+		ajax({
+			url: 'index/getProfile',
+			data: {
+			},
+			method: 'POST',
+			success: res => {
+				const details = res.data.data;
+				this.userinfo = details;
+				console.log(this.userinfo);
+			},
+			error: function() {}
+		}),
+			ajax({
+				url: 'index/myDaily',
+				data: {},
+				method: 'pause',
+				success: (res) => {
+					// console.log(res);
+					const{count,list} = res.data
+					this.logList=list
+					console.log(this.logList+'123')
+				},
+				error: function() {}
+			});
+	}
 };
 </script>
 
