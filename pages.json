@@ -574,6 +574,12 @@
             "path" : "pages/product-detail/sureOrder/sureOrder",
             "style" : {}
         }
+        ,{
+            "path" : "pages/myPublished/commentDetails/commentDetails",
+            "style" : {
+				"navigationBarTitleText":"开心书写"
+			}
+        }
     ],
 
 

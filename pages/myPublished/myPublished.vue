@@ -38,7 +38,7 @@
 			<view class="studyitem-bottom">
 				<view class="shoppcall comment">
 					<view class="comment-item" v-for="(item, index) in commenlist" :key="index">
-						<view class="publish_list comment">
+						<view class="publish_list comment" @tap.stop="commentDetail(item)">
 							<view class="">
 								<image :src="item.avatar" mode="widthFix" class="comment-avatar"></image>
 								<text class="publish_list_item textred">{{ item.nickname }}</text>
@@ -47,7 +47,7 @@
 								<view class="redtree_text">{{ item.content }}</view>
 								<view class="">
 									<view class="comment-time l">{{ item.createtime }}</view>
-									<view class="comment-count l">{{ item.count }} 回复</view>
+									<view class="comment-count l" @click="openCommentDetails">{{ item.count }} 回复</view>
 								</view>
 							</view>
 						</view>
@@ -55,7 +55,12 @@
 				</view>
 			</view>
 			<view class="input-box">
-				<input placeholder="请输入评论内容" class="input" @input="getComment" :value="comment_content" />
+<!-- 				<input placeholder="请输入评论内容" class="input" 
+				@input="getComment" 
+				:value="comment_content"
+				v-model="comment_content"/> -->
+				<input placeholder="请输入评论内容" class="input"
+				v-model="comment_content"/>
 				<text class="send" @tap.stop="send">发送</text>
 			</view>
 		</scroll-view>
@@ -123,14 +128,14 @@ export default {
 				var prevPage = pages[pages.length - 2]; //上一个页面
 				var that = this;
 				var index = that.index;
-				if (options.type == 2) {
-					//type:1首页，2我的，3学习广场
-					var up = 'studylist[' + index + '].browse_times';
-				} else if (options.type == 3 || options.type == 4) {
-					var up = 'daka[' + index + '].browse_times';
-				} else if (options.type == 1) {
-					var up = 'daily[' + index + '].browse_times';
-				}
+				// if (options.type == 2) {
+				// 	//type:1首页，2我的，3学习广场
+				// 	var up = 'studylist[' + index + '].browse_times';
+				// } else if (options.type == 3 || options.type == 4) {
+				// 	var up = 'daka[' + index + '].browse_times';
+				// } else if (options.type == 1) {
+				// 	var up = 'daily[' + index + '].browse_times';
+				// }
 
 				var newp = ++that.browse_times;
 
@@ -157,6 +162,18 @@ export default {
 	},
 	mounted() {},
 	methods: {
+		//评论详情
+		    commentDetail: function (e) {
+				let param={
+					d_id:e.d_id,
+					owner_uid:e.owner_uid,
+					index : e.index,
+					comment_count:e.comment_count
+				}
+		      uni.navigateTo({
+		        url: 'commentDetails/commentDetails?commentDetails' + encodeURIComponent(JSON.stringify(param))
+		      });
+		    },
 		//获取详情
 		getData() {
 			ajax({
@@ -164,7 +181,7 @@ export default {
 				data: { id: this.dy_id },
 				// data:{id:'926'},
 				success: res => {
-					console.log(res.data.data);
+					// console.log(res.data.data);
 					this.studyDetails = res.data.data;
 				}
 			});
@@ -173,20 +190,80 @@ export default {
 		comment() {
 			ajax({
 				url: 'comment/comment',
-				// data:{d_id:this.dy_id},
-				data: { d_id: '926' },
+				data:{d_id:this.dy_id},
+				// data: { d_id: '926' },
 				success: res => {
 					if (this.count < this.page) {
 					} else {
 						let release = this.release;
 						const { count, list } = res.data.data;
 						this.commenlist = list;
-						console.log(this.commenlist);
+						console.log(list);
 						(this.page = this.page + 1), (this.count = count > 1 ? count : 1), (this.release = release.concat(list)), (this.comment_num = count);
 					}
 				}
 			});
 		},
+		//发送评论
+		    send: function () {
+			  ajax({
+				  url:'comment/commentAdd',
+				  data:{content: this.comment_content,
+		        d_id: this.dy_id},
+				  method:'POST',
+				  success:(res)=>{
+					  this.comment_content= ''
+					  ajax({
+						  url:'comment/comment',
+						  data:{d_id: this.dy_id},
+						  success:(res)=>{
+							  console.log(res.data.data)
+							  let list = res.data.data
+							  list.if_input = false
+							  this.release = res.data.list
+							  this.comment_num = res.data.count
+							  var pages = getCurrentPages();
+							  var prevPage = pages[pages.length - 2]; //上一个页面
+							  		
+							  var index = this.index;
+							  		
+							  if (that.type == 1) {
+							    var up = "daily[" + index + "].comment_count";
+							  } else if (that.type == 2) {
+							    var up = "studyList[" + index + "].comment_count";
+							  } else if (that.type == 3 || that.type == 4) {
+							    var up = "daka[" + index + "].comment_count";
+							  }
+							  		
+							  var newp = ++that.comment_count; // that.setData({
+							  //   comment_count:newp
+							  // })
+							  		
+							  if (prevPage) {// 可以修改上一页的数据
+							    // prevPage.setData({
+							    //   [up]: newp
+							    // })
+							  }
+							  		
+							  var prevPages = pages[pages.length - 3];
+							  		
+							  if (prevPages) {
+							    if (prevPages.__route__ == 'pages/index/index') {
+							      var up = "daily[" + index + "].comment_count";
+							    } else if (prevPages.__route__ == 'pages/my/my') {
+							      var up = "daka[" + index + "].comment_count";
+							    } else if (prevPages.__route__ == 'pages/studySquare/studySquare') {
+							      var up = "studylist[" + index + "].comment_count";
+							    } // prevPages.setData({
+							    //   [up]: newp
+							    // })
+							  		
+							  }
+						  }
+					  })
+				  }
+			  })
+		    },
 		//点赞
 		    praise(e) {
 		      var that = this;
@@ -370,6 +447,6 @@ export default {
 	/* margin-left:70rpx */
 }
 .comment-item {
-	padding: 10rpx 0;
+	padding: 10rpx 0 20rpx 0;
 }
 </style>

@@ -91,6 +91,7 @@
 	margin-top:30rpx;
 	padding-top:30rpx;
 	box-sizing: border-box;
+	margin-bottom: 80rpx;
 }
 .comment{
 	font-size:28rpx;
@@ -115,6 +116,12 @@
 .redtree_text{
 	margin-bottom:10rpx;
 	font-size: 34rpx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	word-break: break-all;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
 }
 .comment-time{
 	margin-top:10rpx;

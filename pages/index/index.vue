@@ -65,7 +65,7 @@
 		</view>
 
 		<view class="recommend">
-			<navigator url="">
+			<navigator url="" v-for="(item,index) in ">
 				<image src="../../static/index/zxsc.png" mode=""></image>
 				<view class="info">
 					<view class="title">书法尺</view>

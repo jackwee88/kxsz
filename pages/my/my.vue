@@ -381,8 +381,18 @@ export default {
       }
     };
   },
+  onLoad() {
+	var token = uni.getStorageSync('loginToken')
+  	if(token===''){
+		uni.navigateTo({
+			url:'../login/login'
+		})
+	}else{
+		this.getData();
+	}
+	
+  },
   mounted() {
-    this.getData();
   },
   methods: {
     getData() {
