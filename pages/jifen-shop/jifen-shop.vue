@@ -6,7 +6,7 @@
 		</view>
 		<view class="jifen">
 			<image src="../../static/jifenshop/jf.png" style="width: 52rpx;height: 50rpx;"></image>
-			<text class="jifenTxt" style="color: #f7b500;font-size: 36rpx;font-weight: 500;">900积分</text>
+			<text class="jifenTxt" style="color: #f7b500;font-size: 36rpx;font-weight: 500;">{{userdata[0].after}}积分</text>
 		</view>
 		<view>
 			<view class="title">
@@ -44,7 +44,22 @@ export default {
 	data() {
 		return {
 		   goodsList:[],
+			 userdata: [
+			   {
+			     after: 0
+			   }
+			 ]
 		};
+	},
+	onLoad: function(options) {
+	 ajax({
+		 url:'index/getScore', 
+		 data:{},
+		 success:(res)=>{
+			 const{list}= res.data.data
+			this.userdata =list;
+		 }
+	 })
 	},
 	created() {
 		ajax({

@@ -54,7 +54,7 @@ export default {
 	methods: {
 		gotoDetails: function(e) {
 			let param = {
-				id: e.id
+				id: e.p_id
 			};
 			console.log(param);
 			uni.navigateTo({

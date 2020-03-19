@@ -219,11 +219,11 @@
 		<view class="user_info p_r_l_32">
 			<view class="left_side">
 				<navigator url="../userInfo/userInfo">
-					<image src="../../static/index/dnkf.png" class="avatar"></image>
+					<image :src="getProfile.avatar" class="avatar"></image>
 				</navigator>
 				<view class="info_wrap">
 					<view class="name">
-						<text>asd</text>
+						<text>{{getProfile.nickname}}</text>
 						<view class="huiyuan">
 							<image src="/static/my/hytq.png" style="width: 166rpx" mode="widthFix"></image>
 							<navigator url="huiyuantequan/huiyuantequan" class="huiyuan_name">
@@ -245,19 +245,19 @@
 		<view class="base_info">
 			<navigator class="item" url="../dakaLog/dakaLog">
 				<view>
-					20
+					{{getProfile.diary_num}}
 				</view>
 				<text>打卡</text>
 			</navigator>
 			<navigator class="item" url="follow/follow">
 				<view>
-					20
+					{{getProfile.follow_num}}
 				</view>
 				<text>关注</text>
 			</navigator>
 			<navigator class="item" url="fans/fans">
 				<view>
-					20
+					{{getProfile.fans_num}}
 				</view>
 				<text>粉丝</text>
 			</navigator>
@@ -371,6 +371,7 @@
 </template>
 
 <script>
+import { ajax } from '../../utils/public.js';
 export default {
 	data() {
 		return {
@@ -379,9 +380,22 @@ export default {
 					name: '测试1',
 					id: 1
 				}
-			]
+			],
+			getProfile:{}
 		};
-	}
+	},
+	mounted() {
+		ajax({
+			url: 'index/getProfile',
+			data: {
+			},
+			method: 'POST',
+			success: res => {
+				this.getProfile=res.data.data
+			},
+			error: function() {}
+		})
+	},
 };
 </script>
 

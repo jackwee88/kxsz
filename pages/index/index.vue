@@ -16,15 +16,16 @@
 				</swiper-item>
 			</block>
 		</swiper>
-
-<!-- 			<view class="menu_wrap" v-for="(item,index) in indexList">
+		<view class="menu_wrap">
+			<view class="menu_item" v-for="(item, index) in indexList">
 				<navigator :url="item.to_url">
 					<image :src="item.pic_url" mode=""></image>
-					<text>{{item.content}}</text>
+					<text>{{ item.content }}</text>
 				</navigator>
-			</view> -->
+			</view>
+		</view>
 
-		<view class="menu_wrap">
+	<!-- 	<view class="menu_wrap">
 			<navigator url="../publishedDiary/publishedDiary">
 				<image src="../../static/index/daka.png" mode=""></image>
 				<text>打卡</text>
@@ -37,10 +38,6 @@
 				<image src="../../static/index/mfkc.png" mode=""></image>
 				<text>免费课程</text>
 			</navigator>
-<!-- 			<navigator url="">
-				<image src="../../static/index/jxkc.png" mode=""></image>
-				<text>精选课程</text>
-			</navigator> -->
 			<navigator url="../jifen-shop/jifen-shop">
 				<image src="../../static/index/jxkc.png" mode=""></image>
 				<text>积分商城</text>
@@ -57,10 +54,8 @@
 				<image src="../../static/index/dnkf.png" mode=""></image>
 				<text>大脑开发</text>
 			</navigator>
-
-
 		</view>
-
+ -->
 		<view class="section_title">
 			<text class="recommend_title">推荐用品</text>
 			<navigator url="../onlinestore/onlinestore">
@@ -100,43 +95,41 @@
 				<image src="../../static/index/qj.png" mode=""></image>
 			</navigator>
 		</view>
-<!-- 点击进入我的发表页 请求所有用户数据-->
+		<!-- 点击进入我的发表页 请求所有用户数据-->
 		<view class="works_list">
-			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
+			<view class="work_item" v-for="(item, index) in studylist" :key="index" >
 				<view class="user_info">
 					<view class="left_side">
-						<view class="avatar">
-							<image src="../../static/index/dnkf.png" class="avatar">							
-							</image>
-							</view>
+						<view class="avatar"><image :src="item.avatar" class="avatar"></image></view>
 						<view class="date">
-							<view class="username">{{item.name}}</view>
-							<view>{{item.date}}</view>
+							<view class="username">{{ item.nickname }}</view>
+							<view>{{ item.createtime }}</view>
 						</view>
-						</view>
-					<text class="view_count">浏览{{item.logNum}}次</text>
-				</view>
-				<view class="msg">{{item.msg}}</view>
-				<view class="gallery">
-					<view v-for="(imageItem,imageIndex) in item.imageList" :key="imageIndex" class="imageList">
-						<image :src="imageItem.imageUrl" mode=""></image>
 					</view>
+					<text class="view_count">浏览{{ item.browse_times }}次</text>
+				</view>
+				<view @click="gotoPublished(item)">
+				<view class="msg">{{ item.content }}</view>
+				<view class="gallery">
+					<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
+				</view>
 				</view>
 				<view class="actions">
 					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
-						<text>{{item.shareNum}}</text>
+						<text>{{ item.shareNum }}</text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/pl.png" mode=""></image>
-						<text>{{item.commentNum}}</text>
+						<text>{{ item.comment_count }}</text>
 					</view>
-					<view class="item">
-						<image src="../../static/index/sc.png" mode=""></image>
-						<text>{{item.likeNum}}</text>
+					<view class="item" @tap="praise(item)">
+						<image v-if="item.is_give" src="../../static/index/collect.png"></image>
+						<image v-else src="../../static/index/uncollect.png"></image>
+						<text>{{item.thumbs_times }}</text>
 					</view>
 				</view>
-			</navigator>
+			</view>
 		</view>
 
 		<!-- 在线教程 -->
@@ -203,47 +196,28 @@
 				<navigator url="/pages/my/daySignin/daySignin"><text>签到</text></navigator>
 			</view>
 		</view>
-		<indexModal :isVisible="true"></indexModal>
 	</view>
 </template>
 
 <script>
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
-import indexModal from '@/components/indexModal.vue'
 import '../public/rongyun.js';
-import {ajax} from '../../utils/public.js'
+import { ajax } from '../../utils/public.js';
 export default {
 	data() {
 		return {
 			//轮播图片
 			swiperImges: [],
-			indexList:[],
-			logList:[
-				{
-					date:"2020-02-02 08:32:23",
-					logNum:'99',
-					msg:'打卡',
-					name:'asd',
-					imageList:[
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-					],
-					likeNum:'345',
-					shareNum:'345',
-					commentNum:'345',
-				}
-			],
+			indexList: [],
+			page: 1,
+			type: 1,
+			page_size: 10,
 			//在线教学图标
 			onlineTeaching: [],
 			status: 'more',
-			banner:'',
+			banner: '',
+			studylist: [],
+			pictureList: [],
 			statusTypes: [
 				{
 					value: 'more',
@@ -272,9 +246,9 @@ export default {
 		};
 	},
 	components: {
-		uniLoadMore,indexModal
+		uniLoadMore
 	},
-	
+
 	onLoad() {
 		// var value = uni.getStorageSync('loginToken')
 		// console.log(value)
@@ -318,6 +292,24 @@ export default {
 		// 			});
 	},
 	//下拉刷新
+	onLoad() {
+		this.getData();
+	},
+	// onLoad: function(options) {
+	// 	var that = this;
+	// 	that.setData({
+	// 		page: 1,
+	// 		page_size: this.page_size,
+	// 		studylist: []
+	// 	});
+	// 	that.getData();
+	// 	var pages = getCurrentPages();
+	// 	var prevPage = pages[pages.length - 2];
+	// 	prevPage.setData({
+	// 		is_wait: '',
+	// 		wait: ''
+	// 	});
+	// },
 	onPullDownRefresh() {
 		console.log('下拉');
 		setTimeout(function() {
@@ -346,13 +338,86 @@ export default {
 				this.status = 'noMore'; //赋值查看更多
 			}
 		},
-		getUserDetail:function(){
-			
+		//转发
+		onShareAppMessage: function(e) {
+			if (e.from === 'button') {
+				var nickname = e.target.dataset.nickname;
+				var title = nickname + '的打卡日记';
+				var image = e.target.dataset.image;
+				var video = e.target.dataset.video;
+
+				if (image) {
+					var img = image;
+				} else if (video) {
+					var img = video + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast';
+				}
+
+				var that = this;
+				return {
+					title: title,
+					path: '/pages/myPublished/myPublished?dy_id=' + e.target.dataset.dy_id + '&is_share=1',
+					imageUrl: img,
+					success: function(res) {}
+				};
+			} else {
+				return {
+					title: '开心书写',
+					path: 'pages/index/index?myshare=1&tourl=/pages/studySquare/studySquare' // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
+				};
+			}
 		},
-		gotoPublished:function(e){
+		//点赞
+		praise(e) {
+			var that = this;
+			const index = e.index;
+			const dy_id = e.dy_id;
+			console.log('123'+e.dy_id)
+			ajax({
+				url:'study/praiseStudy',
+				data:{
+					dy_id: dy_id
+				},
+				success:(res) => {
+					const details = this.studylist;
+					if (res.data.data.is_ok) {
+						this.studylist.is_give=!details.is_give,
+						this.studylist.thumbs_times = details.thumbs_times + 1
+					} else {
+						this.studylist.is_give=!details.is_give,
+						this.studylist.thumbs_times = details.thumbs_times - 1
+					}
+				}
+			});
+		},
+		getUserDetail: function() {},
+		gotoPublished: function(e) {
+			let param = {
+				dy_id: e.dy_id,
+				index: e.index,
+				browse_times: e.browse_times,
+				comment_count: e.comment_count,
+				thumbs_times: e.thumbs_times
+			};
 			uni.navigateTo({
-				url:'../myPublished/myPublished'
-			})
+				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
+		getData() {
+			ajax({
+				url: 'study/studyList',
+				data: {
+					page: this.page,
+					page_size: this.page_size,
+					type: this.type
+				},
+				success: res => {
+					console.log(res);
+					const { list, count } = res.data.data;
+					this.studylist = list;
+					console.log(this.studylist)
+				},
+				error: function() {}
+			});
 		}
 	},
 	mounted() {
@@ -377,71 +442,33 @@ export default {
 			complete: () => {}
 		});
 		ajax({
-			url:'index/app',
-			data:{},
-			method:'POST',
-			success:(res)=>{
-				const{banner,smodel} = res.data.data
-				this.indexList =  smodel
-				this.banner = banner
+			url: 'index/app',
+			data: {},
+			method: 'POST',
+			success: res => {
+				const { banner, smodel } = res.data.data;
+				this.indexList = smodel;
+				this.banner = banner;
+				console.log(this.indexList + '123');
 			},
-			error:function(){
-				
-			}
-		})
-
-		//主体内容
-		// uni.request({
-		// 	url: 'https://kxsx.kaifadanao.cn/api/index/daily',
-		// 	method: 'POST',
-		// 	data: {
-		// 		 page:1,
-		// 		 page_size:10,
-		// 		 keyword:''
-		// 	},
-		// 	header: {
-		// 		'Content-Type': 'application/x-www-form-urlencoded'
-		// 	},
-		// 	success: res => {
-		// 		console.log(res);
-		// 		if (res.data.status == 1) {
-		//
-		// 		}
-		//
-		// 	},
-		// 	fail: () => {},
-		// 	complete: () => {}
-		// })
-
-		//api/shop/goods
-		//api/shop/getNewUserCoupon
-		// uni.request({
-		// 	url:'https://kxsx.kaifadanao.cn/api/shop/newUserCouponAction',
-		// 	method: 'POST',
-		// 	data: {},
-		// 	header:{
-		// 		'Content-Type': 'application/x-www-form-urlencoded'
-		// 	},
-		// 	success:res=>{
-		// 		console.log(res);
-		// 	}
-		// });
+			error: function() {}
+		});
 	}
 };
 </script>
 
 <style lang="less">
 @import './index.css';
-.username{
+.username {
 	color: #323232;
 	font-size: 28rpx;
 	padding: 5rpx 0rpx;
 }
-.status_bar {  
-    height: var(--status-bar-height);  
-    width: 100%;  
-    background-color: #F8F8F8;  
-} 
+.status_bar {
+	height: var(--status-bar-height);
+	width: 100%;
+	background-color: #f8f8f8;
+}
 .top_title {
 	display: flex;
 	align-items: center;
@@ -548,13 +575,14 @@ export default {
 	overflow-x: scroll;
 	display: flex;
 	flex-direction: row;
-	navigator {
+	navigator,
+	.menu_item {
 		display: inline-flex;
 		flex-direction: column;
 		align-items: center;
 		width: 98rpx;
 		margin-right: 46rpx;
-		
+
 		&:last-of-type {
 			margin-right: 0;
 		}
@@ -624,7 +652,6 @@ export default {
 		line-height: 28rpx;
 	}
 }
-
 .works_list {
 	margin-top: 20rpx;
 	.work_item {
@@ -667,49 +694,49 @@ export default {
 				line-height: 28rpx;
 			}
 		}
-		
+
 		.msg {
 			margin-top: 20rpx;
 			margin-bottom: 10rpx;
-			font-size:24rpx;
-			font-weight:500;
-			color:rgba(50,50,50,1);
-			line-height:34rpx;
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(50, 50, 50, 1);
+			line-height: 34rpx;
 		}
-		
+
 		.gallery {
 			display: flex;
-			
+
 			image {
 				width: 220rpx;
 				height: 220rpx;
 				margin-right: 14rpx;
-				
+
 				&:nth-of-type(3n) {
 					margin-right: 0;
 				}
 			}
 		}
-		
+
 		.actions {
 			display: flex;
 			justify-content: space-around;
 			margin-top: 38rpx;
-			
+
 			.item {
 				display: flex;
 				align-items: center;
-				
+
 				image {
 					width: 30rpx;
 					height: 28rpx;
 					margin-right: 10rpx;
 				}
-				
+
 				text {
-					font-size:24rpx;
-					color:rgba(153,153,153,1);
-					line-height:34rpx;
+					font-size: 24rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 34rpx;
 				}
 			}
 		}

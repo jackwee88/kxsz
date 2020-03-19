@@ -570,6 +570,10 @@
             "path" : "components/assmeble/assmeble",
             "style" : {}
         }
+        ,{
+            "path" : "pages/product-detail/sureOrder/sureOrder",
+            "style" : {}
+        }
     ],
 
 
