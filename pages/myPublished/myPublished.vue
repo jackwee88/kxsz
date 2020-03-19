@@ -84,6 +84,7 @@ export default {
 					dianzanname: '小芊芊'
 				}
 			],
+			details: '',
 			dy_id: '',
 			release: [],
 			comment_num: 0,
@@ -109,6 +110,8 @@ export default {
 		};
 	},
 	onLoad(event) {
+		console.log(event);
+		// this.getData()
 		const { dy_id, browse_times, comment_count, thumbs_times } = JSON.parse(decodeURIComponent(event.pulishedDetail));
 		if (dy_id) {
 			this.dy_id = dy_id;
@@ -161,6 +164,7 @@ export default {
 				data: { id: this.dy_id },
 				// data:{id:'926'},
 				success: res => {
+					console.log(res.data.data);
 					this.studyDetails = res.data.data;
 				}
 			});
@@ -177,6 +181,7 @@ export default {
 						let release = this.release;
 						const { count, list } = res.data.data;
 						this.commenlist = list;
+						console.log(this.commenlist);
 						(this.page = this.page + 1), (this.count = count > 1 ? count : 1), (this.release = release.concat(list)), (this.comment_num = count);
 					}
 				}
@@ -189,14 +194,13 @@ export default {
 		      ajax({
 						url:'study/praiseStudy', 
 						data:{
-						  dy_id: that.dy_id
+						  dy_id: this.dy_id
 						}, success:(res) => {
 						  const details = this.studyDetails;
-							console.log(details)
-								console.log(res.data.data)
+								
 						  if (res.data.data.is_ok) {
-						      this.studyDetails.is_give=!details.is_give,
-						      this.studyDetails.thumbs_times = details.thumbs_times + 1
+						    this.studyDetails.is_give=!details.is_give,
+						    this.studyDetails.thumbs_times = details.thumbs_times + 1
 						    var pages = getCurrentPages();
 						    var prevPage = pages[pages.length - 2]; //上一个页面
 								
@@ -257,8 +261,8 @@ export default {
 								
 						    ;
 						  } else {
-						      this.studyDetails.is_give=!details.is_give,
-						      this.studyDetails.thumbs_times = details.thumbs_times - 1
+						   this.studyDetails.is_give=!details.is_give,
+						   this.studyDetails.thumbs_times = details.thumbs_times - 1
 						    var pages = getCurrentPages();
 						    var prevPage = pages[pages.length - 2]; //上一个页面
 								
