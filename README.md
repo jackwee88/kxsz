@@ -10,7 +10,7 @@ uniapp
 
 **接口对接**
 
-- [ ] 购物车
+- [x] 购物车
 
   - [x] 购物车对接（跳转商品详情未完成）/pages/shoppingcart/shoppingcart
   - [x] 确认订单(支付还未重新对接) /pages/shoppingcart/sureorder/sureorder
@@ -26,6 +26,7 @@ uniapp
   - [x] 智慧填空(分享功能待做) /pages/brain/fillBlanks/fillBlanks
 
 - [ ] TAB-我的
+  - [x] 我的 /pages/my/my
   - [x] 我的积分 /pages/my/huiyuanjifen/huiyuanjifen
   - [x] 积分规则 /pages/my/jifenguize/jifenguize
   - [ ] 会员特权(联系客服按钮未做) /pages/my/huiyuantequan/huiyuantequan
@@ -35,7 +36,13 @@ uniapp
   - [ ] 我的积分订单 /pages/onlinestore/myScoreOrder/myScoreOrder
   - [x] 我的订单 /pages/onlinestore/myOrder/myOrder
   - [ ] 订单详情 (支付以及其他接口已对接，但是还没有测试) /pages/onlinestore/orderdetails/orderdetails
-  - [ ] 我的视频 /pages/my/videolist/videolist
-    - [ ] 已购视频 /pages/my/myVideo/myVideo
-    - [ ] 功能尺教学 /pages/hncjiaoxue_intro/hncjiaoxue_intro
-  - [ ] 激活码 /pages/my/videoGift/videoGift
+  - [x] 我的视频 /pages/my/videolist/videolist
+    - [x] 已购视频 /pages/my/myVideo/myVideo
+    - [x] 功能尺教学 /pages/hncjiaoxue_intro/hncjiaoxue_intro
+  - [x] 视频礼包 /pages/my/videoGift/videoGift
+    - [x] 激活码 /pages/my/activeCode/activeCode
+  - [x] 每日签到 /pages/my/daySignin/daySignin
+  - [x] 发表日记 /pages/publishedDiary/publishedDiary
+  - [x] 打卡记录 /pages/dakaLog/dakaLog
+  - [x] **关注** /pages/my/follow/follow
+  - [x] **粉丝** /pages/my/fans/fans
