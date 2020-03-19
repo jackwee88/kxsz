@@ -83,6 +83,7 @@ export default {
 	onLoad(event) {
 		console.log(event);
 		this.banner = JSON.parse(decodeURIComponent(event.productName));
+		console.log(this.banner)
 		this.id = this.banner.goods_id;
 	},
 	mounted() {

@@ -1,7 +1,7 @@
 <!-- 首页弹出窗口 -->
 
-<template>
-	<view class="containerModal">
+<template name='indexModal'>
+	<view class="containerModal" v-if="isVisible">
 		<view class="modalTitle">恭喜您获得新人礼包</view>
 		<view class="youhuiquan" >
 			<view class="youhuiNum">
@@ -22,10 +22,17 @@
 
 <script>
 	export default {
+		name:'indexModal',
 		data() {
 			return {
 				
 			};
+		},
+		props:{
+			isVisible: {
+				type: Boolean,
+				default: false
+			},
 		},
 		methods:{
 			gotoNovice:function(){

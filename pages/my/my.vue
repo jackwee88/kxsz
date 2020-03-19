@@ -1,4 +1,216 @@
 <template>
+		<!-- 用户信息 -->
+		<!-- <view class="top">
+			<view class="topleft topfloat">
+				<navigator url="">
+					<image class="userimg" src="../../static/my/daifukuan.png" mode="widthFix"></image>
+				</navigator>
+			</view>
+			<view class="topright topfloat">
+				<view class="username">
+					暂未登录
+				</view>
+				<view class="">
+					<navigator url="" style="display: inline-block;">
+						<image class="qiandao" src="../../static/my/qiandao-my.png" mode="widthFix"></image>
+					</navigator>
+					<navigator url="/pages/chat/chat" style="display: inline-block;">
+						<image class="qiandao" src="../../static/my/kefu-my.png" mode="widthFix" style="margin-left: 20rpx;"></image>
+					</navigator>
+					<navigator url="/pages/my/videoGift/videoGift" style="display: inline-block;margin-left: 20rpx;">
+						<image class="qiandao" src="../../static/my/jhm.png" mode="widthFix"></image>
+					</navigator>
+				</view>
+			</view>
+			<navigator url="/pages/my/jifenguize/jifenguize" style="display: inline-block;">
+				<view class="jifensay">
+					<image src="../../static/my/jifenshuoming.png" mode="widthFix" class="imgqian"></image>
+					<text>积分说明</text>
+					<image src="../../static/my/jifenreturn.png" mode="widthFix" class="imghou"></image>
+				</view>
+			</navigator>
+			<view class="">
+				<navigator url="/pages/my/mydiscount/mydiscount">
+					<view class="myyouhuijuan">
+						<image src="../../static/my/lingjuanduiquan.png" mode="widthFix" class="yhjimg"></image>
+						<text>我的优惠券</text>
+						<image src="../../static/my/youhuijuanruture.png" mode="widthFix" class="rightimg"></image>
+					</view>
+				</navigator>
+			</view>
+		</view> -->
+		<!-- 我的订单 -->
+		<!-- <view class="myorder">
+			<navigator url="/pages/onlinestore/myOrder/myOrder?currentId=0">
+				<view class="myordertitle">
+					<text class="myBill">我的订单</text>
+					<view class="rightorder">
+						<text>全部订单</text>
+						<image src="../../static/my/righticon.png" mode="widthFix"></image>
+					</view>
+				</view>
+			</navigator>
+			<view class="ordercont">
+				<view class="ordercontlist">
+					<navigator url="/pages/onlinestore/myOrder/myOrder?currentId=1">
+						<image src="../../static/my/daifukuan.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							待付款
+						</text>
+					</navigator>
+				</view>
+				<view class="ordercontlist" style="width: 50%;">
+					<navigator url="/pages/onlinestore/myOrder/myOrder?currentId=2">
+						<image src="../../static/my/daifahuo.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							待发货
+						</text>
+					</navigator>
+				</view>
+				<view class="ordercontlist">
+					<navigator url="/pages/onlinestore/myOrder/myOrder?currentId=3">
+						<image src="../../static/my/daishouhuo.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							待收款
+						</text>
+					</navigator>
+				</view>
+			</view>
+		</view> -->
+		<!-- 会员中心 -->
+		<!-- <view class="myorder">
+			<view class="myordertitle">
+				<text class="myBill">会员中心</text>
+			</view>
+			<view class="ordercont">
+				<view class="viplist">
+					<navigator url="/pages/my/huiyuanxinxi/huiyuanxinxi">
+						<image src="../../static/my/huiyuanxinxi-my.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							会员信息
+						</text>
+					</navigator>
+				</view>
+				<view class="viplist">
+					<navigator url="/pages/my/huiyuantequan/huiyuantequan">
+						<image src="../../static/my/huiyuantequan-my.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							会员特权
+						</text>
+					</navigator>
+				</view>
+				<view class="viplist">
+					<navigator url="/pages/my/huiyuanjifen/huiyuanjifen">
+						<image src="../../static/my/huiyuanjifen-my.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							我的积分
+						</text>
+					</navigator>
+				</view>
+				<view class="viplist">
+					<navigator url="/pages/my/jifenguize/jifenguize">
+						<image src="../../static/my/guize.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							积分规则
+						</text>
+					</navigator>
+				</view>
+			</view>
+		</view> -->
+		<!-- 我的收藏 -->
+		<!-- <view class="myorder">
+			<view class="myordertitle">
+				<text class="myBill">我的收藏</text>
+			</view>
+			<view class="ordercont">
+				<view class="ordercontlist">
+					<navigator url="/pages/my/mycollect/mycollect?currentId=1">
+						<image src="../../static/my/collectshipin-yi.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							视频
+						</text>
+					</navigator>
+				</view>
+				<view class="ordercontlist" style="width: 50%;">
+					<navigator url="/pages/my/mycollect/mycollect?currentId=2">
+						<image src="../../static/my/collectyinpin-yi.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							音频
+						</text>
+					</navigator>
+				</view>
+				<view class="ordercontlist">
+					<navigator url="/pages/my/mycollect/mycollect?currentId=3">
+						<image src="../../static/my/chanpin-yi.png" mode="widthFix" class="ordercontlistimage"></image>
+						<text class="ordercontlisttext">
+							产品
+						</text>
+					</navigator>
+				</view>
+			</view>
+		</view> -->
+		<!-- 个性签名 -->
+		<!-- <view class="personalized">
+			<navigator url="/pages/my/signature/signature">
+				<view class="myordertitle">
+					<text class="myBill">个性签名</text>
+					<image src="../../static/my/gerenzhongxin.png" mode="widthFix" class="gerenzhongxin"></image>
+				</view>
+			</navigator>
+		</view> -->
+		<!-- 历史投稿记录 -->
+		<!-- <view class="personalized">
+			<navigator url="/pages/my/lstgjl/lstgjl">
+				<view class="myordertitle">
+					<text class="myBill">历史投稿记录</text>
+					<image src="../../static/my/lstgjl.png" mode="widthFix" class="lstgjl"></image>
+				</view>
+			</navigator>
+		</view> -->
+		<!-- 我的打卡记录 -->
+		<!-- <view class="recommend">
+			<text>我的打卡记录</text>
+		</view>
+		<view class="studylist">
+			<view class="recommend-item" v-for="data in recomItem" :key='data.id'>
+				<navigator url="/pages/myPublished/myPublished">
+					<view class="item-top">
+						<image class="touxiangicon" src="https://wx.qlogo.cn/mmopen/vi_32/99iaN59Fn6lNvW4gXAmaueWC2PCw3ycdjYwQ9c1TKaAz8EePsvN2bR5BDprHTJnXicgiaW88hicOHpVIo5W2PfLQRg/132"
+						 mode="widthFix"></image>
+						<view class="info">
+							<text class="title">{{data.name}}</text>
+							<text class="time">2019-08-29 17:03:55</text>
+							<text class="time">浏览35次</text>
+						</view>
+					</view>
+					<view class="item-middle">
+						<view class="detail">
+							<text class="conttext">真心觉得摒弃物质诱惑，好好带孩子感受书法，让孩子爱上书法，由内而外的兴趣才是学好书法的核心动力。</text>
+						</view>
+						<view class="middle-image">
+							<image src="https://kxsx-front-pic.oss-cn-beijing.aliyuncs.com/pic/20190815/156587576839.png" mode=""></image>
+							<image src="https://kxsx-front-pic.oss-cn-beijing.aliyuncs.com/pic/20190815/156587576839.png" mode=""></image>
+							<image src="https://kxsx-front-pic.oss-cn-beijing.aliyuncs.com/pic/20190815/156587576839.png" mode=""></image>
+						</view>
+					</view>
+				</navigator>
+				<view class="smallicon">
+					<view class="smallicon-flex">
+						<image src="../../static/index/uncollect.png" mode="widthFix" style="width: 38rpx;height: 36rpx;"></image>
+						<text>10086</text>
+					</view>
+					<view class="smallicon-flex">
+						<image src="../../static/index/fx.png" mode="widthFix" style="width: 45rpx;height: 42rpx;"></image>
+						<text>分享</text>
+					</view>
+					<view class="smallicon-flex">
+						<image src="../../static/index/messageicon.png" mode="widthFix" style="width: 40rpx;height: 40rpx;"></image>
+						<text>10086</text>
+					</view>
+				</view>
+			</view>
+		</view> -->
+
   <view class="page">
     <view class="status_bar">
       <!-- 这里是状态栏 -->
@@ -169,8 +381,18 @@ export default {
       }
     };
   },
+  onLoad() {
+	var token = uni.getStorageSync('loginToken')
+  	if(token===''){
+		uni.navigateTo({
+			url:'../login/login'
+		})
+	}else{
+		this.getData();
+	}
+	
+  },
   mounted() {
-    this.getData();
   },
   methods: {
     getData() {
