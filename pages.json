@@ -360,7 +360,6 @@
 				}
 			}
 		},
-
 		{
 			"path": "pages/my/videolist/videolist",
 			"style": {
@@ -571,7 +570,7 @@
 			"style": {
 				"navigationBarTitleText": "激活码"
 			}
-		}, , {
+		}, {
 			"path": "pages/my/videolist/videolist",
 			"style": {
 				"navigationBarTitleText": "我的视频"
@@ -783,15 +782,10 @@
 			"style": {}
 		}
 	],
-
-
 	"globalStyle": {
-		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#ffffff",
 		"navigationBarTextStyle": "black"
-
-
 	},
 	"tabBar": {
 		"selectedColor": "#008800",
@@ -827,45 +821,4 @@
 			}
 		]
 	}
-}
-"globalStyle": {
-	// "enablePullDownRefresh": true,
-	"backgroundTextStyle": "light",
-	"navigationBarBackgroundColor": "#ffffff",
-	"navigationBarTextStyle": "black"
-},
-"tabBar": {
-	"selectedColor": "#008800",
-	"backgroundColor": "#ffffff",
-	"color": "#000000",
-	"list": [{
-			"pagePath": "pages/index/index",
-			"text": "首页",
-			"iconPath": "/static/index/index.png",
-			"selectedIconPath": "/static/index/index_check.png",
-			"biaocount": 0
-		},
-		// {
-		// 	"pagePath": "pages/jctbxzjx/jctbxzjx",
-		// 	"text": "在线教学",
-		// 	"iconPath": "/static/index/zuopinzhengji.png",
-		// 	"selectedIconPath": "/static/index/zuopinzhengji_check.png",
-		// 	"biaocount": 1
-		// },
-		{
-			"pagePath": "pages/message/message",
-			"text": "消息",
-			"iconPath": "/static/index/message.png",
-			"selectedIconPath": "/static/index/message-active.png",
-			"biaocount": 1
-		},
-		{
-			"pagePath": "pages/my/my",
-			"text": "我的",
-			"iconPath": "/static/index/my.png",
-			"selectedIconPath": "/static/index/my_check.png",
-			"biaocount": 0
-		}
-	]
-}
 }
