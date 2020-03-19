@@ -1,93 +1,136 @@
 <template>
-<view>
-<!--pages/my/mycollect/mycollect.wxml-->
+  <view>
+    <!--pages/my/mycollect/mycollect.wxml-->
 
-<view class="mycollect">
-  <view class="search">
-    <image class="searchicon" src="/static/img/shuhuajs/search.png"></image>
-    <input class="searchinput" placeholder-class="place-hoder" placeholder="搜索" @input="keywordFun"></input>
-  </view>
+    <view class="mycollect">
+      <view class="search">
+        <image class="searchicon" src="/static/img/shuhuajs/search.png" />
+        <input
+          class="searchinput"
+          placeholder-class="place-hoder"
+          placeholder="搜索"
+          @input="keywordFun"
+        />
+      </view>
 
-  <view class="navtab">
-    <view :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active':'')" v-for="(item, id) in section" :key="id" @tap.stop="handleTap(item.typeId)" :idAttr="item.typeId">
-      <image :src="item.clicknavtabimg" v-if="currentId==item.typeId" class="navtabimg"></image>
-      <image :src="item.navtabimg" v-else class="navtabimg"></image>{{item.name}}</view>
-  </view>
-
-  <view class="tabcont" :hidden="currentId!=1">
-    <view class="tabcontlist">
-      <view class="tabcontitem" v-for="(item, index) in tabcontitem" :key="index" :data-vp_id="item.vp_id" @tap="details" :data-title="item.title">
-        <view class="left itemfolt">
-          <image class="leftimg" :src="item.img[0]"></image>
-        </view>
-        <view class="right itemfolt">
-          <view class="title">{{item.title}}</view>
-          <view class="xaingqing">详情：{{item.detail}}</view>
-           <view class="title" :data-p_id="item.p_id" @tap="details">{{item.p_name}}</view>
-         
-          <view @tap.stop="collectF" :data-index="index" :data-p_id="item.vp_id" class="collect">
-              <image class="collectimg_active" src="/static/img/freeTeaching/shoucangyi.png"></image>
-              <text class="collecttext_active">取消收藏</text>
-            </view>
-          <view class="shouting clear">
-            <view class="shoutingdate">收藏时间：<text class="date">{{item.date}}</text>
-              <text class="time">{{item.time}}</text>
-            </view>
-            <navigator class="goonlink">继续收听</navigator>
-          </view>
+      <view class="navtab">
+        <view
+          :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active':'')"
+          v-for="(item, id) in section"
+          :key="id"
+          @tap.stop="handleTap(item.typeId)"
+          :idAttr="item.typeId"
+        >
+          <image :src="item.clicknavtabimg" v-if="currentId==item.typeId" class="navtabimg" />
+          <image :src="item.navtabimg" v-else class="navtabimg" />
+          {{item.name}}
         </view>
       </view>
-    </view>
-  </view>
-  <view class="tabcont" :hidden="currentId!=2">
-   <view class="tabcontlist">
-      <view class="tabcontitem" v-for="(item, index) in tabcontitem" :key="index" :data-vp_id="item.vp_id" @tap="details">
-        <view class="left itemfolt">
-          <image class="leftimg" src="/../kxsx_xcx/pages/my/mycollect/https:/kxsx-front-pic.oss-cn-beijing.aliyuncs.com/test/collectproduct-img.png"></image>
-        </view>
-        <view class="right itemfolt">
-          <view class="title">{{item.title}}</view>
-          <view class="xaingqing">详情：{{item.detail}}</view>
-          <view class="shouting">
-            <view class="shoutingdate">上次听到：<text class="date">{{item.date}}</text>
-              <text class="time">{{item.createtime}}</text>
+
+      <view class="tabcont" :hidden="currentId!=1">
+        <view class="tabcontlist">
+          <view
+            class="tabcontitem"
+            v-for="(item, index) in tabcontitem"
+            :key="index"
+            :data-vp_id="item.vp_id"
+            @tap="details"
+            :data-title="item.title"
+          >
+            <view class="left itemfolt">
+              <image class="leftimg" :src="item.img[0]" />
             </view>
-            <navigator class="goonlink">继续收听</navigator>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-  <view class="tabcont" :hidden="currentId!=3">
-    <view class="productlist">
-      <view class="productitem" v-for="(item, index) in goodsList" :key="index" :data-p_id="item.p_id" @tap="goodsdetails">
-      
-          <view class="leftitem leftitem_left">
-            <image class="productimg" :src="item.image"></image>
-          </view>
-          <view class="leftitem leftitem_right">
-            <view class="title">{{item.p_name}}</view>
-            <view class="jieshao">
-              <text class="text-detail">{{item.p_detail}}</text> </view>
-               <view @tap.stop="collectP" :data-index="index" :data-p_id="item.p_id" class="collects">
-                  <image class="collectimg_active" src="/static/img/freeTeaching/shoucangyi.png"></image>
-                  <text class="collecttext_active">取消收藏</text>
+            <view class="right itemfolt">
+              <view class="title">{{item.title}}</view>
+              <view class="xaingqing">详情：{{item.detail}}</view>
+              <view class="title" :data-p_id="item.p_id" @tap="details">{{item.p_name}}</view>
+
+              <view
+                @tap.stop="collectF"
+                :data-index="index"
+                :data-p_id="item.vp_id"
+                class="collect"
+              >
+                <image class="collectimg_active" src="/static/img/freeTeaching/shoucangyi.png" />
+                <text class="collecttext_active">取消收藏</text>
+              </view>
+              <view class="shouting clear">
+                <view class="shoutingdate">
+                  收藏时间：
+                  <text class="date">{{item.date}}</text>
+                  <text class="time">{{item.time}}</text>
                 </view>
-            <navigator class="seedetail">查看详情</navigator>
+                <navigator class="goonlink">继续收听</navigator>
+              </view>
+            </view>
           </view>
-   
+        </view>
+      </view>
+      <view class="tabcont" :hidden="currentId!=2">
+        <view class="tabcontlist">
+          <view
+            class="tabcontitem"
+            v-for="(item, index) in tabcontitem"
+            :key="index"
+            :data-vp_id="item.vp_id"
+            @tap="details"
+          >
+            <view class="left itemfolt">
+              <image
+                class="leftimg"
+                src="/../kxsx_xcx/pages/my/mycollect/https:/kxsx-front-pic.oss-cn-beijing.aliyuncs.com/test/collectproduct-img.png"
+              />
+            </view>
+            <view class="right itemfolt">
+              <view class="title">{{item.title}}</view>
+              <view class="xaingqing">详情：{{item.detail}}</view>
+              <view class="shouting">
+                <view class="shoutingdate">
+                  上次听到：
+                  <text class="date">{{item.date}}</text>
+                  <text class="time">{{item.createtime}}</text>
+                </view>
+                <navigator class="goonlink">继续收听</navigator>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="tabcont" :hidden="currentId!=3">
+        <view class="productlist">
+          <view
+            class="productitem"
+            v-for="(item, index) in goodsList"
+            :key="index"
+            :data-p_id="item.p_id"
+            @tap="goodsdetails"
+          >
+            <view class="leftitem leftitem_left">
+              <image class="productimg" style="width:100%;height:100%;" :src="item.image" />
+            </view>
+            <view class="leftitem leftitem_right">
+              <view class="title">{{item.p_name}}</view>
+              <view class="jieshao">
+                <text class="text-detail">{{item.p_detail}}</text>
+              </view>
+              <view
+                @tap.stop="collectP"
+                :data-index="index"
+                :data-p_id="item.p_id"
+                class="collects"
+              >
+                <image class="collectimg_active" src="/static/img/freeTeaching/shoucangyi.png" />
+                <text class="collecttext_active">取消收藏</text>
+              </view>
+              <navigator class="seedetail">查看详情</navigator>
+            </view>
+          </view>
+        </view>
       </view>
     </view>
-  
-  
-  
+
+    <template is="toTop"></template>
   </view>
-</view>
-
-
-
-<template is="toTop"></template>
-</view>
 </template>
 
 <script>
@@ -96,27 +139,31 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
-      currentId: '1',
-      section:[{
-			navtabimg:'../../../static/my/collectshipin-wei.png',
-			clicknavtabimg:'../../../static/my/collectshipin-yi.png',
-			name:'视频',
-			typeId:'1'
-		},{
-			navtabimg:'../../../static/my/collectyinpin-wei.png',
-			clicknavtabimg:'../../../static/my/collectyinpin-yi.png',
-			name:'音频',
-			typeId:'2'
-		},{
-			navtabimg:'../../../static/my/chanpin-wei.png',
-			clicknavtabimg:'../../../static/my/chanpin-yi.png',
-			name:'产品',
-			typeId:'3'
-	  }],
+      currentId: "1",
+      section: [
+        {
+          navtabimg: "../../../static/my/collectshipin-wei.png",
+          clicknavtabimg: "../../../static/my/collectshipin-yi.png",
+          name: "视频",
+          typeId: "1"
+        },
+        {
+          navtabimg: "../../../static/my/collectyinpin-wei.png",
+          clicknavtabimg: "../../../static/my/collectyinpin-yi.png",
+          name: "音频",
+          typeId: "2"
+        },
+        {
+          navtabimg: "../../../static/my/chanpin-wei.png",
+          clicknavtabimg: "../../../static/my/chanpin-yi.png",
+          name: "产品",
+          typeId: "3"
+        }
+      ],
       tabcontitem: [],
       goodsList: [],
       type: 1,
-      keyword: '',
+      keyword: "",
       page: 1,
       page_size: 10,
       count: 1,
@@ -131,7 +178,7 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     if (options.currentId) {
       this.setData({
         currentId: options.currentId,
@@ -144,7 +191,7 @@ export default {
 
     this.getData();
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     var that = this;
     that.setData({
       page: 1,
@@ -157,37 +204,37 @@ export default {
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
     this.getData();
   },
   methods: {
-	setData(param) {
-		for (const key in param) {
-					const element = param[key];
-		this[key] = element
-		}
-	},
-    keywordFun: function (e) {
+    setData(param) {
+      for (const key in param) {
+        const element = param[key];
+        this[key] = element;
+      }
+    },
+    keywordFun: function(e) {
       var that = this;
       console.log(e.detail.value);
       that.setData({
@@ -200,8 +247,8 @@ export default {
       that.getData();
     },
     //点击切换
-    handleTap: function (typeId) {
-	  let id = typeId;
+    handleTap: function(typeId) {
+      let id = typeId;
       if (id) {
         this.setData({
           currentId: id,
@@ -226,11 +273,11 @@ export default {
       if (that.type == 1 || that.type == 2) {
         if (that.count < that.page) {
           wx.showToast({
-            title: '暂无更多信息',
-            icon: 'none'
+            title: "暂无更多信息",
+            icon: "none"
           });
         } else {
-          util.ajaxs('videopacks/collectList', param, res => {
+          util.ajaxs("videopacks/collectList", param, res => {
             var tabcontitem = that.tabcontitem;
             that.setData({
               page: that.page + 1,
@@ -244,10 +291,10 @@ export default {
       } else if (that.type == 3) {
         if (that.count < that.page) {
           wx.showToast({
-            title: '暂无更多信息'
+            title: "暂无更多信息"
           });
         } else {
-          util.ajaxs('goods/goodsCollectList', param, res => {
+          util.ajaxs("goods/goodsCollectList", param, res => {
             var goodsList = that.goodsList;
             that.setData({
               page: that.page + 1,
@@ -266,19 +313,23 @@ export default {
       let param = {
         vp_id: e.currentTarget.dataset.vp_id
       };
-      util.ajax('/api/videopacks/videopacksLimit', param, res => {
+      util.ajaxs("videopacks/videopacksLimit", param, res => {
         if (res.status == 2) {
           that.setData({
             content: res.data.content,
             cl_id: res.data.cl_id
           });
           wx.showToast({
-            title: '付费视频,请到首页购买',
-            icon: 'none'
+            title: "付费视频,请到首页购买",
+            icon: "none"
           });
         } else {
           wx.navigateTo({
-            url: '/pages/hncjiaoxue_intro/hncjiaoxue_intro?vp_id=' + e.currentTarget.dataset.vp_id + '&title=' + e.currentTarget.dataset.title
+            url:
+              "/pages/hncjiaoxue_intro/hncjiaoxue_intro?vp_id=" +
+              e.currentTarget.dataset.vp_id +
+              "&title=" +
+              e.currentTarget.dataset.title
           });
         }
       });
@@ -288,7 +339,7 @@ export default {
       console.log(e.currentTarget.dataset.p_id);
       const p_id = e.currentTarget.dataset.p_id;
       wx.navigateTo({
-        url: '/pages/onlinestore/productDetail/productDetail?p_id=' + p_id
+        url: "/pages/product-detail/product-detail?p_id=" + p_id
       });
     },
 
@@ -298,15 +349,19 @@ export default {
       let p_id = e.currentTarget.dataset.p_id;
       var index = e.currentTarget.dataset.index;
       var tabcontitem = _this.tabcontitem;
-      util.ajax('/api/videopacks/videoCollect', {
-        vp_id: p_id
-      }, res => {
-        tabcontitem.splice(index, 1);
+      util.ajaxs(
+        "videopacks/videoCollect",
+        {
+          vp_id: p_id
+        },
+        res => {
+          tabcontitem.splice(index, 1);
 
-        _this.setData({
-          tabcontitem: tabcontitem
-        });
-      });
+          _this.setData({
+            tabcontitem: tabcontitem
+          });
+        }
+      );
     },
 
     collectP(e) {
@@ -315,15 +370,19 @@ export default {
       let p_id = e.currentTarget.dataset.p_id;
       var index = e.currentTarget.dataset.index;
       var goodsList = _this.goodsList;
-      util.ajax('/api/goods/goodsCollect', {
-        p_id: p_id
-      }, res => {
-        goodsList.splice(index, 1);
+      util.ajaxs(
+        "goods/goodsCollect",
+        {
+          p_id: p_id
+        },
+        res => {
+          goodsList.splice(index, 1);
 
-        _this.setData({
-          goodsList: goodsList
-        });
-      });
+          _this.setData({
+            goodsList: goodsList
+          });
+        }
+      );
     },
 
     toTop(e) {
@@ -333,7 +392,6 @@ export default {
         duration: 0
       });
     }
-
   }
 };
 </script>

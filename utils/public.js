@@ -1,3 +1,9 @@
+let requestUrl = ''
+if (process.env.NODE_ENV === 'development') {
+  requestUrl = '/api/';
+} else {
+  requestUrl = 'http://kxsx.zcycs.com/api/';
+}
 const ajax = (opt) => {
 	opt = opt || {};
 	opt.url = opt.url || '';
@@ -11,7 +17,7 @@ const ajax = (opt) => {
 		title: '加载中'
 	});
 	uni.request({
-		url: "http://kxsx.zcycs.com/api/" + opt.url,
+		url: requestUrl + opt.url,
 		//url: "http://www.mt.com/com/" + opt.url,
 		data: opt.data,
 		method: opt.method,

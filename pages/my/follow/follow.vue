@@ -13,7 +13,7 @@
 				<view class="info_wrap">
 					<view class="left_side">
 						<view class="name">{{item.nickName}}</view>
-						<view class="account">开心号：{{userinfo.number}}</view>
+						<view class="account">开心号：{{item.number}}</view>
 					</view>
 					<view class="btn" v-if="item.type === 'only'">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
