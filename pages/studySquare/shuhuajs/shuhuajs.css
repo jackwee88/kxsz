@@ -1,0 +1,98 @@
+/* pages/shuhuajs/shuhuajs.wxss */
+page {
+  background-color: #f5f5f5;
+}
+
+.shuhuajs {
+  width: 100%;
+  background-color: #f5f5f5;
+}
+.navtab {
+  width: 100%;
+  height: 87rpx;
+  border-top: 1rpx solid #dddddd;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.navtab_item {
+  height: 87rpx;
+  line-height: 87rpx;
+  font-size: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nav-active {
+  color: #333;
+  border-bottom: 4rpx solid #008800;
+}
+
+.cont-item {
+  padding: 26rpx 30rpx;
+}
+.search {
+  width: 100%;
+  height: 78rpx;
+  line-height: 78rpx;
+  background-color: #e5e4e4;
+  color: black;
+  position: relative;
+  padding-left: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 5rpx;
+}
+.searchicon {
+  width: 25rpx;
+  height: 25rpx;
+  background-size: 100% 100%;
+}
+.searchinput {
+  width: 100%;
+  height: 78rpx;
+  line-height: 78rpx;
+  font-size: 30rpx;
+  position: absolute;
+  top: 0;
+  padding-left: 40rpx;
+}
+.place-hoder {
+    color: #b5b7b4;
+}
+.swiperlist {
+  width: 100%;
+  display: inline-block;
+}
+.swiperitem {
+  /* width:335rpx; */
+  width:47%;
+  height: auto;
+  border-radius: 8rpx;
+  background-color: #fff;
+  padding: 20rpx;
+  float: left;
+  margin-bottom: 26rpx;
+}
+.swiperitem_left {
+ margin: 0 10rpx;
+}
+.swiperitemimg {
+  /* width: 290rpx; */
+  height: 290rpx;
+  background-size: 100% 100%;
+  border-radius: 8rpx;
+}
+.workuserinfo {
+  font-size: 26rpx;
+  line-height: 0;
+  
+}
+
+.texts{
+  text-align: center
+}
+
+.active{
+  border-bottom: 1rpx solid #008800
+}

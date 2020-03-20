@@ -272,9 +272,9 @@
 			"style": {
 				"navigationBarTitleText": "个性签名",
 				"app-plus": {
-					"titleNView": {
-						"titleSize": "28rpx"
-					}
+					// "titleNView": {
+					// 	"titleSize": "28rpx"
+					// }
 				}
 			}
 		},
@@ -595,6 +595,10 @@
         }
         ,{
             "path" : "pages/product-detail/commentList/commentList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/studySquare/shuhuajs/shuhuajs",
             "style" : {}
         }
     ],

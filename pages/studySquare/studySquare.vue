@@ -1,9 +1,9 @@
 <template>
-<view>
-<!--pages/studySquare/studySquare.wxml-->
+	<view>
+		<!--pages/studySquare/studySquare.wxml-->
 
-<view class="studySquare">
-  <!-- <view class="tabbox">
+		<view class="studySquare">
+			<!-- <view class="tabbox">
     <view class="tabcon avtive" class='tabcon{{type==1?"active":""}}' data-type='1' bindtap='changeOil' style="background-color:#E78522">
       成长日记
     </view>
@@ -36,17 +36,15 @@
       </view>
     </view>
   </view> -->
-   <view class="tabbox">
-    <view class="tabcon avtive" data-type="1" @tap="changeOil" style="background-color:#E78522">成长日记</view>
-    <view data-url="/pages/Signature/Signature" class="tabcon" data-type="2" style="background-color:#00C3A0" @tap.stop="toWhere">个性签名</view>
-    <!-- <view data-url='/pages/worksfor/worksfor' class="tabcon"  data-type='3' style="background-color:#02A0C3" catchtap='toWhere'>
+			<view class="tabbox">
+				<view class="tabcon avtive" data-type="1" @tap="changeOil" style="background-color:#E78522">成长日记</view>
+				<view data-url="../my/signature/signature" class="tabcon" data-type="2" style="background-color:#00C3A0" @tap.stop="toWhere">个性签名</view>
+				<!-- <view data-url='/pages/worksfor/worksfor' class="tabcon"  data-type='3' style="background-color:#02A0C3" catchtap='toWhere'>
      作品征集
     </view> -->
-    <view class="tabcon" data-type="3" @tap="changeOil" style="background-color:#2B37C1">文字故事</view>
-    <navigator url="/pages/shuhuajs/shuhuajs" class="tabcon">
-          <view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view>
-        </navigator>
-    <!-- <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
+				<view class="tabcon" data-type="3" @tap="changeOil" style="background-color:#2B37C1">文字故事</view>
+				<navigator url="shuhuajs/shuhuajs" class="tabcon"><view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view></navigator>
+				<!-- <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
       <text>更多</text>
       <image src="/img/studySquare/more.png"></image>
       <view class="drop" wx:if="{{show}}">
@@ -65,503 +63,562 @@
      
       </view>
     </view> -->
-  </view>
-  <view class="studylist">
-    <view class="studyitem" v-for="(item, index) in studylist" :key="index">
-      <text class="is_top" v-if="item.is_top==1">已置顶</text>
-      <view class="studylistflex">
-        <view class="studyitem-top info clear" @tap="growthDaily" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
-          <view style="float:left">
-            <image :src="item.avatar" class="touxiangicon"></image>
-          </view>
-          <view style="float:left">
-            <text class="infoname">{{item.nickname}}</text>
-            <view class="time">
-              <text class="infotime">{{item.createtime}}</text>
-              <text class="browse">浏览{{item.browse_times}}次</text>
-            </view>
-          </view>
+			</view>
+			<view class="studylist">
+				<view class="studyitem" v-for="(item, index) in studylist" :key="index">
+					<text class="is_top" v-if="item.is_top == 1">已置顶</text>
+					<view class="studylistflex">
+						<view class="studyitem-top info clear" @click="gotoPublished(item)">
+							<view style="float:left"><image :src="item.avatar" class="touxiangicon"></image></view>
+							<view style="float:left">
+								<text class="infoname">{{ item.nickname }}</text>
+								<view class="time">
+									<text class="infotime">{{ item.createtime }}</text>
+									<text class="browse">浏览{{ item.browse_times }}次</text>
+								</view>
+							</view>
+						</view>
+						<view class="studyitem-middle">
+							<text
+								class="impression"
+								:data-dy_id="item.dy_id"
+								@tap="details"
+								:data-browse_times="item.browse_times"
+								:data-p_id="item.dy_id"
+								:data-index="index"
+								:data-comment_count="item.comment_count"
+							>
+								{{ item.content }}
+							</text>
 
-        </view>
-        <view class="studyitem-middle">
-          <text class="impression" :data-dy_id="item.dy_id" @tap="details" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count">{{item.content}}</text>
+							<view>
+								<view style="position:relative;display:inline">
+									<image
+										v-if="item.video_ids"
+										style="width:30%;height:200rpx;margin-right:10rpx"
+										:hidden="item.fullScreen"
+										class="acticleimg"
+										:src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'"
+										mode="scaleToFill"
+									></image>
+									<image
+										v-if="item.video_ids"
+										:data-fullScreen="item.fullScreen"
+										class="bt"
+										mode="scaleToFill"
+										:data-src="item.video_ids"
+										:data-index="index"
+										@tap="playVideo"
+										src="../../static/studySquare/play3.png"
+										style="width:60rpx;height:60rpx;position:absolute;top:-118rpx;left:78rpx;"
+									></image>
+								</view>
+								<image
+									v-for="(items, index2) in item.picture_arr"
+									:key="index2"
+									class="acticleimg"
+									:src="items"
+									:data-src="items"
+									:data-pic_arr="item.picture_arr"
+									@tap="previewImg"
+									mode="aspectFill"
+								></image>
+								<audio
+									v-if="item.voice_ids"
+									:src="item.voice_ids"
+									controls
+									loop
+									class="audio"
+									:poster="item.poster"
+									:name="item.name"
+									:author="item.author"
+									:data-index="index"
+									@tap.stop="playorpause"
+									:action="item.action"
+								></audio>
+								<view></view>
+							</view>
 
-          <view>
-            <view style="position:relative;display:inline">
-              <image v-if="item.video_ids" style="width:30%;height:200rpx;margin-right:10rpx" :hidden="item.fullScreen" class="acticleimg" :src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'" mode="scaleToFill"></image>
-              <image v-if="item.video_ids" :data-fullScreen="item.fullScreen" class="bt" mode="scaleToFill" :data-src="item.video_ids" :data-index="index" @tap="playVideo" src="../../static/studySquare/play3.png" style="width:60rpx;height:60rpx;position:absolute;top:-118rpx;left:78rpx;"></image>
-            </view>
-            <image v-for="(items, index2) in item.picture_arr" :key="index2" class="acticleimg" :src="items" :data-src="items" :data-pic_arr="item.picture_arr" @tap="previewImg" mode="aspectFill"></image>
-            <audio v-if="item.voice_ids" :src="item.voice_ids" controls loop class="audio" :poster="item.poster" :name="item.name" :author="item.author" :data-index="index" @tap.stop="playorpause" :action="item.action"></audio>
-            <view>
+							<view class="hr"></view>
+							<view class="thirdlineblock clear">
+								<view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
+									<image class="collecticon" v-if="item.is_give == true" src="../../static/index/collect.png" style="margin-top:6rpx;"></image>
+									<image class="collecticon" v-if="item.is_give == false" src="../../static/index/uncollect.png"></image>
+									<text>{{ item.thumbs_times }}</text>
+								</view>
+								<button
+									class="thirdline share"
+									:data-dy_id="item.dy_id"
+									open-type="share"
+									:data-nickname="item.nickname"
+									:data-image="item.picture_arr[0]"
+									:data-video="item.video_ids"
+								>
+									<image class="shareicon" src="../../static/index/fx.png"></image>
+									<text>分享</text>
+								</button>
+								<view
+									class="thirdline share"
+									@tap.stop="details"
+									:data-dy_id="item.dy_id"
+									:data-browse_times="item.browse_times"
+									:data-p_id="item.dy_id"
+									:data-index="index"
+									:data-comment_count="item.comment_count"
+									open-type="share"
+								>
+									<image class="shareicon" src="../../static/index/message.png"></image>
+									<text>{{ item.comment_count }}</text>
+								</view>
+							</view>
+						</view>
+						<view class="studyitem-bottom" v-if="item.if_input">
+							<!-- <text class='dianzanname'>{{item.dianzanname}},{{item.dianzanname}},{{item.dianzanname}}</text> -->
+							<view v-for="(item, index2) in release" :key="index2" class="shoppcall comment" :data-id="item.id">
+								<view class="publish">
+									<view class="publish_list comment">
+										<text class="publish_list_item red">{{ item.name }}:</text>
+										<text class="redtree_text">{{ item.textareaValue }}</text>
+									</view>
+								</view>
+							</view>
+							<input placeholder="请输入评论内容" :focus="if_false" v-if="item.if_input" class="input"></input>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="fixedbottom">
+				<navigator class="dakaleft dakablock" url="./phpublish/phpublish">
+					<image class="phbimg" src="../../static/studySquare/paihangbang.png"></image>
+					<text>排行榜</text>
+				</navigator>
 
-            </view>
-          </view>
+				<navigator class="dakaright dakablock" url="../onlinestore/onlinestore">
+					<image class="sfcgmimg" src="../../static/studySquare/weizaixianshangcheng.png"></image>
+					<text>在线商城</text>
+				</navigator>
 
-          <view class="hr"></view>
-          <view class="thirdlineblock clear">
-            <view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
-              <image class="collecticon" v-if="item.is_give==true" src="/static/img/studySquare/collect.png" style="margin-top:6rpx;"></image>
-              <image class="collecticon" v-if="item.is_give==false" src="/static/img/studySquare/uncollect.png"></image>
-              <text>{{item.thumbs_times}}</text>
-            </view>
-            <button class="thirdline share" :data-dy_id="item.dy_id" open-type="share" :data-nickname="item.nickname" :data-image="item.picture_arr[0]" :data-video="item.video_ids">
-              <image class="shareicon" src="/static/img/index/fx.png"></image>
-              <text>分享</text>
-            </button>
-            <view class="thirdline share" @tap.stop="details" :data-dy_id="item.dy_id" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count" open-type="share">
-              <image class="shareicon" src="/static/img/index/messageicon.png"></image>
-              <text>{{item.comment_count}}</text>
-            </view>
-          </view>
-        </view>
-        <view class="studyitem-bottom" v-if="item.if_input">
-          <!-- <text class='dianzanname'>{{item.dianzanname}},{{item.dianzanname}},{{item.dianzanname}}</text> -->
-          <view v-for="(item, index2) in release" :key="index2" class="shoppcall comment" :data-id="item.id">
-            <view class="publish">
-              <view class="publish_list comment">
-                <text class="publish_list_item red">{{item.name}}:</text>
-                <text class="redtree_text">{{item.textareaValue}}</text>
-              </view>
-            </view>
-          </view>
-          <input placeholder="请输入评论内容" :focus="if_false" v-if="item.if_input" class="input"></input>
-        </view>
-      </view>
-    </view>
-  </view>
-  <view class="fixedbottom">
-    <navigator class="dakaleft dakablock" url="./phpublish/phpublish">
-      <image class="phbimg" src="../../static/studySquare/paihangbang.png"></image>
-      <text>排行榜</text>
-    </navigator>
+				<view class="dakaciclecont">
+					<navigator class="dakatext" :url="'/pages/publishedDiary/publishedDiary?type=' + type" v-if="type != 4">打卡</navigator>
+					<navigator class="dakatext" url="/pages/parentShare/parentShare" v-if="type == 4">打卡</navigator>
+				</view>
+			</view>
+		</view>
 
-    <navigator class="dakaright dakablock" url="../onlinestore/onlinestore">
-      <image class="sfcgmimg" src="../../static/studySquare/weizaixianshangcheng.png"></image>
-      <text>在线商城</text>
-    </navigator>
+		<image class="wait" :src="smodel" v-if="is_wait == 1"></image>
 
-    <view class="dakaciclecont">
-      <navigator class="dakatext" :url="'/pages/publishedDiary/publishedDiary?type=' + type" v-if="type!=4">打卡</navigator>
-       <navigator class="dakatext" url="/pages/parentShare/parentShare" v-if="type==4">打卡</navigator>
-    </view>
-  </view>
-</view>
-
-<image class="wait" :src="smodel" v-if="is_wait==1"></image>
-
-
-
-
-
-<template is="toTop"></template>
-</view>
+		<template is="toTop"></template>
+	</view>
 </template>
 
 <script>
-
+	import {ajax} from '../../utils/public.js'
 export default {
-  data() {
-    return {
-      back: '',
-      host: getApp().globalData.requestUrl,
-      quanziText: '多读书 读好书',
-      dakaNum: '180',
-      studylist: [],
-      show: false,
-      page: 1,
-      page_size: 10,
-      count: 1,
-      type: 1,
-      is_wait: '',
-      comment_num: 0,
-      release: [{
-        name: '1',
-        textareaValue: 'sfdf'
-      }],
-      smodel: '',
-      wait: "",
-      is_give: "",
-      thumbs_times: "",
-      releaseFocus: false,
-      releaseValue: "",
-      item: "",
-      indeNum: ""
-    };
-  },
+	data() {
+		return {
+			back: '',
+			host: getApp().globalData.requestUrl,
+			quanziText: '多读书 读好书',
+			dakaNum: '180',
+			studylist: [],
+			show: false,
+			page: 1,
+			page_size: 10,
+			count: 1,
+			type: 1,
+			is_wait: '',
+			comment_num: 0,
+			release: [
+				{
+					name: '1',
+					textareaValue: 'sfdf'
+				}
+			],
+			smodel: '',
+			wait: '',
+			is_give: '',
+			thumbs_times: '',
+			releaseFocus: false,
+			releaseValue: '',
+			item: '',
+			indeNum: ''
+		};
+	},
 
-  components: {},
-  props: {},
+	components: {},
+	props: {},
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var that = this;
-    that.setData({
-      page: 1,
-      page_size: this.page_size,
-      studylist: []
-    });
-    that.getData();
-    var pages = getCurrentPages();
-    var prevPage = pages[pages.length - 2];
-    prevPage.setData({
-      is_wait: '',
-      wait: ''
-    });
-  },
-  onPullDownRefresh: function () {
-    var that = this;
-    that.setData({
-      page: 1,
-      studylist: [],
-      count: 1
-    });
-    that.getData();
-  },
+	/**
+	 * 生命周期函数--监听页面加载
+	 */
+	onLoad() {
+		// var that = this;
+		// that.setData({
+		// 	page: 1,
+		// 	page_size: this.page_size,
+		// 	studylist: []
+		// });
+		this.getData();
+		var pages = getCurrentPages();
+		var prevPage = pages[pages.length - 2];
+		prevPage.setData({
+			is_wait: '',
+			wait: ''
+		});
+	},
+	onPullDownRefresh: function() {
+		var that = this;
+		that.setData({
+			page: 1,
+			studylist: [],
+			count: 1
+		});
+		that.getData();
+	},
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {},
-  // init:function() {
-  //   var that = this;
-  //   var myobject= {
-  //     type :1
-  //   }
-  //   util.ajax('/api/study/studyList',myobject,res=>{
-  //     that.setData({
-  //       studylist:res.data.list
-  //     })
-  //   })
-  // },
+	/**
+	 * 生命周期函数--监听页面初次渲染完成
+	 */
+	onReady: function() {},
+	// init:function() {
+	//   var that = this;
+	//   var myobject= {
+	//     type :1
+	//   }
+	//   util.ajax('/api/study/studyList',myobject,res=>{
+	//     that.setData({
+	//       studylist:res.data.list
+	//     })
+	//   })
+	// },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {},
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function() {},
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {},
+	/**
+	 * 生命周期函数--监听页面隐藏
+	 */
+	onHide: function() {},
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {},
+	/**
+	 * 生命周期函数--监听页面卸载
+	 */
+	onUnload: function() {},
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    var that = this;
-    that.getData();
-  },
-  //转发
-  onShareAppMessage: function (e) {
-    if (e.from === 'button') {
-      var nickname = e.target.dataset.nickname;
-      var title = nickname + '的打卡日记';
-      var image = e.target.dataset.image;
-      var video = e.target.dataset.video;
+	/**
+	 * 页面上拉触底事件的处理函数
+	 */
+	onReachBottom: function() {
+		var that = this;
+		that.getData();
+	},
+	//转发
+	onShareAppMessage: function(e) {
+		if (e.from === 'button') {
+			var nickname = e.target.dataset.nickname;
+			var title = nickname + '的打卡日记';
+			var image = e.target.dataset.image;
+			var video = e.target.dataset.video;
 
-      if (image) {
-        var img = image;
-      } else if (video) {
-        var img = video + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast';
-      }
+			if (image) {
+				var img = image;
+			} else if (video) {
+				var img = video + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast';
+			}
 
-      var that = this;
-      return {
-        title: title,
-        path: '/pages/myPublished/myPublished?dy_id=' + e.target.dataset.dy_id + '&is_share=1',
-        imageUrl: img,
-        success: function (res) {}
-      };
-    } else {
-      return {
-        title: '开心书写',
-        path: 'pages/index/index?myshare=1&tourl=/pages/studySquare/studySquare' // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
+			var that = this;
+			return {
+				title: title,
+				path: '/pages/myPublished/myPublished?dy_id=' + e.target.dataset.dy_id + '&is_share=1',
+				imageUrl: img,
+				success: function(res) {}
+			};
+		} else {
+			return {
+				title: '开心书写',
+				path: 'pages/index/index?myshare=1&tourl=/pages/studySquare/studySquare' // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
+			};
+		}
+	},
+	methods: {
+		praise(e) {
+			var that = this;
+			const index = e.currentTarget.dataset.index;
+			const dy_id = e.currentTarget.dataset.dy_id;
+			console.log('123' + dy_id);
+			ajax({
+				url: 'study/praiseStudy',
+				data: {
+					dy_id: dy_id
+				},
+				success: res => {
+					const daily = that.studylist;
+					const is_give = 'daily[' + index + '].is_give';
+					const thumbs_times = 'daily[' + index + '].thumbs_times';
 
-      };
-    }
-  },
-  methods: {
-    praise(e) {
-      var that = this;
-      const index = e.currentTarget.dataset.index;
-      const dy_id = e.currentTarget.dataset.dy_id;
-      util.ajax('/api/study/praiseStudy', {
-        dy_id: dy_id
-      }, res => {
-        const studylist = that.studylist;
-        const is_give = 'studylist[' + index + '].is_give';
-        const thumbs_times = 'studylist[' + index + '].thumbs_times';
+					if (res.data.data.is_ok == true) {
+						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times + 1);
+						uni.showToast({
+							title: '点赞成功',
+							icon: 'none'
+						});
+					} else {
+						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
+					}
+				}
+			});
+		},
 
-        if (res.data.is_ok) {
-          that.setData({
-            [is_give]: !studylist[index].is_give,
-            [thumbs_times]: studylist[index].thumbs_times + 1
-          });
-        } else {
-          that.setData({
-            [is_give]: !studylist[index].is_give,
-            [thumbs_times]: studylist[index].thumbs_times - 1
-          });
-        }
-      });
-    },
+		gotoPublished: function(e) {
+			let param = {
+				dy_id: e.dy_id,
+				index: e.index,
+				browse_times: e.browse_times,
+				comment_count: e.comment_count,
+				thumbs_times: e.thumbs_times
+			};
+			uni.navigateTo({
+				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
 
-    details(e) {
-      const dy_id = e.currentTarget.dataset.dy_id;
-      const index = e.currentTarget.dataset.index;
-      const browse_times = e.currentTarget.dataset.browse_times;
-      const comment_count = e.currentTarget.dataset.comment_count;
-      const thumbs_times = e.currentTarget.dataset.thumbs_times;
-      wx.navigateTo({
-        url: '../myPublished/myPublished?dy_id=' + dy_id + '&index=' + index + '&browse_times=' + browse_times + "&type=2" + "&comment_count=" + comment_count + '&thumbs_times=' + thumbs_times
-      });
-    },
+		getData() {
+			const studylist = this.studylist;
+			if (this.count < this.page) {
+				uni.showToast({
+					title: '暂无更多信息'
+				});
+			} else {
+				ajax({
+					url: 'study/studyList',
+					data: {
+						page: this.page,
+						page_size: this.page_size,
+						type: this.type
+					},
 
-    getData() {
-      const that = this;
-      const param = {
-        page: that.page,
-        page_size: that.page_size,
-        type: that.type
-      };
-      const studylis = that.studylist;
+					success: (res) => {
+						console.log(res.data.data)
+						const { list, count } = res.data.data;
+						this.studylist = list
+						// var action = {
+						// 	method: 'pause'
+						// };
+						// for (var i = 0; i < list.length; i++) {
+						// 	list[i].if_input = false;
+						// 	list[i].fullScreen = false;
 
-      if (that.count < that.page) {
-        wx.showToast({
-          title: '暂无更多信息'
-        });
-      } else {
-        util.ajax('/api/study/studyList', param, res => {
-          var studylist = that.studylist;
-          let list = res.data.list;
-          var action = {
-            method: "pause"
-          };
+						// 	if (list[i].picture_arr.length > 0) {
+						// 		list[i].poster = list[i].picture_arr[0];
+						// 	}
 
-          for (var i = 0; i < list.length; i++) {
-            list[i].if_input = false;
-            list[i].fullScreen = false;
+						// 	list[i].action = action;
+						// 	list[i].name = list[i].nickname + '的音频';
+						// }
 
-            if (list[i].picture_arr.length > 0) {
-              list[i].poster = list[i].picture_arr[0];
-            }
+							this.page= that.page + 1,
+							this.page= that.page + 1,
+							this.count= count > 1 ? res.data.count : 1,
+							this.studylist= list
+						// wx.stopPullDownRefresh();
+					}
+				});
+			}
+		},
 
-            list[i].action = action;
-            list[i].name = list[i].nickname + '的音频';
-          }
+		showmore: function() {
+			if (this.show) {
+				this.setData({
+					show: false
+				});
+			} else {
+				this.setData({
+					show: true
+				});
+			}
+		},
+		ifinput: function(e) {
+			let that = this;
+			const index = e.currentTarget.dataset.index;
+			const studylist = that.studylist;
+			studylist[index].if_input = !studylist[index].if_input; // studylist[index].if_jp = !studylist[index].if_jp
 
-          that.setData({
-            page: that.page + 1,
-            page: that.page + 1,
-            count: res.data.count > 1 ? res.data.count : 1,
-            studylist: studylist.concat(list)
-          });
-          wx.stopPullDownRefresh();
-        });
-      }
-    },
+			that.setData({
+				studylist: studylist
+			});
+		},
+		// 点击发表评论
+		formSubmit: function(e) {
+			console.log('form发生了submit事件，携带数据为：', e.detail.value);
 
-    showmore: function () {
-      if (this.show) {
-        this.setData({
-          show: false
-        });
-      } else {
-        this.setData({
-          show: true
-        });
-      }
-    },
-    ifinput: function (e) {
-      let that = this;
-      const index = e.currentTarget.dataset.index;
-      const studylist = that.studylist;
-      studylist[index].if_input = !studylist[index].if_input; // studylist[index].if_jp = !studylist[index].if_jp
+			if (e.detail.value.input == '') {
+				wx.showToast({
+					title: '请输入内容'
+				});
+			} else {
+				var that = this;
+				var textarea_item = {};
+				var textareaValue = e.detail.value.input;
+				var release = this.release;
+				var id = release.length;
+				textarea_item.textareaValue = textareaValue;
+				release.push(textarea_item); // 将评论内容添加到评论列表
 
-      that.setData({
-        studylist: studylist
-      });
-    },
-    // 点击发表评论
-    formSubmit: function (e) {
-      console.log('form发生了submit事件，携带数据为：', e.detail.value);
+				this.setData({
+					release: release,
+					releaseFocus: true,
+					//隐藏输入框
+					releaseValue: '' //清空输入框内容
+				});
+				console.log(release);
+			}
+		},
+		changeOil: function(e) {
+			if (e.target.dataset.type == 2) {
+				this.setData({
+					type: e.target.dataset.type
+				});
+				wx.navigateTo({
+					url: '/pages/brain/brain'
+				});
+				return;
+			}
 
-      if (e.detail.value.input == '') {
-        wx.showToast({
-          title: '请输入内容'
-        });
-      } else {
-        var that = this;
-        var textarea_item = {};
-        var textareaValue = e.detail.value.input;
-        var release = this.release;
-        var id = release.length;
-        textarea_item.textareaValue = textareaValue;
-        release.push(textarea_item); // 将评论内容添加到评论列表
+			const that = this;
+			that.setData({
+				type: e.target.dataset.type,
+				page: 1,
+				studylist: [],
+				count: 1,
+				show: false
+			});
+			that.getData();
+		},
 
-        this.setData({
-          release: release,
-          releaseFocus: true,
-          //隐藏输入框
-          releaseValue: '' //清空输入框内容
+		toWhere(e) {
+			var url = e.currentTarget.dataset.url;
+			wx.navigateTo({
+				url: url
+			});
+		},
 
-        });
-        console.log(release);
-      }
-    },
-    changeOil: function (e) {
-      if (e.target.dataset.type == 2) {
-        this.setData({
-          type: e.target.dataset.type
-        });
-        wx.navigateTo({
-          url: '/pages/brain/brain'
-        });
-        return;
-      }
+		getoShop() {
+			var that = this;
+			wx.request({
+				url: getApp().globalData.requestUrl + '/api/index/storeStartPage',
+				method: 'post',
+				data: '',
+				header: {
+					'content-type': 'application/json',
+					token: wx.getStorageSync('token')
+				},
+				success: function(res) {
+					that.setData({
+						smodel: res.data.data.smodel,
+						is_wait: 1
+					}); // setTimeout(function () {
+					// wx.switchTab({
+					//   url: '/pages/onlinestore/onlinestore',
+					// })
+					// }, 3000)
 
-      const that = this;
-      that.setData({
-        type: e.target.dataset.type,
-        page: 1,
-        studylist: [],
-        count: 1,
-        show: false
-      });
-      that.getData();
-    },
+					wx.navigateTo({
+						url: '/pages/catalogues/catalogues'
+					});
+				},
+				fail: function() {
+					wx.hideLoading();
+					wx.showModal({
+						title: '网络错误',
+						content: '网络出错，请刷新重试',
+						showCancel: false
+					});
+					return typeof cb == 'function' && cb(false);
+				}
+			}); // wx.switchTab({
+			//       url: '/pages/onlinestore/onlinestore',
+			//     })
+		},
 
-    toWhere(e) {
-      var url = e.currentTarget.dataset.url;
-      wx.navigateTo({
-        url: url
-      });
-    },
+		// shuhuajs(){
+		//   console.log(12)
+		//   wx.navigateTo({
+		//     url: '/pages/shuhuajs/shuhuajs',
+		//   })
+		// }
+		previewImg: function(e) {
+			let src = e.currentTarget.dataset.src;
+			let pic_arr = e.currentTarget.dataset.pic_arr;
+			wx.previewImage({
+				current: src,
+				urls: pic_arr
+			});
+		},
+		growthDaily: function(e) {
+			let uid = e.currentTarget.dataset.uid;
+			let pid = e.currentTarget.dataset.pid;
+			let index = e.currentTarget.dataset.index;
+			const thumbs_times = e.currentTarget.dataset.thumbs_times;
+			wx.navigateTo({
+				url: '../myPublished/myPublished?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=2' + '&thumbs_times=' + thumbs_times
+			});
+		},
 
-    getoShop() {
-      var that = this;
-      wx.request({
-        url: getApp().globalData.requestUrl + '/api/index/storeStartPage',
-        method: 'post',
-        data: '',
-        header: {
-          'content-type': 'application/json',
-          'token': wx.getStorageSync("token")
-        },
-        success: function (res) {
-          that.setData({
-            smodel: res.data.data.smodel,
-            is_wait: 1
-          }); // setTimeout(function () {
-          // wx.switchTab({
-          //   url: '/pages/onlinestore/onlinestore',
-          // })
-          // }, 3000)
+		playVideo(e) {
+			var src = e.currentTarget.dataset.src;
+			wx.navigateTo({
+				url: '../video/video?src=' + src
+			});
+		},
 
-          wx.navigateTo({
-            url: '/pages/catalogues/catalogues'
-          });
-        },
-        fail: function () {
-          wx.hideLoading();
-          wx.showModal({
-            title: '网络错误',
-            content: '网络出错，请刷新重试',
-            showCancel: false
-          });
-          return typeof cb == "function" && cb(false);
-        }
-      }); // wx.switchTab({
-      //       url: '/pages/onlinestore/onlinestore',
-      //     })
-    },
+		playorpause: function(e) {
+			var that = this;
+			var index = e.target.dataset.index; //获取点击音乐的下标
 
-    // shuhuajs(){
-    //   console.log(12)
-    //   wx.navigateTo({
-    //     url: '/pages/shuhuajs/shuhuajs',
-    //   })
-    // }
-    previewImg: function (e) {
-      let src = e.currentTarget.dataset.src;
-      let pic_arr = e.currentTarget.dataset.pic_arr;
-      wx.previewImage({
-        current: src,
-        urls: pic_arr
-      });
-    },
-    growthDaily: function (e) {
-      let uid = e.currentTarget.dataset.uid;
-      let pid = e.currentTarget.dataset.pid;
-      let index = e.currentTarget.dataset.index;
-      const thumbs_times = e.currentTarget.dataset.thumbs_times;
-      wx.navigateTo({
-        url: "../growthDiary/growthDiary?uid=" + uid + "&pid=" + pid + "&index=" + index + "&type=2" + "&thumbs_times=" + thumbs_times
-      });
-    },
+			var item = 'studylist[' + index + '].action'; //获取音乐的播放状态
 
-    playVideo(e) {
-      var src = e.currentTarget.dataset.src;
-      wx.navigateTo({
-        url: '../video/video?src=' + src
-      });
-    },
+			var actionPlay = {
+				method: 'play'
+			}; //定义播放
 
-    playorpause: function (e) {
-      var that = this;
-      var index = e.target.dataset.index; //获取点击音乐的下标
+			var actionPause = {
+				method: 'pause'
+			}; //定义暂停
 
-      var item = 'studylist[' + index + '].action'; //获取音乐的播放状态
+			if (that.studylist[index].action.method == 'pause') {
+				//若当前是暂停，则点击后播放
+				that.setData({
+					[item]: actionPlay
+				});
 
-      var actionPlay = {
-        method: "play"
-      }; //定义播放
+				for (let i = 0; i < that.studylist.length; i++) {
+					if (index != i) {
+						let indeNum = 'studylist[' + i + '].action';
+						that.setData({
+							[indeNum]: actionPause
+						});
+					}
+				}
+			} else {
+				//若当前是播放，则点击后暂停
+				that.setData({
+					[item]: actionPause
+				});
+			}
+		},
 
-      var actionPause = {
-        method: "pause"
-      }; //定义暂停
-
-      if (that.studylist[index].action.method == "pause") {
-        //若当前是暂停，则点击后播放
-        that.setData({
-          [item]: actionPlay
-        });
-
-        for (let i = 0; i < that.studylist.length; i++) {
-          if (index != i) {
-            let indeNum = 'studylist[' + i + '].action';
-            that.setData({
-              [indeNum]: actionPause
-            });
-          }
-        }
-      } else {
-        //若当前是播放，则点击后暂停
-        that.setData({
-          [item]: actionPause
-        });
-      }
-    },
-
-    toTop(e) {
-      var that = this;
-      that.pageScrollTo({
-        scrollTop: 0,
-        duration: 0
-      });
-    }
-
-  }
+		toTop(e) {
+			var that = this;
+			that.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			});
+		}
+	}
 };
 </script>
 <style>
-@import "./studySquare.css";
+@import './studySquare.css';
 </style>

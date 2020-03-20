@@ -278,11 +278,14 @@ export default {
 	},
 	//上拉加载
 	onReachBottom() {
+
 		let _self = this;
 		_self.status = 'loading'; //赋值加载中
-		this.load();
+		// this.getMoreStudyList();
 	},
 	methods: {
+		// 加载更多数据
+		getMoreStudyList(){},
 		load: function() {
 			let index = this.recomItem.length;
 			let id = this.recomItem[index - 1].id;
@@ -338,33 +341,7 @@ export default {
 			}
 		},
 		//点赞
-		praise(e) {
-			var that = this;
-			const index = e.currentTarget.dataset.index;
-			const dy_id = e.currentTarget.dataset.dy_id;
-			console.log('123' + dy_id);
-			ajax({
-				url: 'study/praiseStudy',
-				data: {
-					dy_id: dy_id
-				},
-				success: res => {
-					const daily = that.studylist;
-					const is_give = 'daily[' + index + '].is_give';
-					const thumbs_times = 'daily[' + index + '].thumbs_times';
 
-					if (res.data.data.is_ok == true) {
-						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times + 1);
-						uni.showToast({
-							title: '点赞成功',
-							icon: 'none'
-						});
-					} else {
-						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
-					}
-				}
-			});
-		},
 		getUserDetail: function() {},
 		gotoPublished: function(e) {
 			let param = {
