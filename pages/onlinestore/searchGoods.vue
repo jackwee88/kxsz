@@ -1,7 +1,9 @@
 <template>
 	<view class="container">
 		<view class="top_title">
-			<navigator open-type="navigateBack"><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
+			<navigator open-type="navigateBack">
+				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image>
+				</navigator>
 			<view class="input-wrap flex">
 				<image class="search" src="/static/onlineStore/ss@2x.png"  @click="searchGoods"/>
 				<input  placeholder-class="placeholder-class" class="input" v-model="input"/>

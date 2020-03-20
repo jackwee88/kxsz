@@ -2,6 +2,8 @@
 	<!--页面路径 pages/index/index -->
 	<view class="index_page">
 		<view class="status_bar"><!-- 这里是状态栏 --></view>
+		<indexModal :isVisible="true"></indexModal>
+
 		<view class="top_title">
 			<text>开心书写</text>
 			<navigator url="../shoppingcart/shoppingcart"><image src="../../static/index/gwc.png" mode=""></image></navigator>
@@ -25,7 +27,7 @@
 			</view>
 		</view>
 
-	<!-- 	<view class="menu_wrap">
+		<!-- 	<view class="menu_wrap">
 			<navigator url="../publishedDiary/publishedDiary">
 				<image src="../../static/index/daka.png" mode=""></image>
 				<text>打卡</text>
@@ -97,7 +99,7 @@
 		</view>
 		<!-- 点击进入我的发表页 请求所有用户数据-->
 		<view class="works_list">
-			<view class="work_item" v-for="(item, index) in studylist" :key="index" >
+			<view class="work_item" v-for="(item, index) in studylist" :key="index">
 				<view class="user_info">
 					<view class="left_side">
 						<view class="avatar"><image :src="item.avatar" class="avatar"></image></view>
@@ -109,10 +111,10 @@
 					<text class="view_count">浏览{{ item.browse_times }}次</text>
 				</view>
 				<view @click="gotoPublished(item)">
-				<view class="msg">{{ item.content }}</view>
-				<view class="gallery">
-					<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
-				</view>
+					<view class="msg">{{ item.content }}</view>
+					<view class="gallery">
+						<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
+					</view>
 				</view>
 				<view class="actions">
 					<view class="item">
@@ -123,10 +125,10 @@
 						<image src="../../static/index/pl.png" mode=""></image>
 						<text>{{ item.comment_count }}</text>
 					</view>
-					<view class="item" @tap="praise(item)">
-						<image v-if="item.is_give" src="../../static/index/collect.png"></image>
-						<image v-else src="../../static/index/uncollect.png"></image>
-						<text>{{item.thumbs_times }}</text>
+					<view class="item" :data-thumbs_times="item.thumbs_times">
+						<image class="share l" v-if="item.is_give == true" :data-index="index" :data-dy_id="item.dy_id" @tap.stop="praise" src="../../static/index/collect.png"></image>
+						<image class="share l" v-if="item.is_give == false" :data-index="index" :data-dy_id="item.dy_id" @tap.stop="praise" src="../../static/index/uncollect.png"></image>
+						<text>{{ item.thumbs_times }}</text>
 					</view>
 				</view>
 			</view>
@@ -202,6 +204,7 @@
 <script>
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import '../public/rongyun.js';
+import indexModal from '../modal/modal.vue';
 import { ajax } from '../../utils/public.js';
 export default {
 	data() {
@@ -369,22 +372,29 @@ export default {
 		//点赞
 		praise(e) {
 			var that = this;
-			const index = e.index;
-			const dy_id = e.dy_id;
-			console.log('123'+e.dy_id)
+			const index = e.currentTarget.dataset.index;
+			const dy_id = e.currentTarget.dataset.dy_id;
+			console.log('123' + dy_id);
 			ajax({
-				url:'study/praiseStudy',
-				data:{
+				url: 'study/praiseStudy',
+				data: {
 					dy_id: dy_id
 				},
-				success:(res) => {
-					const details = this.studylist;
-					if (res.data.data.is_ok) {
-						this.studylist.is_give=!details.is_give,
-						this.studylist.thumbs_times = details.thumbs_times + 1
+				success: res => {
+					const daily = that.studylist;
+					const is_give = 'daily[' + index + '].is_give';
+					const thumbs_times = 'daily[' + index + '].thumbs_times';
+
+					if (res.data.data.is_ok == true) {
+							this.studylist[index].is_give=!daily[index].is_give,
+							this.studylist[index].thumbs_times= daily[index].thumbs_times + 1
+						uni.showToast({
+							title: '点赞成功',
+							icon: 'none'
+						});
 					} else {
-						this.studylist.is_give=!details.is_give,
-						this.studylist.thumbs_times = details.thumbs_times - 1
+							this.studylist[index].is_give=!daily[index].is_give,
+							this.studylist[index].thumbs_times= daily[index].thumbs_times - 1
 					}
 				}
 			});
@@ -414,7 +424,7 @@ export default {
 					console.log(res);
 					const { list, count } = res.data.data;
 					this.studylist = list;
-					console.log(this.studylist)
+					console.log(this.studylist);
 				},
 				error: function() {}
 			});
@@ -449,7 +459,6 @@ export default {
 				const { banner, smodel } = res.data.data;
 				this.indexList = smodel;
 				this.banner = banner;
-				console.log(this.indexList + '123');
 			},
 			error: function() {}
 		});

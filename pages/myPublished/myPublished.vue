@@ -22,7 +22,7 @@
 					<view class="smallicon-flex" @tap="praise">
 						<image class="collecticon" v-if="studyDetails.is_give" src="../../static/index/collect.png" style="width: 45rpx;height: 42rpx;"></image>
 						<image class="collecticon" v-else src="../../static/index/uncollect.png" style="width: 45rpx;height: 42rpx;"></image>
-						<text>{{ thumbs_times }}</text>
+						<text>{{studyDetails.thumbs_times}}</text>
 					</view>
 					<view class="smallicon-flex">
 						<image src="../../static/index/fx.png" mode="widthFix" style="width: 45rpx;height: 42rpx;"></image>
@@ -274,10 +274,11 @@ export default {
 						  dy_id: this.dy_id
 						}, success:(res) => {
 						  const details = this.studyDetails;
-								
-						  if (res.data.data.is_ok) {
+						  if (res.data.data.is_ok==true) {
+								console.log('点赞')
 						    this.studyDetails.is_give=!details.is_give,
 						    this.studyDetails.thumbs_times = details.thumbs_times + 1
+								console.log(this.studyDetails.thumbs_times+'123')
 						    var pages = getCurrentPages();
 						    var prevPage = pages[pages.length - 2]; //上一个页面
 								
@@ -338,6 +339,7 @@ export default {
 								
 						    ;
 						  } else {
+								console.log('取消点赞')
 						   this.studyDetails.is_give=!details.is_give,
 						   this.studyDetails.thumbs_times = details.thumbs_times - 1
 						    var pages = getCurrentPages();

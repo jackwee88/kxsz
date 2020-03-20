@@ -245,10 +245,10 @@
     </view>
 
     <view class="base_info">
-      <navigator class="item" url="../dakaLog/dakaLog">
+      <view class="item" @click="dakalog">
         <view>{{info.diary_num}}</view>
         <text>打卡</text>
-      </navigator>
+      </view>
       <navigator class="item" url="follow/follow">
         <view>{{info.follow_num}}</view>
         <text>关注</text>
@@ -381,6 +381,7 @@ export default {
       }
     };
   },
+
   onLoad() {
 	var token = uni.getStorageSync('loginToken')
   	if(token===''){
@@ -400,7 +401,12 @@ export default {
         console.log(res);
         this.info = res.data;
       });
-    }
+    },
+		dakalog(){
+			uni.navigateTo({
+				url:'../dakaLog/dakaLog'
+			})
+			}
   }
 };
 </script>

@@ -83,6 +83,90 @@ export default {
       logList: []
     };
   },
+	  onLoad: function (options) {
+	    // if (options.is_share) {
+	    //   this.setData({
+	    //     is_share: 1
+	    //   });
+	    // }
+	
+	    if (options.uid) {
+	      this.setData({
+	        uid: options.uid,
+	        daka: [],
+	        p_id: options.pid,
+	        index_: options.index,
+	        type: options.type
+	      });
+	    }
+	
+	    this.getData();
+	    this.getSign();
+	    this.getModule();
+	    var that = this;
+	
+	    if (options.dy_id) {
+	      util.ajax('/api/study/bill', {
+	        dy_id: options.dy_id
+	      }, res => {
+	        that.setData({
+	          nickname: res.data.nickname,
+	          d: res.data.d,
+	          y: res.data.y,
+	          title: res.data.title,
+	          date: res.data.date,
+	          where: res.data.where,
+	          word: res.data.word
+	        }); // that.canvas(res.data)
+	
+	        wx.downloadFile({
+	          url: res.data.avatar,
+	          success: function (res) {
+	            that.setData({
+	              avatar: res.tempFilePath
+	            });
+	            that.beginCanvas();
+	          },
+	          fail: function (fres) {}
+	        }); /// 将base64转为二进制数据
+	
+	        var code = res.data.code;
+	        var fileManager = wx.getFileSystemManager();
+	        var imgPath = wx.env.USER_DATA_PATH + '/' + 'eeeeeeeeee' + '.jpg'; // const buffer = wx.base64ToArrayBuffer(that.data.canvas.code);
+	
+	        var imageData = code.replace(/^data:image\/\w+;base64,/, "");
+	        fileManager.writeFile({
+	          filePath: imgPath,
+	          data: imageData,
+	          encoding: 'base64',
+	          success: res => {
+	            this.setData({
+	              code: imgPath
+	            });
+	          },
+	          fail: err => {}
+	        });
+	        wx.downloadFile({
+	          url: res.data.background,
+	          success: function (res) {
+	            that.setData({
+	              background: res.tempFilePath
+	            });
+	            that.beginCanvas();
+	          },
+	          fail: function (fres) {}
+	        });
+	      });
+	      var pages = getCurrentPages(); // 获取页面栈
+	
+	      var prevPage = pages[pages.length - 2]; // 上一个页面
+	
+	      prevPage.setData({
+	        // 给上一个页面变量赋值
+	        back: 1
+	      });
+	    }
+	  },
   methods: {
     //传参 打卡数据id
     gotoPublished: function(e) {
