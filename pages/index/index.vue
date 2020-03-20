@@ -26,38 +26,7 @@
 				</navigator>
 			</view>
 		</view>
-
-		<!-- 	<view class="menu_wrap">
-			<navigator url="../publishedDiary/publishedDiary">
-				<image src="../../static/index/daka.png" mode=""></image>
-				<text>打卡</text>
-			</navigator>
-			<navigator url="../studySquare/studySquare">
-				<image src="../../static/index" mode=""></image>
-				<text>成长广场</text>
-			</navigator>
-			<navigator url="../freeTeaching/freeTeaching">
-				<image src="../../static/index/mfkc.png" mode=""></image>
-				<text>免费课程</text>
-			</navigator>
-			<navigator url="../jifen-shop/jifen-shop">
-				<image src="../../static/index/jxkc.png" mode=""></image>
-				<text>积分商城</text>
-			</navigator>
-			<navigator url="../study-product/study-product">
-				<image src="../../static/index/xxyp.png" mode=""></image>
-				<text>学习用品</text>
-			</navigator>
-			<navigator url="../onlinestore/onlinestore">
-				<image src="../../static/index/zxsc.png" mode=""></image>
-				<text>在线商城</text>
-			</navigator>
-			<navigator url="../brain/brain">
-				<image src="../../static/index/dnkf.png" mode=""></image>
-				<text>大脑开发</text>
-			</navigator>
-		</view>
- -->
+		
 		<view class="section_title">
 			<text class="recommend_title">推荐用品</text>
 			<navigator url="../onlinestore/onlinestore">
@@ -67,27 +36,13 @@
 		</view>
 
 		<view class="recommend">
-			<navigator url="" v-for="(item,index) in ">
-				<image src="../../static/index/zxsc.png" mode=""></image>
+			<view @click="gotoDetails(item)" v-for="(item,index) in hotGoods" :key='index' class="recomment_goods">
+				<image :src="item.image" mode=""></image>
 				<view class="info">
-					<view class="title">书法尺</view>
-					<view class="subtitle">练习书法常备用品</view>
+					<view class="title">{{item.p_name}}</view>
+					<view class="subtitle">{{item.p_detail}}</view>
 				</view>
-			</navigator>
-			<navigator url="">
-				<image src="../../static/index/zxsc.png" mode=""></image>
-				<view class="info">
-					<view class="title">书法尺</view>
-					<view class="subtitle">练习书法常备用品</view>
-				</view>
-			</navigator>
-			<navigator url="">
-				<image src="../../static/index/zxsc.png" mode=""></image>
-				<view class="info">
-					<view class="title">书法尺</view>
-					<view class="subtitle">练习书法常备用品</view>
-				</view>
-			</navigator>
+			</view>
 		</view>
 
 		<view class="section_title">
@@ -245,58 +200,60 @@ export default {
 					name: '测试1',
 					id: 1
 				}
-			]
+			],
+			hotGoods:[]
 		};
 	},
 	components: {
 		uniLoadMore
 	},
 
-	onLoad() {
-		// var value = uni.getStorageSync('loginToken')
-		// console.log(value)
-		// uni.showModal({
-		//     title: '提示',
-		//     content: '这是一个模态弹窗',
-		//     success: function (res) {
-		//         if (res.confirm) {
-		//             console.log('用户点击确定');
-		//         } else if (res.cancel) {
-		//             console.log('用户点击取消');
-		//         }
-		//     }
-		// });
-		// 			uni.$on('login', (usnerinfo) => {
-		// 				//this.usnerinfo = usnerinfo;
-		// 				console.log(usnerinfo);
-		// 			});
-		// 			// 登陆页面
-		// 			uni.$emit('login', {
-		// 				avatarUrl: 'https://img-cdn-qiniu.dcloud.net.cn/uploads/nav_menu/10.jpg',
-		// 				token: 'user123456',
-		// 				userName: 'unier',
-		// 				login: true
-		// 			});
-		// 			uni.getProvider({
-		// 				service: 'push',
-		// 				success: function(res) {
-		// 					console.log(res.provider)
-		//
-		// 					// 个推的名称为 igexin
-		// 					if (~res.provider.indexOf('igexin')) {
-		// 						uni.subscribePush({
-		// 							provider: 'igexin',
-		// 							success: function(res) {
-		// 								console.log('success:' + JSON.stringify(res));
-		// 							}
-		// 						});
-		// 					}
-		// 				}
-		// 			});
-	},
+	// onLoad() {
+	// var value = uni.getStorageSync('loginToken')
+	// console.log(value)
+	// uni.showModal({
+	//     title: '提示',
+	//     content: '这是一个模态弹窗',
+	//     success: function (res) {
+	//         if (res.confirm) {
+	//             console.log('用户点击确定');
+	//         } else if (res.cancel) {
+	//             console.log('用户点击取消');
+	//         }
+	//     }
+	// });
+	// 			uni.$on('login', (usnerinfo) => {
+	// 				//this.usnerinfo = usnerinfo;
+	// 				console.log(usnerinfo);
+	// 			});
+	// 			// 登陆页面
+	// 			uni.$emit('login', {
+	// 				avatarUrl: 'https://img-cdn-qiniu.dcloud.net.cn/uploads/nav_menu/10.jpg',
+	// 				token: 'user123456',
+	// 				userName: 'unier',
+	// 				login: true
+	// 			});
+	// 			uni.getProvider({
+	// 				service: 'push',
+	// 				success: function(res) {
+	// 					console.log(res.provider)
+	//
+	// 					// 个推的名称为 igexin
+	// 					if (~res.provider.indexOf('igexin')) {
+	// 						uni.subscribePush({
+	// 							provider: 'igexin',
+	// 							success: function(res) {
+	// 								console.log('success:' + JSON.stringify(res));
+	// 							}
+	// 						});
+	// 					}
+	// 				}
+	// 			});
+	//},
 	//下拉刷新
 	onLoad() {
 		this.getData();
+		this.getHotGoods();
 	},
 	// onLoad: function(options) {
 	// 	var that = this;
@@ -341,6 +298,17 @@ export default {
 				this.status = 'noMore'; //赋值查看更多
 			}
 		},
+		//热销产品
+		getHotGoods() {
+			let that = this;
+			ajax({url:'shop/goods', data:{}, success:(res) => {
+				console.log(res.data.data)
+				const{count,list} = res.data.data
+					this.hotGoods=list
+			}
+			});
+		},
+
 		//转发
 		onShareAppMessage: function(e) {
 			if (e.from === 'button') {
@@ -386,15 +354,13 @@ export default {
 					const thumbs_times = 'daily[' + index + '].thumbs_times';
 
 					if (res.data.data.is_ok == true) {
-							this.studylist[index].is_give=!daily[index].is_give,
-							this.studylist[index].thumbs_times= daily[index].thumbs_times + 1
+						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times + 1);
 						uni.showToast({
 							title: '点赞成功',
 							icon: 'none'
 						});
 					} else {
-							this.studylist[index].is_give=!daily[index].is_give,
-							this.studylist[index].thumbs_times= daily[index].thumbs_times - 1
+						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
 					}
 				}
 			});
@@ -428,7 +394,16 @@ export default {
 				},
 				error: function() {}
 			});
-		}
+		},
+		gotoDetails: function(e) {
+			let param = {
+				id: e.p_id
+			};
+			console.log(param);
+			uni.navigateTo({
+				url: '../product-detail/product-detail?productDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
 	},
 	mounted() {
 		//https://kxsx.kaifadanao.cn/api/cate/smodelList
@@ -639,26 +614,45 @@ export default {
 }
 
 .recommend {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
-
+	flex-direction: row;
+	overflow: hidden;
 	image {
 		width: 220rpx;
 		height: 220rpx;
 		margin-bottom: 12rpx;
 	}
-
+.recomment_goods{
+	width: 220rpx;
+	margin-right: 20rpx;
+}
 	.title {
 		font-size: 28rpx;
 		font-weight: 500;
 		color: rgba(50, 50, 50, 1);
 		line-height: 40rpx;
+		height: 40rpx;
+		overflow: hidden;
+		word-break: break-all;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
 	}
 
 	.subtitle {
 		font-size: 20rpx;
 		color: rgba(102, 102, 102, 1);
-		line-height: 28rpx;
+		line-height: 40rpx;
+		line-height: 40rpx;
+		overflow: hidden;
+		word-break: break-all;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
 	}
 }
 .works_list {
