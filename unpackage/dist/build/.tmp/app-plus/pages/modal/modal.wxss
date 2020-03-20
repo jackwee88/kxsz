@@ -1,4 +1,29 @@
-.btn.data-v-0590255e {
+.overlayer.data-v-292e4dda {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.overlayer .bg.data-v-292e4dda {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.overlayer .containerModal.data-v-292e4dda {
+  width: 602rpx;
+  height: 660rpx;
+  background-color: #2F881E;
+  padding: 30rpx 20rpx 15rpx 20rpx;
+  text-align: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  margin: auto;
+}
+.overlayer .btn.data-v-292e4dda {
   color: #2F881E;
   background-color: white;
   height: 82rpx;
@@ -8,28 +33,20 @@
   border-radius: 41rpx;
   margin: 22rpx auto;
 }
-.modalTitle.data-v-0590255e {
+.overlayer .modalTitle.data-v-292e4dda {
   color: #ffffff;
   font-weight: 600;
   font-size: 52rpx;
 }
-.containerModal.data-v-0590255e {
-  width: 602rpx;
-  height: 660rpx;
-  background-color: #2F881E;
-  padding: 30rpx 20rpx 15rpx 20rpx;
-  text-align: center;
-  margin: 328rpx auto;
-}
-.detail.data-v-0590255e {
+.overlayer .detail.data-v-292e4dda {
   color: #4F4F4F;
   font-size: 28rpx;
 }
-.date.data-v-0590255e {
+.overlayer .date.data-v-292e4dda {
   coloe: #AAAAAA;
   font-size: 22rpx;
 }
-.youhuiquan.data-v-0590255e {
+.overlayer .youhuiquan.data-v-292e4dda {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -42,7 +59,7 @@
   position: relative;
   width: 100%;
 }
-.youhuiquan .youhuiNum.data-v-0590255e {
+.overlayer .youhuiquan .youhuiNum.data-v-292e4dda {
   background-image: -webkit-linear-gradient(#e38735, #EB6930);
   background-image: linear-gradient(#e38735, #EB6930);
   width: 28%;
@@ -52,7 +69,7 @@
   color: white;
   text-align: center;
 }
-.youhuiquan .youhuiDetail.data-v-0590255e {
+.overlayer .youhuiquan .youhuiDetail.data-v-292e4dda {
   background-color: #ffffff;
   width: 72%;
   height: 130rpx;
@@ -62,12 +79,12 @@
   padding-top: 22rpx;
   border-radius: 0rpx 10rpx 10rpx 0rpx;
 }
-.image.data-v-0590255e {
+.overlayer .image.data-v-292e4dda {
   position: absolute;
   bottom: 0;
   right: 0;
 }
-.youhuiDetail.data-v-0590255e {
+.overlayer .youhuiDetail.data-v-292e4dda {
   background-color: #ffffff;
 }
 

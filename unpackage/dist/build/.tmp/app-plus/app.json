@@ -27,6 +27,7 @@
     "pages/my/mydiscount/mydiscount",
     "pages/my/signature/signature",
     "pages/my/videoGift/videoGift",
+    "pages/my/activeCode/activeCode",
     "pages/message/message",
     "pages/my/follow/follow",
     "pages/my/fans/fans",
@@ -76,7 +77,12 @@
     "pages/my/myVideo/myVideo",
     "pages/onlinestore/searchGoods",
     "components/assmeble/assmeble",
-    "pages/product-detail/sureOrder/sureOrder"
+    "pages/hncjiaoxue_mulu/hncjiaoxue_mulu",
+    "components/assmeble/assmeble",
+    "pages/product-detail/sureOrder/sureOrder",
+    "pages/myPublished/commentDetails/commentDetails",
+    "pages/product-detail/commentList/commentList",
+    "pages/studySquare/shuhuajs/shuhuajs"
   ],
   "window": {
     "backgroundTextStyle": "light",
