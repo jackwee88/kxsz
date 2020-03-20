@@ -7,23 +7,28 @@ page {
 .sureorder {
   margin-top: 20rpx;
   background: #fff;
+	width: 750rpx;
+	box-sizing: border-box;
+	padding: 0 20rpx;
   /* padding-bottom:100rpx; */
 }
 .store {
+	box-sizing: border-box;
   width: 100%;
   min-height: 235rpx;
   height:auto;
-  background-color: #fff;
-  padding: 30rpx 30rpx;
+ /* padding: 0 0rpx 30rpx; */
+	padding: 30rpx;
   display: flex;
+	flex-direction: row;
   justify-content: flex-start;
+	/* background-color: pink; */
 }
 .stroedetail {
   float: left;
 }
 .store_left {
-    width: 150rpx;
-  height: 150rpx;
+  /* width: 40%; */
   /* border: 1rpx solid #F1F1F1; */
   border-radius: 10rpx;
   float:left;
@@ -38,7 +43,7 @@ page {
   margin-right:30rpx;
 }
 .store_right {
-  width: 60%;
+  /* width: 40%; */
   position: relative;
 }
 .title {
@@ -73,6 +78,7 @@ display:-webkit-box;
   /* height: 200rpx; */
   background-color: #fff;
   padding: 10rpx 30rpx 0;
+	box-sizing: border-box;
 }
 .address {
   width: 100%;
@@ -120,6 +126,8 @@ top: 0;
   line-height: 100rpx;
   position: fixed;
   bottom: 0;
+	display: flex;
+	flex-direction: row;
  
 }
 .corderflooct {
@@ -146,7 +154,7 @@ top: 0;
   font-size: 28rpx;
   display: flex;
   justify-content: space-between;
-  width: 516rpx;
+  /* width: 516rpx; */
 }
 .store-flex-right text{
   text-align: right;
@@ -162,6 +170,7 @@ top: 0;
 .title-w {
   width: 100%;
   padding: 0 30rpx;
+	box-sizing: border-box;
 }
 .title-send {
   width: 100%;
@@ -192,6 +201,8 @@ top: 0;
   width: 90%;
   text-align: center;
   font-size: 28rpx;
+	margin-right: 20rpx;
+	box-sizing: border-box;
 }
 .address-right {
   text-align: center;

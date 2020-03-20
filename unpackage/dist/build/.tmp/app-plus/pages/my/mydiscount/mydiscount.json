@@ -1,7 +1,4 @@
 {
   "navigationBarTitleText": "优惠券",
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
   "usingComponents": {}
 }

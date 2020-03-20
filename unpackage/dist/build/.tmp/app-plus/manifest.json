@@ -4,7 +4,7 @@
     "iPhone",
     "iPad"
   ],
-  "id": "__UNI__261BBA2",
+  "id": "__UNI__3AB31B8",
   "name": "kxsxApp",
   "version": {
     "name": "1.0.0",
@@ -42,7 +42,7 @@
     "statusbar": {
       "immersed": "supportedDevice",
       "style": "dark",
-      "background": "#FFFFFF"
+      "background": "#ffffff"
     },
     "usingComponents": true,
     "distribute": {

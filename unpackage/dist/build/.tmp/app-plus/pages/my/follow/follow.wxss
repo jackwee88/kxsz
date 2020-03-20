@@ -1,4 +1,4 @@
-.search_box.data-v-600ea062 {
+.search_box.data-v-0cc60ada {
   position: relative;
   width: 502rpx;
   height: 60rpx;
@@ -6,25 +6,25 @@
   background: #efefef;
   border-radius: 34rpx;
 }
-.search_box .icon.data-v-600ea062,
-.search_box input.data-v-600ea062 {
+.search_box .icon.data-v-0cc60ada,
+.search_box input.data-v-0cc60ada {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-.search_box .icon.data-v-600ea062 {
+.search_box .icon.data-v-0cc60ada {
   left: 50rpx;
   width: 28rpx;
   height: 30rpx;
 }
-.search_box input.data-v-600ea062 {
+.search_box input.data-v-0cc60ada {
   left: 90rpx;
 }
-.list.data-v-600ea062 {
+.list.data-v-0cc60ada {
   padding: 0 36rpx 0 44rpx;
 }
-.list .item.data-v-600ea062 {
+.list .item.data-v-0cc60ada {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -34,15 +34,15 @@
   padding: 30rpx 0;
   border-bottom: 1rpx solid #ddd;
 }
-.list .item.data-v-600ea062:last-of-type {
+.list .item.data-v-0cc60ada:last-of-type {
   border: 0;
 }
-.list .item image.data-v-600ea062 {
+.list .item image.data-v-0cc60ada {
   width: 100rpx;
   height: 100rpx;
   margin-right: 24rpx;
 }
-.list .item .info_wrap.data-v-600ea062 {
+.list .item .info_wrap.data-v-0cc60ada {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
@@ -56,17 +56,17 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
 }
-.list .item .info_wrap .left_side .name.data-v-600ea062 {
+.list .item .info_wrap .left_side .name.data-v-0cc60ada {
   font-size: 36rpx;
   color: #323232;
   line-height: 50rpx;
 }
-.list .item .info_wrap .left_side .account.data-v-600ea062 {
+.list .item .info_wrap .left_side .account.data-v-0cc60ada {
   font-size: 28rpx;
   color: #999999;
   line-height: 40rpx;
 }
-.list .item .info_wrap .btn.data-v-600ea062 {
+.list .item .info_wrap .btn.data-v-0cc60ada {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -81,14 +81,14 @@
   border-radius: 26rpx;
   border: 1px solid #dddddd;
 }
-.list .item .info_wrap .btn image.data-v-600ea062 {
+.list .item .info_wrap .btn image.data-v-0cc60ada {
   width: 24rpx;
   margin-right: 10rpx;
 }
-.list .item .info_wrap .btn .ygz.data-v-600ea062 {
+.list .item .info_wrap .btn .ygz.data-v-0cc60ada {
   height: 18rpx;
 }
-.list .item .info_wrap .btn .hxgz.data-v-600ea062 {
+.list .item .info_wrap .btn .hxgz.data-v-0cc60ada {
   height: 16rpx;
 }
 

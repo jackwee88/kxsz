@@ -1,0 +1,360 @@
+.data-v-43112fc4 .uni-scroll-view::-webkit-scrollbar {
+		/* 隐藏滚动条，但依旧具备可以滚动的功能 */
+		display: none
+}
+.top_title.data-v-43112fc4{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	height: 50rpx;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 10rpx 20rpx;
+}
+.recommend-header.data-v-43112fc4{
+	margin-right: 16rpx;
+}
+.banner.data-v-43112fc4 {
+	border-radius: 8rpx;
+}
+.recommend-footer.data-v-43112fc4{
+	margin: 0 26rpx;
+}
+.new-goods.data-v-43112fc4 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin: 50rpx 16rpx 12rpx;
+}
+.limitedTime.data-v-43112fc4 {
+	margin: 60rpx 16rpx 16rpx 40rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	/* height: 358rpx; */
+}
+.recommend-banner.data-v-43112fc4 {
+	height: 358rpx;
+}
+.swiper-item.data-v-43112fc4 {
+	width: 100%;
+	height: 332rpx;
+}
+.uni-tab-bar.data-v-43112fc4 {
+	margin: 0 28rpx;
+}
+.uni-swiper-tab.data-v-43112fc4{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	background-color: yellow;
+}
+.swiper-tab-list.data-v-43112fc4{
+	color: #969696;
+	font-size: 16px;
+}
+.swiper-tab-item.data-v-43112fc4{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	height: 50rpx;
+	background-color: pink;
+}
+.uni-tab-bar .active.data-v-43112fc4 {
+	color: #343434;
+	font-size: 18px;
+}
+.search.data-v-43112fc4{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+}
+.adversity.data-v-43112fc4 {
+	text-align: center;
+}
+.recommend-product.data-v-43112fc4{
+	width:58%;
+	/*overflow: hidden;*/
+	/*text-overflow:ellipsis;*/
+	/*white-space: nowrap;*/
+}
+.recommend-banner.data-v-43112fc4 {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.uni-product.data-v-43112fc4 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 30rpx 0 18rpx 0;
+	margin-top: 30rpx;
+}
+.uni-product-title.data-v-43112fc4 {
+	color: #333333;
+	font-size: 32rpx;
+	font-weight: 400;
+}
+.uni-product-price.data-v-43112fc4{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding-right: 20rpx;
+}
+.goods-detail.data-v-43112fc4 {
+	margin-top: 20rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.image-view.data-v-43112fc4 {
+	background-color: #EBEEF5;
+	width: 220rpx;
+	height: 200rpx
+}
+.recommend.data-v-43112fc4 {
+	font-size: 20rpx;
+	color: #E02020;
+	border: 1px solid #E02020;
+	padding: 2rpx 6rpx;
+	border-radius: 8rpx;
+	margin: 0 18rpx 0 22rpx;
+}
+.recommend-image.data-v-43112fc4 {
+	padding: 36rpx;
+	text-align: center;
+}
+.goods-adverse.data-v-43112fc4 {
+	background-color: #EBEEF5;
+	height: 220rpx;
+}
+.goods-price.data-v-43112fc4 {
+	color: #E02020;
+	font-size: 36rpx;
+	text-align: center;
+}
+.goods-box.data-v-43112fc4 {
+	display: inline-block;
+	width: 262rpx;
+	height: 244rpx;
+	background: #EBEEF5;
+	margin-right: 30rpx;
+}
+.limitedImage.data-v-43112fc4 {
+	height: 98rpx;
+}
+.banner-title.data-v-43112fc4 {
+	text-align: center;
+	margin: 34rpx;
+}
+.image-ruler.data-v-43112fc4 {
+	width: 330rpx;
+	height: 350rpx;
+	background-color: #EBEEF5;
+}
+.recommend-ruler.data-v-43112fc4{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	margin-bottom: 210rpx;
+}
+.uni-ruler.data-v-43112fc4{
+	padding-bottom: 10rpx;
+}
+.active .swiper-tab-line.data-v-43112fc4 {
+	width:22rpx;
+	height:10rpx;
+	background:rgba(224,32,32,1);
+	margin: 4rpx auto 0;
+}
+page.data-v-43112fc4,
+.container.data-v-43112fc4 {
+  min-height: 100%;
+  height: 100%;
+}
+.uni-product-title.data-v-43112fc4 {
+  max-height: 130rpx;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.list-scroll-content.data-v-43112fc4 {
+  height: 100%;
+}
+.red.data-v-43112fc4 {
+  font-size: 28rpx;
+  margin-right: 18rpx;
+  color: #e02020;
+}
+/*商品推荐*/
+.recommend-banner .banner-icon.data-v-43112fc4 {
+  width: 100%;
+  height: 244rpx;
+  border: 2rpx solid #3fae2a;
+}
+.recommend-banner .banner-item.data-v-43112fc4 {
+  padding-top: 4rpx;
+  width: 262rpx;
+  height: auto;
+  margin-right: 36rpx;
+}
+/*時間僅剩*/
+.data-v-43112fc4 .uni-countdown__number {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 4rpx;
+}
+/*将成团*/
+.uni-product .goods-detail.data-v-43112fc4 {
+  margin-top: 0;
+  margin-left: 12rpx;
+}
+/*爲你推薦*/
+.recommend-ruler .uni-product-title.data-v-43112fc4 {
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+}
+/*頭部搜索*/
+.top_title .input-wrap.data-v-43112fc4 {
+  height: 60rpx;
+  background: #efefef;
+  border-radius: 34rpx;
+  width: 70%;
+}
+.top_title .input-wrap .search.data-v-43112fc4 {
+  width: 32rpx;
+  height: 34rpx;
+  margin-left: 50rpx;
+  margin-right: 22rpx;
+}
+.top_title .input-wrap .input.data-v-43112fc4 {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333;
+  line-height: 60rpx;
+}
+.top_title .icon1.data-v-43112fc4 {
+  width: 18rpx;
+  height: 32rpx;
+}
+.top_title .icon2.data-v-43112fc4 {
+  height: 44rpx;
+  width: 44rpx;
+}
+/*tab*/
+.tabBars-content.data-v-43112fc4 {
+  width: 92%;
+}
+.tabBars-content .tabBars.data-v-43112fc4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.tabBars-content .tabBars .tabBars-item.data-v-43112fc4 {
+  width: 20%;
+  text-align: center;
+  font-size: 32rpx;
+  font-family: PingFangSC-Light, PingFang SC;
+  font-weight: 300;
+  color: #333333;
+}
+.tabBars-content .tabBars .tabBars-item.active.data-v-43112fc4 {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+}
+.more.data-v-43112fc4 {
+  width: 32rpx;
+  height: 26rpx;
+}
+/*根据tab加载不同内容*/
+/*輪播圖*/
+.data-v-43112fc4 uni-swiper .uni-swiper-dot {
+  width: 12rpx;
+  height: 12rpx;
+}
+.data-v-43112fc4 uni-swiper .uni-swiper-dot-active {
+  background: #3fae2a;
+}
+.uni-tab-content.data-v-43112fc4 {
+  margin-top: 26rpx;
+}
+.swiper-box.data-v-43112fc4 {
+  height: 100%;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  background-color: rgba(239, 239, 239, 0.3);
+  /*广告*/
+}
+.swiper-box .adver.data-v-43112fc4 {
+  position: relative;
+  width: 100%;
+  background-color: pink;
+}
+.swiper-box .adver .ggxbq.data-v-43112fc4 {
+  width: 80rpx;
+  height: 40rpx;
+}
+.swiper-box .adver .close.data-v-43112fc4 {
+  position: absolute;
+  top: 0;
+  right: 16rpx;
+  width: 36rpx;
+  height: 36rpx;
+}
+

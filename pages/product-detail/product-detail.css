@@ -171,6 +171,7 @@ page {
 	padding: 0rpx 20rpx 0rpx 36rpx;
 	background-color: #ffffff;
 	position: fixed;
+	z-index: 100;
 	top: 0;
 	width: 750rpx;
 	box-sizing: border-box;
@@ -428,27 +429,50 @@ page {
 	width: 450rpx;
 }
 
-.comment {
+.comment-wrap {
 	padding: 28rpx 40rpx 26rpx 28rpx;
+	background-color: #FFFFff;
+	margin-top: 12rpx;
+}
+.comment {
+	/* padding: 28rpx 40rpx 26rpx 28rpx; */
 	background-color: #FFFFff;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	flex-wrap: nowrap;
 	justify-content: space-between;
-	margin-top: 12rpx;
 }
-
+.comment-user text{
+  color:#999;
+  font-size: 30rpx;
+}
+.comment-content{
+  word-spacing:10rpx;
+  font-size: 24rpx;
+}
+.comment-user{
+	padding: 20rpx 0;
+}
+.comment-user image{
+  width:60rpx;
+  height:60rpx;
+  border-radius: 50%;
+  margin-right:16rpx;
+  vertical-align:middle;
+}
 .pic-txt-detail {
 	text-align: center;
 	font-size: 24rpx;
 	color: #999999;
 	background-color: #ffffff;
-	padding: 30rpx 0 32rpx 0;
 	margin-top: 12rpx;
-	margin-bottom: 140rpx;
+	margin-bottom: 120rpx;
 }
-
+.pic-txt{
+	height: 100rpx;
+	line-height: 100rpx;
+}
 .oprate {
 	position: fixed;
 	bottom: 0;

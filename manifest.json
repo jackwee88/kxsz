@@ -1,6 +1,6 @@
 {
 	"name" : "kxsxApp",
-	"appid" : "__UNI__261BBA2",
+	"appid" : "__UNI__3AB31B8",
 	"description" : "",
 	"versionName" : "1.0.0",
 	"versionCode" : "100",
@@ -92,17 +92,25 @@
 	{
 		"usingComponents" : true
 	},
-	"h5" : {
-	    "devServer" : {
-	         "port" : 8000, //端口号
-	          "disableHostCheck" : true,
-	          "proxy" : {
-	              "/api" : {
-	                  "target" : "http://kxsx.zcycs.com", //目标接口域名
-	                   "changeOrigin" : true,  //是否跨域
-	                   "secure" : true  // 设置支持https协议的代理
-	             }
-	        }
-	    }
+	"h5" : 
+	{
+		"devServer" : 
+		{
+			"port" : 8000, //端口号
+			
+			"disableHostCheck" : true,
+			"proxy" : 
+			{
+				"/api" : 
+				{
+					"target" : "http://kxsx.zcycs.com", //目标接口域名
+					
+					"changeOrigin" : true, //是否跨域
+					
+					"secure" : true // 设置支持https协议的代理
+					
+				}
+			}
+		}
 	}
 }

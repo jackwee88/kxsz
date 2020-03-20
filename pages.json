@@ -583,13 +583,19 @@
         }
         ,{
             "path" : "pages/product-detail/sureOrder/sureOrder",
-            "style" : {}
+            "style" : {
+							"navigationBarTitleText":"确认订单"
+						}
         }
         ,{
             "path" : "pages/myPublished/commentDetails/commentDetails",
             "style" : {
 				"navigationBarTitleText":"开心书写"
 			}
+        }
+        ,{
+            "path" : "pages/product-detail/commentList/commentList",
+            "style" : {}
         }
     ],
 

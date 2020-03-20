@@ -1,7 +1,7 @@
-.feedback_page.data-v-bfe3c6ea {
+.feedback_page.data-v-ee8d2d40 {
   padding: 0 44rpx;
 }
-.tip.data-v-bfe3c6ea {
+.tip.data-v-ee8d2d40 {
   padding: 0 48rpx;
   margin: 30rpx 0;
   font-size: 26rpx;
@@ -9,7 +9,22 @@
   line-height: 38rpx;
   text-align: center;
 }
-.section_title.data-v-bfe3c6ea {
+.uploadbtn.data-v-ee8d2d40 {
+  width: 100%;
+  height: 90rpx;
+  margin-top: 60rpx;
+}
+.btn.data-v-ee8d2d40 {
+  width: 70%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #008800;
+  color: #fff;
+  font-size: 36rpx;
+  border-radius: 10rpx;
+  margin: 0 auto;
+}
+.section_title.data-v-ee8d2d40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -21,13 +36,13 @@
           justify-content: space-between;
   margin: 44rpx 0 22rpx;
 }
-.section_title text.data-v-bfe3c6ea {
+.section_title text.data-v-ee8d2d40 {
   font-size: 28rpx;
   font-weight: 500;
   color: #323232;
   line-height: 40rpx;
 }
-.section_title navigator.data-v-bfe3c6ea {
+.section_title navigator.data-v-ee8d2d40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -37,19 +52,19 @@
   font-size: 20rpx;
   color: #999;
 }
-.section_title navigator image.data-v-bfe3c6ea {
+.section_title navigator image.data-v-ee8d2d40 {
   width: 16rpx;
   height: 24rpx;
   margin-left: 10rpx;
 }
-.feedback_types.data-v-bfe3c6ea {
+.feedback_types.data-v-ee8d2d40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
 }
-.feedback_types .item.data-v-bfe3c6ea {
+.feedback_types .item.data-v-ee8d2d40 {
   width: 178rpx;
   height: 56rpx;
   margin-bottom: 26rpx;
@@ -62,17 +77,17 @@
   border-radius: 28rpx;
   border: 1rpx solid #999;
 }
-.feedback_types .item.data-v-bfe3c6ea:nth-of-type(3n) {
+.feedback_types .item.data-v-ee8d2d40:nth-of-type(3n) {
   margin-right: 0;
 }
-.feedback_types .active.data-v-bfe3c6ea {
+.feedback_types .active.data-v-ee8d2d40 {
   color: #41AD29;
   border-color: #41AD29;
 }
-.content_input.data-v-bfe3c6ea {
+.content_input.data-v-ee8d2d40 {
   margin-top: 60rpx;
 }
-.qq_input.data-v-bfe3c6ea {
+.qq_input.data-v-ee8d2d40 {
   margin-bottom: 70rpx;
 }
 

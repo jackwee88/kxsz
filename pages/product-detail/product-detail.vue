@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<view class="top_title">
-			<navigator open-type="navigateBack"><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
+			<navigator open-type="navigateBack">
+				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1">
+					
+				</image>
+				</navigator>
 			<navigator url="../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
 		</view>
 		<!-- 商品详情 -->
@@ -13,7 +17,7 @@
 		<swiper :autoplay="true" :interval="3000" :duration="1000" class="detailPicture">
 			<block v-for="(item, index) in detail.icon" :key="index">
 				<swiper-item>
-					<view class="detailPicture"><image :src="item" style="width: 100%;height: 660rpx;"></image></view>
+					<view><image :src="item" style="width: 100%;height: 660rpx;"></image></view>
 				</swiper-item>
 			</block>
 		</swiper>
@@ -36,8 +40,8 @@
 		<view class="product-detail">
 			<view class="beij">
 				<text style="color: #e33944;font-size: 24rpx;">¥</text>
-				<text style="color: #e33944;margin-right: 12rpx;">{{detail.coupon_price}}</text>
-				<text style="color: #A1A4A5;font-size: 28rpx;text-decoration: line-through;">¥{{detail.coupon_price}}</text>
+				<text style="color: #e33944;margin-right: 12rpx;">{{ detail.coupon_price }}</text>
+				<text style="color: #A1A4A5;font-size: 28rpx;text-decoration: line-through;">¥{{ detail.coupon_price }}</text>
 			</view>
 			<view>
 				<text style="color: #A1A4A5;font-size: 28rpx;margin-right: 12rpx;">已售{{ detail.sale }}件</text>
@@ -50,7 +54,7 @@
 					style="font-size: 30rpx;
 				color: #333333;font-weight: bolder;"
 				>
-					{{detail.p_name}}
+					{{ detail.p_name }}
 				</text>
 			</view>
 
@@ -115,26 +119,41 @@
 			<view style="margin-left:120rpx ;"><image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image></view>
 		</navigator>
 		<!-- 地址 -->
-		<navigator url="" class="address">
+		<view class="address">
 			<text class="txt-address">地址</text>
-			<view class="choose-address">选择收货地址</view>
+			<view class="choose-address">{{ detail.place_of_delivery }}</view>
+			<!-- <view class="choose-address">选择收货地址</view> -->
 			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
-		</navigator>
-		<navigator url="" class="address">
+		</view>
+		<view url="" class="address">
 			<text class="txt-address">参数</text>
-			<view class="choose-address productTxt">选择收货地址地址选择收货地址地址地址选择收货地址地址择收货地址地址<<</view>
+			<view class="choose-address productTxt">{{ detail.p_detail }}</view>
 			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
-		</navigator>
-		<navigator url="" class="comment">
-			<view class="choose-address">评价({{ detail.comment_num }})</view>
-			<view>
-				<text style="color: #A1A4A5;font-size: 28rpx;">查看全部</text>
+		</view>
+		<!-- 		  <view class="comment-wrap">
+		    <view class="comment-title">
+		      <text>宝贝评价({{evaluateList.total}})</text>
+		      <text class="cpmment-more" @tap.stop="evaluateList.total== 0 ? '' : 'lookMore'">查看全部<text class="more-icon">></text></text>
+		    </view>
+
+		  </view> -->
+		<view class="comment-wrap">
+			<view class="comment">
+				<text class="choose-address">评价({{ evaluateList.total }})</text>
+				<text style="color: #A1A4A5;font-size: 28rpx;" @tap.stop="evaluateList.total == 0 ? '' : 'lookMore'">查看全部</text>
 				<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;"></image>
 			</view>
-		</navigator>
+			<view v-if="evaluateList.total != 0">
+				<view class="comment-user">
+					<image class="comment-img" :src="evaluateList.list[0].avatar"></image>
+					<text>{{ evaluateList.list[0].nickname }}</text>
+				</view>
+				<view class="comment-content">{{ evaluateList.list[0].content }}</view>
+			</view>
+		</view>
 		<view class="pic-txt-detail">
-			<view>图文详情</view>
-			<view v-for="(item, index) in swiperImages" :key="index" class="detailPicture"><image :src="item" style="width: 100%;height: 650rpx;"></image></view>
+			<view class="pic-txt">图文详情</view>
+			<view><image :src="item" style="width: 100%;" v-for="(item, index) in detail.html" :key="index" mode="widthFix"></image></view>
 		</view>
 		<!-- 加入购物车  固定-->
 		<view class="oprate">
@@ -143,11 +162,11 @@
 					<image src="../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;"></image>
 					<view class="oprate-txt">客服</view>
 				</navigator>
-				<navigator url="" class="oprate-icon">
+				<navigator url="../shoppingcart/shoppingcart" class="oprate-icon">
 					<image src="../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;"></image>
 					<view class="oprate-txt">购物车</view>
 				</navigator>
-				<navigator url="" class="oprate-icon">
+				<view url="" class="oprate-icon">
 					<image src="../../static/onlineStore/sc.png" style="width: 36rpx;height: 34rpx;"></image>
 					<view class="oprate-txt">
 						<view class="twobtncont">
@@ -155,7 +174,7 @@
 							<text class="add" @click="collectP" v-else>取消收藏</text>
 						</view>
 					</view>
-				</navigator>
+				</view>
 				<view>
 					<button size="mini" class="bth-gwc" @tap="showSku" data-type="2">加入购物车</button>
 					<button size="mini" class="btn-fastbuy" @tap="showSku" data-type="1">立即购买</button>
@@ -173,17 +192,18 @@
 			</view>
 			<view class="attr_box" v-for="(attrValueObj, attrIndex) in sku_arr" :key="attrIndex">
 				<view class="attr_name">{{ attrValueObj.group_name }}</view>
-
+				<!-- 		// attrValueObj.item_id
+		// data.value -->
 				<view class="attr_value_box">
 					<view
+						v-for="(value, valueIndex) in attrValueObj.spec_items"
 						:class="'attr_value ' + (value.selected ? 'attr_value_active' : '')"
 						@tap="selectAttrValue"
 						:data-value="value.spec_value"
-						:data-key="attrValueObj.item_id"
+						:data-key="value.item_id"
 						:data-code="attrCode"
 						:data-index="attrIndex"
 						:data-selectedvalue="attrValueObj.selectedValue"
-						v-for="(value, valueIndex) in attrValueObj.spec_items"
 						:key="valueIndex"
 						:data-sec_index="valueIndex"
 						:data-item="value"
@@ -204,9 +224,7 @@
 			</view>
 
 			<image src="../../static/my/close.png" class="close" @tap.stop="closeSku"></image>
-			<view class="weui-btn-area" v-if="sku_show">
-				<button class="weui-btn" @tap="submit">确定</button>
-				</view>
+			<view class="weui-btn-area" v-if="sku_show"><button class="weui-btn" @tap="submit">确定</button></view>
 		</scroll-view>
 	</view>
 </template>
@@ -230,7 +248,8 @@ export default {
 			// 	status: 1,
 			// 	stock: 1
 			// },
-			detail:{},
+			// detailIcon:{}
+			detail: {},
 			html: {},
 			icon: {},
 			p_id: 0,
@@ -272,6 +291,7 @@ export default {
 		console.log(event);
 		this.banner = JSON.parse(decodeURIComponent(event.productDetail));
 		this.pid = this.banner.id;
+		this.getEvaluateList();
 	},
 
 	onShareAppMessage: function(res) {
@@ -304,31 +324,29 @@ export default {
 		ajax({
 			url: 'goods/detail',
 			data: {
-				// p_id:this.pid,
-				p_id: '1201'
+				p_id: this.pid
+				// p_id: '1201'
 			},
 			method: 'POST',
-			success: (res) => {
-				console.log(res.data.data)
+			success: res => {
+				console.log(res.data.data);
 				res.data.data.coupon_price = res.data.data.spec ? res.data.data.spec[0].goods_price : res.data.data.coupon_price;
 				res.data.data.image = res.data.data.spec ? res.data.data.spec[0].spec_image : res.data.data.image;
-				
-				this.detail = res.data.data, 
-				this.collect_p = res.data.data.if_collect;
+				(this.detail = res.data.data), (this.collect_p = res.data.data.if_collect);
 				this.main_image = res.data.data.image;
 				if (res.data.data.specData) {
-					const {spec_attr,spec_list} = res.data.data.specData
-					this.sku_arr = spec_attr
+					const { spec_attr, spec_list } = res.data.data.specData;
+					this.sku_arr = spec_attr;
 				}
 			},
 			error: function() {}
 		}),
+			// 获取拼团详情
 			ajax({
 				url: 'assemble/wait',
 				method: 'POST',
 				data: {
-					// goods_id:this.pid,
-					goods_id: '1072'
+					goods_id: this.pid
 				},
 				success: res => {
 					const { count, list } = res.data.data;
@@ -339,7 +357,6 @@ export default {
 	},
 	methods: {
 		assmbleDetail: function() {
-			console.log(this.pid);
 			uni.navigateTo({
 				url: '../assemble/assemble',
 				success: res => {},
@@ -348,67 +365,63 @@ export default {
 			});
 		},
 		getEvaluateList() {
-			let that = this;
-			let param = {
-				goods_id: that.p_id
-			};
-			util.ajax('/api/evaluate/getEvaluateList', param, res => {
-				console.log(res.data.total);
-				that.setData({
-					evaluateList: res.data
-				});
+			ajax({
+				url: 'evaluate/getEvaluateList',
+				data: { goods_id: this.pid },
+				success: res => {
+					this.evaluateList = res.data.data;
 
-				if (res.data.total != 0) {
-					let namee = res.data.list[0].nickname;
-					let userName = 'evaluateList.list[0].nickname';
+					if (res.data.data.total != 0) {
+						let namee = res.data.data.list[0].nickname;
+						let userName = 'evaluateList.list[0].nickname';
 
-					if (namee.length == 1) {
-						//用户名为一个字的显示*
-						that.setData({
-							[userName]: '*'
-						});
-					} else if (namee.length == 2) {
-						//用户名为2个字
-						let newName = namee.slice(0, 1);
-						that.setData({
-							[userName]: newName + '*'
-						});
-					} else {
-						let startName = namee.slice(0, 1);
-						let endName = namee.slice(namee.length - 1, namee.length);
-
-						if (namee.length == 3) {
-							//用户名称3个字的
+						if (namee.length == 1) {
+							//用户名为一个字的显示*
 							that.setData({
-								[userName]: startName + '*' + endName
+								[userName]: '*'
+							});
+						} else if (namee.length == 2) {
+							//用户名为2个字
+							let newName = namee.slice(0, 1);
+							that.setData({
+								[userName]: newName + '*'
 							});
 						} else {
-							//用户名称4个字及以上
-							that.setData({
-								[userName]: startName + '**' + endName
-							});
+							let startName = namee.slice(0, 1);
+							let endName = namee.slice(namee.length - 1, namee.length);
+
+							if (namee.length == 3) {
+								//用户名称3个字的
+								that.setData({
+									[userName]: startName + '*' + endName
+								});
+							} else {
+								//用户名称4个字及以上
+								that.setData({
+									[userName]: startName + '**' + endName
+								});
+							}
 						}
 					}
 				}
 			});
+			util.ajax();
 		},
 		//
 		add(e) {
-			var that = this;
-			var param = {
-				p_id: that.p_id,
-				goods_num: that.buyQuantity,
-				goods_sku_id: that.valueStrNum
-			};
 			ajax({
 				url: 'cart/add',
-				data: { param },
+				data: {
+					p_id: this.p_id,
+					goods_num: this.buyQuantity,
+					goods_sku_id: this.valueStrNum
+				},
 				success: res => {
 					uni.showToast({
-						title: res.msg
+						title: res.data.msg
 					});
-					if (that.detail.specData) {
-						that.closeSku();
+					if (this.detail.specData) {
+						this.closeSku();
 					}
 				}
 			});
@@ -416,9 +429,7 @@ export default {
 		//打开sku弹窗
 		showSku(e) {
 			if (this.sku_arr.length > 0) {
-				console.log(e.type)
-				this.sku_show=true,
-				this.type=e.type
+				(this.sku_show = true), (this.type = e.currentTarget.dataset.type);
 			} else {
 				if (e.currentTarget.dataset.type == 1) {
 					this.buyNow();
@@ -431,7 +442,7 @@ export default {
 		//关闭sku弹窗
 		closeSku() {
 			var that = this;
-			this.sku_show = false
+			this.sku_show = false;
 			var list = that.detail.specData.spec_attr;
 			list.forEach(function(v) {
 				v.spec_items.forEach(function(val) {
@@ -458,8 +469,8 @@ export default {
 		//查看更多评论
 		lookMore() {
 			let that = this;
-			wx.navigateTo({
-				url: '/pages/commentList/commentList?p_id=' + that.p_id + '&collect_p=' + that.collect_p
+			uni.navigateTo({
+				url: 'commentList/commentList?p_id=' + that.p_id + '&collect_p=' + that.collect_p
 			});
 		},
 
@@ -477,7 +488,7 @@ export default {
 
 			for (var i = 0; i < commodityAttr.length; i++) {
 				for (var j = 0; j < commodityAttr[i].attrValueList.length; j++) {
-					var attrIndex = this.getAttrIndex(commodityAttr[i].attrValueList[j].attrKey, attrValueList); // console.log('属性索引', attrIndex);
+					var attrIndex = this.getAttrIndex(commodityAttr[i].attrValueList[j].attrKey, attrValueList); // ('属性索引', attrIndex);
 					// 如果还没有属性索引为-1，此时新增属性并设置属性值数组的第一个值；索引大于等于0，表示已存在的属性名的位置
 
 					if (attrIndex >= 0) {
@@ -492,7 +503,7 @@ export default {
 						});
 					}
 				}
-			} // console.log('result', attrValueList)
+			}
 
 			for (var i = 0; i < attrValueList.length; i++) {
 				for (var j = 0; j < attrValueList[i].attrValues.length; j++) {
@@ -536,9 +547,7 @@ export default {
 
 			for (var i = 0; i < this.detail.spec.length; i++) {
 				if (this.valueStrNum == this.detail.spec[i].spec_sku_id) {
-					this.setData({
-						goods_spec_id: this.detail.spec[i].goods_spec_id
-					});
+					this.goods_spec_id = this.detail.spec[i].goods_spec_id;
 					flag = true;
 					break;
 				}
@@ -563,30 +572,27 @@ export default {
 					that.buyNow();
 				} else {
 					that.add();
-				} 
+				}
 			}
 		},
 		//收藏商品
 		collectP(e) {
 			let _this = this;
-
-			util.ajax(
-				'/api/goods/goodsCollect',
-				{
-					p_id: _this.p_id
+			ajax({
+				url: 'goods/goodsCollect',
+				data: {
+					p_id: _this.pid
 				},
-				res => {
-					wx.showToast({
+				success: res => {
+					console.log(res.data.data);
+					uni.showToast({
 						title: res.msg,
 						icon: 'none',
 						mask: true
 					});
-
-					_this.setData({
-						collect_p: !_this.collect_p
-					});
+					this.collect_p = !_this.collect_p;
 				}
-			);
+			});
 		},
 		goindex: function() {
 			var that = this;
@@ -595,37 +601,38 @@ export default {
 
 		buyNow() {
 			ajax({
-				url: '/index/getProfile',
-				data: {},
+				url: 'index/getProfile',
 				success: res => {
 					var that = this;
 					if (!uni.getStorageSync('loginToken')) {
+						console.log('登录状态失效');
 						uni.navigateTo({
 							url: '../login/login'
 						});
 					} else {
+						let param = {
+							type: 1,
+							ids: this.pid,
+							now_buy: 1,
+							goods_num: this.buyQuantity,
+							valueStrNum: this.valueStrNum,
+							goods_spec_id: this.goods_spec_id
+						};
+						uni.navigateTo({
+							url: 'sureOrder/sureOrder?sureOrder=' + encodeURIComponent(JSON.stringify(param))
+						});
+						console.log(this.detail.specData);
 						if (that.detail.specData) {
 							that.closeSku();
+							console.log('beij');
 						}
-
-						uni.navigateTo({
-							url:
-								'sureOrder/sureOrder?type=1&ids=' +
-								that.p_id +
-								'&now_buy=1&goods_num=' +
-								that.buyQuantity +
-								'&goods_sku_id=' +
-								that.valueStrNum +
-								'&goods_spec_id=' +
-								that.goods_spec_id
-						});
 					}
 				}
 			});
 		},
 
 		addCount(e) {
-			this.buyQuantity = parseInt(this.buyQuantity)+ 1
+			this.buyQuantity = parseInt(this.buyQuantity) + 1;
 		},
 
 		// 减少数量
@@ -633,54 +640,36 @@ export default {
 			if (this.buyQuantity <= 1) {
 				return;
 			}
-			this.buyQuantity = parseInt(this.buyQuantity)- 1
+			this.buyQuantity = parseInt(this.buyQuantity) - 1;
 			// this.setData({
 			// 	buyQuantity: parseInt(this.buyQuantity) - 1
 			// });
 		},
 
-		changeNum: function(e) {
-			var that = this;
-			that.setData({
-				buyQuantity: e.detail.value
-			});
-		},
+		// 选择商品属性
 		selectAttrValue: function(e) {
 			var attrValueList = this.sku_arr;
-			// var index = e.currentTarget.dataset.index; //属性索引
-
-			// var key = e.currentTarget.dataset.key;
-			// var value = e.currentTarget.dataset.value;
-			// var sec_index = e.currentTarget.dataset.sec_index; //属性索引
-
-			// var item = e.currentTarget.dataset.item; //选中
-			var index = e.index; //属性索引
-			
-			var key = e.key;
-			var value = e.value;
-			var sec_index = e.sec_index; //属性索引
-			
-			var item = e.item;
-
-			this.selectValue(attrValueList, index, key, value, sec_index, item);
+			var index = e.currentTarget.dataset.index; //属性索引
+			var key = e.currentTarget.dataset.key;
+			var value = e.currentTarget.dataset.value;
+			var sec_index = e.currentTarget.dataset.sec_index; //属性索引
+			this.selectValue(attrValueList, index, key, value, sec_index);
 		},
 
 		/* 选中 */
-		selectValue: function(attrValueList, index, key, value, sec_index, item) {
+		selectValue: function(attrValueList, index, key, value, sec_index) {
 			for (var j = 0; j < attrValueList[index].spec_items.length; j++) {
 				attrValueList[index].selectedValue = '';
-
-				if (attrValueList[index].spec_items[j].item_id == item.item_id) {
+				if (attrValueList[index].spec_items[j].item_id == key) {
 					attrValueList[index].spec_items[j].selected = !attrValueList[index].spec_items[j].selected;
 				} else {
 					attrValueList[index].spec_items[j].selected = false;
 				}
 			}
 
-			attrValueList[index].selectedValue = value;
-			this.setData({
-				sku_arr: attrValueList
-			});
+			attrValueList[index].selectedValue = value; //此时等于蓝色
+			// console.log(attrValueList)
+			this.sku_arr = attrValueList;
 			var valueStr = '';
 			var valueStrNum = '';
 
@@ -692,7 +681,6 @@ export default {
 					}
 				}
 			}
-
 			if (valueStrNum.substr(valueStrNum.length - 1, valueStrNum.length) == '_') {
 				valueStrNum = valueStrNum.substr(0, valueStrNum.length - 1);
 			}
@@ -700,34 +688,22 @@ export default {
 			if (valueStr.substr(valueStr.length - 1, valueStr.length) == ',') {
 				valueStr = valueStr.substr(0, valueStr.length - 1);
 			}
-
 			var str = valueStrNum
 				.split('')
 				.reverse()
 				.join('');
-
 			for (var i = 0; i < this.detail.spec.length; i++) {
 				if (valueStrNum == this.detail.spec[i].spec_sku_id || str == this.detail.spec[i].spec_sku_id) {
 					if (this.detail.spec[i].spec_image) {
-						this.setData({
-							'detail.image': this.detail.spec[i].spec_image
-						});
+						this.detail.image = this.detail.spec[i].spec_image;
 					} else {
-						this.setData({
-							'detail.image': this.main_image
-						});
+						this.detail.image = this.main_image;
 					}
-
-					this.setData({
-						'detail.coupon_price': this.detail.spec[i].goods_price
-					});
+					this.detail.coupon_price = this.detail.spec[i].goods_price;
 				}
 			}
 
-			this.setData({
-				valueStr: valueStr,
-				valueStrNum: valueStrNum
-			});
+			(this.valueStr = valueStr), (this.valueStrNum = valueStrNum);
 			console.log(this.valueStrNum, 'ggggggggggg');
 		}
 	}
@@ -737,9 +713,10 @@ export default {
 <style style lang="less" scoped>
 @import './product-detail.css';
 .detailPicture {
-	width: 750rpx;
+	width: 100%;
 	height: 660rpx;
-	// margin-top: 90rpx;
+	box-sizing: border-box;
+	margin-top: 90rpx;
 }
 
 // .add {
