@@ -60,13 +60,15 @@ const ajax = (opt) => {
 				});
 			} else {
 				uni.showToast({
-					title: '请稍后重试,staus:000001'
+					icon: 'none',
+					title: res.data.msg
 				});
 			}
 		},
 		fail: function() {
 			uni.hideLoading();
 			uni.showToast({
+				icon: 'none',
 				title: '请稍后重试'
 			});
 		},

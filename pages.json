@@ -248,12 +248,7 @@
 		{
 			"path": "pages/hncjiaoxue_intro/hncjiaoxue_intro",
 			"style": {
-				"navigationBarTitleText": "金木水火土",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "功能尺教学"
 			}
 		},
 		{
@@ -341,22 +336,9 @@
 			}
 
 		}, {
-			"path": "pages/jifen-shop/jifen-shop",
-			"style": {
-				"navigationBarTitleText": "积分商城",
-				"navigationBarBackgroundColor": "#FFFFFF",
-				"navigationBarTextStyle": "black",
-				"app-plus": {
-
-				}
-			}
-		}, {
 			"path": "pages/product-detail/product-detail",
 			"style": {
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": false
-				}
+				"navigationBarTitleText": "商品详情"
 			}
 		}
 
@@ -371,16 +353,6 @@
 				"navigationBarTitleText": "成长小广场"
 			}
 		}, {
-			"path": "pages/jifen-shop/jifen-shop",
-			"style": {
-				"navigationBarTitleText": "积分商城",
-				"navigationBarBackgroundColor": "#FFFFFF",
-				"navigationBarTextStyle": "black",
-				"app-plus": {
-
-				}
-			}
-		}, {
 			"path": "pages/brain/brain",
 			"style": {
 				"navigationStyle": "custom"
@@ -398,18 +370,6 @@
 				"navigationBarTextStyle": ""
 			}
 		}, {
-			"path": "pages/brain/fillBlanks/fillBlanks",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": ""
-			}
-		}, {
-			"path": "pages/gexingname/gexingname",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": ""
-			}
-		}, {
 			"path": "pages/jifen-shop/jifen-shop",
 			"style": {
 				"navigationBarTitleText": "积分商城",
@@ -420,25 +380,7 @@
 				}
 			}
 		}, {
-			"path": "pages/product-detail/product-detail",
-			"style": {
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": false
-				}
-			}
-		}, {
-			"path": "pages/brain/brain",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
 			"path": "pages/brain/poetry/poetry",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/brain/choice/choice",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -500,17 +442,7 @@
 		}, {
 			"path": "pages/jifen-shop/jifen-detail/jifen-detail",
 			"style": {
-				"navigationBarTitleText": "新增地址"
-			}
-		}, {
-			"path": "pages/jifen-shop/jifen-detail/jifen-detail",
-			"style": {
-
-			}
-		}, {
-			"path": "pages/shoppingcart/shaddress/shaddress",
-			"style": {
-				"navigationBarTitleText": "管理收货地址"
+				"navigationBarTitleText": "商品详情"
 			}
 		}, {
 			"path": "pages/userInfo/otherInfo",
@@ -533,7 +465,7 @@
 		}, {
 			"path": "pages/shoppingcart/shaddress/shaddress",
 			"style": {
-				"navigationBarTitleText": "收货地址"
+				"navigationBarTitleText": "管理收货地址"
 			}
 		}, {
 			"path": "pages/shoppingcart/newaddress/newaddress",
@@ -578,10 +510,6 @@
 			}
 		}
         ,{
-            "path" : "components/assmeble/assmeble",
-            "style" : {}
-        }
-        ,{
             "path" : "pages/product-detail/sureOrder/sureOrder",
             "style" : {
 							"navigationBarTitleText":"确认订单"
@@ -595,11 +523,35 @@
         }
         ,{
             "path" : "pages/product-detail/commentList/commentList",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"评论详情"
+			}
         }
         ,{
             "path" : "pages/studySquare/shuhuajs/shuhuajs",
             "style" : {}
+        }
+        ,{
+            "path" : "pages/otherInfo/otherInfo",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/addComment/addComment",
+            "style" : {
+				"navigationBarTitleText":"评论"
+			}
+        }
+        ,{
+            "path" : "pages/onlinestore/discountcenter/discountcenter",
+            "style": {
+				"navigationBarTitleText": "领劵中心"
+			}
+        }
+        ,{
+            "path" : "pages/jctbxzjx/jctbxzjx",
+            "style": {
+				"navigationBarTitleText": "教材同步写字教学"
+			}
         }
     ],
 

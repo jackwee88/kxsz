@@ -89,6 +89,7 @@ const ajax = opt => {
         });
       } else {
         uni.showToast({
+          icon: 'none',
           title: res.data.msg
         });
       }
@@ -96,6 +97,7 @@ const ajax = opt => {
     fail: function() {
       uni.hideLoading();
       uni.showToast({
+        icon: 'none',
         title: '请稍后重试'
       });
     },
@@ -168,6 +170,7 @@ const ajaxs = (url, data, success) => {
         });
       } else {
         uni.showToast({
+          icon: 'none',
           title: res.data.msg
         });
       }
@@ -175,6 +178,7 @@ const ajaxs = (url, data, success) => {
     fail: function() {
       uni.hideLoading();
       uni.showToast({
+        icon: 'none',
         title: '请稍后重试'
       });
     },

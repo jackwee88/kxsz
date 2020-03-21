@@ -53,3 +53,10 @@ uniapp
   - [x] 功能尺使用教学 /pages/hncjiaoxue_mulu/hncjiaoxue_mulu
 
 - [ ] 免费线上教程 
+
+- [x] 其他信息 /pages/otherInfo/otherInfo
+- [x] 评论 /page/addComment/addComment
+- [x] 领券中心 /pages/onlinestore/discountcenter/discountcenter
+- [x] 教材同步写字教学 /pages/jctbxzjx/jctbxzjx
+- [x] 功能尺教学 /pages/hncjiaoxue_intro/hncjiaoxue_intro
+- [x] 评论详情 /pages/product-detail/commentList/commentList

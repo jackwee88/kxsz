@@ -70,7 +70,7 @@
       <view class="popup" :hidden="flag">
         <view class="popupcont"></view>
         <view class="popupback">
-          <image src="../../../static/my/bg@2x.png" class="bag" />
+          <image src="../../../static/my/bg.png" class="bag" />
           <view style="position:absolute;top:36rpx;left:0;right:0">
             <image src="../../../static/my/dateimg.png" class="small-icon" />
             <view class="tips">签到成功</view>

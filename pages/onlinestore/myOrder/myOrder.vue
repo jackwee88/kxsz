@@ -1,69 +1,108 @@
 <template>
-<view>
-<!--pages/onlinestore/myOrder/myOrder.wxml-->
-<view class="myorder">
-  <view class="myorder_tab">
-    <view :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active':'')" v-for="(item, id) in section" :key="id" :data-currentId="item.typeId" @tap="handleTap">
-      <text class="text">{{item.name}}</text>
-     
-    </view>
-  </view>
-
-  <!-- 待付款 -->
-  <view class="tabcont daifukuan">
-    <view class="tabcontitem" v-for="(item, index) in tabcontitem" :key="index" @tap="show">
-      <navigator>
-        <view class="tabconttitle" :data-order_id="item.order_id" @tap="orderDetails">
-          <!-- <image class='tabconttitle_icon' src='/img/onlinestore/shopicon.png'></image> -->
-          <text class="storename">订单号：{{item.order_sno}}</text>
-          <text class="dealstate waitfukuan">{{item.status_name}}</text>
+  <view>
+    <view class="myorder">
+      <view class="myorder_tab">
+        <view
+          :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active':'')"
+          v-for="(item, id) in section"
+          :key="id"
+          :data-currentId="item.typeId"
+          @tap="handleTap"
+        >
+          <text class="text">{{item.name}}</text>
         </view>
-        <view class="storedetail" v-for="(items, index2) in item.goods" :key="index2" :data-order_id="item.order_id" @tap="orderDetails">
-          <view class="tableftimg tabfloct">
-            <image class="productimg" :src="items.image"></image>
-            <!-- //items.image -->
-          </view>
-          <view class="tabright tabfloct">
-            <view class="title over">{{items.goods_name}}</view>
-            <view class="title over" style="color:#999">{{items.goods_attr}}</view>
-            <!-- <text class='baozhuang'>礼盒装</text> -->
-            <view class="storemoney">
-              <text class="money">¥{{items.price}}</text>
-              <text class="storenum">x{{items.quantity}}</text>
+      </view>
+
+      <!-- 待付款 -->
+      <view class="tabcont daifukuan">
+        <view class="tabcontitem" v-for="(item, index) in tabcontitem" :key="index">
+          <navigator>
+            <view class="tabconttitle" :data-order_id="item.order_id" @tap="orderDetails">
+              <!-- <image class='tabconttitle_icon' src='/img/onlinestore/shopicon.png'> -->
+              <text class="storename">订单号：{{item.order_sno}}</text>
+              <text class="dealstate waitfukuan">{{item.status_name}}</text>
+            </view>
+            <view
+              class="storedetail"
+              v-for="(items, index2) in item.goods"
+              :key="index2"
+              :data-order_id="item.order_id"
+              @tap="orderDetails"
+            >
+              <view class="tableftimg tabfloct">
+                <image class="productimg" :src="items.image" />
+                <!-- //items.image -->
+              </view>
+              <view class="tabright tabfloct">
+                <view class="title over">{{items.goods_name}}</view>
+                <view class="title over" style="color:#999">{{items.goods_attr}}</view>
+                <!-- <text class='baozhuang'>礼盒装</text> -->
+                <view class="storemoney">
+                  <text class="money">¥{{items.price}}</text>
+                  <text class="storenum">x{{items.quantity}}</text>
+                </view>
+              </view>
+            </view>
+          </navigator>
+          <view class="amountmoney">
+            <view class="amountcont">
+              <text class="zonggong">共{{item.sum}}件商品</text>
+              <!-- {{item.zonggong}} -->
+              <text>合计：¥{{item.amount}}</text>
             </view>
           </view>
-        </view>
-      </navigator>
-      <view class="amountmoney">
-        <view class="amountcont">
-          <text class="zonggong">共{{item.sum}}件商品</text>
-          <!-- {{item.zonggong}} -->
-          <text>合计：¥{{item.amount}}</text>
+          <view class="tabcontbottom" v-show="item.refund_status == 1">
+            <view
+              class="bottomlink"
+              :data-order_id="item.order_id"
+              v-if="item.status == 2 && item.evaluate_status==10"
+              :data-index="index"
+              @tap="addComment"
+            >去评价</view>
+            <navigator
+              class="bottomlink"
+              v-if="item.status == -2"
+              :data-order_id="item.order_id"
+              :data-index="index"
+              @tap="cancle"
+            >取消订单</navigator>
+            <navigator
+              class="bottomlink"
+              v-if="item.status == -2"
+              :data-order_id="item.order_id"
+              :data-index="index"
+              @tap="pay"
+            >付款</navigator>
+            <navigator
+              class="bottomlink"
+              v-if="item.status == 0"
+              :data-order_id="item.order_id"
+              :data-index="index"
+              @tap="reminder"
+            >催单</navigator>
+
+            <navigator
+              class="bottomlink"
+              v-if="(item.status == 0 && item.is_refund==1) || (item.status == 1 && item.is_refund==1) || (item.status==2 && item.is_refund==1)"
+              :data-index="index"
+              :data-order_id="item.order_id"
+              @tap="returnFun"
+            >退货</navigator>
+
+            <navigator
+              class="bottomlink"
+              v-if="item.status == 1"
+              :data-order_id="item.order_id"
+              :data-index="index"
+              @tap="confirm"
+            >确认收货</navigator>
+          </view>
         </view>
       </view>
-      <view class="tabcontbottom">
-      <block v-if="item.refund_status == 1">
-      <view class="bottomlink" :data-order_id="item.order_id" v-if="item.status == 2 && item.evaluate_status==10" :data-index="index" @tap="addComment">去评价</view>
-        <navigator class="bottomlink" v-if="item.status == -2" :data-order_id="item.order_id" :data-index="index" @tap="cancle">取消订单</navigator>
-        <navigator class="bottomlink" v-if="item.status == -2" :data-order_id="item.order_id" :data-index="index" @tap="pay">付款</navigator>
-        <navigator class="bottomlink" v-if="item.status == 0" :data-order_id="item.order_id" :data-index="index" @tap="reminder">催单</navigator>
-
-        <navigator class="bottomlink" v-if="(item.status == 0 && item.is_refund==1) || (item.status == 1 && item.is_refund==1) || (item.status==2 && item.is_refund==1)" :data-index="index" :data-order_id="item.order_id" @tap="returnFun">退货</navigator>
-       
-         <navigator class="bottomlink" v-if="item.status == 1" :data-order_id="item.order_id" :data-index="index" @tap="confirm">确认收货</navigator>
-         </block>
-      </view>
-
     </view>
+
+    <template is="toTop"></template>
   </view>
-
-</view>
-
-
-
-
-<template is="toTop"></template>
-</view>
 </template>
 
 <script>
@@ -72,28 +111,33 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
-      currentId: '1',
-      refreshId: 'a',
-      section: [{
-        name: '全部',
-        typeId: '0'
-      }, {
-        name: '待付款',
-        typeId: '1'
-      }, {
-        name: '待发货',
-        typeId: '2'
-      }, {
-        name: '待收货',
-        typeId: '3'
-      }, // {
-      //   name: '退货',
-      //   typeId: '4'
-      // },
-      {
-        name: '待评价',
-        typeId: '6'
-      }],
+      currentId: "1",
+      refreshId: "a",
+      section: [
+        {
+          name: "全部",
+          typeId: "0"
+        },
+        {
+          name: "待付款",
+          typeId: "1"
+        },
+        {
+          name: "待发货",
+          typeId: "2"
+        },
+        {
+          name: "待收货",
+          typeId: "3"
+        }, // {
+        //   name: '退货',
+        //   typeId: '4'
+        // },
+        {
+          name: "待评价",
+          typeId: "6"
+        }
+      ],
       tabcontitem: [],
       currentId: 0,
       page: 1,
@@ -108,7 +152,7 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const that = this;
 
     if (options.currentId) {
@@ -127,18 +171,18 @@ export default {
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     let that = this;
 
-    if (that.refreshId != 'a') {
+    if (that.refreshId != "a") {
       wx.getStorage({
-        key: 'refreshIds',
-        success: function (res) {
+        key: "refreshIds",
+        success: function(res) {
           console.log(res);
 
           if (res.data == 1) {
@@ -152,17 +196,17 @@ export default {
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     var that = this;
     that.setData({
       page: 1
@@ -173,30 +217,30 @@ export default {
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     return {
-      title: '开心书写',
-      path: 'pages/index/index?myshare=1&tourl=/pages/onlinestore/myOrder/myOrder' // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
-
+      title: "开心书写",
+      path:
+        "pages/index/index?myshare=1&tourl=/pages/onlinestore/myOrder/myOrder" // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
     };
   },
 
   /**
-  * 页面上拉触底事件的处理函数
-  */
-  onReachBottom: function () {
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
     var that = this;
     that.getDataBott();
   },
   methods: {
-	setData(param) {
-		for (const key in param) {
-			const element = param[key];
-			this[key] = element
-		}
-	},
+    setData(param) {
+      for (const key in param) {
+        const element = param[key];
+        this[key] = element;
+      }
+    },
     //点击切换
-    handleTap: function (e) {
+    handleTap: function(e) {
       var that = this;
       let currentId = e.currentTarget.dataset.currentid;
 
@@ -226,7 +270,7 @@ export default {
       //   })
       // } else {
 
-      util.ajaxs('order/orderList', param, res => {
+      util.ajaxs("order/orderList", param, res => {
         var tabcontitem = that.tabcontitem;
         that.setData({
           page: that.page + 1,
@@ -249,11 +293,11 @@ export default {
 
       if (that.count < that.page) {
         wx.showToast({
-          title: '暂无更多信息',
-          icon: 'none'
+          title: "暂无更多信息",
+          icon: "none"
         });
       } else {
-        util.ajaxs('order/orderList', param, res => {
+        util.ajaxs("order/orderList", param, res => {
           var tabcontitem = that.tabcontitem;
           that.setData({
             page: that.page + 1,
@@ -266,14 +310,14 @@ export default {
     },
 
     /**
-    * 取消订单
-    */
+     * 取消订单
+     */
     cancle(e) {
       var that = this;
       var list = that.tabcontitem;
       wx.showModal({
-        title: '提示',
-        content: '是否确认取消订单',
+        title: "提示",
+        content: "是否确认取消订单",
 
         success(res) {
           if (res.confirm) {
@@ -282,11 +326,11 @@ export default {
             const param = {
               order_id: order_id
             };
-            util.ajaxs('order/cancle', param, ress => {
+            util.ajaxs("order/cancle", param, ress => {
               // //删除订单
               wx.showToast({
                 title: ress.msg,
-                icon: 'none',
+                icon: "none",
                 mask: true
               });
               that.setData({
@@ -299,13 +343,12 @@ export default {
             });
           }
         }
-
       });
     },
 
     /**
-    * 支付订单
-    */
+     * 支付订单
+     */
     pay(e) {
       const order_id = e.currentTarget.dataset.order_id; // let that = this;
       // that.setData({
@@ -313,8 +356,8 @@ export default {
       // })
 
       wx.showModal({
-        title: '提示',
-        content: '是否确认付款',
+        title: "提示",
+        content: "是否确认付款",
 
         success(ress) {
           if (ress.confirm) {
@@ -324,7 +367,7 @@ export default {
               order_id: order_id
             };
             var that = this;
-            util.ajaxs('paygoods/repay', param, res => {
+            util.ajaxs("paygoods/repay", param, res => {
               console.log(res.data);
               wx.requestPayment({
                 timeStamp: String(res.data.timeStamp),
@@ -332,39 +375,42 @@ export default {
                 package: res.data.package,
                 signType: res.data.signType,
                 paySign: res.data.paySign,
-                success: function (payres) {
+                success: function(payres) {
                   console.log(payres); // wx.showToast({
                   //   title: "付款成功",
                   //   icon:'none'
                   // })
 
                   wx.redirectTo({
-                    url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + e.currentTarget.dataset.order_id
+                    url:
+                      "/pages/onlinestore/orderdetails/orderdetails?order_id=" +
+                      e.currentTarget.dataset.order_id
                   });
                 },
-                fail: function () {// wx.showModal({
+                fail: function() {
+                  // wx.showModal({
                   //   title: '错误提示',
                   //   content: '支付失败',
                   //   showCancel: false
                   // })
                 },
-                complete: function () {// complete
+                complete: function() {
+                  // complete
                 }
               });
             });
           }
         }
-
       });
     },
 
     /**
-    * 催单
-    */
+     * 催单
+     */
     reminder(e) {
       wx.showModal({
-        title: '提示',
-        content: '是否确认催单',
+        title: "提示",
+        content: "是否确认催单",
 
         success(ress) {
           if (ress.confirm) {
@@ -374,7 +420,7 @@ export default {
               order_id: order_id
             };
             var that = this;
-            util.ajaxs('order/reminder', param, res => {
+            util.ajaxs("order/reminder", param, res => {
               console.log(res.data);
               wx.showToast({
                 title: "催单成功",
@@ -382,22 +428,21 @@ export default {
               });
             });
           } else if (ress.cancel) {
-            console.log('用户点击取消');
+            console.log("用户点击取消");
           }
         }
-
       });
     },
 
     /**
-    * 退货
-    */
+     * 退货
+     */
     returnFun(e) {
       const order_id = e.currentTarget.dataset.order_id;
       var that = this;
       wx.showModal({
-        title: '提示',
-        content: '是否确认退货',
+        title: "提示",
+        content: "是否确认退货",
 
         success(ress) {
           if (ress.confirm) {
@@ -406,10 +451,10 @@ export default {
             const param = {
               order_id: order_id
             };
-            util.ajaxs('order/returnGoods', param, res => {
+            util.ajaxs("order/returnGoods", param, res => {
               wx.showToast({
                 title: res.msg,
-                icon: 'none'
+                icon: "none"
               });
               that.setData({
                 currentId: 4,
@@ -421,7 +466,6 @@ export default {
             });
           }
         }
-
       });
     },
 
@@ -433,8 +477,8 @@ export default {
       const order_id = e.currentTarget.dataset.order_id;
       var list = that.tabcontitem;
       wx.showModal({
-        title: '提示',
-        content: '是否确认收货',
+        title: "提示",
+        content: "是否确认收货",
 
         success(ress) {
           if (ress.confirm) {
@@ -443,10 +487,10 @@ export default {
             const param = {
               order_id: order_id
             };
-            util.ajaxs('order/sure_goods', param, res => {
+            util.ajaxs("order/sure_goods", param, res => {
               wx.showToast({
                 title: "收货成功",
-                icon: 'none',
+                icon: "none",
                 mask: true
               });
               that.setData({
@@ -467,11 +511,9 @@ export default {
               // that.setData({
               //   tabcontitem: list
               // })
-
             });
           }
         }
-
       });
     },
 
@@ -482,8 +524,8 @@ export default {
       var that = this;
       var list = that.tabcontitem;
       wx.showModal({
-        title: '提示',
-        content: '是否删除订单',
+        title: "提示",
+        content: "是否删除订单",
 
         success(ress) {
           if (ress.confirm) {
@@ -492,7 +534,7 @@ export default {
             const param = {
               order_id: order_id
             };
-            util.ajaxs('order/del', param, res => {
+            util.ajaxs("order/del", param, res => {
               console.log(res.data); //删除订单
 
               wx.showToast({
@@ -506,7 +548,6 @@ export default {
             });
           }
         }
-
       });
     },
 
@@ -515,7 +556,8 @@ export default {
 
       if (order_id) {
         wx.navigateTo({
-          url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + order_id
+          url:
+            "/pages/onlinestore/orderdetails/orderdetails?order_id=" + order_id
         });
       }
     },
@@ -546,15 +588,14 @@ export default {
       arrlist.splice(that.refreshId, 1);
       that.setData({
         tabcontitem: arrlist,
-        refreshId: 'a'
+        refreshId: "a"
       });
       wx.setStorage({
         //储存一个刷新值，返回到前一页然后获取到，有就进行刷新
-        key: 'refreshIds',
-        data: '0'
+        key: "refreshIds",
+        data: "0"
       });
     }
-
   }
 };
 </script>
