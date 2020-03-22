@@ -9,7 +9,7 @@
       </navigator>
     </view>
     <!-- 商品详情 -->
-    <cover-view class="team-position" v-if="assemble === []">
+    <cover-view class="team-position" v-if="!assemble ==''">
       <view class="team-num">2人团</view>
       <view class="team-total">已拼26件</view>
     </cover-view>
@@ -24,7 +24,7 @@
       </block>
     </swiper>
     <!-- 限时秒杀 判断商品是否为秒杀商品-->
-    <view class="xsms" v-if="productDetail.sale_status === '2'">
+    <view class="xsms" v-if="detail.sale_status === 2">
       <view class="back-red">
         <view class="back-red-txt">
           <text style="color: #ffffff;font-size: 32rpx;">¥</text>
@@ -337,8 +337,11 @@ export default {
     };
   },
   onLoad(event) {
-    this.pid = event.p_id;
-    this.getEvaluateList();
+	this.banner = JSON.parse(decodeURIComponent(event.productDetail));
+	console.log(this.banner);
+	this.pid = this.banner.id;
+	this.getData()
+  this.getEvaluateList();
   },
 
   onShareAppMessage: function(res) {
@@ -370,44 +373,6 @@ export default {
     });
   },
   mounted() {
-    ajax({
-      url: "goods/detail",
-      data: {
-        p_id: this.pid
-        // p_id: '1201'
-      },
-      method: "POST",
-      success: res => {
-        console.log(res.data.data);
-        res.data.data.coupon_price = res.data.data.spec
-          ? res.data.data.spec[0].goods_price
-          : res.data.data.coupon_price;
-        res.data.data.image = res.data.data.spec
-          ? res.data.data.spec[0].spec_image
-          : res.data.data.image;
-        (this.detail = res.data.data),
-          (this.collect_p = res.data.data.if_collect);
-        this.main_image = res.data.data.image;
-        if (res.data.data.specData) {
-          const { spec_attr, spec_list } = res.data.data.specData;
-          this.sku_arr = spec_attr;
-        }
-      },
-      error: function() {}
-    }),
-      // 获取拼团详情
-      ajax({
-        url: "assemble/wait",
-        method: "POST",
-        data: {
-          goods_id: this.pid
-        },
-        success: res => {
-          const { count, list } = res.data.data;
-          this.teamlist = list;
-        },
-        error: function() {}
-      });
   },
   methods: {
     setData(param) {
@@ -424,6 +389,51 @@ export default {
         complete: () => {}
       });
     },
+		getData(){
+			ajax({
+			  url: "goods/detail",
+			  data: {
+			    p_id: this.pid
+			    // p_id: '1201'
+			  },
+			  method: "POST",
+			  success: res => {
+			    console.log(res.data.data);
+			    res.data.data.coupon_price = res.data.data.spec
+			      ? res.data.data.spec[0].goods_price
+			      : res.data.data.coupon_price;
+			    res.data.data.image = res.data.data.spec
+			      ? res.data.data.spec[0].spec_image
+			      : res.data.data.image;
+			    (this.detail = res.data.data),
+			      (this.collect_p = res.data.data.if_collect);
+			    this.main_image = res.data.data.image;
+			    if (res.data.data.specData) {
+			      const { spec_attr, spec_list } = res.data.data.specData;
+			      this.sku_arr = spec_attr;
+			    }
+					if(!res.data.data.assemble==''){
+						this.getAssemble()
+					}
+			  },
+			  error: function() {}
+			});
+		},
+		  // 获取拼团详情
+		  getAssemble(){
+				ajax({
+				  url: "assemble/wait",
+				  method: "POST",
+				  data: {
+				    goods_id: this.pid
+				  },
+				  success: res => {
+				    const { count, list } = res.data.data;
+				    this.teamlist = list;
+				  },
+				  error: function() {}
+				});
+			},
     getEvaluateList() {
       let that = this;
       ajax({
@@ -802,7 +812,6 @@ export default {
   width: 100%;
   height: 660rpx;
   box-sizing: border-box;
-  margin-top: 90rpx;
 }
 
 // .add {

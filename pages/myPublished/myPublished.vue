@@ -67,7 +67,7 @@
                 <view class="redtree_text">{{ item.content }}</view>
                 <view class>
                   <view class="comment-time l">{{ item.createtime }}</view>
-                  <view class="comment-count l" @click="openCommentDetails">{{ item.count }} 回复</view>
+                  <view class="comment-count l">{{ item.count }} 回复</view>
                 </view>
               </view>
             </view>

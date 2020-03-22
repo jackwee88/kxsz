@@ -46,17 +46,14 @@ export default{
 	    // 1已申请，未设计签名,2:已申请，已设计签名，3未申请
 	  ajax({url:'videoPacks/getSignature',data:{},success:(res)=>{
 	        if (res.data.data.status==1){
-	            this.userinfo= res.data.data,
 	            this.status= res.data.data.status,
 	            this.tips= '签名正在努力设计中...'
 
 	        } else if (res.data.status == 2){
-	            this.userinfo= res.data.data.data,
 	            this.status= res.data.data.status,
 	            this.tips= res.data.msg
 	        }else{
-	            this.userinfo= this.res.data.data,
-	            this.status= this.res.data.status
+	            this.status= res.data.data.status
 	            // createtime: res.data.data.createtime
 	        }
 

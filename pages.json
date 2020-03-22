@@ -524,12 +524,20 @@
         ,{
             "path" : "pages/product-detail/commentList/commentList",
             "style" : {
-				"navigationBarTitleText":"评论详情"
-			}
+							"navigationBarTitleText":"评论详情"
+						}
         }
         ,{
             "path" : "pages/studySquare/shuhuajs/shuhuajs",
-            "style" : {}
+            "style" : {
+							"navigationBarTitleText":"书画鉴赏"
+						}
+        }
+        ,{
+            "path" : "pages/studySquare/personsign/personsign",
+            "style" : {
+							"navigationBarTitleText":"个性签名"
+						}
         }
         ,{
             "path" : "pages/otherInfo/otherInfo",

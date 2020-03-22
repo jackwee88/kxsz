@@ -46,6 +46,7 @@ page{
   text-align: center;
   /* border: 1rpx solid #ebf6eb; */
   border-radius: 10rpx;
+	margin-top: 50rpx;
 }
 .showinfos {
   width: 100%;

@@ -38,7 +38,7 @@
   </view> -->
 			<view class="tabbox">
 				<view class="tabcon avtive" data-type="1" @tap="changeOil" style="background-color:#E78522">成长日记</view>
-				<view data-url="../my/signature/signature" class="tabcon" data-type="2" style="background-color:#00C3A0" @tap.stop="toWhere">个性签名</view>
+				<view data-url="./personsign/personsign" class="tabcon" data-type="2" style="background-color:#00C3A0" @tap.stop="toWhere">个性签名</view>
 				<!-- <view data-url='/pages/worksfor/worksfor' class="tabcon"  data-type='3' style="background-color:#02A0C3" catchtap='toWhere'>
      作品征集
     </view> -->
@@ -68,7 +68,7 @@
 				<view class="studyitem" v-for="(item, index) in studylist" :key="index">
 					<text class="is_top" v-if="item.is_top == 1">已置顶</text>
 					<view class="studylistflex">
-						<view class="studyitem-top info clear" @click="gotoPublished(item)">
+						<view class="studyitem-top info clear">
 							<view style="float:left"><image :src="item.avatar" class="touxiangicon"></image></view>
 							<view style="float:left">
 								<text class="infoname">{{ item.nickname }}</text>
@@ -82,7 +82,7 @@
 							<text
 								class="impression"
 								:data-dy_id="item.dy_id"
-								@tap="details"
+								@tap="gotoPublished"
 								:data-browse_times="item.browse_times"
 								:data-p_id="item.dy_id"
 								:data-index="index"
@@ -159,7 +159,7 @@
 								</button>
 								<view
 									class="thirdline share"
-									@tap.stop="details"
+									@tap.stop="gotoPublished"
 									:data-dy_id="item.dy_id"
 									:data-browse_times="item.browse_times"
 									:data-p_id="item.dy_id"
@@ -371,13 +371,14 @@ export default {
 			});
 		},
 
-		gotoPublished: function(e) {
+		gotoPublished(e) {
+			console.log('你好')
 			let param = {
-				dy_id: e.dy_id,
-				index: e.index,
-				browse_times: e.browse_times,
-				comment_count: e.comment_count,
-				thumbs_times: e.thumbs_times
+				      dy_id : e.currentTarget.dataset.dy_id,
+				      index : e.currentTarget.dataset.index,
+				     browse_times : e.currentTarget.dataset.browse_times,
+				      comment_count : e.currentTarget.dataset.comment_count,
+				      thumbs_times : e.currentTarget.dataset.thumbs_times,
 			};
 			uni.navigateTo({
 				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
@@ -398,30 +399,28 @@ export default {
 						page_size: this.page_size,
 						type: this.type
 					},
-
 					success: (res) => {
 						console.log(res.data.data)
 						const { list, count } = res.data.data;
 						this.studylist = list
-						// var action = {
-						// 	method: 'pause'
-						// };
-						// for (var i = 0; i < list.length; i++) {
-						// 	list[i].if_input = false;
-						// 	list[i].fullScreen = false;
+						var action = {
+							method: 'pause'
+						};
+						for (var i = 0; i < list.length; i++) {
+							list[i].if_input = false;
+							list[i].fullScreen = false;
 
-						// 	if (list[i].picture_arr.length > 0) {
-						// 		list[i].poster = list[i].picture_arr[0];
-						// 	}
+							if (list[i].picture_arr.length > 0) {
+								list[i].poster = list[i].picture_arr[0];
+							}
 
-						// 	list[i].action = action;
-						// 	list[i].name = list[i].nickname + '的音频';
-						// }
+							list[i].action = action;
+							list[i].name = list[i].nickname + '的音频';
+						}
 
-							this.page= that.page + 1,
-							this.page= that.page + 1,
-							this.count= count > 1 ? res.data.count : 1,
-							this.studylist= list
+							this.page= this.page + 1,
+							this.count= count > 1 ? res.data.count : 1
+							// this.studylist= list
 						// wx.stopPullDownRefresh();
 					}
 				});
@@ -477,10 +476,8 @@ export default {
 		},
 		changeOil: function(e) {
 			if (e.target.dataset.type == 2) {
-				this.setData({
-					type: e.target.dataset.type
-				});
-				wx.navigateTo({
+					this.type=e.target.dataset.type
+				uni.navigateTo({
 					url: '/pages/brain/brain'
 				});
 				return;

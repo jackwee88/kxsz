@@ -363,6 +363,7 @@
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
     </view>
+		<navigator url="../dakaLog/dakaLog"></navigator>
   </view>
 </template>
 

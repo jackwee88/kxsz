@@ -100,16 +100,11 @@
 		/**
 		 * 生命周期函数--监听页面加载
 		 */
-		onLoad: function(event) {
-			const {
-				d_id,
-				owner_uid,
-				index,
-				comment_count
-			} = JSON.parse(decodeURIComponent(event.commentDetails));
-			console.log('123'+event.commentDetails)
-			if (d_id) {
-				this.d_id = d_id,
+		onLoad(event) {
+			this.banner = JSON.parse(decodeURIComponent(event.commentDetails));
+			console.log(this.banner.id)
+			if (this.banner.d_id) {
+				  this.d_id = d_id,
 					this.id = owner_uid,
 					this.index = index,
 					this.comment_count = comment_count
