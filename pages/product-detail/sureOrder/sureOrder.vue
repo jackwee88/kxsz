@@ -306,7 +306,8 @@ export default {
 			goods_sku_id: '',
 			goods_num: '',
 			goods_spec_id: '',
-			remarks: ''
+			remarks: '',
+			banner:''
 		};
 	},
 

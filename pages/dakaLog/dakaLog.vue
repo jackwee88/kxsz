@@ -179,8 +179,9 @@ export default {
   methods: {
     //传参 打卡数据id
     gotoPublished: function(e) {
+			let param ={type:3}
       uni.navigateTo({
-        url: "../myPublished/myPublished"
+        url: "../myPublished/myPublished?="+encodeURIComponent(JSON.stringify(param))
       });
     },
 		getData() {

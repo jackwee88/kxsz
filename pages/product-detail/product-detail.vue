@@ -333,6 +333,7 @@ export default {
           num: "1"
         }
       ],
+			banner:'',
       pid: ""
     };
   },

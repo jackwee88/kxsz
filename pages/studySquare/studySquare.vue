@@ -372,13 +372,14 @@ export default {
 		},
 
 		gotoPublished(e) {
-			console.log('你好')
+			console.log('this.type'+this.type)
 			let param = {
 				      dy_id : e.currentTarget.dataset.dy_id,
 				      index : e.currentTarget.dataset.index,
-				     browse_times : e.currentTarget.dataset.browse_times,
+				      browse_times : e.currentTarget.dataset.browse_times,
 				      comment_count : e.currentTarget.dataset.comment_count,
 				      thumbs_times : e.currentTarget.dataset.thumbs_times,
+							type:2
 			};
 			uni.navigateTo({
 				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))

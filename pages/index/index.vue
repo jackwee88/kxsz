@@ -65,11 +65,19 @@
 					</view>
 					<text class="view_count">浏览{{ item.browse_times }}次</text>
 				</view>
-				<view @click="gotoPublished(item)">
-					<view class="msg">{{ item.content }}</view>
-					<view class="gallery">
-						<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
-					</view>
+				<view
+					class="msg"
+					:data-dy_id="item.dy_id"
+					@tap="gotoPublished"
+					:data-browse_times="item.browse_times"
+					:data-p_id="item.dy_id"
+					:data-index="index"
+					:data-comment_count="item.comment_count"
+				>
+					{{ item.content }}
+				</view>
+				<view class="gallery">
+					<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
 				</view>
 				<view class="actions">
 					<view class="item">
@@ -100,10 +108,10 @@
 				</view>
 			</view>
     </view>-->
-    <!-- 精品推荐 -->
-    <!-- <view class="recommend"><view class="recommendText">精品推荐</view></view> -->
-    <!-- 精品推荐主内容 -->
-    <!-- <view>
+		<!-- 精品推荐 -->
+		<!-- <view class="recommend"><view class="recommendText">精品推荐</view></view> -->
+		<!-- 精品推荐主内容 -->
+		<!-- <view>
 			<view class="recommend-item" v-for="data in recomItem" :key="data.id">
 				<navigator url="/pages/growthDiary/growthDiary">
 					<view class="item-top">
@@ -146,11 +154,10 @@
 			</view>
 		</view> -->
 		<!-- 上拉加载 -->
-<!-- 		<view class="">
+		<!-- 		<view class="">
 			<uni-load-more :status="status" />
 			</view> -->
-			<view class="upload" @click="gotoStudy">点击加载更多
-				</view>
+		<view class="upload" @click="gotoStudy">点击加载更多</view>
 		<!-- 签到 -->
 		<view class="dakaciclecont_daka">
 			<view class="dakaciclecont_daka_flex">
@@ -161,10 +168,10 @@
 </template>
 
 <script>
-import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue";
-import "../public/rongyun.js";
-import indexModal from "../modal/modal.vue";
-import { ajax } from "../../utils/public.js";
+import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+import '../public/rongyun.js';
+import indexModal from '../modal/modal.vue';
+import { ajax } from '../../utils/public.js';
 export default {
 	data() {
 		return {
@@ -347,19 +354,20 @@ export default {
 			}
 		},
 		//点赞
-		gotoStudy(){
+		gotoStudy() {
 			uni.navigateTo({
-				url:'../studySquare/studySquare'
-			})
+				url: '../studySquare/studySquare'
+			});
 		},
 		getUserDetail: function() {},
 		gotoPublished: function(e) {
 			let param = {
-				dy_id: e.dy_id,
-				index: e.index,
-				browse_times: e.browse_times,
-				comment_count: e.comment_count,
-				thumbs_times: e.thumbs_times
+				dy_id: e.currentTarget.dataset.dy_id,
+				index: e.currentTarget.dataset.index,
+				browse_times: e.currentTarget.dataset.browse_times,
+				comment_count: e.currentTarget.dataset.comment_count,
+				thumbs_times: e.currentTarget.dataset.thumbs_times,
+				type: 1
 			};
 			uni.navigateTo({
 				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
@@ -457,181 +465,181 @@ export default {
 
 <style lang="less">
 @import './index.css';
-.upload{
+.upload {
 	color: #999999;
 	font-size: 24rpx;
 	height: 40rpx;
 	line-height: 40rpx;
 	text-align: center;
-	}
+}
 .username {
-  color: #323232;
-  font-size: 28rpx;
-  padding: 5rpx 0rpx;
+	color: #323232;
+	font-size: 28rpx;
+	padding: 5rpx 0rpx;
 }
 .status_bar {
-  height: var(--status-bar-height);
-  width: 100%;
-  background-color: #f8f8f8;
+	height: var(--status-bar-height);
+	width: 100%;
+	background-color: #f8f8f8;
 }
 .top_title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20rpx 0;
-  margin-bottom: 26rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20rpx 0;
+	margin-bottom: 26rpx;
 
-  text {
-    font-size: 36rpx;
-    font-weight: 500;
-    color: rgba(50, 50, 50, 1);
-    line-height: 50rpx;
-  }
+	text {
+		font-size: 36rpx;
+		font-weight: 500;
+		color: rgba(50, 50, 50, 1);
+		line-height: 50rpx;
+	}
 
-  image {
-    width: 44rpx;
-    height: 44rpx;
-  }
+	image {
+		width: 44rpx;
+		height: 44rpx;
+	}
 }
 
 .swiper {
-  height: 248rpx;
-  margin-bottom: 44rpx;
+	height: 248rpx;
+	margin-bottom: 44rpx;
 
-  .banner {
-    width: 100%;
-    height: 248rpx;
-    border-radius: 8rpx;
-  }
+	.banner {
+		width: 100%;
+		height: 248rpx;
+		border-radius: 8rpx;
+	}
 }
 .works_list {
-  .work_item {
-    padding-bottom: 50rpx;
-    margin: 30rpx 0 50rpx;
-    border-bottom: 1rpx solid #ddd;
-    &:last-of-type {
-      border: 0;
-    }
-    .user_info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+	.work_item {
+		padding-bottom: 50rpx;
+		margin: 30rpx 0 50rpx;
+		border-bottom: 1rpx solid #ddd;
+		&:last-of-type {
+			border: 0;
+		}
+		.user_info {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
-      .left_side {
-        display: flex;
-        align-items: center;
+			.left_side {
+				display: flex;
+				align-items: center;
 
-        .date {
-          font-size: 20rpx;
-          color: rgba(153, 153, 153, 1);
-          line-height: 1;
-        }
-      }
+				.date {
+					font-size: 20rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 1;
+				}
+			}
 
-      .view_count {
-        font-size: 20rpx;
-        color: rgba(153, 153, 153, 1);
-        line-height: 28rpx;
-      }
-    }
+			.view_count {
+				font-size: 20rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 28rpx;
+			}
+		}
 
-    .msg {
-      margin-top: 20rpx;
-      margin-bottom: 10rpx;
-      font-size: 24rpx;
-      font-weight: 500;
-      color: rgba(50, 50, 50, 1);
-      line-height: 34rpx;
-    }
+		.msg {
+			margin-top: 20rpx;
+			margin-bottom: 10rpx;
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(50, 50, 50, 1);
+			line-height: 34rpx;
+		}
 
-    .gallery {
-      display: flex;
-      flex-direction: row;
-    }
+		.gallery {
+			display: flex;
+			flex-direction: row;
+		}
 
-    .actions {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 38rpx;
+		.actions {
+			display: flex;
+			justify-content: space-around;
+			margin-top: 38rpx;
 
-      .item {
-        display: flex;
-        align-items: center;
+			.item {
+				display: flex;
+				align-items: center;
 
-        image {
-          width: 30rpx;
-          height: 28rpx;
-          margin-right: 10rpx;
-        }
+				image {
+					width: 30rpx;
+					height: 28rpx;
+					margin-right: 10rpx;
+				}
 
-        text {
-          font-size: 24rpx;
-          color: rgba(153, 153, 153, 1);
-          line-height: 34rpx;
-        }
-      }
-    }
-  }
+				text {
+					font-size: 24rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 34rpx;
+				}
+			}
+		}
+	}
 }
 
 .menu_wrap {
-  width: 100%;
-  white-space: nowrap;
-  overflow-x: scroll;
-  display: flex;
-  flex-direction: row;
-  navigator,
-  .menu_item {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    width: 98rpx;
-    margin-right: 46rpx;
+	width: 100%;
+	white-space: nowrap;
+	overflow-x: scroll;
+	display: flex;
+	flex-direction: row;
+	navigator,
+	.menu_item {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		width: 98rpx;
+		margin-right: 46rpx;
 
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
 
-  image {
-    width: 72rpx;
-    height: 72rpx;
-    margin-bottom: 5rpx;
-  }
+	image {
+		width: 72rpx;
+		height: 72rpx;
+		margin-bottom: 5rpx;
+	}
 
-  text {
-    letter-spacing: 3rpx;
-    font-size: 24rpx;
-    color: rgba(102, 102, 102, 1);
-    line-height: 34rpx;
-  }
+	text {
+		letter-spacing: 3rpx;
+		font-size: 24rpx;
+		color: rgba(102, 102, 102, 1);
+		line-height: 34rpx;
+	}
 }
 
 .section_title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 44rpx 0 22rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 44rpx 0 22rpx;
 
-  text {
-    font-size: 28rpx;
-    font-weight: 500;
-    color: rgba(50, 50, 50, 1);
-    line-height: 40rpx;
-  }
+	text {
+		font-size: 28rpx;
+		font-weight: 500;
+		color: rgba(50, 50, 50, 1);
+		line-height: 40rpx;
+	}
 
-  navigator {
-    display: flex;
-    align-items: center;
-    font-size: 20rpx;
-    color: #999;
+	navigator {
+		display: flex;
+		align-items: center;
+		font-size: 20rpx;
+		color: #999;
 
-    image {
-      width: 16rpx;
-      height: 24rpx;
-      margin-left: 10rpx;
-    }
-  }
+		image {
+			width: 16rpx;
+			height: 24rpx;
+			margin-left: 10rpx;
+		}
+	}
 }
 
 .recommend {
@@ -677,93 +685,93 @@ export default {
 	}
 }
 .works_list {
-  margin-top: 20rpx;
-  .work_item {
-    .user_info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+	margin-top: 20rpx;
+	.work_item {
+		.user_info {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
-      .left_side {
-        display: flex;
-        align-items: center;
+			.left_side {
+				display: flex;
+				align-items: center;
 
-        .avatar {
-          width: 60rpx;
-          height: 60rpx;
-          margin-right: 20rpx;
-          border-radius: 50%;
-        }
+				.avatar {
+					width: 60rpx;
+					height: 60rpx;
+					margin-right: 20rpx;
+					border-radius: 50%;
+				}
 
-        .name_n_date {
-          .name {
-            margin-bottom: 10rpx;
-            font-size: 28rpx;
-            font-weight: 500;
-            color: rgba(50, 50, 50, 1);
-            line-height: 1;
-          }
+				.name_n_date {
+					.name {
+						margin-bottom: 10rpx;
+						font-size: 28rpx;
+						font-weight: 500;
+						color: rgba(50, 50, 50, 1);
+						line-height: 1;
+					}
 
-          .date {
-            font-size: 20rpx;
-            color: rgba(153, 153, 153, 1);
-            line-height: 1;
-          }
-        }
-      }
+					.date {
+						font-size: 20rpx;
+						color: rgba(153, 153, 153, 1);
+						line-height: 1;
+					}
+				}
+			}
 
-      .view_count {
-        font-size: 20rpx;
-        color: rgba(153, 153, 153, 1);
-        line-height: 28rpx;
-      }
-    }
+			.view_count {
+				font-size: 20rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 28rpx;
+			}
+		}
 
-    .msg {
-      margin-top: 20rpx;
-      margin-bottom: 10rpx;
-      font-size: 24rpx;
-      font-weight: 500;
-      color: rgba(50, 50, 50, 1);
-      line-height: 34rpx;
-    }
+		.msg {
+			margin-top: 20rpx;
+			margin-bottom: 10rpx;
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(50, 50, 50, 1);
+			line-height: 34rpx;
+		}
 
-    .gallery {
-      display: flex;
+		.gallery {
+			display: flex;
 
-      image {
-        width: 220rpx;
-        height: 220rpx;
-        margin-right: 14rpx;
+			image {
+				width: 220rpx;
+				height: 220rpx;
+				margin-right: 14rpx;
 
-        &:nth-of-type(3n) {
-          margin-right: 0;
-        }
-      }
-    }
+				&:nth-of-type(3n) {
+					margin-right: 0;
+				}
+			}
+		}
 
-    .actions {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 38rpx;
+		.actions {
+			display: flex;
+			justify-content: space-around;
+			margin-top: 38rpx;
 
-      .item {
-        display: flex;
-        align-items: center;
+			.item {
+				display: flex;
+				align-items: center;
 
-        image {
-          width: 30rpx;
-          height: 28rpx;
-          margin-right: 10rpx;
-        }
+				image {
+					width: 30rpx;
+					height: 28rpx;
+					margin-right: 10rpx;
+				}
 
-        text {
-          font-size: 24rpx;
-          color: rgba(153, 153, 153, 1);
-          line-height: 34rpx;
-        }
-      }
-    }
-  }
+				text {
+					font-size: 24rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 34rpx;
+				}
+			}
+		}
+	}
 }
 </style>
