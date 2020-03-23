@@ -400,6 +400,7 @@ export default {
 			  method: "POST",
 			  success: res => {
 			    console.log(res.data.data);
+					console.log(res.data.data.spec[0].goods_spec_id)
 			    res.data.data.coupon_price = res.data.data.spec
 			      ? res.data.data.spec[0].goods_price
 			      : res.data.data.coupon_price;
@@ -413,6 +414,8 @@ export default {
 			      const { spec_attr, spec_list } = res.data.data.specData;
 			      this.sku_arr = spec_attr;
 			    }
+					this.goods_spec_id = res.data.data.spec[0].goods_spec_id
+					this.valueStrNum = res.data.data.spec[0].spec_sku_id
 					if(!res.data.data.assemble==''){
 						this.getAssemble()
 					}
@@ -484,7 +487,7 @@ export default {
       ajax({
         url: "cart/add",
         data: {
-          p_id: this.p_id,
+          p_id: this.pid,
           goods_num: this.buyQuantity,
           goods_sku_id: this.valueStrNum
         },
@@ -637,6 +640,7 @@ export default {
       for (var i = 0; i < this.detail.spec.length; i++) {
         if (this.valueStrNum == this.detail.spec[i].spec_sku_id) {
           this.goods_spec_id = this.detail.spec[i].goods_spec_id;
+					console.log(this.goods_spec_id)
           flag = true;
           break;
         }
@@ -670,12 +674,12 @@ export default {
       ajax({
         url: "goods/goodsCollect",
         data: {
-          p_id: _this.pid
+          p_id: this.pid
         },
         success: res => {
           console.log(res.data.data);
           uni.showToast({
-            title: res.msg,
+            title: res.data.msg,
             icon: "none",
             mask: true
           });
@@ -704,7 +708,7 @@ export default {
               ids: this.pid,
               now_buy: 1,
               goods_num: this.buyQuantity,
-              valueStrNum: this.valueStrNum,
+              goods_sku_id: this.valueStrNum,
               goods_spec_id: this.goods_spec_id
             };
             uni.navigateTo({
@@ -762,6 +766,7 @@ export default {
       attrValueList[index].selectedValue = value; //此时等于蓝色
       // console.log(attrValueList)
       this.sku_arr = attrValueList;
+			console.log(this.sku_arr)
       var valueStr = "";
       var valueStrNum = "";
 

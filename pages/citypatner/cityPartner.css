@@ -1,0 +1,141 @@
+/* pages/cityPartner/cityPartner.wxss */
+
+/* .page{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-direction: column;
+} */
+
+page {
+  padding-top: 24rpx;
+}
+
+.title {
+  margin-bottom: 51rpx;
+  text-indent: 70rpx;
+  font-size: 30rpx;
+  color: #000;
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+}
+
+.img-box {
+  text-align: center;
+}
+
+.img {
+  width: 702rpx;
+  height: 98rpx;
+  margin-bottom: 29rpx;
+  /* border: 1px solid red; */
+  border-radius: 10rpx;
+}
+
+.btn {
+  text-align: center;
+  color: white;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 36rpx;
+  background-color: #080;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.big-box {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.info-box {
+  width: 450rpx;
+  height: 765rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 22;
+  background-color: #fff;
+  border-radius: 23rpx;
+  margin-left: -308.5rpx;
+  margin-top: -382.5rpx;
+  display: flex;
+  justify-content: center;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  flex-direction: column;
+  padding-left: 100rpx;
+  padding-right: 100rpx;
+  font-size: 29rpx;
+}
+
+.h1 {
+  font-size: 45rpx;
+  color: #1c1c1c;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.text {
+  font-size: 29rpx;
+  color: #595959;
+}
+
+.picker {
+  line-height: 54rpx;
+  font-size: 29rpx;
+  /* border: 1rpx solid #f5f5f5; */
+  text-align: left;
+  width: 308rpx;
+  height: 54rpx;
+  border: 1rpx solid #f5f5f5;
+  float: right;
+  display: box !important;
+  display: -webkit-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /*第几行出现省略号*/
+}
+
+textarea, input {
+  border: 1rpx solid #f5f5f5;
+}
+
+.submit {
+  width: 301rpx;
+  height: 61rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #080;
+  color: #fff;
+  border-radius: 30rpx;
+  margin: 20rpx auto 0;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+input {
+  width: 308rpx;
+  height: 54rpx;
+}
+
+.svg {
+  position: absolute;
+  top: -80rpx;
+  right: -40rpx;
+  width: 80rpx;
+  height: 80rpx;
+}

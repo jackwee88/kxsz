@@ -37,6 +37,7 @@
 .swiper-item {
 	width: 100%;
 	height: 332rpx;
+	margin-top: 10rpx;
 }
 .uni-tab-bar {
 	margin: 0 28rpx;
@@ -159,12 +160,14 @@
 }
 .recommend-ruler{
 	display: flex;
-	flex-wrap: wrap;
+	/* flex-wrap: wrap; */
 	justify-content: space-between;
-	margin-bottom: 210rpx;
+	/* margin-bottom: 210rpx; */
 }
 .uni-ruler{
 	padding-bottom: 10rpx;
+	width: 350rpx;
+	background-color: pink;
 }
 .active .swiper-tab-line {
 	width:22rpx;

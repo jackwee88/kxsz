@@ -53,6 +53,7 @@
 			</navigator>
 		</view>
 		<!-- 点击进入我的发表页 请求所有用户数据-->
+
 		<view class="works_list">
 			<view class="work_item" v-for="(item, index) in studylist" :key="index">
 				<view class="user_info">
@@ -76,13 +77,64 @@
 				>
 					{{ item.content }}
 				</view>
-				<view class="gallery">
+				<!-- 				<view class="gallery">
 					<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
+				</view> -->
+				<view class="gallery" @tap.stop="gotoPublished" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count">
+					<view class="case-li case-view-item">
+						<view style="position:relative;display:inline">
+							<image
+								v-if="item.video_ids"
+								style="width:30%;height:200rpx;"
+								:hidden="item.fullScreen"
+								class="case-picture"
+								:src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'"
+								mode="scaleToFill"
+							></image>
+							<image
+								v-if="item.video_ids"
+								:data-fullScreen="item.fullScreen"
+								class="bt"
+								mode="scaleToFill"
+								:data-src="item.video_ids"
+								:data-index="index"
+								@tap.stop="playVideo"
+								src="/static/img/index/play3.png"
+								style="width:60rpx;height:60rpx;position:absolute;top:-122rpx;left:73rpx;"
+							></image>
+						</view>
+
+						<image
+							v-for="(items, index2) in item.picture_arr"
+							:key="index2"
+							:src="items"
+							@tap.stop="previewImg"
+							:data-effect_pic="item.picture_arr"
+							:data-src="items"
+							mode="aspectFill"
+							:data-index="index"
+						></image>
+						<!--前提一个播放的按钮-->
+					</view>
+
+					<audio
+						v-if="item.voice_ids"
+						:src="item.voice_ids"
+						controls
+						class="audio"
+						:poster="item.poster"
+						:name="item.name"
+						:author="item.author"
+						:data-index="index"
+						@tap.stop="playorpause"
+						:action="item.action"
+					></audio>
+					<view><view></view></view>
 				</view>
 				<view class="actions">
 					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
-						<text>{{ item.shareNum }}</text>
+						<text></text>
 					</view>
 					<view class="item">
 						<image src="../../static/index/pl.png" mode=""></image>
@@ -164,6 +216,29 @@
 				<navigator url="/pages/my/daySignin/daySignin"><text>签到</text></navigator>
 			</view>
 		</view>
+		<view class="big-box" v-if="if_over">
+			<view class="containerModal">
+			  <view class="modalTitle">恭喜您获得新人礼包</view>
+			  <view class="youhuiquan">
+			    <view class="youhuiNum">
+			      <text style="font-size:36rpx ;">
+			        ¥
+			        <text style="font-size: 54rpx;">10</text>
+			      </text>
+			    </view>
+			    <view class="youhuiDetail">
+			      <view class="detail">每满99减10元</view>
+			      <view class="date">2019.03.20-2019.05.20</view>
+			      <image
+			        class="image"
+			        src="../../static/index/newPerpson.png"
+			        style="width: 84rpx;height: 78rpx;"
+			      />
+			    </view>
+			  </view>		
+			  <view class="btn" @click="gotoNovice">快去完成新人任务吧！</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -172,15 +247,84 @@ import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import '../public/rongyun.js';
 import indexModal from '../modal/modal.vue';
 import { ajax } from '../../utils/public.js';
+import util from '../../utils/util.js';
 export default {
 	data() {
 		return {
 			//轮播图片
+			bugId: true,
+			//购买商品送书包显示隐藏id
+			activeImg: '',
+			//活动图片
+			activeUrl: '',
+			if_over:false,
+			//活动链接
+			to_details: true,
+			preview: true,
+			keyword: '',
+			host: getApp().globalData.requestUrl,
+			bannerUrl: [],
+			name: '梁雨淇',
+			time: '今天10：30',
+			contText: '生活不止眼前的苟且，还有读不了的诗和别不了的远方',
+			dianzanNum: '203',
+			userName: '流浪人',
+			userReview: '哈哈，see里就你最煽情。',
+			datalist: '',
+			daily: [],
+			page: 1,
+			page_size: 10,
+			count: 1,
+			smodel: '',
+			constlist: '',
+			modelType: 1,
+			section: [
+				{
+					name: '热卖推荐',
+					typeId: '1'
+				},
+				{
+					name: '精品推荐',
+					typeId: '2'
+				}
+			],
+			currentId: 1,
+			producturl: [],
+			comment_num: 0,
+			release: [
+				{
+					name: '1',
+					textareaValue: 'sfdf'
+				}
+			],
+			isFolded: true,
+			src: '',
+			curIdx: '',
+			ifNewUser: '',
+			popupitem: [],
+			index_model: 1000,
+			content_t: '',
+			//内容
+			size: 14,
+			//宽度即文字大小
+			marqueeW: 0,
+			moveTimes: 8,
+			//一屏内容滚动时间为8s
+			allT: '0s',
+			scrollLeft: 0,
+			announcement: [],
+			toAn: '',
+			start_page: '',
+			is_give: '',
+			thumbs_times: '',
+			currentTab: '',
+			type: 1,
+			playIndex: '',
+			indeNum: '',
+			item: '',
 			swiperImges: [],
 			indexList: [],
-			page: 1,
-			type: 1,
-			page_size: 10,
+			browse_times: '',
 			//在线教学图标
 			onlineTeaching: [],
 			status: 'more',
@@ -218,54 +362,100 @@ export default {
 	components: {
 		uniLoadMore
 	},
+	onLoad: function(options) {
+		// this.setData({
+		// 	daily: []
+		// });
 
-	// onLoad() {
-	// var value = uni.getStorageSync('loginToken')
-	// console.log(value)
-	// uni.showModal({
-	//     title: '提示',
-	//     content: '这是一个模态弹窗',
-	//     success: function (res) {
-	//         if (res.confirm) {
-	//             console.log('用户点击确定');
-	//         } else if (res.cancel) {
-	//             console.log('用户点击取消');
-	//         }
-	//     }
-	// });
-	// 			uni.$on('login', (usnerinfo) => {
-	// 				//this.usnerinfo = usnerinfo;
-	// 				console.log(usnerinfo);
-	// 			});
-	// 			// 登陆页面
-	// 			uni.$emit('login', {
-	// 				avatarUrl: 'https://img-cdn-qiniu.dcloud.net.cn/uploads/nav_menu/10.jpg',
-	// 				token: 'user123456',
-	// 				userName: 'unier',
-	// 				login: true
-	// 			});
-	// 			uni.getProvider({
-	// 				service: 'push',
-	// 				success: function(res) {
-	// 					console.log(res.provider)
-	//
-	// 					// 个推的名称为 igexin
-	// 					if (~res.provider.indexOf('igexin')) {
-	// 						uni.subscribePush({
-	// 							provider: 'igexin',
-	// 							success: function(res) {
-	// 								console.log('success:' + JSON.stringify(res));
-	// 							}
-	// 						});
-	// 					}
-	// 				}
-	// 			});
-	//},
-	//下拉刷新
-	onLoad() {
+		if (options.myshare) {
+			setTimeout(function() {
+				if (options.title) {
+					wx.navigateTo({
+						url: options.tourl + '?title=' + options.title + '&md_id=' + options.md_id + '&type=' + options.type
+					});
+				} else {
+					wx.navigateTo({
+						url: options.tourl
+					});
+				}
+			}, 100);
+		}
+
+		var that = this;
+		this.getHotGoods();
+		this.getData(); //代理商的邀请码 options.scene
+
+		if (decodeURIComponent(options.scene)) {
+			var qrId = decodeURIComponent(options.scene);
+			console.log(qrId, 333);
+		} else {
+			var qrId = 0;
+		}
+
+		wx.setStorageSync('scene', qrId);
+		// wx.request({
+		// 	url: getApp().globalData.requestUrl + 'shop/ifNewUser',
+		// 	method: 'post',
+		// 	data: '',
+		// 	header: {
+		// 		'content-type': 'application/json',
+		// 		token: wx.getStorageSync('token')
+		// 	},
+		// 	success: function(res) {
+		// 		if (res.data.data.if_new_user) {
+		// 			that.setData({
+		// 				ifNewUser: res.data.data.if_new_user
+		// 			});
+		// 		}
+		// 	},
+		// 	fail: function() {}
+		// }); //获取活动图片
+		//let that = this
+
+		util.ajax('index/getActive', {}, res => {
+			let that = this;
+
+			if (res.data == '') {
+				that.setData({
+					bugId: false
+				});
+			} else {
+				that.setData({
+					activeImg: res.data.image,
+					activeUrl: res.data.jump
+				});
+			}
+		});
+
 		this.getData();
 		this.getHotGoods();
 	},
+	onPullDownRefresh: function() {
+		var that = this;
+		that.setData({
+			page: 1,
+			producturl: [],
+			daily: [],
+			count: 1
+		});
+
+		if (that.modelType == 1) {
+			that.getIndexData();
+		} else if (that.modelType == 2) {
+			that.getDataGoods();
+		}
+	},
+
+	onHide() {
+		this.setData({
+			preview: true
+		});
+	},
+	//下拉刷新
+	// onLoad() {
+	// 	this.getData();
+	// 	this.getHotGoods();
+	// },
 	// onLoad: function(options) {
 	// 	var that = this;
 	// 	that.setData({
@@ -281,6 +471,23 @@ export default {
 	// 		wait: ''
 	// 	});
 	// },
+	onShow: function() {
+		if (getApp().globalData.preview == true) {
+			this.setData({
+				start_page: '',
+				daily: []
+			});
+			var that = this;
+			this.getAnnouncement();
+			this.setData({
+				page: 1,
+				count: 1,
+				start_page: ''
+			});
+		}
+		// this.getIndexData()
+		// this.init();
+	},
 	onPullDownRefresh() {
 		console.log('下拉');
 		setTimeout(function() {
@@ -293,6 +500,17 @@ export default {
 		// _self.status = 'loading'; //赋值加载中
 		// this.getMoreStudyList();
 	},
+	// onShow(e){
+	// 	let pages = getCurrentPages();
+	// 	console.log('get'+pages)
+	// 		let currPage = pages[pages.length-1];
+	// 		if(currPage.data.times==undefined || currPage.data.times==''){
+
+	// 		}else{
+	// 			this.studylist.browse_times = currPage.data.times
+	// 			// this.address_id = currPage.data.selectedAddressID
+	// 		}
+	// },
 	methods: {
 		// 加载更多数据
 		getMoreStudyList() {},
@@ -383,9 +601,18 @@ export default {
 				},
 				success: res => {
 					console.log(res);
-					const { list, count } = res.data.data;
-					this.studylist = list;
-					console.log(this.studylist);
+									 const { list, count } = res.data.data;
+					// for (var i = 0; i < list.length; i++) {
+					// 	list[i].isPlaying = false;
+					// 	list[i].fullScreen = false;
+					// 	(list[i].type = 1), (list[i].action = action);
+					// 	list[i].poster = list[i].picture_ids[0];
+					// 	list[i].name = list[i].nickname + '的音频';
+					// }
+
+						this.page=this.page + 1,
+						this.count= res.data.count > 1 ? res.data.count : 1,
+						this.studylist = list
 				},
 				error: function() {}
 			});
@@ -424,6 +651,467 @@ export default {
 						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
 					}
 				}
+			});
+		},
+		//放大图片
+		previewImg: function(e) {
+			getApp().globalData.preview = false;
+			var src = e.currentTarget.dataset.src; 
+			console.log(src+'src')
+			//获取data-src  循环单个图片链接
+      var imgList=[];
+			imgList.push = (e.currentTarget.dataset.effect_pic);
+			imgList
+			// for(i=0;i<imgList.length)
+			console.log(e.currentTarget.dataset.effect_pic)
+			//图片预览
+			console.log('imglist' + imgList);
+			wx.previewImage({
+				current: src,
+				// 当前显示图片的http链接
+				urls: imgList // 需要预览的图片http链接列表
+			});
+		},
+		ifinput: function(e) {
+			let that = this;
+			const index = e.currentTarget.dataset.index;
+			const daily = that.daily;
+			daily[index].if_input = !daily[index].if_input; // studylist[index].if_jp = !studylist[index].if_jp
+
+			that.setData({
+				daily: daily
+			});
+		},
+		getUserInfo: function(e) {},
+		// init: function() {
+		// 	var that = this;
+		// 	util.ajax(
+		// 		'cate/smodelList',
+		// 		{
+		// 			type: 1,
+		// 			auditing: true
+		// 		},
+		// 		res => {
+		// 			that.setData({
+		// 				datalist: res.data.list
+		// 			});
+		// 		}
+		// 	);
+		// 	that.getIndexData();
+		// },
+
+		getIndexData() {
+			var that = this;
+			var param = {
+				page: that.page,
+				page_size: that.page_size,
+				keyword: that.keyword
+			};
+			const daily = that.daily;
+
+			if (that.page > 1) {
+			} else {
+				util.ajax('index/daily', param, res => {
+					var daily = that.daily;
+					let list = res.data.list;
+					var action = {
+						method: 'pause'
+					};
+
+					for (var i = 0; i < list.length; i++) {
+						list[i].isPlaying = false;
+						list[i].fullScreen = false;
+						(list[i].type = 1), (list[i].action = action);
+						list[i].poster = list[i].picture_idss[0];
+						list[i].name = list[i].nickname + '的音频';
+					}
+
+					that.setData({
+						page: that.page + 1,
+						count: res.data.count > 1 ? res.data.count : 1,
+						daily: daily.concat(list)
+					});
+					wx.stopPullDownRefresh();
+				});
+			}
+		},
+
+		//购买商品送书包的点击立即前往
+		leaveBuy(e) {
+			let that = this;
+			let url = e.currentTarget.dataset.id;
+			wx.navigateTo({
+				url: url
+			});
+		},
+
+		//购买商品送书包的取消点击
+		buyQuxiao() {
+			var that = this;
+			that.setData({
+				bugId: false
+			});
+		},
+
+		// getbanner: function() {
+		// 	var that = this;
+		// 	util.ajax('index/index', 2, res => {
+		// 		that.setData({
+		// 			bannerUrl: res.data.banner,
+		// 			smodel: res.data.smodel,
+		// 			index_model: res.data.index_model
+		// 		});
+		// 	});
+		// },
+		jump: function(e) {
+			var time = parseInt(this.index_model);
+			var that = this;
+			var jump_type = e.currentTarget.dataset.jump_type;
+			var url = e.currentTarget.dataset.url;
+			this.setData({
+				start_page: e.currentTarget.dataset.md_id
+			});
+			setTimeout(function() {
+				wx.navigateTo({
+					url: url
+				});
+			}, time);
+		},
+		jumpOther: function(e) {
+			var that = this;
+			var type = e.currentTarget.dataset.type;
+			var types = e.currentTarget.dataset.types;
+			var url = e.currentTarget.dataset.url;
+			console.log(url);
+			wx.navigateTo({
+				url: url
+			});
+		},
+
+		/* 商城js*/
+		swichNav: function(e) {
+			let that = this;
+
+			if (this.currentTab === e.target.dataset.current) {
+				return false;
+			} else {
+				that.setData({
+					currentTab: e.target.dataset.current
+				});
+			}
+		},
+		getDataGoods() {
+			const that = this;
+			const param = {
+				page: that.page,
+				page_size: that.page_size,
+				type: that.type,
+				keyword: that.keyword
+			};
+
+			if (that.count < that.page) {
+				wx.showToast({
+					title: '暂无更多信息',
+					icon: 'none'
+				});
+			} else {
+				util.ajax('shop/goods', param, res => {
+					var producturl = that.producturl;
+					that.setData({
+						page: that.page + 1,
+						count: res.data.count > 1 ? res.data.count : 1,
+						producturl: producturl.concat(res.data.list)
+					});
+					wx.stopPullDownRefresh();
+				});
+			}
+		},
+
+		//点击切换
+		handleTap: function(e) {
+			let id = e.currentTarget.id;
+			var that = this;
+			that.setData({
+				type: id,
+				currentId: id,
+				producturl: [],
+				count: 1,
+				daily: [],
+				page: 1
+			});
+
+			if (id) {
+				const param = {
+					page: 1,
+					page_size: 10,
+					type: that.type
+				};
+				that.getDataGoods(); // util.ajax('shop/goods', param, res => {
+				//   var producturl = [];
+				//   that.setData({
+				//     page: 1,
+				//     currentId: id,
+				//     count: res.data.count,
+				//     producturl: producturl.concat(res.data.list)
+				//   })
+				//   wx.stopPullDownRefresh();
+				// })
+			}
+		},
+		// onReachBottom: function() {
+		//   var that = this;
+		//   if (that.data.modelType == 1) {
+		//     that.getIndexData()
+		//   } else if (that.data.modelType == 2) {
+		//     that.getDataGoods()
+		//   }
+		// },
+		show: function() {
+			// this.setData({ flag: false })
+		},
+		hide: function() {
+			this.setData({
+				ifNewUser: 1
+			});
+		},
+		goindex: function() {
+			var that = this;
+			getApp().globalData.infoModel();
+			that.onShow(); // wx.switchTab({
+			//   url: '/pages/index/index'
+			// })
+		},
+		goTop: function(e) {
+			// 一键回到顶部
+			if (wx.pageScrollTo) {
+				wx.pageScrollTo({
+					scrollTop: 0
+				});
+			} else {
+				wx.showModal({
+					title: '提示',
+					content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+				});
+			}
+		},
+		gotoNovice: function() {
+		  uni.navigateTo({
+		    url: "../novice/novice"
+		  });
+		},
+		change: function(e) {
+			let that = this;
+			const index = e.currentTarget.dataset.index;
+			const daily = that.daily;
+			daily[index].is_folded = !daily[index].is_folded;
+			that.setData({
+				daily: daily
+			});
+		},
+		keywordFun: function(e) {
+			var that = this;
+			that.setData({
+				type: that.type,
+				page: 1,
+				producturl: [],
+				keyword: e.detail.value
+			});
+			var timer = null;
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				that.getDataGoods();
+			}, 1000);
+		},
+		growthDaily: function(e) {
+			let uid = e.currentTarget.dataset.uid;
+			let pid = e.currentTarget.dataset.pid;
+			let index = e.currentTarget.dataset.index;
+			const thumbs_times = e.currentTarget.dataset.thumbs_times;
+			getApp().globalData.preview = false;
+			wx.navigateTo({
+				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
+			});
+		},
+		playMusic: function(e) {
+			let id = e.currentTarget.dataset.id;
+			var index = e.target.dataset.index; //获取点击音乐的下标
+
+			var item = 'daily[' + index + '].action'; //获取音乐的播放状态
+
+			var actionPlay = 'play'; //定义播放
+
+			var actionPause = 'pause'; //定义暂停
+
+			this.setData({
+				playIndex: id
+			});
+
+			if (this.daily[index].action == 'pause') {
+				//若当前是暂停，则点击后播放
+				for (let i = 0; i < that.bgmList.length; i++) {
+					if (index != i) {
+						let indeNum = 'bgmList[' + i + '].action';
+						that.setData({
+							[indeNum]: actionPause
+						});
+					}
+				}
+
+				this.audioCtx = wx.createAudioContext(id);
+				this.audioCtx.play();
+			} else {
+				//若当前是播放，则点击后暂停
+				this.setData({
+					[item]: actionPause
+				});
+			}
+		},
+
+		playVideo(e) {
+			getApp().globalData.preview = false;
+			var src = e.currentTarget.dataset.src;
+			wx.navigateTo({
+				url: '../video/video?src=' + src
+			});
+		},
+
+		playorpause: function(e) {
+			var that = this;
+			var index = e.target.dataset.index; //获取点击音乐的下标
+
+			var item = 'daily[' + index + '].action'; //获取音乐的播放状态
+
+			var actionPlay = {
+				method: 'play'
+			}; //定义播放
+
+			var actionPause = {
+				method: 'pause'
+			}; //定义暂停
+
+			if (that.daily[index].action.method == 'pause') {
+				//若当前是暂停，则点击后播放
+				that.setData({
+					[item]: actionPlay
+				});
+
+				for (let i = 0; i < that.daily.length; i++) {
+					if (index != i) {
+						let indeNum = 'daily[' + i + '].action';
+						that.setData({
+							[indeNum]: actionPause
+						});
+					}
+				}
+			} else {
+				//若当前是播放，则点击后暂停
+				that.setData({
+					[item]: actionPause
+				});
+			}
+		},
+		getCoupon: function(e) {
+			var that = this;
+			util.ajax('shop/getNewUserCoupon', {}, res => {
+				that.setData({
+					popupitem: res.data.list
+				});
+			});
+		},
+		getGiftPack: function() {
+			let that = this;
+			util.ajax('shop/newUserCouponAction', {}, res => {
+				wx.showToast({
+					title: res.msg,
+					icon: 'none'
+				});
+				that.setData({
+					ifNewUser: 1
+				});
+			});
+		},
+		//判断当前滚动超过一屏时
+		checkCor: function(e) {
+			var that = this;
+
+			if (that.currentTab > 2) {
+				that.setData({
+					scrollLeft: 300
+				});
+			} else {
+				that.setData({
+					scrollLeft: 0
+				});
+			}
+		},
+		toPlay(e) {
+			var url = e.currentTarget.dataset.url;
+			wx.navigateTo({
+				url: url
+			});
+		},
+
+		toCatalogues() {
+			wx.navigateTo({
+				url: '/pages/catalogues/catalogues'
+			});
+		},
+
+		//获取通告消息
+		getAnnouncement() {
+			let that = this;
+			var screenW = wx.getSystemInfoSync().windowWidth; //获取屏幕宽度
+
+			util.ajax('index/announcement', {}, res => {
+				// if (!res.data.title){
+				//   return
+				// }
+				if (!res.data.title) {
+					return false;
+				}
+
+				var contentW = res.data.title.length * this.size; //获取文本宽度（大概宽度）
+
+				that.setData({
+					marqueeW: -contentW + 'px',
+					content_t: res.data.title,
+					toAn: res.data.url,
+					announcement: res.data
+				});
+				var allT = (contentW / screenW) * this.moveTimes;
+				allT = allT < 8 ? 8 : allT; //不够一平-----最小滚动一平时间
+
+				this.setData({
+					// marqueeW: -contentW + "px",
+					allT: allT + 's'
+				});
+			});
+		},
+
+		//回到顶部
+		toTop(e) {
+			var that = this;
+			wx.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			});
+		},
+
+		//
+		toAnnouncement(e) {
+			var url = e.currentTarget.dataset.url;
+			wx.navigateTo({
+				url: url
+			});
+		},
+
+		//点击查看更多
+		more() {
+			wx.navigateTo({
+				url: '/pages/studySquare/studySquare',
+				success: function(res) {},
+				fail: function(res) {},
+				complete: function(res) {}
 			});
 		}
 	},
@@ -648,6 +1336,7 @@ export default {
 	justify-content: space-between;
 	flex-direction: row;
 	overflow: hidden;
+	overflow-x: scroll;
 	image {
 		width: 220rpx;
 		height: 220rpx;

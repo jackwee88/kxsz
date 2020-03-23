@@ -42,7 +42,12 @@ const ajax = (opt) => {
 				})
 			} else if (res.data.status == 1) {
 				opt.success(res);
-			} else if (res.data.status == -10086) {
+			} else if(res.data.status == -1){
+				uni.navigateTo({
+					url:'/pages/login/login.vue'
+				})
+			}
+			else if (res.data.status == -10086) {
 				uni.navigateTo({
 					url: '/pages/loginapp/loginapp',
 				});

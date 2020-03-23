@@ -1,7 +1,7 @@
 <!-- 首页弹出窗口 -->
 
 <template name='indexModal'>
-  <view class="overlayer" v-if="isVisible">
+  <view class="overlayer">
     <view class="bg"></view>
     <view class="containerModal">
       <view class="modalTitle">恭喜您获得新人礼包</view>

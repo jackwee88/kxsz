@@ -311,8 +311,29 @@ export default {
 	 * 页面上拉触底事件的处理函数
 	 */
 	onReachBottom: function() {
-		var that = this;
+	  let that = this;
+	  let page = that.page;
+	  page++;
 		that.getData();
+	  let param = {
+
+	    page: page,
+	    page_size: that.page_size,
+			type:that.type
+	  };
+	  util.ajaxs("study/studyList", param, res => {
+	    if (page < res.data.count) {
+	      that.setData({
+	        studyList: that.studylist.concat(res.data.list),
+	        page: page
+	      });
+	    } else {
+	      uni.showToast({
+	        title: "到底了...",
+	        icon: "none"
+	      });
+	    }
+	  });
 	},
 	//转发
 	onShareAppMessage: function(e) {

@@ -121,23 +121,28 @@ export default {
 			setTimeout(function() {
 				var pages = getCurrentPages();
 				var prevPage = pages[pages.length - 2]; //上一个页面
+				// var that = this;
+				// var index = index;
 				if (type == 1) {
 					//type:1首页，2学习广场,3打卡
-					var up = 'studylist[' +index + '].browse_times';
-					// console.log(up+' 123  ')
+					var up = 'studylist[' + index + '].browse_times';
+					console.log(up+'123')
 				} else if (type==2) {
 					var up = 'studylist[' + index + '].browse_times';
 				} else if (type == 3) {
 					var up ='dakalog[' + index + '].browse_times';
 				}
-				var newp = ++browse_times;
-				console.log(this.browse_times+'123')
+				console.log('thumbs_times'+browse_times)
+				let times = browse_times
+				var newp = ++times;
+				console.log('newp'+newp)
 				if (prevPage) {
 					// 可以修改上一页的数据
 					prevPage.setData({
-						browse_times: newp
+						times: newp
 					});
 				}
+				uni.navigateBack()
 			}, 1000);
 			this.getData();
 			this.comment();
@@ -282,18 +287,18 @@ export default {
 						var index = that.index;
 
 						if (that.type == 1) {
-							var up = 'daily[' + index + '].thumbs_times';
-							var is_give = 'daily[' + index + '].is_give';
-							var newp = details.thumbs_times;
-							var new_is_give = details.is_give;
-						} else if (that.type == 3 || that.type == 4) {
-							var up = 'daka[' + index + '].thumbs_times';
-							var is_give = 'daka[' + index + '].is_give';
-							var newp = details.thumbs_times;
-							var new_is_give = details.is_give;
-						} else if (that.type == 2) {
 							var up = 'studylist[' + index + '].thumbs_times';
 							var is_give = 'studylist[' + index + '].is_give';
+							var newp = details.thumbs_times;
+							var new_is_give = details.is_give;
+						} else if (that.type ==2) {
+							var up = 'studylist[' + index + '].thumbs_times';
+							var is_give = 'studylist[' + index + '].is_give';
+							var newp = details.thumbs_times;
+							var new_is_give = details.is_give;
+						} else if (that.type == 3) {
+							var up = 'dakalog[' + index + '].thumbs_times';
+							var is_give = 'dakalog[' + index + '].is_give';
 							var newp = details.thumbs_times;
 							var new_is_give = details.is_give;
 						}
