@@ -29,8 +29,8 @@
 			<view class="new-goods">
 				<image src="../../static/onlineStore/xpss.png" style="width:182rpx;height: 78rpx;" mode="aspectFit"></image>
 				<view class="recommend">推荐</view>
-				<view class="recommend-product" v-for="(item, index) in flashSale">
-					<screenTextScroll :list="item.goods.p_name" /></view>
+				<view class="recommend-product" @tap="gotoDetails">
+					<text>{{flashSale.p_name}}</text></view>
 			</view>
 			<!-- 广告链接 -->
 			<view class="adver" :style="{ display: isClose == true ? 'none' : 'block' }">
@@ -49,6 +49,7 @@
 			<view class="limitedTime">
 				<image src="../../static/onlineStore/xsms.png" style="width: 150rpx;height: 98rpx;" mode="aspectFit"></image>
 				<view class="flex">
+					<text style="font-size: 24rpx;"  @tap="xsmsDetails" :data-id="flashSale.p_id" >{{flashSale.p_name}}</text>
 					<text class="red">时间仅剩</text>
 					<uni-countdown backgroundColor="#545458" color="#ffffff" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
 				</view>
@@ -101,7 +102,8 @@
 					</view>
 				</view>
 				<!-- 为您推荐 -->
-				<view class="recommend-image"><image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
+				<view class="recommend-image">
+					<image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
 				<view class="recommend-ruler" >
 					<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
 							<view class="image-ruler">
@@ -111,7 +113,7 @@
 							<view class="goods-detail" >
 								<view class="uni-product-title">{{ item.p_name }}</view>
 								<view class="uni-product-price">
-									<text style="font-size:28rpx ;color:#666666 ;"class="subtitle">
+									<text style="font-size:28rpx ;color:#666666" class="subtitle">
 									{{ item.p_detail }}</text>
 									</view>
 							</view>
@@ -138,7 +140,7 @@ export default {
 			contentList: ['分类', '分类', '分类', '分类', '分类'],
 			swiperImges: [],
 			isClose: false,
-			flashSale: [],
+			flashSale: {},
 			productList: [],
 			renderImage: false,
 			joinAssembleList: [],
@@ -198,12 +200,13 @@ export default {
 			data: {},
 			success: res => {
 				const { count, list } = res.data.data;
-				this.flashSale = list;
-				const time = list.endtime-list.createtime
-				const mstime = new Date(time)
-				console.log(mstime.getFullYear()+''+mstime.getMonth()+''+mstime.getDate())
-				mstime.getMonth()
-				mstime.getDate()
+				this.flashSale = list.goods;
+				console.log(this.flashSale.p_id)
+				// const time = list.endtime-list.createtime
+				// const mstime = new Date(time)
+				// console.log(mstime.getFullYear()+''+mstime.getMonth()+''+mstime.getDate())
+				// mstime.getMonth()
+				// mstime.getDate()
 			}
 		});
 	},
@@ -216,6 +219,12 @@ export default {
 					this.gonggao=res.data.data
 				}
 			})
+		},
+		// 秒杀详情
+		xsmsDetails:function(e){
+			let param={
+				id:e.currentTarget.dataset.id
+			}
 		},
 		getData(){
 			ajax({

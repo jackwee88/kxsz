@@ -8,7 +8,7 @@
     <view class="img-box" style="padding-bottom:200rpx;">
       <image :src="item.image" class="img" v-for="(item, index) in imgList" 
 			:key="index" :data-id="item.id" 
-			@tap.stop="item.jump=='cate'?'toCompanyInfo':'toOther'"></image>
+			@tap.stop="item.jump=='text'?toCompanyInfo:toOther"></image>
     </view>
   </view>
   <view class="btn" @tap.stop="showOver">申请加入</view>
@@ -27,7 +27,7 @@
       <input type="number" :value="phone" data-type="phone" @input="inputChange"></input>
     </view>
     <view>
-      <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
+      <picker mode="region" @change="bindPickerChange" :value="region" >
         <label class="text" style="float:left">地址:</label>
         <view class="picker clear" v-if="region != ''" style="float:right">
           <text style="font-size:24rpx;">{{region[0]}},{{region[1]}},{{region[2]}}</text>
@@ -144,7 +144,10 @@ export default {
       console.log('picker发送选择改变，携带值为', e.detail.value);
         thhis.region= e.detail.value
     },
-
+		bindPickerChange: function(e) {
+		            console.log('picker发送选择改变，携带值为', e.target.value)
+		            this.index = e.target.value
+		        },
     //关闭遮罩层
     close() {
         this.if_over=false,

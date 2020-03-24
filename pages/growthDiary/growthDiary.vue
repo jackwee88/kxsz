@@ -123,13 +123,13 @@
                   <image
                     class="collecticon"
                     v-if="item.is_give==true"
-                    src="/static/img/studySquare/collect.png"
+                    src="../../static/index/collect.png"
                     style="margin-top:6rpx;"
                   />
                   <image
                     class="collecticon"
                     v-if="item.is_give==false"
-                    src="/static/img/studySquare/uncollect.png"
+                    src="../../static/index/uncollect.png"
                     style="margin-top:6rpx;"
                   />
                   <text>{{item.thumbs_times}}</text>
@@ -144,10 +144,11 @@
                 >
                   <image
                     class="shareicon img-share"
-                    src="/static/img/index/fx.png"
+                    src="../../static/index/zf.png" 
+										mode=""
                     style="top:-23rpx;"
                   />
-                  <text class="text-share">分享</text>
+                  <text class="text-share">转发</text>
                 </button>
                 <view
                   class="thirdline share"
@@ -159,7 +160,7 @@
                   :data-comment_count="item.comment_count"
                   :data-thumbs_times="item.thumbs_times"
                 >
-                  <image class="shareicon" src="/static/img/index/messageicon.png" />
+                  <image class="shareicon" src="../../static/index/pl.png" />
                   <text>{{item.comment_count}}</text>
                 </view>
               </view>
@@ -212,7 +213,7 @@
 
 <script>
 var util = require("../../utils/util.js");
-
+import {ajax} from '../../utils/public.js'
 export default {
   data() {
     return {
@@ -275,6 +276,7 @@ export default {
         index_: options.index,
         type: options.type
       });
+			console.log('nihao'+this.uid)
     }
 
     this.getData();
@@ -474,8 +476,8 @@ export default {
       let parma = {
         uid: that.uid
       };
-      util.ajax("/api/index/UserCenter", parma, res => {
-        let list = res.data.list;
+      ajax({url:"/index/UserCenter",data: parma, success:(res) => {
+        let list = res.data.data.list;
         var action = {
           method: "pause"
         };
@@ -487,10 +489,11 @@ export default {
         }
 
         that.setData({
-          user: res.data.user,
+          user: res.data.data.user,
           daka: list
         });
-      });
+				console.log()
+      }});
     },
 
     praise(e) {
@@ -498,6 +501,7 @@ export default {
       var index = e.currentTarget.dataset.index;
       const dy_id = e.currentTarget.dataset.dy_id;
       var index_ = that.index_;
+			console.log(index+'index')
       util.ajaxs(
         "study/praiseStudy",
         {
@@ -508,18 +512,16 @@ export default {
           const is_give = "daka[" + index + "].is_give";
           const thumbs_times = "daka[" + index + "].thumbs_times";
 
-          if (res.data.is_ok) {
-            that.setData({
-              [is_give]: !daka[index].is_give,
-              [thumbs_times]: daka[index].thumbs_times + 1,
-              is_ok: "y"
-            });
+          if (res.data.is_ok==true) {
+						console.log('点赞成功')
+              this.daka[index].is_give= !daka[index].is_give,
+              this.daka[index].thumbs_times=daka[index].thumbs_times + 1,
+              this.is_ok= "y"
           } else {
-            that.setData({
-              [is_give]: !daka[index].is_give,
-              [thumbs_times]: daka[index].thumbs_times - 1,
-              is_ok: "n"
-            });
+						console.log('取消点赞')
+              this.daka[index].is_give= !daka[index].is_give,
+              this.daka[index].thumbs_times=daka[index].thumbs_times - 1,
+              this.is_ok= "n"
           }
         }
       );
@@ -622,37 +624,54 @@ export default {
         urls: pic_arr
       });
     },
+		details(e) {
+			let param = {
+				dy_id: e.currentTarget.dataset.dy_id,
+				index: e.currentTarget.dataset.index,
+				browse_times: e.currentTarget.dataset.browse_times,
+				comment_count: e.currentTarget.dataset.comment_count,
+				thumbs_times: e.currentTarget.dataset.thumbs_times,
+				type: 4
+			};
+			// if (this.index_ == "") {
+			//   var index_ = -1;
+			// } else {
+			//   var index_ = this.index_;
+			// }
+			uni.navigateTo({
+				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
+    // details(e) {
+    //   const dy_id = e.currentTarget.dataset.dy_id;
+    //   const index = e.currentTarget.dataset.index;
+    //   const comment_count = e.currentTarget.dataset.comment_count;
+    //   const browse_times = e.currentTarget.dataset.browse_times;
+    //   const thumbs_times = e.currentTarget.dataset.thumbs_times;
 
-    details(e) {
-      const dy_id = e.currentTarget.dataset.dy_id;
-      const index = e.currentTarget.dataset.index;
-      const comment_count = e.currentTarget.dataset.comment_count;
-      const browse_times = e.currentTarget.dataset.browse_times;
-      const thumbs_times = e.currentTarget.dataset.thumbs_times;
+    //   if (this.index_ == "") {
+    //     var index_ = -1;
+    //   } else {
+    //     var index_ = this.index_;
+    //   }
 
-      if (this.index_ == "") {
-        var index_ = -1;
-      } else {
-        var index_ = this.index_;
-      }
-
-      wx.navigateTo({
-        url:
-          "../myPublished/myPublished?dy_id=" +
-          dy_id +
-          "&type=4" +
-          "&index=" +
-          index +
-          "&comment_count=" +
-          comment_count +
-          "&browse_times=" +
-          browse_times +
-          "&thumbs_times=" +
-          thumbs_times +
-          "&index_=" +
-          index_
-      });
-    },
+    //   uni.navigateTo({
+    //     url:
+    //       "../myPublished/myPublished?dy_id=" +
+    //       dy_id +
+    //       "&type=4" +
+    //       "&index=" +
+    //       index +
+    //       "&comment_count=" +
+    //       comment_count +
+    //       "&browse_times=" +
+    //       browse_times +
+    //       "&thumbs_times=" +
+    //       thumbs_times +
+    //       "&index_=" +
+    //       index_
+    //   });
+    // },
 
     playVideo(e) {
       this.setData({

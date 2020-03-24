@@ -5,7 +5,11 @@
 		<view class="phblist">
 			<!-- 排行榜 勋章 -->
 			<view class="navtab">
-				<view :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active' : '')" v-for="(item, id) in section" :key="id" @tap.stop="handleTap" :idAttr="item.typeId">
+				<view :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active' : '')" v-for="(item, id) in section" 
+				:key="id" 
+				@tap.stop="handleTap" 
+				:data-id = "item.typeId"
+				>
 					{{ item.name }}
 				</view>
 			</view>
@@ -34,7 +38,12 @@
 					<view class="itembottom_top">
 						<view class="title">积分排行榜</view>
 						<view class="selectday">
-							<view :class="'phb_day ' + (item.typeId == currentIds ? 'active' : '')" v-for="(item, id) in sections" :key="id" :data-id="item.typeId" @tap="handleTaps">
+							<view :class="'phb_day ' + 
+							(item.typeId == currentIds ? 'active' : '')" 
+							v-for="(item, id) in sections" 
+							:key="id" 
+							:data-id="item.typeId" 
+							@tap="handleTaps">
 								<text class="text">{{ item.name }}</text>
 							</view>
 						</view>
@@ -184,66 +193,52 @@ export default {
 	methods: {
 		//点击切换 切换排行榜与勋章
 		handleTap: function(e) {
-			let id = e.currentTarget.id;
+			let id = e.currentTarget.dataset.id;
 			var that = this;
 			this.currentId = id;
-
+			console.log('this.current'+this.currentId)
 			if (id == 1) {
-			} else if (id == 2) {
-				uni.request({
-					url: getApp().globalData.requestUrl + '/api/study/medal',
-					method: 'post',
-					data: '',
-					header: {
-						'content-type': 'application/json',
-						token: uni.getStorageSync('loginToken')
-					},
-					success: function(res) {
+			} else if 
+			(id == 2) {
+				ajax({
+					url:'study/medal',
+					data:{},
+					success:(res)=>{
 						uni.hideLoading();
-						this.medal_list = res.data.data.list;
+						const{list} = res.data.data
+						this.modal_list = list;
+						console.log(this.modal_list)
 					},
-					fail: function() {
-						uni.hideLoading();
+					error:function(){
 						uni.showModal({
-							title: '网络错误',
+							title:'网络错误',
 							content: '网络出错，请刷新重试',
-							showCancel: false
-						});
+										showCancel: false
+						})
 					}
-				});
-			} //  else if (id == 3) {
-			//   wx.request({
-			//     url: getApp().globalData.requestUrl + '/api/study/getDiaryImg',
-			//     method: 'post',
-			//     data: '',
-			//     header: {
-			//       'content-type': 'application/json',
-			//       'token': wx.getStorageSync("token")
-			//     },
-			//     success: function (res) {
-			//       wx.hideLoading();
-			//       if (res.data.data) {
-			//         that.setData({
-			//           img: res.data.data
-			//         })
-			//       } else {
-			//         wx.showToast({
-			//           title: '您还未签到,快去签到吧',
-			//           icon: 'none'
-			//         })
-			//       }
-			//     },
-			//     fail: function () {
-			//       wx.hideLoading();
-			//       wx.showModal({
-			//         title: '网络错误',
-			//         content: '网络出错，请刷新重试',
-			//         showCancel: false
-			//       })
-			//       return typeof cb == "function" && cb(false)
-			//     }
-			//   })
-			// }
+				})
+				// uni.request({
+				// 	url: getApp().globalData.requestUrl + '/api/study/medal',
+				// 	method: 'post',
+				// 	data: '',
+				// 	header: {
+				// 	 'content-type': 'application/json',
+				// 		token: uni.getStorageSync('loginToken')
+				// 	},
+				// 	success: function(res) {
+				// 		uni.hideLoading();
+				// 		this.medal_list = res.data.data.list;
+				// 	},
+				// 	fail: function() {
+				// 		uni.hideLoading();
+				// 		uni.showModal({
+				// 			title: '网络错误',
+				// 			content: '网络出错，请刷新重试',
+				// 			showCancel: false
+				// 		});
+				// 	}
+				// });
+			} 
 		},
 		//点击切换 切换时间榜单
 		handleTaps: function(e) {
@@ -252,12 +247,10 @@ export default {
 			let that = this;
 
 			if (id) {
-				that.setData({
-					currentIds: id,
-					page: 1,
-					list: [],
-					count: 1
-				});
+					this.currentIds=id,
+					this.page= 1,
+					this.list= [],
+					this.count= 1
 				that.getData();
 			}
 		},
@@ -292,16 +285,15 @@ export default {
 					data: {
 						page: that.page,
 						page_size: that.page_size,
-						type: ++that.currentIds
+						type: that.currentIds
 					},
 					success: (res) => {
 						var tabcontitem = that.tabcontitem;
-						that.setData({
-							page: that.page + 1,
-							count: res.data.count > 1 ? res.data.count : 1,
-							list: res.data.list,
-							headImg: res.data.list[0].avatar
-						});
+						const {list} = res.data.data
+							this.page= that.page + 1,
+							this.count= res.data.count > 1 ? res.data.count : 1,
+							this.list=list,
+							this.headImg= list[0].avatar
 						wx.stopPullDownRefresh();
 					},
 					error:function(){

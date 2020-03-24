@@ -4,7 +4,7 @@
 
 <view class="shuhuajs">
   <view class="navtab">
-    <view :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active':'')" v-for="(item, id) in section" :key="id" @tap.stop="handleTap" :idAttr="item.typeId">{{item.name}}</view>
+    <view :class="'navtab_item ' + (item.typeId == currentId ? 'nav-active':'')" v-for="(item, id) in section" :key="id" @tap.stop="handleTap" :data-id="item.typeId">{{item.name}}</view>
   </view>
 
   <view class="cont-item">
@@ -33,7 +33,7 @@
 // pages/shjs/shjs.js
 const app = getApp().globalData;
 // var util = require("../../utils/util.js");
-
+import {ajax} from '../../../utils/public.js'
 export default {
   data() {
     return {
@@ -61,18 +61,26 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    var param = {
-      type: this.currentId
-    };
-    this.setData({
-      type: this.type,
-      tabcontitem: [],
-      page: 1,
-      count: 1
-    });
-    this.getData();
-  },
+	// onLoad(){
+		
+	// }
+	onLoad(){
+		this.getData()
+	},
+  // onLoad: function (options) {
+		// this.getData();
+  //   // var param = {
+  //   //   type: this.currentId
+  //   // };
+  //   this.setData({
+  //     type: this.type,
+  //     tabcontitem: [],
+  //     page: 1,
+  //     count: 1
+  //   });
+		// console.log('123')
+  //   this.getData();
+  // },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -91,15 +99,13 @@ export default {
   methods: {
     //点击切换
     handleTap: function (e) {
-      let id = e.currentTarget.id;
+      let id = e.currentTarget.dataset.id;
 
       if (id) {
-        this.setData({
-          type: id,
-          page: 1,
-          tabcontitem: [],
-          currentId: id
-        });
+          this.type= id,
+          this.page= 1,
+          this.tabcontitem= [],
+          this.currentId= id
         this.getData();
       }
     },
@@ -132,7 +138,7 @@ export default {
         //   icon:'none'
         // })
       } else {
-        util.ajax('/api/works/worksList', param, res => {
+        ajax({url:'works/worksList', data:param, success:(res) => {
           var tabcontitem = that.tabcontitem;
           that.setData({
             page: that.page + 1,
@@ -140,7 +146,7 @@ export default {
             tabcontitem: tabcontitem.concat(res.data.list)
           });
           wx.stopPullDownRefresh();
-        });
+        }});
       }
     },
 

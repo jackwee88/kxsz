@@ -100,9 +100,14 @@
 			},
 			//获取验证码点击
 			yzmBtn(){
-				if(this.phone===''){
-					
-				}else{
+				 var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+				      if (!myreg.test(this.phone)) {
+				        this.loading = false;
+				        uni.showModal({
+				        	title:'错误',
+									content:'请输入正确的手机号'
+				        })
+				      }else{
 					let _self=this
 					let s=60
 					let stime=setInterval(function(){

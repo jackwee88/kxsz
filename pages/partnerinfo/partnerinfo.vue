@@ -10,7 +10,7 @@
 // pages/otherInfo/otherInfo.js
 var app = getApp().globalData;
 var util = require("../../utils/util.js");
-
+import {ajax} from '../../utils/public.js'
 export default {
   data() {
     return {
@@ -26,9 +26,7 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      id: options.id
-    });
+     this.id= options.id
     this.getData();
   },
 
@@ -69,13 +67,11 @@ export default {
   methods: {
     getData() {
       var that = this;
-      util.ajax('/api/partner/partner', {
+      ajax({url:'partner/partner',data: {
         id: this.id
-      }, res => {
-        that.setData({
-          detail: res.data
-        });
-      });
+      }, success:(res) => {
+          this.detail= res.data.data
+      }});
     }
 
   }

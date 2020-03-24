@@ -7,16 +7,16 @@
 				<view class="top">
 					<view class="name">{{userinfo.nickname}}</view>
 					<view class="btn had_btn" v-if="userinfo.type==='none'">
-						<image src="../../static/my/add.png" class="addhao" @click="follow()"></image>
+						<image src="../../static/my/add.png" class="addhao" @click="follow"></image>
 						关注
 					</view>
 
-					<view class="btn" v-if="userinfo.type==='only'" @click="follow()">
+					<view class="btn" v-if="userinfo.type==='only'" @click="follow">
 						<image src="../../static/my/ygz.png" class="ygz"></image>
 						取消关注
 					</view>
 
-					<view class="btn" v-if="userinfo.type==='mutual'" @click="follow()" >
+					<view class="btn" v-if="userinfo.type==='mutual'" @click="follow" >
 						<image src="../../static/my/hxgz.png" class="hxgz"></image>
 						互相关注
 					</view>
@@ -104,23 +104,13 @@ export default {
 		}
 	}),
 	onLoad(event) {
-		this.userinfo = JSON.parse(decodeURIComponent(event.userInfo));
-		this.id = this.userinfo.id;
+		this.userinfo = JSON.parse(decodeURIComponent(event.infoDetail));
+		this.id = this.userinfo.uid;
+		console.log(this.id)
+		this.getData()
 	},
 	mounted(){
-		ajax({
-		     url: 'friend/userDetail',
-		     data: {
-					friend_uid :'366',
-					// friend_uid :this.id
-		     },
-		     method: 'POST',
-		     success: (res) =>{
-					 const details = res.data.data
-					 this.userinfo  = details
-		     },
-		     error: function() {}
-		    })
+
 	},
 	methods:{
 		follow(){
@@ -128,15 +118,59 @@ export default {
 			     url: 'friend/follow',
 			     data: {
 			      // token:uni.getStorageSync('access_token'),
-						// friend_uid :'366'
+						friend_uid :this.id
 			     },
 			     method: 'POST',
 			     success: (res) =>{
-						 console.log(res)
+						 console.log(res.data.msg)
+						 this.getData()
 			     },
 			     error: function() {
 						 console.log("111")
 					 }
+			    })
+		},
+		praise(e) {
+			var that = this;
+		
+			const index = e.currentTarget.dataset.index;
+			const dy_id = e.currentTarget.dataset.dy_id;
+			console.log('123' + dy_id);
+			ajax({
+				url: 'study/praiseStudy',
+				data: {
+					dy_id: dy_id
+				},
+				success: res => {
+					const daily = that.studylist;
+					const is_give = 'daily[' + index + '].is_give';
+					const thumbs_times = 'daily[' + index + '].thumbs_times';
+					if (res.data.data.is_ok == true) {
+						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times + 1);
+						uni.showToast({
+							title: '点赞成功',
+							icon: 'none'
+						});
+					} else {
+						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
+					}
+				}
+			});
+		},
+		getData(){
+			ajax({
+			     url: 'friend/userDetail',
+			     data: {
+						// friend_uid :'366',
+						friend_uid :this.id
+			     },
+			     method: 'POST',
+			     success: (res) =>{
+						 const details = res.data.data
+						 this.userinfo  = details
+						 this.type = details.type
+			     },
+			     error: function() {}
 			    })
 		}
 	}

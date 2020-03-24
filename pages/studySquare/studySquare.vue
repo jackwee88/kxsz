@@ -42,7 +42,7 @@
 				<!-- <view data-url='/pages/worksfor/worksfor' class="tabcon"  data-type='3' style="background-color:#02A0C3" catchtap='toWhere'>
      作品征集
     </view> -->
-				<view class="tabcon" data-type="3" @tap="changeOil" style="background-color:#2B37C1">文字故事</view>
+				<view class="tabcon" data-type="3" @tap="changeOil" style="background-color:#2B37C1" v-if="type=3">文字故事</view>
 				<navigator url="shuhuajs/shuhuajs" class="tabcon"><view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view></navigator>
 				<!-- <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
       <text>更多</text>
@@ -261,10 +261,10 @@ export default {
 		this.getData();
 		var pages = getCurrentPages();
 		var prevPage = pages[pages.length - 2];
-		prevPage.setData({
-			is_wait: '',
-			wait: ''
-		});
+		// prevPage.setData({
+		// 	is_wait: '',
+		// 	wait: ''
+		// });
 	},
 	onPullDownRefresh: function() {
 		var that = this;
@@ -497,25 +497,23 @@ export default {
 			}
 		},
 		changeOil: function(e) {
-			if (e.target.dataset.type == 2) {
-					this.type=e.target.dataset.type
-				uni.navigateTo({
-					url: '/pages/brain/brain'
-				});
-				return;
-			}
+			console.log(e.target.dataset.type)
+			// if (e.target.dataset.type == 2) {
+			// 		this.type=e.target.dataset.type
+			// 	uni.navigateTo({
+			// 		url: '/pages/brain/brain'
+			// 	});
+			// 	return;
+			// }
 
 			const that = this;
-			that.setData({
-				type: e.target.dataset.type,
-				page: 1,
-				studylist: [],
-				count: 1,
-				show: false
-			});
+				this.type= e.target.dataset.type,
+				this.page= 1,
+				this.studylist= [],
+				this.count= 1,
+				this.show=false
 			that.getData();
-		},
-
+},
 		toWhere(e) {
 			var url = e.currentTarget.dataset.url;
 			wx.navigateTo({

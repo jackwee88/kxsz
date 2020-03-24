@@ -2,7 +2,6 @@
 	<!--页面路径 pages/index/index -->
 	<view class="index_page">
 		<view class="status_bar"><!-- 这里是状态栏 --></view>
-		<indexModal :isVisible="true"></indexModal>
 
 		<view class="top_title">
 			<text>开心书写</text>
@@ -56,9 +55,9 @@
 
 		<view class="works_list">
 			<view class="work_item" v-for="(item, index) in studylist" :key="index">
-				<view class="user_info">
+				<view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
 					<view class="left_side">
-						<view class="avatar"><image :src="item.avatar" class="avatar"></image></view>
+						<view class="avatar"><image :src="item.avatar" class="avatar" @tap="gotoUserInfo" :data-uid="item.uid"></image></view>
 						<view class="date">
 							<view class="username">{{ item.nickname }}</view>
 							<view>{{ item.createtime }}</view>
@@ -132,11 +131,22 @@
 					<view><view></view></view>
 				</view>
 				<view class="actions">
-					<view class="item">
+					<view
+						class="item"
+					>
 						<image src="../../static/index/zf.png" mode=""></image>
 						<text></text>
 					</view>
-					<view class="item">
+					<view
+						class="item"
+						@tap.stop="gotoPublished"
+						:data-dy_id="item.dy_id"
+						:data-browse_times="item.browse_times"
+						:data-p_id="item.dy_id"
+						:data-index="index"
+						:data-comment_count="item.comment_count"
+						:data-thumbs_times="item.thumbs_times"
+					>
 						<image src="../../static/index/pl.png" mode=""></image>
 						<text>{{ item.comment_count }}</text>
 					</view>
@@ -218,25 +228,21 @@
 		</view>
 		<view class="big-box" v-if="if_over">
 			<view class="containerModal">
-			  <view class="modalTitle">恭喜您获得新人礼包</view>
-			  <view class="youhuiquan">
-			    <view class="youhuiNum">
-			      <text style="font-size:36rpx ;">
-			        ¥
-			        <text style="font-size: 54rpx;">10</text>
-			      </text>
-			    </view>
-			    <view class="youhuiDetail">
-			      <view class="detail">每满99减10元</view>
-			      <view class="date">2019.03.20-2019.05.20</view>
-			      <image
-			        class="image"
-			        src="../../static/index/newPerpson.png"
-			        style="width: 84rpx;height: 78rpx;"
-			      />
-			    </view>
-			  </view>		
-			  <view class="btn" @click="gotoNovice">快去完成新人任务吧！</view>
+				<view class="modalTitle">恭喜您获得新人礼包</view>
+				<view class="youhuiquan">
+					<view class="youhuiNum">
+						<text style="font-size:36rpx ;">
+							¥
+							<text style="font-size: 54rpx;">10</text>
+						</text>
+					</view>
+					<view class="youhuiDetail">
+						<view class="detail">每满99减10元</view>
+						<view class="date">2019.03.20-2019.05.20</view>
+						<image class="image" src="../../static/index/newPerpson.png" style="width: 84rpx;height: 78rpx;" />
+					</view>
+				</view>
+				<view class="btn" @click="gotoNovice">快去完成新人任务吧！</view>
 			</view>
 		</view>
 	</view>
@@ -245,7 +251,6 @@
 <script>
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import '../public/rongyun.js';
-import indexModal from '../modal/modal.vue';
 import { ajax } from '../../utils/public.js';
 import util from '../../utils/util.js';
 export default {
@@ -257,7 +262,7 @@ export default {
 			activeImg: '',
 			//活动图片
 			activeUrl: '',
-			if_over:false,
+			if_over: false,
 			//活动链接
 			to_details: true,
 			preview: true,
@@ -591,6 +596,15 @@ export default {
 				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
+		gotoUserInfo: function(e) {
+			console.log(e.currentTarget.dataset.uid + '123');
+			let param = {
+				uid: e.currentTarget.dataset.uid
+			};
+			uni.navigateTo({
+				url: '../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
 		getData() {
 			ajax({
 				url: 'study/studyList',
@@ -601,7 +615,7 @@ export default {
 				},
 				success: res => {
 					console.log(res);
-									 const { list, count } = res.data.data;
+					const { list, count } = res.data.data;
 					// for (var i = 0; i < list.length; i++) {
 					// 	list[i].isPlaying = false;
 					// 	list[i].fullScreen = false;
@@ -610,9 +624,7 @@ export default {
 					// 	list[i].name = list[i].nickname + '的音频';
 					// }
 
-						this.page=this.page + 1,
-						this.count= res.data.count > 1 ? res.data.count : 1,
-						this.studylist = list
+					(this.page = this.page + 1), (this.count = res.data.count > 1 ? res.data.count : 1), (this.studylist = list);
 				},
 				error: function() {}
 			});
@@ -656,14 +668,14 @@ export default {
 		//放大图片
 		previewImg: function(e) {
 			getApp().globalData.preview = false;
-			var src = e.currentTarget.dataset.src; 
-			console.log(src+'src')
+			var src = e.currentTarget.dataset.src;
+			console.log(src + 'src');
 			//获取data-src  循环单个图片链接
-      var imgList=[];
-			imgList.push = (e.currentTarget.dataset.effect_pic);
-			imgList
+			var imgList = [];
+			imgList.push = e.currentTarget.dataset.effect_pic;
+			imgList;
 			// for(i=0;i<imgList.length)
-			console.log(e.currentTarget.dataset.effect_pic)
+			console.log(e.currentTarget.dataset.effect_pic);
 			//图片预览
 			console.log('imglist' + imgList);
 			wx.previewImage({
@@ -866,6 +878,16 @@ export default {
 		//     that.getDataGoods()
 		//   }
 		// },
+		gotoGrowthDairy: function(e) {
+			let uid = e.currentTarget.dataset.uid;
+			let pid = e.currentTarget.dataset.pid;
+			let index = e.currentTarget.dataset.index;
+			const thumbs_times = e.currentTarget.dataset.thumbs_times;
+			getApp().globalData.preview = false;
+			uni.navigateTo({
+				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
+			});
+		},
 		show: function() {
 			// this.setData({ flag: false })
 		},
@@ -895,9 +917,9 @@ export default {
 			}
 		},
 		gotoNovice: function() {
-		  uni.navigateTo({
-		    url: "../novice/novice"
-		  });
+			uni.navigateTo({
+				url: '../novice/novice'
+			});
 		},
 		change: function(e) {
 			let that = this;

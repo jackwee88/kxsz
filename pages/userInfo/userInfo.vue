@@ -16,7 +16,7 @@
 						已关注
 					</view> -->
 				</view>
-				<!-- <view class="sub">开心号：{{ userinfo.number }}</view> -->
+				<view class="sub">开心号：{{ userinfo.mobile }}</view>
 				<!-- <view class="sub">男</view> -->
 			</view>
 		</view>

@@ -43,13 +43,14 @@ const ajax = (opt) => {
 			} else if (res.data.status == 1) {
 				opt.success(res);
 			} else if(res.data.status == -1){
+				//无token
 				uni.navigateTo({
-					url:'/pages/login/login.vue'
+					url:'/pages/login/login.vue',
 				})
 			}
 			else if (res.data.status == -10086) {
 				uni.navigateTo({
-					url: '/pages/loginapp/loginapp',
+					url: '../pages/loginapp/loginapp',
 				});
 			} else if (res.data.status == -10087) { //用户被拉黑
 				uni.navigateTo({

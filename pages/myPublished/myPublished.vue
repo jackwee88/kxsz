@@ -3,7 +3,7 @@
 		<scroll-view scroll-y>
 			<view class="recommend-item">
 				<view class="item-top">
-					<image class="touxiangicon" :src="studyDetails.avatar" mode="widthFix" />
+					<image class="touxiangicon" :src="studyDetails.avatar" mode="widthFix" @tap="gotoUserInfo" :data-uid="studyDetails.uid"/>
 					<view class="info">
 						<text class="title">{{ studyDetails.nickname }}</text>
 						<text class="time">{{ studyDetails.createtime }}</text>
@@ -142,7 +142,7 @@ export default {
 						times: newp
 					});
 				}
-				uni.navigateBack()
+				// uni.navigateBack()
 			}, 1000);
 			this.getData();
 			this.comment();
@@ -220,7 +220,7 @@ export default {
 					ajax({
 						url: 'comment/comment',
 						data: { d_id: this.dy_id },
-						success: res => {
+						success: (res) => {
 							console.log(res.data.data);
 							let list = res.data.data;
 							list.if_input = false;
@@ -266,7 +266,19 @@ export default {
 				}
 			});
 		},
+		//跳转用户详情
+		gotoUserInfo: function(e) {
+			console.log(e.currentTarget.dataset.uid+'123')
+			let param = {
+				uid: e.currentTarget.dataset.uid,
+		
+			};
+			uni.navigateTo({
+				url: '../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
 		//点赞
+		
 		praise(e) {
 			var that = this;
 			var index_ = that.index_;

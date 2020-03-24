@@ -10,7 +10,7 @@
 // pages/companyInfo/companyInfo.js
 var app = getApp().globalData;
 var util = require("../../utils/util.js");
-
+import {ajax} from '../../utils/public.js'
 export default {
   data() {
     return {
@@ -26,9 +26,7 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      pid: options.id
-    });
+      this.pid= options.id
     this.getData();
   },
 
@@ -75,13 +73,13 @@ export default {
 
     getData() {
       var that = this;
-      util.ajax('/api/partner/partnerSeCate', {
+     ajax({url:'partner/partnerSeCate', data:{
         pid: this.pid
-      }, res => {
+      }, success:(res) => {
         that.setData({
           list: res.data.list
         });
-      });
+      }});
     }
 
   }

@@ -62,7 +62,7 @@ const ajax = opt => {
         opt.success(res.data);
       } else if (res.data.status == -10086 || res.data.status == -1) {
         uni.navigateTo({
-          url: '/pages/login/login'
+          url: '../pages/login/login'
         });
       } else if (res.data.status == -10087) {
         //用户被拉黑
