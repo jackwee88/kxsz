@@ -194,22 +194,22 @@ export default {
       const param = {
         page: that.page,
         page_size: that.page_size,
-        type: ++that.currentIds
+        type: Number(that.currentIds) + 1
       };
 
-      if (that.currentIds == 1) {
+      if (that.currentIds == 0) {
         that.setData({
           nowdate: "昨天"
         });
-      } else if (that.currentIds == 2) {
+      } else if (that.currentIds == 1) {
         that.setData({
           nowdate: "本周"
         });
-      } else if (that.currentIds == 3) {
+      } else if (that.currentIds == 2) {
         that.setData({
           nowdate: "本月"
         });
-      } else if (that.currentIds == 4) {
+      } else if (that.currentIds == 3) {
         that.setData({
           nowdate: "上月"
         });
