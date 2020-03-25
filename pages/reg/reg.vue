@@ -14,10 +14,10 @@
 							<input maxlength="7" type="text" value="" class="input picker" placeholder="请填写姓名"/>
 						</view>
 						<view class="form-item">
-							<picker mode="selector" :range="gender" class="" @change="bindSchoolChange">
+							<picker mode="selector" :range="school" class="" @change="bindSchoolChange">
 								<text class="itemtitle">学校</text>
 								<view class="picker">
-									{{gender[uploadInfo.school]}}
+									<!-- {{school[uploadInfo.school]}} -->
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
@@ -78,56 +78,265 @@
 
 <script>
 	import wPicker from "@/components/w-picker/w-picker.vue";
+	import {ajax} from '../../utils/public.js'
 	export default{
 		components: {
 			wPicker
 		},
 		data(){
 			return{
-				gender:['a学校', 'b学校', 'c学校', 'd学校', 'e学校', 'f学校'],
-				genClass:['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
-				grade:['1班', '2班', '3班', '4班', '5班', '6班'],
-				uploadInfo:{
-					school:'',		//学校
-					class:'',		//年级
-					classClass:'',	//班级
-					province: '', 	//省份
-					city: '', 		//城市
-					area: '', 		//地区
-					region: [],
+				 school_index: -1,
+				      school: [],
+				      array: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+				      //传值时加1
+				      arrayClass: ['1班', '2班', '3班', '4班', '5班', '6班', '7班', '8班', '9班', '10班', '11班', '12班', '13班', '14班', '15班'],
+				      region: ['福建省', '厦门市', '思明区'],
+				      uploadInfo: {
+				        username: '',
+				        mobile: '',
+				        // grade: '',
+				        province: '',
+				        city: '',
+				        area: '',
+				        region: ['福建省', '厦门市', '思明区'],
+				        code: '' // classes: [],
+				        // school:''
+				
+				      },
+				      userinfo: {},
+				      sms_zt: '发送验证码',
+				      second: 60,
+				      nullHouse1: false,
+				      nullHouse2: true,
+				      mySchool: '',
+				      phone: '',
+				      noPhone: 'false',
+				      type: "",
+				      selected: false,
+				      selected1: false
 				}
-			}
-		},
-		methods:{
-			//学校点击
-			bindSchoolChange(e){
-				this.uploadInfo.school=e.target.value;
 			},
-			//年级点击
-			bindClassChange(e){
-				this.uploadInfo.class=e.target.value;
-			},
-			//班级点击
-			bindGradeChange(e){
-				this.uploadInfo.classClass=e.target.value;
-			},
-			//地区点击出现选项
-			toggleTab() {
-				this.$refs.region.show();
-			},
-			//地区选择点击
-			bindCityChange(e) {
-				this.uploadInfo.region=e.checkArr;
-			},
-			//发送验证码点击
-			getcode(){
-				
-			},
-			//确定点击
-			save(){
-				
-			}
-		}
+		
+		  onLoad: function (options) {
+		    let that = this;
+		    ajax({url:'index/getSchool', data:{}, success:(res) => {
+				const{list} = res.data.data
+		        this.school=list
+		    }});
+		
+		    if (wx.getStorageSync('wxPhone')) {
+		      this.setData({
+		        "uploadInfo.region": ['请选择省', '市', '区'],
+		        'uploadInfo.mobile': wx.getStorageSync('wxPhone')
+		      });
+		    }
+		
+		    if (uni.getStorageSync('phone') == "" || !uni.getStorageSync('phone')) {
+		        this.noPhone=true
+		     ajax({url:'index/getProfile', data:{}, success:(res) => {
+		          this.uploadInfo.mobile=res.data.data.mobile
+		      }});
+}
+		  },
+  methods: {
+    // 日期选择
+    bindDateChange(e) {
+      console.log(e);
+      this.setData({
+        'uploadInfo.birthday': e.detail.value
+      });
+    },
+
+    // 年级选择
+    bindPickerChange(e) {
+      this.setData({
+        'uploadInfo.gender': Number(e.detail.value) + 1
+      });
+    },
+
+    bindClassChange(e) {
+      this.setData({
+        'uploadInfo.classes': Number(e.detail.value) + 1
+      });
+    },
+
+    bindGradeChange(e) {
+      this.setData({
+        'uploadInfo.grade': Number(e.detail.value) + 1
+      });
+    },
+
+    // 省区选择
+    bindRegionChange(e) {
+      this.setData({
+        'uploadInfo.region': e.detail.value,
+        'uploadInfo.province': e.detail.value[0],
+        'uploadInfo.city': e.detail.value[1],
+        'uploadInfo.area': e.detail.value[2]
+      });
+    },
+
+    inputChange(e) {
+      var that = this;
+      var type = e.currentTarget.dataset.type;
+      this.setData({
+        [type]: e.detail.value
+      });
+    },
+
+    inputPhoneChange(e) {
+      var that = this;
+      var type = e.currentTarget.dataset.type;
+      this.setData({
+        phone: e.detail.value
+      });
+    },
+
+    save(e) {
+      // if (!this.data.uploadInfo.mobile){
+      //   this.setData({
+      //     'uploadInfo.mobile':this.data.phone
+      //   })
+      // }
+      const uploadInfo = this.uploadInfo; // if (uploadInfo.username == '') {
+      //   wx.showToast({
+      //     title: '请输入姓名',
+      //     icon: 'none'
+      //   })
+      //   return false;
+      // }
+      // if (uploadInfo.region == '请选择省' ||uploadInfo.province == ""){
+      //   wx.showToast({
+      //     title: '请选择家庭住址',
+      //     icon:'none'
+      //   })
+      //   return false;
+      // }
+      // if (uploadInfo.mobile == '') {
+      //   wx.showToast({
+      //     title: '请输入联系方式',
+      //     icon: 'none'
+      //   })
+      //   return false;
+      // }
+
+      util.ajax('/api/index/registerProfile', uploadInfo, res => {
+        if (res.status == 1) {
+          wx.showToast({
+            title: '成功',
+            icon: 'none',
+            mask: 'true'
+          });
+        } else {
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+            mask: 'true'
+          });
+        } // setTimeout(function () { wx.switchTab({
+        //   url: '/pages/index/index',
+        // }) }, 1000);
+
+
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1000);
+      });
+    },
+
+    getcode: function (e) {
+      var phone = this.uploadInfo.mobile;
+
+      if (!phone) {
+        wx.showToast({
+          title: '请输入手机号',
+          icon: 'none'
+        });
+      } else {
+        var that = this;
+        util.ajax('/api/user/sendUpgradeMembershipCode', {
+          mobile: phone
+        }, res => {
+          if (res.status == '1') {
+            that.countdown();
+          }
+        });
+      }
+    },
+
+    codeChange(e) {
+      var that = this;
+      var type = e.currentTarget.dataset.type;
+      this.setData({
+        [type]: e.detail.value
+      });
+    },
+
+    //倒计时方法
+    countdown() {
+      var that = this;
+      var second = that.second;
+
+      if (second == 0) {
+        // console.log("Time Out...");
+        that.setData({
+          selected: false,
+          selected1: true,
+          second: 60,
+          nullHouse1: false,
+          nullHouse2: true
+        });
+        return;
+      }
+
+      var time = setTimeout(function () {
+        that.setData({
+          second: second - 1,
+          nullHouse1: true,
+          nullHouse2: false
+        });
+        that.countdown();
+      }, 1000);
+    },
+
+    inputChangeSchool(e) {
+      var that = this;
+      var type = e.currentTarget.dataset.type;
+      this.setData({
+        [type]: e.detail.value
+      });
+    },
+
+    inputChangeHome(e) {
+      var that = this;
+      var type = e.currentTarget.dataset.type;
+      this.setData({
+        [type]: e.detail.value
+      });
+    },
+
+    bindSchoolChange(e) {
+      var that = this;
+      var school = this.school;
+      var id = that.school[e.detail.value].id;
+      this.setData({
+        school_index: Number(e.detail.value),
+        'uploadInfo.school': id,
+        mySchool: school[Number(e.detail.value)].school_name
+      });
+    },
+
+    writeSchool(e) {
+      this.setData({
+        school_index: 0,
+        'uploadInfo.school': e.detail.value,
+        mySchool: e.detail.value
+      });
+    }
+
+  }
 	}
 </script>
 

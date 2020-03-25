@@ -50,18 +50,17 @@ export default {
 			ajax({
 				url:'feedback/upload',
 				data:{
-					cate:this.activeIndex,
+					cate:++this.activeIndex,
 					content:this.content,
 					qq:this.qq,
 					mobile:this.mobile
 				},
 				method:'POST',
 				success:(res)=>{
-					uni.showModal({
-						title:"提示",
-						content:"感谢您的反馈",
-						confirmColor:this.themeColor
-					});
+					console.log(res.data.msg)
+					uni.showToast({
+						title:res.data.msg
+					})
 				},
 				error:function(){
 					

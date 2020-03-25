@@ -92,7 +92,7 @@ export default {
         method: 'post',
         header: {
           'content-type': 'application/json',
-          'token': uni.getStorageSync("token")
+          'token': uni.getStorageSync("token") 
         },
         success: function (res) {
           if (res.data.status == 1) {
