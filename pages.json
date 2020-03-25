@@ -277,8 +277,7 @@
 			"path": "pages/my/videoGift/videoGift",
 			"style": {
 				"navigationBarTitleText": "视频礼包",
-				"app-plus": {
-				}
+				"app-plus": {}
 			}
 		},
 		{
@@ -494,10 +493,9 @@
 			"style": {
 				"navigationBarTitleText": "已购视频"
 			}
-		}
-	    ,{
-            "path" : "pages/onlinestore/searchGoods",
-            "style" : {
+		}, {
+			"path": "pages/onlinestore/searchGoods",
+			"style": {
 				"navigationStyle": "custom"
 			}
 		}, {
@@ -508,82 +506,71 @@
 			"style": {
 				"navigationBarTitleText": "功能尺使用教学"
 			}
-		}
-        ,{
-            "path" : "pages/product-detail/sureOrder/sureOrder",
-            "style" : {
-							"navigationBarTitleText":"确认订单"
-						}
-        }
-        ,{
-            "path" : "pages/myPublished/commentDetails/commentDetails",
-            "style" : {
-				"navigationBarTitleText":"开心书写"
+		}, {
+			"path": "pages/product-detail/sureOrder/sureOrder",
+			"style": {
+				"navigationBarTitleText": "确认订单"
 			}
-        }
-        ,{
-            "path" : "pages/product-detail/commentList/commentList",
-            "style" : {
-							"navigationBarTitleText":"评论详情"
-						}
-        }
-        ,{
-            "path" : "pages/studySquare/shuhuajs/shuhuajs",
-            "style" : {
-							"navigationBarTitleText":"书画鉴赏"
-						}
-        }
-        ,{
-            "path" : "pages/studySquare/personsign/personsign",
-            "style" : {
-							"navigationBarTitleText":"个性签名"
-						}
-        }
-        ,{
-            "path" : "pages/otherInfo/otherInfo",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/addComment/addComment",
-            "style" : {
-				"navigationBarTitleText":"评论"
+		}, {
+			"path": "pages/myPublished/commentDetails/commentDetails",
+			"style": {
+				"navigationBarTitleText": "开心书写"
 			}
-        }
-        ,{
-            "path" : "pages/onlinestore/discountcenter/discountcenter",
-            "style": {
+		}, {
+			"path": "pages/product-detail/commentList/commentList",
+			"style": {
+				"navigationBarTitleText": "评论详情"
+			}
+		}, {
+			"path": "pages/studySquare/shuhuajs/shuhuajs",
+			"style": {
+				"navigationBarTitleText": "书画鉴赏"
+			}
+		}, {
+			"path": "pages/studySquare/personsign/personsign",
+			"style": {
+				"navigationBarTitleText": "个性签名"
+			}
+		}, {
+			"path": "pages/otherInfo/otherInfo",
+			"style": {}
+		}, {
+			"path": "pages/addComment/addComment",
+			"style": {
+				"navigationBarTitleText": "评论"
+			}
+		}, {
+			"path": "pages/onlinestore/discountcenter/discountcenter",
+			"style": {
 				"navigationBarTitleText": "领劵中心"
 			}
-        }
-        ,{
-            "path" : "pages/jctbxzjx/jctbxzjx",
-            "style": {
+		}, {
+			"path": "pages/jctbxzjx/jctbxzjx",
+			"style": {
 				"navigationBarTitleText": "教材同步写字教学"
 			}
-        }
-        ,{
-            "path" : "pages/citypatner/citypatner",
-            "style" : {
-							"navigationBarTitleText":"城市合伙人"
-						}
-        }
-        ,{
-            "path" : "pages/companyinfo/companyinfo",
-            "style" : {
-							"navigationBarTitleText":"开心书写"
-						}
-        }
-        ,{
-            "path" : "pages/partnerinfo/partnerinfo",
-            "style" : {
-            	"navigationBarTitleText":"开心书写"
-            }
-        }
-        ,{
-            "path" : "pages/studySquare/shjx-detail/shjx-detail",
-            "style" : {}
-        }
-    ],
+		}, {
+			"path": "pages/citypatner/citypatner",
+			"style": {
+				"navigationBarTitleText": "城市合伙人"
+			}
+		}, {
+			"path": "pages/companyinfo/companyinfo",
+			"style": {
+				"navigationBarTitleText": "开心书写"
+			}
+		}, {
+			"path": "pages/partnerinfo/partnerinfo",
+			"style": {
+				"navigationBarTitleText": "开心书写"
+			}
+		}, {
+			"path": "pages/studySquare/shjx-detail/shjx-detail",
+			"style": {
+				"navigationBarTitleText": "开心书写"
+			}
+		}
+	],
 
 
 	"globalStyle": {
