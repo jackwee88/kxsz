@@ -1,5 +1,5 @@
 <template name='assmeble'>
-		<view class="overlayer">
+		<view class="overlayer" :visible='visible'>
 			<view class="bg"></view>
 			<view class="content_wrap">
 				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
@@ -7,12 +7,12 @@
 					<view class="item">
 						<image src="../../static/reg/log.png" class="avatar"></image>
 
-						<view class="name">雨女无瓜雨女无瓜雨女无瓜雨女无瓜雨女无瓜</view>
+						<view class="name">{{ data.name }}</view>
 
 						<view class="num_n_time">
 							<view class="num">
 								差
-								<text>1</text>
+								<text>{{ data.num }}</text>
 								人拼成
 							</view>
 
@@ -32,7 +32,14 @@
 export default {
 	data() {
 		return {};
-	}
+		
+	},
+	props: {
+	  isVisible: {
+	    type: Boolean,
+	    default: true
+	  }
+	},
 };
 </script>
 

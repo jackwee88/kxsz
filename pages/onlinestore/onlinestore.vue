@@ -29,29 +29,26 @@
 			<view class="new-goods">
 				<image src="../../static/onlineStore/xpss.png" style="width:182rpx;height: 78rpx;" mode="aspectFit"></image>
 				<view class="recommend">推荐</view>
-				<view class="recommend-product" @tap="gotoDetails">
-					<text>{{flashSale.p_name}}</text></view>
+				<view class="marquee-bg" @tap.stop="toAnnouncement" :data-url="toAn">
+				      <!-- <image src="/static/img/index/1@2x.png" class="bg-text"></image> -->
+				      <view class="marquee_container" :style="'--marqueeWidth--:' + marqueeW + ';--allTs--:' + allT + ';'">
+				        <view class="marquee_text" :style="'font-size:' + size + 'px'">{{content_t}}</view>
+				      </view>
+				    </view>
 			</view>
 			<!-- 广告链接 -->
 			<view class="adver" :style="{ display: isClose == true ? 'none' : 'block' }">
-				<image
-					class="ggxbq"
-					src="/static/onlineStore/ggxbq@2x.png"
-				/>
-				<image
-					class="close"
-					@tap="close"
-					src="/static/onlineStore/close-circle@2x.png"
-				/>
+				<image class="ggxbq" src="/static/onlineStore/ggxbq@2x.png" />
+				<image class="close" @tap="close" src="/static/onlineStore/close-circle@2x.png" />
 				<view class="adversity"><image src="/static/onlineStore/gg@2x.png" mode="aspectFit" style="width: 100%;height: 196rpx;"></image></view>
 			</view>
 			<!-- 限时秒杀 -->
 			<view class="limitedTime">
 				<image src="../../static/onlineStore/xsms.png" style="width: 150rpx;height: 98rpx;" mode="aspectFit"></image>
 				<view class="flex">
-					<text style="font-size: 24rpx;"  @tap="xsmsDetails" :data-id="flashSale.p_id" >{{flashSale.p_name}}</text>
+					<text style="font-size: 24rpx;" @tap="xsmsDetails" :data-id="flashSale.p_id" :data-hour="hour" :data-minute="minute" :data-second="second">{{ flashSale.p_name }}</text>
 					<text class="red">时间仅剩</text>
-					<uni-countdown backgroundColor="#545458" color="#ffffff" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+					<uni-countdown backgroundColor="#545458" color="#ffffff" :hour="hour" :minute="minute" :second="second" :showDay="false"></uni-countdown>
 				</view>
 			</view>
 			<!-- 商品推荐 -->
@@ -65,17 +62,6 @@
 					</swiper-item>
 				</swiper>
 			</view>
-			<!-- 					<swiper class="goods-adverse" :autoplay="true" :interval="3000" :duration="1000">
-						<block v-for="(data, index) in swiperImges" :key="index">
-							<swiper-item>
-								<view class="swiper-item">
-									<navigator :url="data.to_url" open-type="navigate">
-										<image :src="data.pic_url" class="banner" style="width: 100%;height: 220rpx;" mode="aspectFill"></image>
-									</navigator>
-								</view>
-							</swiper-item>
-						</block>
-					</swiper> -->
 
 			<view class="banner-title"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
 			<!-- 商品推荐 -->
@@ -102,21 +88,19 @@
 					</view>
 				</view>
 				<!-- 为您推荐 -->
-				<view class="recommend-image">
-					<image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
-				<view class="recommend-ruler" >
+				<view class="recommend-image"><image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
+				<view class="recommend-ruler">
 					<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
-							<view class="image-ruler">
-								<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-								<image :src="item.image" style="width:330rpx ;height: 350rpx;" mode="aspectFit"></image>
+						<view class="image-ruler">
+							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
+							<image :src="item.image" style="width:330rpx ;height: 350rpx;" mode="aspectFit"></image>
+						</view>
+						<view class="goods-detail">
+							<view class="uni-product-title">{{ item.p_name }}</view>
+							<view class="uni-product-price">
+								<text style="font-size:28rpx ;color:#666666" class="subtitle">{{ item.p_detail }}</text>
 							</view>
-							<view class="goods-detail" >
-								<view class="uni-product-title">{{ item.p_name }}</view>
-								<view class="uni-product-price">
-									<text style="font-size:28rpx ;color:#666666" class="subtitle">
-									{{ item.p_detail }}</text>
-									</view>
-							</view>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -130,7 +114,11 @@ import { ajax } from '../../utils/public.js';
 export default {
 	data() {
 		return {
-			gonggao:'',
+			marqueeW:'',
+			content_t:'',
+			toAn:'',
+			announcement:'',
+			gonggao: '',
 			input: '',
 			leftWords: '',
 			rightWords: '',
@@ -144,8 +132,11 @@ export default {
 			productList: [],
 			renderImage: false,
 			joinAssembleList: [],
-			page:1,
-			pagesize:10,
+			page: 1,
+			pagesize: 10,
+			hour: 0,
+			minute: 0,
+			second: 0,
 			bannerList: [
 				{
 					item: [
@@ -171,18 +162,19 @@ export default {
 					]
 				}
 			],
-			swiperHeight: 0,
-
+			swiperHeight: 0
 		};
 	},
 	components: {
 		uniCountdown,
 		screenTextScroll
 	},
-	onLoad(){
-		this.getHotGoods()
-		this.getData()
-		this.getAboutUs()
+	onLoad() {
+		this.getHotGoods();
+		this.getData();
+		this.getAboutUs();
+		this.getflashtime();
+		this.getNewgoods();
 	},
 	created() {},
 	mounted() {
@@ -190,57 +182,124 @@ export default {
 		ajax({
 			url: 'index/shopBanner',
 			data: {},
-			success:(res)=>{
-				this.swiperImges = res.data.data.list
-			}
-		}),
-		//秒杀
-		ajax({
-			url: 'assemble/flashSale',
-			data: {},
 			success: res => {
-				const { count, list } = res.data.data;
-				this.flashSale = list.goods;
-				console.log(this.flashSale.p_id)
-				// const time = list.endtime-list.createtime
-				// const mstime = new Date(time)
-				// console.log(mstime.getFullYear()+''+mstime.getMonth()+''+mstime.getDate())
-				// mstime.getMonth()
-				// mstime.getDate()
+				this.swiperImges = res.data.data.list;
 			}
 		});
 	},
 	methods: {
-		getAboutUs(){
+		getAboutUs() {
 			ajax({
-				url:'index/getSystem',
-				data:{type:'16'},
-				success:(res)=>{
-					this.gonggao=res.data.data
+				url: 'index/getSystem',
+				data: { type: '16' },
+				success: res => {
+					this.gonggao = res.data.data;
 				}
-			})
+			});
 		},
 		// 秒杀详情
-		xsmsDetails:function(e){
-			let param={
-				id:e.currentTarget.dataset.id
-			}
+		xsmsDetails: function(e) {
+			let param = {
+				id: e.currentTarget.dataset.id
+			};
+			// console.log(param)
+			uni.navigateTo({
+				url: '../product-detail/product-detail?productDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
 		},
-		getData(){
+		getData() {
 			ajax({
 				url: 'assemble/joinAssemble',
 				data: {
-					page:this.page,
-					pagesize:this.pagesize
+					page: this.page,
+					pagesize: this.pagesize
 				},
 				method: 'POST',
-				success: (res) => {
-					const { list } = res.data.data;
+				success: res => {
+					const { list, count } = res.data.data;
 					this.joinAssembleList = list;
-					console.log(this.joinAssembleList);
+					// console.log(count);
 				},
 				error: function() {}
-			})
+			});
+		},
+		timeChange(value) {
+			var lastTime = parseInt(value);
+			if (lastTime > 60) {
+				var middle = parseInt(lastTime / 60);
+				lastTime = parseInt(lastTime % 60);
+				if (middle > 60) {
+					var hour = parseInt(middle / 60);
+					middle = parseInt(middle % 60);
+					this.hour = hour; //小时
+				}
+			}
+			var result = parseInt(lastTime);
+			this.second = result; //秒
+			if (middle > 0) {
+				var minute = parseInt(middle);
+				this.minute = minute;
+			}
+			if (hour > 0) {
+				var hour = parseInt(hour);
+				this.hour = hour;
+			}
+			return result;
+		},
+		getflashtime() {
+			ajax({
+				url: 'assemble/flashSale',
+				data: {},
+				success: res => {
+					const { count, list } = res.data.data;
+					this.flashSale = list.goods;
+					console.log(this.flashSale.p_id);
+					// 获取当前时间戳
+					let timeNoew = new Date().getTime() / 1000;
+					if (timeNoew > list.endtime) {
+						console.log('秒杀结束');
+					} else if (timeNoew < list.createTime) {
+						console.log('秒杀未开始');
+					} else {
+						var lastTime = list.endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						// 然后将秒转化成时间  (定时器每秒更新一次)
+						this.timeChange(lastTime);
+					}
+				}
+			});
+		},
+		getNewgoods() {
+			let that = this;
+			var screenW = wx.getSystemInfoSync().windowWidth; //获取屏幕宽度
+
+			ajax({
+				url: 'index/announcement',
+				data: {},
+				success: res => {
+					// if (!res.data.title){
+					//   return
+					// }
+					console.log(res.data.data);
+					if (!res.data.title) {
+						return false;
+					}
+					var contentW = res.data.title.length * this.size; //获取文本宽度（大概宽度）
+
+					// that.setData({
+						this.marqueeW= -contentW + 'px',
+						this.content_t= res.data.data.title,
+						this.toAn= res.data.data.url,
+						this.announcement= res.data
+					// });
+					var allT = (contentW / screenW) * this.moveTimes;
+					allT = allT < 8 ? 8 : allT; //不够一平-----最小滚动一平时间
+
+					this.setData({
+						// marqueeW: -contentW + "px",
+						allT: allT + 's'
+					});
+				}
+			});
 		},
 		gotoDetails: function(e) {
 			let param = {
@@ -260,7 +319,6 @@ export default {
 					console.log(res.data.data);
 					const { count, list } = res.data.data;
 					this.productList = list;
-					
 				}
 			});
 		},
@@ -284,30 +342,30 @@ export default {
 .flashgoods {
 	background-color: pink;
 }
-	.subtitle {
-		color: rgba(102, 102, 102, 1);
-		line-height: 40rpx;
-		line-height: 40rpx;
-		overflow: hidden;
-		word-break: break-all;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-	}
-	.title {
-		font-size: 28rpx;
-		font-weight: 500;
-		color: rgba(50, 50, 50, 1);
-		line-height: 40rpx;
-		height: 40rpx;
-		overflow: hidden;
-		word-break: break-all;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 1;
-	}
+.subtitle {
+	color: rgba(102, 102, 102, 1);
+	line-height: 40rpx;
+	line-height: 40rpx;
+	overflow: hidden;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+.title {
+	font-size: 28rpx;
+	font-weight: 500;
+	color: rgba(50, 50, 50, 1);
+	line-height: 40rpx;
+	height: 40rpx;
+	overflow: hidden;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+}
 page,
 .container {
 	min-height: 100%;
@@ -352,7 +410,7 @@ page,
 /*爲你推薦*/
 .recommend-ruler {
 	display: flex;
-	flex-direction: row;
+	// flex-direction: row;
 	.uni-product-title {
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
@@ -439,22 +497,21 @@ page,
 	margin-top: 26rpx;
 }
 
-	/*广告*/
-	.adver {
-		position: relative;
-		width: 100%;
-		// background-color: pink;
-		.ggxbq{
-			width: 80rpx;
-			height: 40rpx
-		}
-		.close {
-			position: absolute;
-			top: 0;
-			right: 16rpx;
-			width: 36rpx;
-			height: 36rpx;
-		}
+/*广告*/
+.adver {
+	position: relative;
+	width: 100%;
+	// background-color: pink;
+	.ggxbq {
+		width: 80rpx;
+		height: 40rpx;
 	}
-
+	.close {
+		position: absolute;
+		top: 0;
+		right: 16rpx;
+		width: 36rpx;
+		height: 36rpx;
+	}
+}
 </style>
