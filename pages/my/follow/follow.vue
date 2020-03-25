@@ -12,19 +12,19 @@
 				</view>
 				<view class="info_wrap">
 					<view class="left_side">
-						<view class="name">{{item.nickName}}</view>
+						<view class="name">{{item.nickname}}</view>
 						<view class="account">开心号：{{item.number}}</view>
 					</view>
 					<view class="btn" v-if="item.type === 'only'">
-						<image src="../../../static/my/ygz.png" class="ygz"></image>
+						<image src="../../../static/my/ygz.png" class="ygz" @tap.stop="follow(item)"></image>
 						已关注
 					</view>
 					<view class="btn" v-if="item.type === 'none'">
-						<image src="../../../static/my/ygz.png" class="ygz"></image>
+						<image src="../../../static/my/ygz.png" class="ygz" @tap.stop="follow(item)"></image>
 						关注
 					</view>
 					<view class="btn" v-if="item.type === 'mutual'">
-						<image src="../../../static/my/ygz.png" class="ygz"></image>
+						<image src="../../../static/my/ygz.png" class="ygz" @tap.stop="follow(item)"></image>
 						互相关注
 					</view>
 				</view>
@@ -42,8 +42,15 @@ export default {
 			myFriendList:[]
 		};
 	},
+	onLoad(){
+		this.getData()
+	},
 	mounted() {
-		ajax({
+		
+	},
+	methods: {
+		getData(){
+			ajax({
 			url: 'friend/myFriendList',
 			data: {},
 			method: 'POST',
@@ -52,15 +59,31 @@ export default {
 				this.myFriendList = list
 			},
 			error: function() {}
-		});
-	},
-	methods: {
+		})
+		},
+		
 		gotoOtherInfo:function(e){
-			let param ={id:e.id,	}
+			let param ={uid:e.id,}
 				console.log(param)
 			uni.navigateTo({
-				url: '../../userInfo/otherInfo?userInfo=' + encodeURIComponent(JSON.stringify(param))
+				url: '../../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
+		},
+		follow(e){
+			ajax({
+			     url: 'friend/follow',
+			     data: {
+						friend_uid :e.id
+			     },
+			     method: 'POST',
+			     success: (res) =>{
+						 console.log(res.data.msg)
+						 this.getData()
+			     },
+			     error: function() {
+						 console.log("111")
+					 }
+			    })
 		},
 	}
 };

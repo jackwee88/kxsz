@@ -37,10 +37,56 @@
 				</view>
 				<view class="msg">{{item.msg}}</view>
 		
-				<view class="gallery">
-					<view v-for="(imageItem,imageIndex) in item.imageList" :key="imageIndex" class="imageList">
-						<image :src="imageItem.imageUrl" mode=""></image>
+				<view class="gallery" @tap.stop="gotoPublished" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count">
+					<view class="case-li case-view-item">
+						<view style="position:relative;display:inline">
+							<image
+								v-if="item.video_ids"
+								style="width:30%;height:200rpx;"
+								:hidden="item.fullScreen"
+								class="case-picture"
+								:src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'"
+								mode="scaleToFill"
+							></image>
+							<image
+								v-if="item.video_ids"
+								:data-fullScreen="item.fullScreen"
+								class="bt"
+								mode="scaleToFill"
+								:data-src="item.video_ids"
+								:data-index="index"
+								@tap.stop="playVideo"
+								src="/static/img/index/play3.png"
+								style="width:60rpx;height:60rpx;position:absolute;top:-122rpx;left:73rpx;"
+							></image>
+						</view>
+				
+						<image
+							v-for="(items, index2) in item.picture_arr"
+							:key="index2"
+							:src="items"
+							@tap.stop="previewImg"
+							:data-effect_pic="item.picture_arr"
+							:data-src="items"
+							mode="aspectFill"
+							:data-index="index"
+						></image>
+						<!--前提一个播放的按钮-->
 					</view>
+				
+					<audio
+						v-if="item.voice_ids"
+						:src="item.voice_ids"
+						controls
+						class="audio"
+						:poster="item.poster"
+						:name="item.name"
+						:author="item.author"
+						:data-index="index"
+						@tap.stop="playorpause"
+						:action="item.action"
+					></audio>
+					<view><view></view></view>
 				</view>
 				<view class="actions">
 					<view class="item">

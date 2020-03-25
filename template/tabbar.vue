@@ -35,10 +35,10 @@ export default {
         "selectedColor": "#48db8d",
         active: true
       }, {
-        "pagePath": "/pages/onlinestore/fenleilist/fenleilist",
-        "text": "分类列表",
+        "pagePath": "/pages/fenleilist/fenleilist",
+        "text": "分类",
         "iconPath": "/img/onlinestore/fenleiwei.png",
-        "selectedIconPath": "/img/onlinestore/fenleiyi.png",
+        "selectedIconPath": "",
         "selectedColor": "#48db8d",
         "clas": "menu-item",
         active: false

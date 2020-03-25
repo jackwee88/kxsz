@@ -878,16 +878,16 @@ export default {
 		//     that.getDataGoods()
 		//   }
 		// },
-		gotoGrowthDairy: function(e) {
-			let uid = e.currentTarget.dataset.uid;
-			let pid = e.currentTarget.dataset.pid;
-			let index = e.currentTarget.dataset.index;
-			const thumbs_times = e.currentTarget.dataset.thumbs_times;
-			getApp().globalData.preview = false;
-			uni.navigateTo({
-				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
-			});
-		},
+		// gotoGrowthDairy: function(e) {
+		// 	let uid = e.currentTarget.dataset.uid;
+		// 	let pid = e.currentTarget.dataset.pid;
+		// 	let index = e.currentTarget.dataset.index;
+		// 	const thumbs_times = e.currentTarget.dataset.thumbs_times;
+		// 	getApp().globalData.preview = false;
+		// 	uni.navigateTo({
+		// 		url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
+		// 	});
+		// },
 		show: function() {
 			// this.setData({ flag: false })
 		},

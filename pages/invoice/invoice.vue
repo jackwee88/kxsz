@@ -328,7 +328,7 @@ export default {
       var pages = getCurrentPages(); //页面指针数组 
 
       var prepage = pages[pages.length - 2]; //上一页面指针 
-		console.log(prepage)
+		  console.log(prepage)
       wx.setStorageSync('a', arr);
 
       if (this.no_invoice == false) {

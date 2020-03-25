@@ -59,10 +59,7 @@
 		{
 			"path": "pages/onlinestore/onlinestore",
 			"style": {
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": false
-				}
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -70,6 +67,7 @@
 			"style": {
 				"navigationBarTitleText": "我的发表",
 				"app-plus": {
+					
 					// "titleNView": {
 					// 	"titleSize": "28rpx"
 					// }
@@ -570,7 +568,13 @@
 				"navigationBarTitleText": "开心书写"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/fenleiList/fenleiList",
+            "style": {
+            	"navigationStyle":"custom"
+            }
+        }
+    ],
 
 
 	"globalStyle": {
@@ -597,6 +601,20 @@
 			// 	"text": "在线教学",
 			// 	"iconPath": "/static/index/zuopinzhengji.png",
 			// 	"selectedIconPath": "/static/index/zuopinzhengji_check.png",
+			// 	"biaocount": 1
+			// },
+			{
+			  "pagePath": "pages/fenleiList/fenleiList",
+			  "text": "分类",
+			  "iconPath": "/static/index/mulv.png",
+			  "selectedIconPath": "/static/index/mulvYes.png",
+				"biaocount": 1
+			}, 
+			// {
+			//   "pagePath": "pages/onlinestore/shopcart/shopcart",
+			//   "text": "购物车",
+			//   "iconPath": "/static/index/shop.png",
+			//   "selectedIconPath": "/static/index/shopYes.png",
 			// 	"biaocount": 1
 			// },
 			{

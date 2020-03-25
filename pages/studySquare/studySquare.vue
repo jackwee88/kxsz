@@ -87,7 +87,7 @@
         <view class="studyitem" v-for="(item, index) in studylist" :key="index">
           <text class="is_top" v-if="item.is_top == 1">已置顶</text>
           <view class="studylistflex">
-            <view class="studyitem-top info clear">
+            <view class="studyitem-top info clear" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
               <view style="float:left">
                 <image :src="item.avatar" class="touxiangicon" />
               </view>
@@ -550,16 +550,18 @@ export default {
         console.log(release);
       }
     },
+		gotoGrowthDairy: function(e) {
+			let uid = e.currentTarget.dataset.uid;
+			let pid = e.currentTarget.dataset.pid;
+			let index = e.currentTarget.dataset.index;
+			const thumbs_times = e.currentTarget.dataset.thumbs_times;
+			getApp().globalData.preview = false;
+			uni.navigateTo({
+				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
+			});
+		},
     changeOil: function(e) {
       console.log(e.target.dataset.type);
-      // if (e.target.dataset.type == 2) {
-      // 		this.type=e.target.dataset.type
-      // 	uni.navigateTo({
-      // 		url: '/pages/brain/brain'
-      // 	});
-      // 	return;
-      // }
-
       const that = this;
       (this.type = e.target.dataset.type),
         (this.page = 1),

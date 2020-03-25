@@ -778,7 +778,7 @@ export default {
 		},
 
 		invoice() {
-			wx.navigateTo({
+			uni.navigateTo({
 				url: '/pages/invoice/invoice'
 			});
 		},

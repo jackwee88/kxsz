@@ -75,19 +75,15 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		//编辑与修改
     let that = this;
     let ar_id = parseInt(options.ar_id);
     this.goods_sku_id= options.goods_sku_id
-
+		console.log(this.goods_sku_id)
     if (options.list != undefined) {
       wx.setNavigationBarTitle({
         title: '编辑地址'
-      }); // let list = JSON.parse(options.list)
-      // this.setData({
-      //   name: list.person,
-      //   tel: list.mobile
-      // })
-
+      }); 
       if (ar_id == undefined) {
         this.type= ''
         return false;
@@ -96,13 +92,13 @@ export default {
         that.ar_id= ar_id,
         that.index= options.index
       }
-
-      util.ajax({
+			console.log('123+456')
+      ajax({
 		url:'address/onelist', 
 		data:{
 			ar_id: ar_id
 		}, 
-		success:res => {
+		success:(res) => {
 			that.name= res.data.person,
 			that.tel= res.data.mobile,
 			that.region= [res.data.province, res.data.city, res.data.area],

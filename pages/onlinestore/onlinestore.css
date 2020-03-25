@@ -107,8 +107,8 @@
 
 .image-view {
 	background-color: #EBEEF5;
-	width: 220rpx;
-	height: 200rpx
+	width: 262rpx;
+	height: 244rpx
 }
 
 .recommend {
@@ -156,7 +156,6 @@
 .image-ruler {
 	width: 330rpx;
 	height: 350rpx;
-	background-color: #EBEEF5;
 }
 .recommend-ruler{
 	display: flex;

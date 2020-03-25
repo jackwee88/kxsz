@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<view class = "status-bar"></view>
 		<view class="top_title">
 			<navigator open-type="navigateBack">
 				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image>
@@ -90,6 +91,11 @@ page,
 	min-height: 100%;
 	height: 100%;
 	// background-color: rgba(239, 239, 239, 0.3);
+}
+.status_bar {
+  height: var(--status-bar-height);
+  width: 100%;
+  background-color: #f8f8f8;
 }
 .uni-product-title{
 	max-height: 130upx;

@@ -1,5 +1,8 @@
 <template>
 	<view class="container">
+		<view class="status_bar">
+		  <!-- 这里是状态栏 -->
+		</view>
 		<view class="top_title">
 			<navigator open-type="navigateBack"><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image></navigator>
 			<view class="input-wrap flex">
@@ -30,11 +33,11 @@
 				<image src="../../static/onlineStore/xpss.png" style="width:182rpx;height: 78rpx;" mode="aspectFit"></image>
 				<view class="recommend">推荐</view>
 				<view class="marquee-bg" @tap.stop="toAnnouncement" :data-url="toAn">
-				      <image src="/static/img/index/1@2x.png" class="bg-text"></image>
-				      <view class="marquee_container" :style="'--marqueeWidth--:' + marqueeW + ';--allTs--:' + allT + ';'">
-				        <view class="marquee_text" :style="'font-size:' + size + 'px'">{{content_t}}</view>
-				      </view>
-				    </view>
+					<image src="/static/img/index/1@2x.png" class="bg-text"></image>
+					<view class="marquee_container" :style="'--marqueeWidth--:' + marqueeW + ';--allTs--:' + allT + ';'">
+						<view class="marquee_text" :style="'font-size:' + size + 'px'">{{ content_t }}</view>
+					</view>
+				</view>
 			</view>
 			<!-- 广告链接 -->
 			<view class="adver" :style="{ display: isClose == true ? 'none' : 'block' }">
@@ -53,9 +56,9 @@
 			</view>
 			<!-- 商品推荐 -->
 			<view class="recommend-banner">
-				<swiper previous-margin="96rpx" circular="true" next-margin="96rpx">
+				<swiper previous-margin="96rpx" circular="true" next-margin="360rpx">
 					<swiper-item class="flex" v-for="(item, index) in productList" :key="index">
-						<view class="banner-item">
+						<view class="banner-item" :data-id="item.p_id" @tap.stop="gotoDetails">
 							<image class="banner-icon" :src="item.image" />
 							<view class="goods-price">¥{{ item.price }}</view>
 						</view>
@@ -67,7 +70,7 @@
 			<!-- 商品推荐 -->
 			<view class="recommend-footer">
 				<view class="recommend-list" v-for="(item, index) in joinAssembleList" :key="index">
-					<view class="uni-product" @click="gotoDetails(item)">
+					<view class="uni-product" @tap.stop="gotoDetails" :data-id="item.goods.p_id">
 						<view class="image-view">
 							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
 							<image :src="item.goods.icon" style="width:220rpx ;height: 200rpx;" mode="aspectFit"></image>
@@ -90,14 +93,10 @@
 				<!-- 为您推荐 -->
 				<view class="recommend-image"><image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
 				<view class="recommend-ruler">
-					<view class="uni-ruler" v-for="(item, index) in productList" 
-					:key="index"
-					
-					>
+					<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
 						<view class="image-ruler">
 							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-							<image :src="item.image" style="width:330rpx ;height: 350rpx;" mode="aspectFit" :data-id="item.p_id"
-					@tap="gotoDetails"></image>
+							<image :src="item.image" style="width:330rpx ;height: 350rpx;" :data-id="item.p_id" @tap.stop="gotoDetails"></image>
 						</view>
 						<view class="goods-detail">
 							<view class="uni-product-title">{{ item.p_name }}</view>
@@ -278,32 +277,33 @@ export default {
 		},
 		getNewgoods() {
 			let that = this;
-			      var screenW = wx.getSystemInfoSync().windowWidth; //获取屏幕宽度
-						var width=200;
-			     ajax({url:'index/announcement',data: {},success:(res) => {
-			        // if (!res.data.title){
-			        //   return
-			        // }
-			        if (!res.data.data.title) {
-			          return false;
-			        }
-			
-			        var contentW = res.data.data.title.length * this.size; //获取文本宽度（大概宽度）
-			          this.marqueeW= -contentW + "px",
-			          this.content_t= res.data.data.title,
-			          this.toAn= res.data.data.url,
-			          this.announcement= res.data.data
-			        var allT = contentW / width * this.moveTimes;
-			        allT = allT < 8 ? 8 : allT; //不够一平-----最小滚动一平时间
-			
-			          // marqueeW: -contentW + "px",
-			          this.allT= allT + "s"
-			      }});
+			var screenW = wx.getSystemInfoSync().windowWidth; //获取屏幕宽度
+			var width = 200;
+			ajax({
+				url: 'index/announcement',
+				data: {},
+				success: res => {
+					// if (!res.data.title){
+					//   return
+					// }
+					if (!res.data.data.title) {
+						return false;
+					}
+
+					var contentW = res.data.data.title.length * this.size; //获取文本宽度（大概宽度）
+					(this.marqueeW = -contentW + 'px'), (this.content_t = res.data.data.title), (this.toAn = res.data.data.url), (this.announcement = res.data.data);
+					var allT = (contentW / width) * this.moveTimes;
+					allT = allT < 8 ? 8 : allT; //不够一平-----最小滚动一平时间
+
+					// marqueeW: -contentW + "px",
+					this.allT = allT + 's';
+				}
+			});
 		},
 		gotoDetails: function(e) {
 			let param = {
-				id: e.goods.p_id,
-				// p_id:e.currentTarget.dataset.p_id
+				// id: e.goods.p_id
+				p_id:e.currentTarget.dataset.p_id
 			};
 			console.log(param);
 			uni.navigateTo({
@@ -345,8 +345,14 @@ export default {
 
 <style style lang="less" scoped>
 @import './onlinestore.css';
+.status_bar {
+  height: var(--status-bar-height);
+  width: 100%;
+  background-color: #f8f8f8;
+}
 .flashgoods {
 	background-color: pink;
+	
 }
 .subtitle {
 	color: rgba(102, 102, 102, 1);
@@ -391,13 +397,14 @@ page,
 	.banner-icon {
 		width: 100%;
 		height: 244rpx;
-		border: 2rpx solid rgba(63, 174, 42, 1);
+		border: 2rpx solid #3FAE2A;
 	}
 	.banner-item {
 		padding-top: 4rpx;
 		width: 262rpx;
 		height: auto;
 		margin-right: 36rpx;
+		box-sizing: border-box;
 	}
 }
 /*時間僅剩*/
@@ -420,6 +427,7 @@ page,
 	flex-wrap: wrap;
 	width: 100%;
 	justify-content: space-between;
+	margin-bottom: 30rpx;
 	.uni-product-title {
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;

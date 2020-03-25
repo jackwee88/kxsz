@@ -1,31 +1,35 @@
 <template>
 	<view class="about_page">
-		<view class="p">厦门市则盖帘商务有限公司旗下的电商APP，是限时秒杀类电商APP</view>
-		<view class="p">醉不成欢惨将别，别时茫茫江浸月。</view>
-		<view class="p">忽闻水上琵琶声，主人忘归客不发。寻声暗问弹者谁，琵琶声停欲语迟。移船相近邀相见，添酒回灯重开宴。千呼万唤始出来，犹抱琵琶半遮面。</view>
-
-		<view class="title">品牌入驻</view>
-		<view class="p">
-			周先生
-		</view>
-		<view class="p">
-			0594-14567789
-		</view>
-		
-		<view class="title">市场合作</view>
-		<view class="p">
-			卢先生
-		</view>
-		<view class="p">
-			0594-14567789
+		<view v-html ="data">{{data}}</view>
+		<view class="Copyright">
+			 闽ICP备19004461号 版权由开心书写所有    2019-2029
 		</view>
 	</view>
 </template>
 
 <script>
+import { ajax } from '../../utils/public.js';
 export default {
+	onLoad() {
+		this.getIndexStystem();
+	},
 	data() {
-		return {};
+		return {
+			data:''
+		};
+	},
+	methods: {
+		getIndexStystem() {
+			ajax({
+				url: 'index/getSystem',
+				data: {
+					type:"16"
+				},
+				success: (res) => {
+					this.data = res.data.data
+				}
+			});
+		}
 	}
 };
 </script>
@@ -34,7 +38,14 @@ export default {
 .about_page {
 	padding: 70rpx 44rpx 0;
 }
-
+.Copyright{
+	color: #999999;
+	font-size: 28rpx;
+	width: 390rpx;
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 50rpx;
+}
 .title {
 	margin-top: 88rpx;
 	margin-bottom: 32rpx;

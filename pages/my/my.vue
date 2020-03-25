@@ -396,14 +396,14 @@ export default {
   },
 	// 监听页面显示
 	onShow() {
-		let pages = getCurrentPages();
-			let currPage = pages[pages.length-1];
-			if(currPage.data.selectedAddress==undefined || currPage.data.selectedAddress==''){
+		// let pages = getCurrentPages();
+		// 	let currPage = pages[pages.length-1];
+		// 	if(currPage.data.selectedAddress==undefined || currPage.data.selectedAddress==''){
 				
-			}else{
-				this.address = currPage.data.selectedAddress
-				this.address_id = currPage.data.selectedAddressID
-			}
+		// 	}else{
+		// 		this.address = currPage.data.selectedAddress
+		// 		this.address_id = currPage.data.selectedAddressID
+		// 	}
 	},
   mounted() {
   },

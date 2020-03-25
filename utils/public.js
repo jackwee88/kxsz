@@ -40,7 +40,7 @@ const ajax = (opt) => {
 					duration: 1000,
 					success: function(res) {}
 				})
-			} else if (res.data.status == 1) {
+			} else if (res.data.status == 1 || res.data.status == 2) {
 				opt.success(res);
 			} else if(res.data.status == -1){
 				//无token

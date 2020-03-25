@@ -2,7 +2,7 @@
 	<view>
 		<scroll-view scroll-y>
 			<view class="recommend-item">
-				<view class="item-top">
+				<view class="item-top" >
 					<image class="touxiangicon" :src="studyDetails.avatar" mode="widthFix" @tap="gotoUserInfo" :data-uid="studyDetails.uid"/>
 					<view class="info">
 						<text class="title">{{ studyDetails.nickname }}</text>
@@ -161,6 +161,16 @@ export default {
 	mounted() {},
 	methods: {
 		//评论详情
+		gotoGrowthDairy: function(e) {
+			let uid = e.currentTarget.dataset.uid;
+			let pid = e.currentTarget.dataset.pid;
+			let index = e.currentTarget.dataset.index;
+			const thumbs_times = e.currentTarget.dataset.thumbs_times;
+			getApp().globalData.preview = false;
+			uni.navigateTo({
+				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
+			});
+		},
 		commentDetail: function(e) {
 			let param = {
 				d_id: e.currentTarget.dataset.d_id,
