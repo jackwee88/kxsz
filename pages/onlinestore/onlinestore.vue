@@ -30,7 +30,7 @@
 				<image src="../../static/onlineStore/xpss.png" style="width:182rpx;height: 78rpx;" mode="aspectFit"></image>
 				<view class="recommend">推荐</view>
 				<view class="marquee-bg" @tap.stop="toAnnouncement" :data-url="toAn">
-				      <!-- <image src="/static/img/index/1@2x.png" class="bg-text"></image> -->
+				      <image src="/static/img/index/1@2x.png" class="bg-text"></image>
 				      <view class="marquee_container" :style="'--marqueeWidth--:' + marqueeW + ';--allTs--:' + allT + ';'">
 				        <view class="marquee_text" :style="'font-size:' + size + 'px'">{{content_t}}</view>
 				      </view>
@@ -90,10 +90,14 @@
 				<!-- 为您推荐 -->
 				<view class="recommend-image"><image src="../../static/onlineStore/wntj.png" style="width: 224rpx;height: 30rpx;"></image></view>
 				<view class="recommend-ruler">
-					<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
+					<view class="uni-ruler" v-for="(item, index) in productList" 
+					:key="index"
+					
+					>
 						<view class="image-ruler">
 							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-							<image :src="item.image" style="width:330rpx ;height: 350rpx;" mode="aspectFit"></image>
+							<image :src="item.image" style="width:330rpx ;height: 350rpx;" mode="aspectFit" :data-id="item.p_id"
+					@tap="gotoDetails"></image>
 						</view>
 						<view class="goods-detail">
 							<view class="uni-product-title">{{ item.p_name }}</view>
@@ -114,10 +118,12 @@ import { ajax } from '../../utils/public.js';
 export default {
 	data() {
 		return {
-			marqueeW:'',
-			content_t:'',
-			toAn:'',
-			announcement:'',
+			marqueeW: 0,
+			content_t: '',
+			allT: '0s',
+			toAn: '',
+			size: 14,
+			announcement: '',
 			gonggao: '',
 			input: '',
 			leftWords: '',
@@ -137,6 +143,8 @@ export default {
 			hour: 0,
 			minute: 0,
 			second: 0,
+			moveTimes: 8,
+			p_id: '',
 			bannerList: [
 				{
 					item: [
@@ -270,40 +278,32 @@ export default {
 		},
 		getNewgoods() {
 			let that = this;
-			var screenW = wx.getSystemInfoSync().windowWidth; //获取屏幕宽度
-
-			ajax({
-				url: 'index/announcement',
-				data: {},
-				success: res => {
-					// if (!res.data.title){
-					//   return
-					// }
-					console.log(res.data.data);
-					if (!res.data.title) {
-						return false;
-					}
-					var contentW = res.data.title.length * this.size; //获取文本宽度（大概宽度）
-
-					// that.setData({
-						this.marqueeW= -contentW + 'px',
-						this.content_t= res.data.data.title,
-						this.toAn= res.data.data.url,
-						this.announcement= res.data
-					// });
-					var allT = (contentW / screenW) * this.moveTimes;
-					allT = allT < 8 ? 8 : allT; //不够一平-----最小滚动一平时间
-
-					this.setData({
-						// marqueeW: -contentW + "px",
-						allT: allT + 's'
-					});
-				}
-			});
+			      var screenW = wx.getSystemInfoSync().windowWidth; //获取屏幕宽度
+						var width=200;
+			     ajax({url:'index/announcement',data: {},success:(res) => {
+			        // if (!res.data.title){
+			        //   return
+			        // }
+			        if (!res.data.data.title) {
+			          return false;
+			        }
+			
+			        var contentW = res.data.data.title.length * this.size; //获取文本宽度（大概宽度）
+			          this.marqueeW= -contentW + "px",
+			          this.content_t= res.data.data.title,
+			          this.toAn= res.data.data.url,
+			          this.announcement= res.data.data
+			        var allT = contentW / width * this.moveTimes;
+			        allT = allT < 8 ? 8 : allT; //不够一平-----最小滚动一平时间
+			
+			          // marqueeW: -contentW + "px",
+			          this.allT= allT + "s"
+			      }});
 		},
 		gotoDetails: function(e) {
 			let param = {
-				id: e.goods.p_id
+				id: e.goods.p_id,
+				// p_id:e.currentTarget.dataset.p_id
 			};
 			console.log(param);
 			uni.navigateTo({
@@ -320,6 +320,12 @@ export default {
 					const { count, list } = res.data.data;
 					this.productList = list;
 				}
+			});
+		},
+		toAnnouncement(e) {
+			var url = e.currentTarget.dataset.url;
+			uni.navigateTo({
+				url: url
 			});
 		},
 		searchGoods() {
@@ -410,7 +416,10 @@ page,
 /*爲你推薦*/
 .recommend-ruler {
 	display: flex;
-	// flex-direction: row;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	justify-content: space-between;
 	.uni-product-title {
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;

@@ -165,8 +165,9 @@
 	/* margin-bottom: 210rpx; */
 }
 .uni-ruler{
-	padding-bottom: 10rpx;
+	padding-bottom: 20rpx;
 	width: 350rpx;
+	/* margin-right: 5rpx; */
 	/* background-color: pink; */
 }
 .active .swiper-tab-line {
@@ -180,13 +181,38 @@
   display: flex;
   height: 47rpx;
   align-items: center;
-  width: 660rpx;
+  width: 400rpx;
   
  box-shadow:0px 1px 4px rgba(0,0,0,0.3),0 0 40px rgba(0,0,0,0.1);
 	/* webkit-box-shadow:0px 1px 4px rgba(0,0,0,0.3),0 0 40px rgba(0,0,0,0.1) inset;
 	moz-box-shadow:0px 1px 4px rgba(0,0,0,0.3),0 0 40px rgba(0,0,0,0.1) inset;
 	o-box-shadow:0px 1px 4px rgba(0,0,0,0.3),0 0 40px rgba(0,0,0,0.1) inset; */
 
+}
+.marquee_container {
+  background-color: #fff;
+  height: 40rpx;
+  line-height: 40rpx;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.marquee_text {
+  color: #080;
+  font-size: 28rpx;
+  display: inline-block;
+  white-space: nowrap;
+  animation: around var(--allTs--) infinite linear;
+}
+@keyframes around {
+  from {
+    margin-left: 100%;
+  }
+
+  to {
+    /* var接受传入的变量 */
+    margin-left: var(--marqueeWidth--);
+  }
 }
 /* .marquee-bg:after,.marquee-bg:before{
 	content:" ";

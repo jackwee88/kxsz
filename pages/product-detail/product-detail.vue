@@ -305,7 +305,11 @@ export default {
 	onLoad(event) {
 		this.banner = JSON.parse(decodeURIComponent(event.productDetail));
 		console.log(this.banner);
-		this.pid = this.banner.id;
+		if(this.banner.p_id){
+			this.pid = this.banner.id
+		}else{
+			this.pid = this.banner.id;
+		}
 		this.getData();
 		this.getEvaluateList();
 	},
