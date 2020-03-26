@@ -13,14 +13,14 @@
   <audio controls loop :src="audio" id="audioID" :action="action"></audio>
   <view>
 
-    <navigator url="poetry/poetry" style="position:relative" @tap="to">
-      <image src="https://kxsx.kaifadanao.cn/assets/pig.png" class="pig"></image>
+    <navigator url="poetry/poetry" style="position:relative" >
+      <image src="https://kxsx.kaifadanao.cn/assets/img/pig.png" class="pig"></image>
       <view class="btn btn-f" hover-class="wsui-btn__hover_btn" hover-stay-time="3000"></view>
     </navigator> 
-    <navigator url="./choice/choice" @tap="to">
+    <navigator url="./choice/choice" >
       <view class="btn btn-c" hover-class="wsui-btn__hover_btn1" hover-stay-time="3000"></view>
     </navigator>
-    <navigator url="./fillBlanks/fillBlanks" @tap="to">
+    <navigator url="./fillBlanks/fillBlanks" >
       <view class="btn btn-p" hover-class="wsui-btn__hover_btn2" hover-stay-time="3000"></view>
     </navigator>
 
@@ -159,7 +159,7 @@ export default {
     },
 
     to(e) {
-      util.ajax({
+      utils.ajax({
         url:'index/getProfile', 
         data:{}, 
         success:res => {

@@ -21,12 +21,13 @@ export default {
       count: 1,
       contents: "",
       page: 1,
-      page_size: 10,
+      page_size: 80,
       cl_id: "",
       dataList: []
     };
   },
   onLoad: function(options) {
+    this.cl_id = options.cl_id;
     this.getData();
   },
   methods: {

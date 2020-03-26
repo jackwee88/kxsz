@@ -201,7 +201,6 @@ export default {
   },
 
   onLoad(options) {
-    this.getAudio();
     this.playorpause();
     this.backGroundImgFun();
     this.succImgFun();
@@ -236,6 +235,7 @@ export default {
     this.endY= 0
     this.topicList();
     this.getLevel();
+    
   },
 
   onShareAppMessage: function () {
@@ -739,58 +739,27 @@ export default {
       this.getLevel();
     },
 
-    getAudio() {
-      let that = this;
-      wx.request({
-        url: 'index/getSystem',
-        method: 'post',
-        data: {
-          type: 8
-        },
-        header: {
-          'content-type': 'application/json',
-          'token': wx.getStorageSync("token")
-        },
-        success: function (res) {
-          wx.hideLoading();
-          that.setData({
-            audio: res.data.data
-          });
-        },
-        fail: function () {
-          wx.hideLoading();
-          wx.showModal({
-            title: '网络错误',
-            content: '网络出错，请刷新重试',
-            showCancel: false,
-            mask: true
-          });
-        }
-      });
+    pause() {
+      this.$audio.pause()
     },
-
-    playorpause: function (e) {
-      var that = this;
-      var actionPlay = {
-        method: "play"
-      }; //定义播放
-
-      var actionPause = {
-        method: "pause"
-      }; //定义暂停
-
-      if (that.action.method == "pause") {
+    playorpause: function () {
+      if (this.$audio.paused) {
         //若当前是暂停，则点击后播放
-        that.setData({
-          action: actionPlay,
-          is_p: true
-        });
+        this.is_p = true
+        this.$audio.play()
       } else {
         //若当前是播放，则点击后暂停
-        that.setData({
-          action: actionPause,
-          is_p: false
-        });
+        this.is_p = false;
+        this.$audio.pause()
+      }
+    },
+    initaudio() {
+      if (this.$audio.paused) {
+        //若当前是暂停，则点击后播放
+        this.is_p = false
+      } else {
+        //若当前是播放，则点击后暂停
+        this.is_p = true;
       }
     },
 

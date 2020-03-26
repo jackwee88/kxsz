@@ -82,7 +82,7 @@
       <image class="nextPage" @tap.stop="nextPage" src="/static/img/index/Arrowicon.png" v-if="pageId!=counts.length-1"></image>
       <view class="bg-img bg-level" @touchstart="touchstart" @touchend="touchend">
         <!-- <view class="level-item {{item.pass==false?'level-false':''}}" wx:for="{{levelList}}" bindtap='{{item.pass==true&&"toDetail"}}' data-id="{{item.id}}">{{item.id}}</view> -->
-        <view :class="'level-item ' + (item.pass==false?'level-false':'')" v-for="(item, index) in levelList" :key="index" @tap="toDetail" :data-id="item.id">{{item.id}}</view>
+        <view :class="'level-item ' + (item.pass==false?'level-false':'')" v-for="(item, index) in levelList" :key="index" @tap="toDetail(item.id)" :data-id="item.id">{{item.id}}</view>
         <view class="cancle" @tap="closeLevel"></view>
       </view>
       <view style="position:absolute;bottom:25%;position:absolute;bottom:24%;left:0;right:0;display:flex;justify-content:center;">
@@ -130,6 +130,7 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
+      innerAudioContext: null,
       is_last: false,
       is_order: false,
       sequence: false,
@@ -188,53 +189,47 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-  },
+    this.getAudio();
+    this.backGroundImgFun();
+    this.succImgFun();
+    this.failImgFun();
+    this.limitImgFun();
+    this.lastImgFun();
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {},
+    if (options.is_share) {
+      this.setData({
+        toIndex: 1
+      });
+    }
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  },
+    var _this = this;
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {},
+    wx.getSystemInfo({
+      success: function (res) {
+        let nav_top = res.statusBarHeight;
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
+        if (res.platform.toLowerCase() == 'android') {
+          nav_top += 4;
+        }
+      }
+    });
+    this.topicList();
+    this.getLevel();
   },
   methods: {
     backGroundImgFun: function () {
       var that = this;
+      // util.ajax({
+      //   url:'/api/index/getSystem', data:{
+      //     type: 9
+      //   }, success:res => {
+      //     that.backgroundImg= res.data
+      //   }
+      // });
       util.ajax({
-        url:'/api/index/getSystem', data:{
+        url:'index/getSystem', data:{
           type: 9
-        }, success:res => {
+        }, success: res => {
           that.backgroundImg= res.data
         }
       });
@@ -350,17 +345,6 @@ export default {
       this.answer= answer,
       this.currentId= index,
       this.ans= answer
-       //   var topic = this.data.topic
-      //   topic = topic.split('')
-      //  for(var i = 0;i<topic.length;i++){
-      //    if(topic[i]==' '){
-      //      topic[i] = answer
-      //    }
-      //  }
-      //   topic = topic.join(',');
-      //  this.setData({
-      //    topic:topic
-      //  })
 
       this.answerFun();
     },
@@ -418,12 +402,11 @@ export default {
       this.getLevel();
     },
 
-    toDetail(e) {
-      id= e.currentTarget.dataset.id,
-        isLevel= false,
-        ans= '',
-        currentId= '-1'
-      uni.setStorageSync('game-cid', e.currentTarget.dataset.id);
+    toDetail(id) {
+      this.isLevel= false,
+      this.ans= '',
+      this.currentId= '-1'
+      uni.setStorageSync('game-cid', id);
       this.topicList();
     },
 
@@ -451,35 +434,36 @@ export default {
 
     getAudio() {
       let that = this;
-      uni.request({
-        url: 'index/getSystem',
-        data: {
+      util.ajax({
+        url:'index/getSystem', data:{
           type: 8
-        },
-        success: function (res) {
-          uni.hideLoading();
-          this.audio=  res.data.data
+        }, success: res => {
+          console.log(res)
+          this.audio= res.data
+
+          this.initAudio(res.data)
         }
       });
     },
-
+    initAudio(url) {
+      this.innerAudioContext = uni.createInnerAudioContext();
+      this.innerAudioContext.autoplay = true;
+      this.innerAudioContext.loop = true;
+      this.innerAudioContext.src = url;
+      this.innerAudioContext.onCanplay(res => {
+        this.playorpause();
+      })
+    },
     playorpause: function (e) {
       var that = this;
-      var actionPlay = {
-        method: "play"
-      }; //定义播放
 
-      var actionPause = {
-        method: "pause"
-      }; //定义暂停
-
-      if (that.action.method == "pause") {
+      if (this.innerAudioContext.paused) {
         //若当前是暂停，则点击后播放
-        this.action=actionPlay,
+        this.innerAudioContext.play();
         this.is_p=true
       } else {
         //若当前是播放，则点击后暂停
-        this.action= actionPause,
+        this.innerAudioContext.pause();
         this.is_p= false
       }
     },

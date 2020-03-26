@@ -4,7 +4,6 @@
   <image src="/static/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:0rpx;" @tap.stop="goBack"></image>
   <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
   <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
-  <audio controls loop :src="audio" id="audioID" :action="action"></audio>
   <text v-if="id" class="where">第{{ids}}关</text>
   <text v-else class="where">第1关</text>
   <view class="topic">
@@ -123,6 +122,7 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
+      innerAudioContext: null,
       is_last: false,
       lastImg: '',
       sequence: false,
@@ -180,7 +180,6 @@ export default {
    */
   onLoad: function (options) {
     this.getAudio();
-    this.playorpause();
     this.backGroundImgFun();
     this.succImgFun();
     this.failImgFun();
@@ -247,6 +246,12 @@ export default {
       path: '/pages/brain/fillBlanks/fillBlanks?is_share=1',
       success: function (res) {}
     };
+  },
+  onHide() {
+    this.innerAudioContext.stop();
+  },
+  onBackPress() {
+    this.innerAudioContext.stop();
   },
   methods: {
     backGroundImgFun: function () {
@@ -495,56 +500,32 @@ export default {
 
     getAudio() {
       let that = this;
-      wx.request({
-        url: getApp().globalData.requestUrl + 'index/getSystem',
-        method: 'post',
-        data: {
-          type: 8
-        },
-        header: {
-          'content-type': 'application/json',
-          'token': wx.getStorageSync("token")
-        },
-        success: function (res) {
-          wx.hideLoading();
-          that.setData({
-            audio: res.data.data
-          });
-        },
-        fail: function () {
-          wx.hideLoading();
-          wx.showModal({
-            title: '网络错误',
-            content: '网络出错，请刷新重试',
-            showCancel: false,
-            mask: true
-          });
-        }
+      util.ajaxs('index/getSystem', {
+        type: 8
+      }, res => {
+        this.initAudio(res.data)
       });
     },
 
+    initAudio(url) {
+      this.innerAudioContext = uni.createInnerAudioContext();
+      this.innerAudioContext.autoplay = true;
+      this.innerAudioContext.loop = true;
+      this.innerAudioContext.onCanplay(res => {
+        this.playorpause();
+      })
+      this.innerAudioContext.src = url;
+    },
     playorpause: function (e) {
       var that = this;
-      var actionPlay = {
-        method: "play"
-      }; //定义播放
-
-      var actionPause = {
-        method: "pause"
-      }; //定义暂停
-
-      if (that.action.method == "pause") {
+      if (this.innerAudioContext.paused) {
         //若当前是暂停，则点击后播放
-        that.setData({
-          action: actionPlay,
-          is_p: true
-        });
+        this.innerAudioContext.play();
+        this.is_p=true
       } else {
         //若当前是播放，则点击后暂停
-        that.setData({
-          action: actionPause,
-          is_p: false
-        });
+        this.innerAudioContext.pause();
+        this.is_p= false
       }
     },
 
@@ -555,7 +536,6 @@ export default {
       }; //定义暂停
 
       that.setData({
-        action: actionPause,
         is_p: false
       });
 

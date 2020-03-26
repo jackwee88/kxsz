@@ -101,9 +101,9 @@ export default {
 						// console.log(this.goodsList)
 						uni.setStorageSync('loginToken',res.data.data)
 						console.log(res)
-						// uni.navigateTo({
-						// 	url: '../../index/index'
-						// })
+						uni.navigateTo({
+							url: '../../index/index'
+						})
 					},
 					error: function() {}
 				});

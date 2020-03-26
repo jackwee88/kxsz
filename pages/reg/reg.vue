@@ -17,7 +17,7 @@
 							<picker mode="selector" :range="school" class="" @change="bindSchoolChange">
 								<text class="itemtitle">学校</text>
 								<view class="picker">
-									<!-- {{school[uploadInfo.school]}} -->
+									{{school[uploadInfo.school]}}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
@@ -122,7 +122,7 @@
 		  onLoad: function (options) {
 		    let that = this;
 		    ajax({url:'index/getSchool', data:{}, success:(res) => {
-				const{list} = res.data.data
+        const{list} = res.data.data
 		        this.school=list
 		    }});
 		
@@ -141,6 +141,12 @@
 }
 		  },
   methods: {
+    setData(param) {
+      for (const key in param) {
+        const element = param[key];
+        this[key] = element;
+      }
+    },
     // 日期选择
     bindDateChange(e) {
       console.log(e);

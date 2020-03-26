@@ -450,9 +450,7 @@ export default {
 	},
 
 	onHide() {
-		this.setData({
-			preview: true
-		});
+		this.preview= true
 	},
 	//下拉刷新
 	// onLoad() {

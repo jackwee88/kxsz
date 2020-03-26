@@ -357,14 +357,13 @@
 		}, {
 			"path": "pages/brain/poetry/poetry",
 			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": ""
+				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/brain/choice/choice",
 			"style": {
 				"navigationStyle": "custom",
-				"navigationBarTextStyle": ""
+				"navigationBarTitleText": "趣味选择"
 			}
 		}, {
 			"path": "pages/jifen-shop/jifen-shop",
@@ -379,11 +378,13 @@
 		}, {
 			"path": "pages/brain/poetry/poetry",
 			"style": {
+				"navigationBarTitleText": "开心连词",
 				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/brain/fillBlanks/fillBlanks",
 			"style": {
+				"navigationBarTitleText": "智慧填空",
 				"navigationStyle": "custom"
 			}
 		}, {
@@ -575,6 +576,10 @@
             "style": {
             	"navigationStyle":"custom"
             }
+        }
+        ,{
+            "path" : "cityPartner/cityPartner",
+            "style" : {}
         }
     ],
 

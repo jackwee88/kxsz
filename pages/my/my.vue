@@ -1,6 +1,6 @@
 <template>
-		<!-- 用户信息 -->
-		<!-- <view class="top">
+  <!-- 用户信息 -->
+  <!-- <view class="top">
 			<view class="topleft topfloat">
 				<navigator url="">
 					<image class="userimg" src="../../static/my/daifukuan.png" mode="widthFix"></image>
@@ -38,9 +38,9 @@
 					</view>
 				</navigator>
 			</view>
-		</view> -->
-		<!-- 我的订单 -->
-		<!-- <view class="myorder">
+  </view>-->
+  <!-- 我的订单 -->
+  <!-- <view class="myorder">
 			<navigator url="/pages/onlinestore/myOrder/myOrder?currentId=0">
 				<view class="myordertitle">
 					<text class="myBill">我的订单</text>
@@ -76,9 +76,9 @@
 					</navigator>
 				</view>
 			</view>
-		</view> -->
-		<!-- 会员中心 -->
-		<!-- <view class="myorder">
+  </view>-->
+  <!-- 会员中心 -->
+  <!-- <view class="myorder">
 			<view class="myordertitle">
 				<text class="myBill">会员中心</text>
 			</view>
@@ -116,9 +116,9 @@
 					</navigator>
 				</view>
 			</view>
-		</view> -->
-		<!-- 我的收藏 -->
-		<!-- <view class="myorder">
+  </view>-->
+  <!-- 我的收藏 -->
+  <!-- <view class="myorder">
 			<view class="myordertitle">
 				<text class="myBill">我的收藏</text>
 			</view>
@@ -148,27 +148,27 @@
 					</navigator>
 				</view>
 			</view>
-		</view> -->
-		<!-- 个性签名 -->
-		<!-- <view class="personalized">
+  </view>-->
+  <!-- 个性签名 -->
+  <!-- <view class="personalized">
 			<navigator url="/pages/my/signature/signature">
 				<view class="myordertitle">
 					<text class="myBill">个性签名</text>
 					<image src="../../static/my/gerenzhongxin.png" mode="widthFix" class="gerenzhongxin"></image>
 				</view>
 			</navigator>
-		</view> -->
-		<!-- 历史投稿记录 -->
-		<!-- <view class="personalized">
+  </view>-->
+  <!-- 历史投稿记录 -->
+  <!-- <view class="personalized">
 			<navigator url="/pages/my/lstgjl/lstgjl">
 				<view class="myordertitle">
 					<text class="myBill">历史投稿记录</text>
 					<image src="../../static/my/lstgjl.png" mode="widthFix" class="lstgjl"></image>
 				</view>
 			</navigator>
-		</view> -->
-		<!-- 我的打卡记录 -->
-		<!-- <view class="recommend">
+  </view>-->
+  <!-- 我的打卡记录 -->
+  <!-- <view class="recommend">
 			<text>我的打卡记录</text>
 		</view>
 		<view class="studylist">
@@ -209,7 +209,7 @@
 					</view>
 				</view>
 			</view>
-		</view> -->
+  </view>-->
 
   <view class="page">
     <view class="status_bar">
@@ -217,7 +217,7 @@
     </view>
     <view class="top_title">
       <text>我的</text>
-			<view class="loginout" @tap="loginout">退出</view>
+      <view class="loginout" @tap="loginout">退出</view>
     </view>
     <view class="user_info p_r_l_32">
       <view class="left_side">
@@ -364,7 +364,7 @@
         <image src="../../static/index/qj.png" class="icon_more" />
       </navigator>
     </view>
-		<navigator url="../dakaLog/dakaLog"></navigator>
+    <navigator url="../dakaLog/dakaLog"></navigator>
   </view>
 </template>
 
@@ -384,49 +384,43 @@ export default {
     };
   },
 
-  onLoad() {
-	var token = uni.getStorageSync('loginToken')
-  	if(token===''){
-		uni.navigateTo({
-			url:'../login/login'
-		})
-	}
-
-  },
-	// 监听页面显示
-	onShow() {
-		// let pages = getCurrentPages();
-		// 	let currPage = pages[pages.length-1];
-		// 	if(currPage.data.selectedAddress==undefined || currPage.data.selectedAddress==''){
-				
-		// 	}else{
-		// 		this.address = currPage.data.selectedAddress
-		// 		this.address_id = currPage.data.selectedAddressID
-		// 	}
-	},
-  mounted() {
-		util.ajaxs("index/getProfile", {}, res => {
-        console.log(res);
-        this.info = res.data;
+  onLoad() {},
+  // 监听页面显示
+  onShow() {
+    var token = uni.getStorageSync("loginToken");
+    if (token === "") {
+      uni.navigateTo({
+        url: "../login/login"
       });
+    }
+    util.ajaxs("index/getProfile", {}, res => {
+      console.log(res);
+      this.info = res.data;
+    });
+  },
+  mounted() {
+    util.ajaxs("index/getProfile", {}, res => {
+      console.log(res);
+      this.info = res.data;
+    });
   },
   methods: {
     getData() {
       util.ajaxs("index/getProfile", {}, res => {
-          console.log(res);
-          this.info = res.data;
-        });
+        console.log(res);
+        this.info = res.data;
+      });
     },
-		dakalog(){
-			uni.navigateTo({
-				url:'../dakaLog/dakaLog'
-			})
-			},
-			loginout(){
-				console.log('123')
-				uni.removeStorageSync('loginToken')
-				this.getData()
-			}
+    dakalog() {
+      uni.navigateTo({
+        url: "../dakaLog/dakaLog"
+      });
+    },
+    loginout() {
+      console.log("123");
+      uni.removeStorageSync("loginToken");
+      this.getData();
+    }
   }
 };
 </script>
@@ -452,12 +446,12 @@ export default {
     color: rgba(50, 50, 50, 1);
     line-height: 50rpx;
   }
-	.loginout{
-		font-size: 36rpx;
-		font-weight: 500;
-		color: rgba(50, 50, 50, 1);
-		line-height: 50rpx;
-	}
+  .loginout {
+    font-size: 36rpx;
+    font-weight: 500;
+    color: rgba(50, 50, 50, 1);
+    line-height: 50rpx;
+  }
 }
 .block {
   height: 20rpx;
