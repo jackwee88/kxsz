@@ -57,7 +57,7 @@
 			<view class="work_item" v-for="(item, index) in studylist" :key="index">
 				<view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
 					<view class="left_side">
-						<view class="avatar"><image :src="item.avatar" class="avatar" @tap="gotoUserInfo" :data-uid="item.uid"></image></view>
+						<view class="avatar"><image :src="item.avatar" class="avatar" @tap.stop="gotoUserInfo" :data-uid="item.uid"></image></view>
 						<view class="date">
 							<view class="username">{{ item.nickname }}</view>
 							<view>{{ item.createtime }}</view>
@@ -108,7 +108,7 @@
 							:key="index2"
 							:src="items"
 							@tap.stop="previewImg"
-							:data-effect_pic="item.picture_arr"
+							:data-effect_arr="item.picture_ids"
 							:data-src="items"
 							mode="aspectFill"
 							:data-index="index"
@@ -131,9 +131,7 @@
 					<view><view></view></view>
 				</view>
 				<view class="actions">
-					<view
-						class="item"
-					>
+					<view class="item">
 						<image src="../../static/index/zf.png" mode=""></image>
 						<text></text>
 					</view>
@@ -417,20 +415,20 @@ export default {
 		// }); //获取活动图片
 		//let that = this
 
-		util.ajax('index/getActive', {}, res => {
-			let that = this;
+		// util.ajax('index/getActive', {}, res => {
+		// 	let that = this;
 
-			if (res.data == '') {
-				that.setData({
-					bugId: false
-				});
-			} else {
-				that.setData({
-					activeImg: res.data.image,
-					activeUrl: res.data.jump
-				});
-			}
-		});
+		// 	if (res.data == '') {
+		// 		that.setData({
+		// 			bugId: false
+		// 		});
+		// 	} else {
+		// 		that.setData({
+		// 			activeImg: res.data.image,
+		// 			activeUrl: res.data.jump
+		// 		});
+		// 	}
+		// });
 
 		this.getData();
 		this.getHotGoods();
@@ -624,7 +622,10 @@ export default {
 					// 	list[i].name = list[i].nickname + '的音频';
 					// }
 
-					(this.page = this.page + 1), (this.count = res.data.count > 1 ? res.data.count : 1), (this.studylist = list);
+					(this.page = this.page + 1), 
+					(this.count = res.data.count > 1 ? res.data.count : 1), 
+					(this.studylist = list);
+					console.log(typeof(this.studylist[2].picture_arr))
 				},
 				error: function() {}
 			});
@@ -666,19 +667,15 @@ export default {
 			});
 		},
 		//放大图片
-		previewImg: function(e) {
+		previewImg(e) {
 			getApp().globalData.preview = false;
-			var src = e.currentTarget.dataset.src;
-			console.log(src + 'src');
-			//获取data-src  循环单个图片链接
-			var imgList = [];
-			imgList.push = e.currentTarget.dataset.effect_pic;
-			imgList;
-			// for(i=0;i<imgList.length)
-			console.log(e.currentTarget.dataset.effect_pic);
+			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接
+
+			var imgList= []; //获取data-effect_pic   图片列表
 			//图片预览
-			console.log('imglist' + imgList);
-			wx.previewImage({
+			console.log(typeof(e.currentTarget.dataset.effect_arr) + 'imglist');
+				console.log(typeof( e.currentTarget.dataset.src)+'src'); 
+			uni.previewImage({
 				current: src,
 				// 当前显示图片的http链接
 				urls: imgList // 需要预览的图片http链接列表
@@ -878,23 +875,21 @@ export default {
 		//     that.getDataGoods()
 		//   }
 		// },
-		// gotoGrowthDairy: function(e) {
-		// 	let uid = e.currentTarget.dataset.uid;
-		// 	let pid = e.currentTarget.dataset.pid;
-		// 	let index = e.currentTarget.dataset.index;
-		// 	const thumbs_times = e.currentTarget.dataset.thumbs_times;
-		// 	getApp().globalData.preview = false;
-		// 	uni.navigateTo({
-		// 		url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
-		// 	});
-		// },
+		gotoGrowthDairy: function(e) {
+			let uid = e.currentTarget.dataset.uid;
+			let pid = e.currentTarget.dataset.pid;
+			let index = e.currentTarget.dataset.index;
+			const thumbs_times = e.currentTarget.dataset.thumbs_times;
+			getApp().globalData.preview = false;
+			uni.navigateTo({
+				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
+			});
+		},
 		show: function() {
 			// this.setData({ flag: false })
 		},
 		hide: function() {
-			this.setData({
-				ifNewUser: 1
-			});
+				this.ifNewUser= 1
 		},
 		goindex: function() {
 			var that = this;
@@ -1222,75 +1217,6 @@ export default {
 		border-radius: 8rpx;
 	}
 }
-.works_list {
-	.work_item {
-		padding-bottom: 50rpx;
-		margin: 30rpx 0 50rpx;
-		border-bottom: 1rpx solid #ddd;
-		&:last-of-type {
-			border: 0;
-		}
-		.user_info {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-
-			.left_side {
-				display: flex;
-				align-items: center;
-
-				.date {
-					font-size: 20rpx;
-					color: rgba(153, 153, 153, 1);
-					line-height: 1;
-				}
-			}
-
-			.view_count {
-				font-size: 20rpx;
-				color: rgba(153, 153, 153, 1);
-				line-height: 28rpx;
-			}
-		}
-
-		.msg {
-			margin-top: 20rpx;
-			margin-bottom: 10rpx;
-			font-size: 24rpx;
-			font-weight: 500;
-			color: rgba(50, 50, 50, 1);
-			line-height: 34rpx;
-		}
-
-		.gallery {
-			display: flex;
-			flex-direction: row;
-		}
-
-		.actions {
-			display: flex;
-			justify-content: space-around;
-			margin-top: 38rpx;
-
-			.item {
-				display: flex;
-				align-items: center;
-
-				image {
-					width: 30rpx;
-					height: 28rpx;
-					margin-right: 10rpx;
-				}
-
-				text {
-					font-size: 24rpx;
-					color: rgba(153, 153, 153, 1);
-					line-height: 34rpx;
-				}
-			}
-		}
-	}
-}
 
 .menu_wrap {
 	width: 100%;
@@ -1395,6 +1321,76 @@ export default {
 		-webkit-line-clamp: 1;
 	}
 }
+.works_list {
+	.work_item {
+		padding-bottom: 50rpx;
+		margin: 30rpx 0 50rpx;
+		border-bottom: 1rpx solid #ddd;
+		&:last-of-type {
+			border: 0;
+		}
+		.user_info {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			.left_side {
+				display: flex;
+				align-items: center;
+
+				.date {
+					font-size: 20rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 1;
+				}
+			}
+
+			.view_count {
+				font-size: 20rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 28rpx;
+			}
+		}
+
+		.msg {
+			margin-top: 20rpx;
+			margin-bottom: 10rpx;
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(50, 50, 50, 1);
+			line-height: 34rpx;
+		}
+
+		.gallery {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.actions {
+			display: flex;
+			justify-content: space-around;
+			margin-top: 38rpx;
+
+			.item {
+				display: flex;
+				align-items: center;
+
+				image {
+					width: 30rpx;
+					height: 28rpx;
+					margin-right: 10rpx;
+				}
+
+				text {
+					font-size: 24rpx;
+					color: rgba(153, 153, 153, 1);
+					line-height: 34rpx;
+				}
+			}
+		}
+	}
+}
+
 .works_list {
 	margin-top: 20rpx;
 	.work_item {

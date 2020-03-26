@@ -4,8 +4,8 @@
 			<image src="../../../static/jctbxzjx/search.png" class="icon"></image>
 			<input type="text" :value="search_txt" placeholder="搜索关注" />
 		</view>
-
-		<view class="list">
+		<view v-if="myFriendList.length == 0">暂无信息</view>
+		<view class="list" v-if="myFriendList.length>=1">
 			<view class="item" v-for="(item,index) in myFriendList" :key="index">
 				<view @click="gotoOtherInfo(item)">
 					<image :src="item.avatar" mode=""></image>
@@ -15,16 +15,16 @@
 						<view class="name">{{item.nickname}}</view>
 						<view class="account">开心号：{{item.number}}</view>
 					</view>
-					<view class="btn" v-if="item.type === 'only'">
-						<image src="../../../static/my/ygz.png" class="ygz" @tap.stop="follow(item)"></image>
+					<view class="btn" v-if="item.type === 'only'" @tap="follow" :data-id="item.id">
+						<image src="../../../static/my/ygz.png" class="ygz"  ></image>
 						已关注
 					</view>
-					<view class="btn" v-if="item.type === 'none'">
-						<image src="../../../static/my/ygz.png" class="ygz" @tap.stop="follow(item)"></image>
+					<view class="btn" v-if="item.type === 'none'" @tap="follow" :data-id="item.id">
+						<image src="../../../static/my/ygz.png" class="ygz"></image>
 						关注
 					</view>
-					<view class="btn" v-if="item.type === 'mutual'">
-						<image src="../../../static/my/ygz.png" class="ygz" @tap.stop="follow(item)"></image>
+					<view class="btn" v-if="item.type === 'mutual'" @tap="follow" :data-id="item.id">
+						<image src="../../../static/my/ygz.png" class="ygz"></image>
 						互相关注
 					</view>
 				</view>
@@ -70,15 +70,21 @@ export default {
 			});
 		},
 		follow(e){
+			let type = e.type
+			console.log(type+'type')
 			ajax({
 			     url: 'friend/follow',
 			     data: {
-						friend_uid :e.id
+						friend_uid :e.currentTarget.dataset.id
 			     },
 			     method: 'POST',
 			     success: (res) =>{
-						 console.log(res.data.msg)
-						 this.getData()
+						 if(res.data.status==1){
+							 console.log(res.data.msg)
+						 }else if(res.data.status==2){
+							 console.log(res.data.msg)
+						 }
+						 // this.getData()
 			     },
 			     error: function() {
 						 console.log("111")

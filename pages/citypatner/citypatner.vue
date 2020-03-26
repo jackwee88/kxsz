@@ -8,7 +8,7 @@
     <view class="img-box" style="padding-bottom:200rpx;">
       <image :src="item.image" class="img" v-for="(item, index) in imgList" 
 			:key="index" :data-id="item.id" 
-			@tap.stop="item.jump=='text'?toCompanyInfo:toOther"></image>
+			@tap="item.jump=='cate'?'toCompanyInfo':'toOther'"></image>
     </view>
   </view>
   <view class="btn" @tap.stop="showOver">申请加入</view>
@@ -27,7 +27,7 @@
       <input type="number" :value="phone" data-type="phone" @input="inputChange"></input>
     </view>
     <view>
-      <picker mode="region" @change="bindPickerChange" :value="region" >
+      <picker mode="region"  @click="toggleTab" :value="region" >
         <label class="text" style="float:left">地址:</label>
         <view class="picker clear" v-if="region != ''" style="float:right">
           <text style="font-size:24rpx;">{{region[0]}},{{region[1]}},{{region[2]}}</text>
@@ -59,6 +59,15 @@ import {ajax} from '../../utils/public.js'
 export default {
   data() {
     return {
+			uploadInfo: {
+				username: '', //昵称
+				mobile: '', //手机
+				email:'',
+				province: '', //省份
+				city: '', //城市
+				area: '', //地区
+				region: [],
+			},
       detail: {},
       imgList: [],
       region: [],
@@ -67,7 +76,7 @@ export default {
       phone: '',
       content: '',
       email: '',
-      type: ""
+      type: "",
     };
   },
 
@@ -77,10 +86,37 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.getData();
-    this.getDataCate();
-  },
+	onLoad: function (options) {
+			let that = this
+			ajax({url:'index/getProfile', data:{}, success:(res) => {
+				console.log(res.data.data)
+	let data = {
+		'nickname': res.data.nickname,
+		'avatar': res.data.avatar,
+		'gender': res.data.gender,
+		'birthday': res.data.birthday,
+		'mobile': res.data.mobile,
+		'grade': res.data.grade,
+		'province': res.data.province,
+		'city': res.data.cityname,
+		'area': res.data.areaname,
+		"region": res.data.region,
+		"type": ''
+	}
+	that.setData({
+		uploadInfo:data
+	});
+	
+	console.log(res.data.province);
+	
+	if (res.data.province == '' || res.data.province == null) {
+		that.uploadInfo.region= ['请选择省', '市', '区']
+	}
+			}});
+			
+	    this.getData();
+	    this.getDataCate();
+	  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -117,12 +153,13 @@ export default {
    */
   onShareAppMessage: function () {},
   methods: {
-    // getData() {// util.ajax('/api/evaluate/getEvaluateHeadLableList', { goods_id: that.data.p_id }, res => {
-    //   //   that.setData({
-    //   //     detail: res.data.detail
-    //   //   })
-    //   // })
-    // },
+    getevalue() {
+			// util.ajax('evaluate/getEvaluateHeadLableList', { goods_id: that.data.p_id }, res => {
+   //      that.setData({
+   //        detail: res.data.detail
+   //      })
+   //    })
+    },
 
     toCompanyInfo(e) {
 			console.log('company')
@@ -137,7 +174,9 @@ export default {
         url: '/pages/otherInfo/otherInfo?id=' + e.currentTarget.dataset.id
       });
     },
-
+   toggleTab() {
+			this.$refs.region.show();
+		},
     //地址选择
     bindRegionChange(e) {
 			console.log(e.detail.value)
@@ -245,13 +284,14 @@ export default {
 				url:'partner/partnerCate', data:{}, success:(res) => {
 				  console.log(res.data.data);
 				    this.imgList= res.data.data.list
+						console.log(res.data.data.list[0].jump)
 				}
 			});
     },
 
     getData() {
       var that = this;
-  ajax({url:'partner/getIntroduction',data:{}, success:(res) => {
+    ajax({url:'partner/getIntroduction',data:{}, success:(res) => {
         console.log(res);
           this.detail=res.data.data
       }});

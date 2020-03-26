@@ -225,7 +225,33 @@
 			<image src="../../static/my/close.png" class="close" @tap.stop="closeSku" />
 			<view class="weui-btn-area" v-if="sku_show"><button class="weui-btn" @tap="submit">确定</button></view>
 		</scroll-view>
-		<assemble></assemble>
+		<view class="overlayer" v-if="visible">
+			<view class="bg"></view>
+			<view class="content_wrap">
+				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
+				<view class="list">
+					<view class="item">
+						<image src="../../static/reg/log.png" class="avatar"></image>
+		
+						<view class="name">1</view>
+		
+						<view class="num_n_time">
+							<view class="num">
+								差
+								<text>1</text>
+								人拼成
+							</view>
+		
+							<view class="time">剩余23:59:59</view>
+						</view>
+						<view class="cantuan">
+							参团
+							<image src="../../static/index/qj.png" mode=""></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -237,6 +263,7 @@ export default {
 	data() {
 		return {
 			evaluateList: {
+				
 				total: 56,
 				count: 6,
 				list: [
@@ -247,6 +274,7 @@ export default {
 					}
 				]
 			},
+			visible:false,
 			//获取评论列表
 			// detail: {
 			// 	coupon_price: 0.0,
@@ -389,6 +417,9 @@ export default {
 						const { spec_attr, spec_list } = res.data.data.specData;
 						this.sku_arr = spec_attr;
 					}
+					if(res.data.data.sale_status==2){
+						this.getflashtime()
+					}
 					this.goods_spec_id = res.data.data.spec[0].goods_spec_id;
 					this.valueStrNum = res.data.data.spec[0].spec_sku_id;
 					if (!res.data.data.assemble == '') {
@@ -412,6 +443,51 @@ export default {
 				},
 				error: function() {}
 			});
+		},
+		getflashtime() {
+			ajax({
+				url: 'assemble/flashSale',
+				data: {},
+				success: res => {
+					const { count, list } = res.data.data;
+					this.flashSale = list.goods;
+					console.log(this.flashSale.p_id);
+					// 获取当前时间戳
+					let timeNoew = new Date().getTime() / 1000;
+					if (timeNoew > list.endtime) {
+						console.log('秒杀结束');
+					} else if (timeNoew < list.createTime) {
+						console.log('秒杀未开始');
+					} else {
+						var lastTime = list.endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						// 然后将秒转化成时间  (定时器每秒更新一次)
+						this.timeChange(lastTime);
+					}
+				}
+			});
+		},
+		timeChange(value) {
+			var lastTime = parseInt(value);
+			if (lastTime > 60) {
+				var middle = parseInt(lastTime / 60);
+				lastTime = parseInt(lastTime % 60);
+				if (middle > 60) {
+					var hour = parseInt(middle / 60);
+					middle = parseInt(middle % 60);
+					this.hour = hour; //小时
+				}
+			}
+			var result = parseInt(lastTime);
+			this.second = result; //秒
+			if (middle > 0) {
+				var minute = parseInt(middle);
+				this.minute = minute;
+			}
+			if (hour > 0) {
+				var hour = parseInt(hour);
+				this.hour = hour;
+			}
+			return result;
 		},
 		getEvaluateList() {
 			let that = this;

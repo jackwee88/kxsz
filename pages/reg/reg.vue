@@ -11,7 +11,7 @@
 					<view class="form">
 						<view class="form-item">
 							<text class="itemtitle">姓名</text>
-							<input maxlength="7" type="text" value="" class="input picker" placeholder="请填写姓名"/>
+							<input maxlength="7" type="text" value="" class="input picker" placeholder="请填写姓名" v-model="uploadInfo.username"/>
 						</view>
 						<view class="form-item">
 							<picker mode="selector" :range="school" class="" @change="bindSchoolChange">
@@ -23,19 +23,19 @@
 							</picker>
 						</view>
 						<view class="form-item">
-							<picker mode="selector" :range="genClass" class="" @change="bindClassChange">
+							<picker mode="selector" :range="array" class="" @change="bindClassChange">
 								<text class="itemtitle">年级</text>
 								<view class="picker">
-									{{genClass[uploadInfo.class]}}
+									{{array[uploadInfo.class]}}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
 						</view>
 						<view class="form-item">
-							<picker mode="selector" :range="grade" class="" @change="bindGradeChange">
+							<picker mode="selector" :range="arrayClass" class="" @change="bindGradeChange">
 								<text class="itemtitle">班级</text>
 								<view class="picker">
-									{{grade[uploadInfo.classClass]}}
+									{{arrayClass[uploadInfo.classClass]}}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
@@ -55,16 +55,18 @@
 							<w-picker mode="region"  @confirm="bindCityChange" ref="region"></w-picker>
 						</view>
 						<view class="form-item">
-							<text class="itemtitle">详细住址</text>
+							<text class="itemtitle" v-model="uploadInfo.addressdetail">详细住址</text>
 							<input  type="text" value="" class="input picker"/>
 						</view>
 						<view class="form-item">
 							<text class="itemtitle">联系方式</text>
-							<input maxlength="11" type="number" value="" class="input picker" />
+							<input maxlength="11" type="number" class="input picker" v-model="uploadInfo.mobile"/>
 						</view>
-						<view class="form-item">
-							<text class="itemtitle">验证码</text>
-							<text class="get_code" @click="getcode">发送验证码</text>
+						<view class="code-item">
+							<text class="codetxt">验证码</text>
+							<input type="text" value="" class="code" maxlength="6" />
+							<text v-if="second == ''" class="get_code" @click="getcode">获取验证码</text>
+							<text v-else class="get_code">{{ second }}s</text>
 						</view>
 						<view class="lijishengji">
 							<button @click="save" class="sengjibtn">确定</button>

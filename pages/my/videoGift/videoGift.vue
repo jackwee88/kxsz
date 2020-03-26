@@ -1,57 +1,81 @@
 <template>
-  <view class="wrap">
-    <navigator
-      class="item"
-      v-for="(item,index) in dataList"
-      :key="index"
-      :url="'../activeCode/activeCode?cl_id=' + item.cl_id"
-    >{{item.title}}</navigator>
-  </view>
+<!--pages/my/splb/splb.wxml-->
+
+<view class="wrap">
+  <navigator class="item" v-for="(item, index) in dataList" :key="index" :url="'/pages/my/jhm/jhm?cl_id=' + item.cl_id">{{item.title}}</navigator>
+</view>
 </template>
 
 <script>
+// pages/my/splb/splb.js
+const app = getApp().globalData;
+var util = require("../../../utils/util.js");
+import {ajax} from '../../../utils/public.js'
 export default {
   data() {
     return {
-      dataList: [
-        {
-          cl_id: 10,
-          content:
-            "1.同步最新部编版语文课程↵2.线上教学视频实现把老师请回家↵3.小学生的随身书法老师↵4. 视频动画生动有趣，内容丰富↵5.孩子减负，家长轻松",
-          createtime: 1560233365,
-          deletetime: null,
-          icon:
-            "https://pic.kaifadanao.cn/20190826/ab9de66bf5b00697d378055e52e01127.jpg",
-          is_effective: 1,
-          is_pay: null,
-          md_id: 7,
-          money: "0.00",
-          sort: 0,
-          title: "一年级上册",
-          updatetime: 1567740541
-        },
-        {
-          cl_id: 10,
-          content:
-            "1.同步最新部编版语文课程↵2.线上教学视频实现把老师请回家↵3.小学生的随身书法老师↵4. 视频动画生动有趣，内容丰富↵5.孩子减负，家长轻松",
-          createtime: 1560233365,
-          deletetime: null,
-          icon:
-            "https://pic.kaifadanao.cn/20190826/ab9de66bf5b00697d378055e52e01127.jpg",
-          is_effective: 1,
-          is_pay: null,
-          md_id: 7,
-          money: "0.00",
-          sort: 0,
-          title: "一年级上册",
-          updatetime: 1567740541
-        }
-      ]
+      dataList: []
     };
+  },
+
+  components: {},
+  props: {},
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    var that = this;
+    this.getData();
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {},
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {},
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {},
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {},
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {},
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {},
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {},
+  methods: {
+    getData() {
+      var that = this;
+      ajax({url:'videopacks/videopacksList', data:{
+        md_id: 7
+      },success:(res) => {
+          this.dataList= res.data.data.catalog
+      }});
+    }
+
   }
 };
 </script>
-
 <style>
 @import "./videoGift.css";
 </style>

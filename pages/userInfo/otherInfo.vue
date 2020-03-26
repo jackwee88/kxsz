@@ -6,8 +6,8 @@
 			<view class="info_text">
 				<view class="top">
 					<view class="name">{{userinfo.nickname}}</view>
-					<view class="btn had_btn" v-if="userinfo.type==='none'">
-						<image src="../../static/my/add.png" class="addhao" @click="follow"></image>
+					<view class="btn had_btn" v-if="userinfo.type==='none'" @click="follow">
+						<image src="../../static/my/add.png" class="addhao" ></image>
 						关注
 					</view>
 
@@ -29,13 +29,18 @@
 		<view class="section_title"><text>最近打卡</text></view>
 
 		<view class="works_list">
-			<navigator class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
-				<view class="user_info">
-					<view class="left_side"><view class="date">{{item.date}}</view></view>
-		
-					<text class="view_count">浏览{{item.logNum}}次</text>
+			<view class="work_item" v-for="(item,index) in loglist" :key="index" @click="gotoPublished()">
+				<view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
+					<view class="left_side">
+						<!-- <view class="avatar"><image :src="item.avatar" class="avatar" @tap="gotoUserInfo" :data-uid="item.uid"></image></view> -->
+						<view class="date">
+							<view class="username">{{ item.nickname }}</view>
+							<view>{{ item.createtime }}</view>
+						</view>
+					</view>
+					<text class="view_count">浏览{{ item.browse_times }}次</text>
 				</view>
-				<view class="msg">{{item.msg}}</view>
+				<view class="msg">{{item.content}}</view>
 		
 				<view class="gallery" @tap.stop="gotoPublished" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count">
 					<view class="case-li case-view-item">
@@ -62,11 +67,11 @@
 						</view>
 				
 						<image
-							v-for="(items, index2) in item.picture_arr"
+							v-for="(items, index2) in item.picture_idss"
 							:key="index2"
 							:src="items"
 							@tap.stop="previewImg"
-							:data-effect_pic="item.picture_arr"
+							:data-effect_pic="item.picture_idss"
 							:data-src="items"
 							mode="aspectFill"
 							:data-index="index"
@@ -89,20 +94,32 @@
 					<view><view></view></view>
 				</view>
 				<view class="actions">
-					<view class="item">
+					<view
+						class="item"
+					>
 						<image src="../../static/index/zf.png" mode=""></image>
-						<text>{{item.shareNum}}</text>
+						<text></text>
 					</view>
-					<view class="item">
+					<view
+						class="item"
+						@tap.stop="gotoPublished"
+						:data-dy_id="item.dy_id"
+						:data-browse_times="item.browse_times"
+						:data-p_id="item.dy_id"
+						:data-index="index"
+						:data-comment_count="item.comment_count"
+						:data-thumbs_times="item.thumbs_times"
+					>
 						<image src="../../static/index/pl.png" mode=""></image>
-						<text>{{item.commentNum}}</text>
+						<text>{{ item.comment_count }}</text>
 					</view>
-					<view class="item">
-						<image src="../../static/index/sc.png" mode=""></image>
-						<text>{{item.likeNum}}</text>
+					<view class="item" :data-thumbs_times="item.thumbs_times">
+						<image class="share l" v-if="item.is_give == true" :data-index="index" :data-dy_id="item.dy_id" @tap.stop="praise" src="../../static/index/collect.png"></image>
+						<image class="share l" v-if="item.is_give == false" :data-index="index" :data-dy_id="item.dy_id" @tap.stop="praise" src="../../static/index/uncollect.png"></image>
+						<text>{{ item.thumbs_times }}</text>
 					</view>
 				</view>
-			</navigator>
+			</view>
 		</view>
 
 		<view class="talk_btn">聊天</view>
@@ -113,52 +130,39 @@
 	import {
 	  ajax
 	 } from '../../utils/public.js'
+	 var util = require("../../utils/util.js");
 export default {
 	data() {
 		return {
-			logList:[
-				{
-					date:"2020-02-02 08:32:23",
-					logNum:'99',
-					msg:'打卡',
-					imageList:[
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-						{
-							imageUrl:'../../static/index/dnkf.png'
-						},
-					],
-					likeNum:'345',
-					shareNum:'345',
-					commentNum:'345',
-				}
-			],
 		 userinfo:'',
 		 id:'',
+		 loglist:[]
 		};
 	},
-	methods:({
-		//传参 打卡数据id
-		gotoPublished:function(e){
-			uni.navigateTo({
-				url:'../myPublished/myPublished'
-			})
-		}
-	}),
 	onLoad(event) {
 		this.userinfo = JSON.parse(decodeURIComponent(event.infoDetail));
 		this.id = this.userinfo.uid;
 		console.log(this.id)
 		this.getData()
+		this.getDakalog()
 	},
 	mounted(){
 
 	},
 	methods:{
+		gotoPublished: function(e) {
+			let param = {
+				dy_id: e.currentTarget.dataset.p_id,
+				index: e.currentTarget.dataset.index,
+				browse_times: e.currentTarget.dataset.browse_times,
+				comment_count: e.currentTarget.dataset.comment_count,
+				thumbs_times: e.currentTarget.dataset.thumbs_times,
+				type: 3
+			};
+			uni.navigateTo({
+				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
 		follow(){
 			ajax({
 			     url: 'friend/follow',
@@ -176,33 +180,6 @@ export default {
 					 }
 			    })
 		},
-		praise(e) {
-			var that = this;
-		
-			const index = e.currentTarget.dataset.index;
-			const dy_id = e.currentTarget.dataset.dy_id;
-			console.log('123' + dy_id);
-			ajax({
-				url: 'study/praiseStudy',
-				data: {
-					dy_id: dy_id
-				},
-				success: res => {
-					const daily = that.studylist;
-					const is_give = 'daily[' + index + '].is_give';
-					const thumbs_times = 'daily[' + index + '].thumbs_times';
-					if (res.data.data.is_ok == true) {
-						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times + 1);
-						uni.showToast({
-							title: '点赞成功',
-							icon: 'none'
-						});
-					} else {
-						(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
-					}
-				}
-			});
-		},
 		getData(){
 			ajax({
 			     url: 'friend/userDetail',
@@ -218,7 +195,61 @@ export default {
 			     },
 			     error: function() {}
 			    })
+		},
+		praise(e) {
+		  var that = this;
+		  var index = e.currentTarget.dataset.index;
+		  const dy_id = e.currentTarget.dataset.dy_id;
+		  var index_ = that.index_;
+			console.log(index+'index')
+		  util.ajaxs(
+		    "study/praiseStudy",
+		    {
+		      dy_id: dy_id
+		    },
+		    res => {
+		      var loglist = that.loglist;
+		      const is_give = "loglist[" + index + "].is_give";
+		      const thumbs_times = "loglist[" + index + "].thumbs_times";
+		
+		      if (res.data.is_ok==true) {
+						console.log('点赞成功')
+		          this.loglist[index].is_give= !loglist[index].is_give,
+		          this.loglist[index].thumbs_times=loglist[index].thumbs_times + 1,
+		          this.is_ok= "y"
+		      } else {
+						console.log('取消点赞')
+		          this.loglist[index].is_give= !loglist[index].is_give,
+		          this.loglist[index].thumbs_times=loglist[index].thumbs_times - 1,
+		          this.is_ok= "n"
+		      }
+		    }
+		  );
+			},
+		
+		getDakalog(){
+			let that = this;
+			  this.loglist= []
+			let parma = {
+			  uid: this.id
+			};
+			ajax({url:"/index/UserCenter",data: parma, success:(res) => {
+			  let list = res.data.data.list;
+			  var action = {
+			    method: "pause"
+			  };
+			
+			  for (var i = 0; i < list.length; i++) {
+			    list[i].action = action;
+			    list[i].poster = list[i].picture_idss[0];
+			    list[i].name = list[i].nickname + "的音频";
+			  }
+			
+			    this.loglist= list
+				console.log()
+			}});
 		}
+		
 	}
 
 };
@@ -299,7 +330,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 44rpx;
+	padding: 0 28rpx;
 	margin: 44rpx 0 22rpx;
 
 	text {
@@ -311,7 +342,7 @@ export default {
 }
 
 .works_list {
-	padding: 0 44rpx;
+	padding: 0 28rpx;
 	.work_item {
 		padding-bottom: 50rpx;
 		margin: 30rpx 0 50rpx;
@@ -355,7 +386,7 @@ export default {
 
 		.gallery {
 			display: flex;
-
+			flex-direction: row;
 			image {
 				width: 220rpx;
 				height: 220rpx;

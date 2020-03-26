@@ -1,46 +1,195 @@
+
+
 .card{
-	width:90%;
-	height:280rpx;
-	border-radius:10rpx;
-	background-color:#52ae52;
-	margin:80rpx auto;
-	box-shadow:0rpx 0rpx 5rpx #000000;
+  width: 90%;
+  height: 280rpx;
+  border-radius: 10rpx;
+  background-color: #52ae52;
+  margin: 80rpx auto;
+  box-shadow: 0rpx 0rpx 5rpx #000000
 }
-.card_title{
-	color:white;
-	font-size:36rpx;
-	font-weight:bold;
-	display:block;
-	padding-top:50rpx;
-	margin-left:30rpx;
+.card .card_title{
+  color: white;
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+  padding-top: 50rpx;
+  margin-left: 30rpx
 }
 .jifen{
-	font-weight:bold;
-	font-size:66rpx;
-	color:white;
-	margin-left:30rpx;
+  font-weight: bold;
+  font-size: 66rpx;
+  color: white;
+  margin-left: 30rpx
 }
 .line{
-	height:1rpx;
-	background-color:#e6e6e6;
-	width:90%;
-	margin:60rpx auto;
+  height: 1rpx;
+  background-color: #e6e6e6;
+  width: 90%;
+  margin: 60rpx auto;
+ 
 }
 .txt{
-	color:#999999;
-	font-size:30rpx;
-	width:200rpx;
-	height:40rpx;
-	background-color:white;
-	position:relative;
-	top:-20rpx;
-	display:block;
-	margin:0 auto;
-	text-align:center;
+  color: #999999;
+  font-size: 30rpx;
+  width: 200rpx;
+  height: 40rpx;
+  background-color: white;
+  position: relative;
+  top: -20rpx;
+  display: block;
+  margin: 0 auto;
+  text-align: center 
+}
+.qd-icon{
+  width: 38rpx;
+  height: 38rpx;
+}
+.dh-icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+.dh-icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+.dh-icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+.xf-icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.qiandao{
+  width: 100%;
+  height: 150rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+  margin: 0 auto;
+  position: relative;
+}
+.timer {
+  position: absolute;
+  bottom: 0;
+}
+.timer .date{
+  color: #b3b3b3;
+  font-size: 24rpx;
+  padding-left: 55rpx;
+
+}
+.duihuan{
+  width: 100%;
+  height: 150rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+  margin: 0 auto
 }
 .mokuai{
-	padding-left:30rpx;
-	padding-right:30rpx;
-	position:relative;
-	top:-50rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  position: relative;
+  /* top: -50rpx; */
+}
+.font{
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 150rpx;
+  padding-left: 20rpx;
+}
+.add {
+  position: absolute;
+  right: 5rpx;
+  top: 50rpx;
+  color: #008800;
+  font-size: 44rpx;
+}
+
+
+page{
+  background-color: #f5f5f5;
+}
+.wrap{
+  display: flex;
+  flex-direction: column;
+
+}
+.top-bg{
+ background-image: url("https://pic.kaifadanao.cn/kxsx/20191008141054.png");
+  width:100%;
+  height:200rpx;
+  display:flex;
+  align-items: center;
+  color:white;
+  padding-left: 50rpx;
+  font-size: 50rpx;
+  letter-spacing:4rpx;
+ position: relative;
+ background-size: 100% 100%; 
+}
+
+.jf{
+ position: relative;
+ top:-20rpx;
+}
+
+
+.bottom-box{
+  width:100%;
+flex:1;
+background-color: #f5f5f5;
+border-top-left-radius: 40rpx;
+border-top-right-radius: 40rpx;
+height:95%;
+position: absolute;
+top:150rpx;
+left:0;
+padding-top:50rpx;
+}
+
+.jfgz{
+  position: absolute;
+  right:0;
+  top:46rpx;
+  width:180rpx;
+  height: 60rpx;
+  background-color: rgba(0, 0, 0, 0.4);
+  color:white;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 60rpx;
+  border-top-left-radius: 50rpx;
+border-bottom-left-radius: 50rpx;
+}
+
+.top-box{
+  display: flex;
+  box-shadow: 2rpx 2rpx 4rpx 4rpx rgba(0, 0, 0, 0.1);
+  justify-content: space-around;
+  height:240rpx;
+  background-color: white;
+align-items: center;
+width:90%;
+margin:0 auto;
+border-radius: 20rpx;
+text-align: center;
+font-size: 30rpx;
+
+}
+.top-box .hr{
+  width:3rpx;
+  height:60%;
+  background-color: #D8D8D8;
+  
+}
+
+
+.top-box image{
+  width: 100rpx;
+  height:70rpx;
+}
+
+.text{
+  margin-top: 20rpx;
+  
 }

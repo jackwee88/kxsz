@@ -217,6 +217,7 @@
     </view>
     <view class="top_title">
       <text>我的</text>
+			<view class="loginout" @tap="loginout">退出</view>
     </view>
     <view class="user_info p_r_l_32">
       <view class="left_side">
@@ -389,10 +390,8 @@ export default {
 		uni.navigateTo({
 			url:'../login/login'
 		})
-	}else{
-		this.getData();
 	}
-	
+
   },
 	// 监听页面显示
 	onShow() {
@@ -406,18 +405,27 @@ export default {
 		// 	}
 	},
   mounted() {
+		util.ajaxs("index/getProfile", {}, res => {
+        console.log(res);
+        this.info = res.data;
+      });
   },
   methods: {
     getData() {
       util.ajaxs("index/getProfile", {}, res => {
-        console.log(res);
-        this.info = res.data;
-      });
+          console.log(res);
+          this.info = res.data;
+        });
     },
 		dakalog(){
 			uni.navigateTo({
 				url:'../dakaLog/dakaLog'
 			})
+			},
+			loginout(){
+				console.log('123')
+				uni.removeStorageSync('loginToken')
+				this.getData()
 			}
   }
 };
@@ -444,6 +452,12 @@ export default {
     color: rgba(50, 50, 50, 1);
     line-height: 50rpx;
   }
+	.loginout{
+		font-size: 36rpx;
+		font-weight: 500;
+		color: rgba(50, 50, 50, 1);
+		line-height: 50rpx;
+	}
 }
 .block {
   height: 20rpx;

@@ -87,17 +87,15 @@
         <view class="studyitem" v-for="(item, index) in studylist" :key="index">
           <text class="is_top" v-if="item.is_top == 1">已置顶</text>
           <view class="studylistflex">
-            <view class="studyitem-top info clear" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
-              <view style="float:left">
-                <image :src="item.avatar" class="touxiangicon" />
-              </view>
-              <view style="float:left">
-                <text class="infoname">{{ item.nickname }}</text>
-                <view class="time">
-                  <text class="infotime">{{ item.createtime }}</text>
-                  <text class="browse">浏览{{ item.browse_times }}次</text>
-                </view>
-              </view>
+            <view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
+            	<view class="left_side">
+            		<view class="avatar"><image :src="item.avatar" class="avatar" @tap.stop="gotoUserInfo" :data-uid="item.uid"></image></view>
+            		<view class="date">
+            			<view class="username">{{ item.nickname }}</view>
+            			<view>{{ item.createtime }}</view>
+            		</view>
+            	</view>
+            	<text class="view_count">浏览{{ item.browse_times }}次</text>
             </view>
             <view class="studyitem-middle">
               <text
@@ -460,7 +458,15 @@ export default {
           encodeURIComponent(JSON.stringify(param))
       });
     },
-
+gotoUserInfo: function(e) {
+			console.log(e.currentTarget.dataset.uid + '123');
+			let param = {
+				uid: e.currentTarget.dataset.uid
+			};
+			uni.navigateTo({
+				url: '../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
     getData() {
       const studylist = this.studylist;
       if (this.count < this.page) {
@@ -550,6 +556,7 @@ export default {
         console.log(release);
       }
     },
+		
 		gotoGrowthDairy: function(e) {
 			let uid = e.currentTarget.dataset.uid;
 			let pid = e.currentTarget.dataset.pid;
@@ -701,6 +708,46 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="less" scoped>
 @import "./studySquare.css";
+		.user_info {
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
+			height: 80rpx;
+			margin-bottom: 10rpx;
+
+			.left_side {
+				display: flex;
+				align-items: center;
+
+				.avatar {
+					width: 60rpx;
+					height: 60rpx;
+					margin-right: 20rpx;
+					border-radius: 50%;
+				}
+
+					.name {
+						margin-bottom: 10rpx;
+						font-size: 28rpx;
+						font-weight: 500;
+						color: rgba(50, 50, 50, 1);
+						line-height: 1;
+						
+					}
+
+					.date {
+						font-size: 20rpx;
+						color: rgba(153, 153, 153, 1);
+						line-height: 1;
+					}
+			}
+
+			.view_count {
+				font-size: 20rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 28rpx;
+			}
+		}
 </style>

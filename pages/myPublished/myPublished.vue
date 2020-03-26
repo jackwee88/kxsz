@@ -124,7 +124,7 @@ export default {
 				// var that = this;
 				// var index = index;
 				if (type == 1) {
-					//type:1首页，2学习广场,3打卡
+					//type:1首页，2学习广场,3打卡,
 					var up = 'studylist[' + index + '].browse_times';
 					console.log(up+'123')
 				} else if (type==2) {
@@ -301,127 +301,33 @@ export default {
 					const details = this.studyDetails;
 					if (res.data.data.is_ok == true) {
 						console.log('点赞');
-						(this.studyDetails.is_give = !details.is_give), (this.studyDetails.thumbs_times = details.thumbs_times + 1);
-						console.log(this.studyDetails.thumbs_times + '123');
-						var pages = getCurrentPages();
-						var prevPage = pages[pages.length - 2]; //上一个页面
-
-						var index = that.index;
-
-						if (that.type == 1) {
-							var up = 'studylist[' + index + '].thumbs_times';
-							var is_give = 'studylist[' + index + '].is_give';
-							var newp = details.thumbs_times;
-							var new_is_give = details.is_give;
-						} else if (that.type ==2) {
-							var up = 'studylist[' + index + '].thumbs_times';
-							var is_give = 'studylist[' + index + '].is_give';
-							var newp = details.thumbs_times;
-							var new_is_give = details.is_give;
-						} else if (that.type == 3) {
-							var up = 'dakalog[' + index + '].thumbs_times';
-							var is_give = 'dakalog[' + index + '].is_give';
-							var newp = details.thumbs_times;
-							var new_is_give = details.is_give;
-						}
-
-						if (prevPage) {
-							// 可以修改上一页的数据
-							prevPage.setData({
-								[up]: newp,
-								[is_give]: new_is_give
-							});
-						}
-
-						var prevPages = pages[pages.length - 3];
-						console.log(prevPages);
-
-						if (prevPages) {
-							if (prevPages.__route__ == 'pages/index/index') {
-								var up = 'daily[' + index_ + '].thumbs_times';
-								var is_give = 'daily[' + index_ + '].is_give';
-								var newp = details.thumbs_times;
-								var new_is_give = details.is_give;
-								console.log(new_is_give);
-							} else if (prevPages.__route__ == 'pages/my/my') {
-								var up = 'daka[' + index_ + '].thumbs_times';
-								var is_give = 'daka[' + index_ + '].is_give';
-								var newp = details.thumbs_times;
-								var new_is_give = details.is_give;
-							} else if (prevPages.__route__ == 'pages/studySquare/studySquare') {
-								var up = 'studylist[' + index_ + '].thumbs_times';
-								var is_give = 'studylist[' + index_ + '].is_give';
-								var newp = details.thumbs_times;
-								var new_is_give = details.is_give;
-							}
-
-							prevPages.setData({
-								[up]: newp,
-								[is_give]: new_is_give
-							});
-						}
+						this.studyDetails.is_give = !details.is_give, 
+						this.studyDetails.thumbs_times = details.thumbs_times + 1;
+						
 					} else {
 						console.log('取消点赞');
-						(this.studyDetails.is_give = !details.is_give), (this.studyDetails.thumbs_times = details.thumbs_times - 1);
-						var pages = getCurrentPages();
-						var prevPage = pages[pages.length - 2]; //上一个页面
-
-						var index = that.index;
-
-						if (that.type == 1) {
-							console.log(new_is_give);
-							var up = 'daily[' + index + '].thumbs_times';
-							var is_give = 'daily[' + index + '].is_give';
-							var newp = details.thumbs_times - 1;
-							var new_is_give = details.is_give;
-						} else if (that.type == 3 || that.type == 4) {
-							var up = 'daka[' + index + '].thumbs_times';
-							var is_give = 'daka[' + index + '].is_give';
-							var newp = details.thumbs_times - 1;
-							var new_is_give = details.is_give;
-						} else if (that.type == 2) {
-							var up = 'studylist[' + index + '].thumbs_times';
-							var is_give = 'studylist[' + index + '].is_give';
-							var newp = details.thumbs_times;
-							var new_is_give = details.is_give;
-						}
-
-						var newp = details.thumbs_times;
-
-						if (prevPage) {
-							// 可以修改上一页的数据
-							prevPage.setData({
-								[up]: newp,
-								[is_give]: new_is_give
-							});
-						}
-
-						var prevPages = pages[pages.length - 3];
-
-						if (prevPages) {
-							if (prevPages.__route__ == 'pages/index/index') {
-								var up = 'daily[' + index_ + '].thumbs_times';
-								var is_give = 'daily[' + index_ + '].is_give';
-								var newp = details.thumbs_times;
-								var new_is_give = details.is_give;
-							} else if (prevPages.__route__ == 'pages/my/my') {
-								var up = 'daka[' + index_ + '].thumbs_times';
-								var is_give = 'daka[' + index_ + '].is_give';
-								var newp = details.thumbs_times;
-								var new_is_give = details.is_give;
-							} else if (prevPages.__route__ == 'pages/studySquare/studySquare') {
-								var up = 'studylist[' + index_ + '].thumbs_times';
-								var is_give = 'studylist[' + index_ + '].is_give';
-								var newp = details.thumbs_times;
-								var new_is_give = details.is_give;
-							}
-
-							prevPages.setData({
-								[up]: newp,
-								[is_give]: new_is_give
-							});
-						}
+						this.studyDetails.is_give = !details.is_give, 
+						this.studyDetails.thumbs_times = details.thumbs_times - 1;
 					}
+					var pages = getCurrentPages();
+					var index = that.index;
+					
+					var prepage = pages[pages.length - 2]; //上一页面指针 
+					console.log(prepage)
+					wx.setStorageSync('a', arr);
+					if (that.type == 1) {//
+					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					prepage.studylist[index].is_give = this.studyDetails.is_give
+					} else if (that.type ==2) {
+					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					prepage.studylist[index].is_give = this.studyDetails.is_give
+					} else if (that.type == 3) {
+					prepage.loglist[index].thumbs_times = this.studyDetails.thumbs_times
+					prepage.loglist[index].is_give = this.studyDetails.is_give
+					}
+					wx.navigateBack({
+					  delta: 1
+					}); 
 				},
 				error: function() {}
 			});

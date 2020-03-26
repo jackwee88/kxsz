@@ -2,12 +2,24 @@
   <view>
     <view class="card">
       <text class="card_title">积分</text>
-      <text class="jifen">{{userdata[0].after}}</text>
+      <text class="jifen">{{jifen[0].after}}</text>
     </view>
     <!-- <view class="line">
       <text class="txt">积分规则</text>
     </view>-->
-    <view class="mokuai"></view>
+    <view class="mokuai">  
+          <view class="qiandao" v-for="(item, index) in userdata" :key="index">
+            <view class="qiandaotop">
+              <image src="../../../static/img/qiandao.png" class="qd-icon"></image>
+              <text class="font">{{item.title}}</text>
+            </view>
+            <view class="timer">
+              <text class="date">{{item.createtime}}</text>
+            </view>
+            <text class="date add jifen">{{item.score}}</text>
+          </view>
+    
+        </view>
   </view>
 </template>
 
@@ -16,18 +28,20 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
-      userdata: [
+      jifen: [
         {
           after: 0
         }
-      ]
+      ],
+			userdata:[],
     };
   },
   onLoad: function(options) {
     var that = this;
     util.ajaxs("index/getScore", {}, res => {
-      console.log(res);
-      that.userdata = res.data.list;
+      console.log(res.data.list);
+      that.jifen = res.data.list;
+			that.userdata= res.data.list;
     });
   }
 };

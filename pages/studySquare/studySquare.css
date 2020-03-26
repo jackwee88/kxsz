@@ -24,7 +24,11 @@
   padding: 20rpx 15rpx;
   position: relative;
 }
-
+.username {
+	color: #323232;
+	font-size: 28rpx;
+	padding: 5rpx 0rpx;
+}
 .addicon {
   width: 58rpx;
   height: 57rpx;
@@ -534,7 +538,6 @@ video {
   left: 0;
   /* background-color: pink; */
 }
-
 .is_top {
   color: #008800;
   font-size: 28rpx;
@@ -544,6 +547,7 @@ video {
   font-weight: bolder;
 
 }
+
 
 .dakaciclecont1 {
   position: fixed;
