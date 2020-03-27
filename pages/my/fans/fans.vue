@@ -8,17 +8,19 @@
 						<view class="name">{{ item.nickname }}</view>
 						<view class="account">开心号{{ item.number }}</view>
 					</view>
-					<view class="btn" v-if="item.type === 'only'" 
+					<view class="btn" v-if="item.type == 'only'" 
 					@tap="follow" 
 					:data-id="item.id" 
+					:data-index="index"
 					:data-type="item.type">
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
 					</view>
-					<view class="btn" v-if="item.type === 'mutual'" 
+					<view class="btn" v-if="item.type == 'mutual'" 
 					@tap="follow" 
 					:data-id="item.id"
 					:data-type="item.type"
+					:data-index="index"
 					>
 						<image src="../../../static/my/hxgz.png" class="ygz"></image>
 						互相关注
@@ -73,6 +75,7 @@ export default {
 			});
 		},
 		follow(e){
+			const index=e.currentTarget.dataset.index
 			let type = e.currentTarget.dataset.type
 			console.log(type+'type')
 			ajax({
@@ -83,10 +86,10 @@ export default {
 			     method: 'POST',
 			     success: (res) =>{
 						 if(res.data.status==1){
-							 this.type=='only'
+							 this.myFansList.type='only'
 						 }else if(res.data.status==2){
 							 console.log(res.data.msg)
-							 this.type== 'mutual'
+							 this.myFansList.type= 'mutual'
 						 }
 						 this.getdata()
 			     },
