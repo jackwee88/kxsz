@@ -40,9 +40,10 @@ export default {
     };
   },
 	onReachBottom() {
+		var that = this
 		util.ajaxs("index/getScore", {page:this.page,pagesize:this.pagesize}, res => {
 		  console.log(res.data.list);
-			if(page < res.data.count){
+			if(this.page < res.data.count){
 			that.userdata= that.jifen.concat(res.data.list);
 			that.page= that.page+1
 			}else{
@@ -56,11 +57,11 @@ export default {
   onLoad: function(options) {
     var that = this;
     util.ajaxs("index/getScore", {page:this.page,pagesize:this.pagesize}, res => {
-      console.log(res.data.list);
+      console.log(res.data);
       that.jifen = res.data.list;
 			that.userdata= res.data.list;
 			that.page= that.page+1
-			this.count = count > 1 ? res.data.count : 1
+			this.count = this.count > 1 ? res.data.count : 1
     });
   }
 };

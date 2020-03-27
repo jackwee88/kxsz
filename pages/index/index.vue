@@ -108,7 +108,7 @@
 							:key="index2"
 							:src="items"
 							@tap.stop="previewImg"
-							:data-effect_arr="item.picture_ids"
+							:data-effect_arr="item.picture_arr"
 							:data-src="items"
 							mode="aspectFill"
 							:data-index="index"
@@ -668,11 +668,10 @@ export default {
 		previewImg(e) {
 			getApp().globalData.preview = false;
 			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接
-
-			var imgList= []; //获取data-effect_pic   图片列表
+			
+			var str= e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
+			var imgList= str.split(',')
 			//图片预览
-			console.log(typeof(e.currentTarget.dataset.effect_arr) + 'imglist');
-				console.log(typeof( e.currentTarget.dataset.src)+'src'); 
 			uni.previewImage({
 				current: src,
 				// 当前显示图片的http链接

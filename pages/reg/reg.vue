@@ -102,8 +102,8 @@
 				        city: '',
 				        area: '',
 				        region: ['福建省', '厦门市', '思明区'],
-				        code: '' // classes: [],
-				        // school:''
+				        code: '' ,// classes: [],
+				        school:''
 				
 				      },
 				      userinfo: {},

@@ -271,13 +271,14 @@ export default {
 	width: 219rpx;
 	height: auto;
 	text-align: center;
-	height: 250rpx;
+	height: auto;
+	margin-bottom: 30rpx;
 }
 .goods-detail{
 	margin: 0 auto;
 	.productimg{
 		width: 218rpx;
-		height: 146rpx;
+		height: 218rpx;
 	}
 }
 .recommend{

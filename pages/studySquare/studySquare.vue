@@ -136,7 +136,7 @@
                   class="acticleimg"
                   :src="items"
                   :data-src="items"
-                  :data-pic_arr="item.picture_arr"
+                  :data-pic_arr="item.picture_ids"
                   @tap="previewImg"
                   mode="aspectFill"
                 />
@@ -630,9 +630,10 @@ gotoUserInfo: function(e) {
     previewImg: function(e) {
       let src = e.currentTarget.dataset.src;
       let pic_arr = e.currentTarget.dataset.pic_arr;
+			var imglist=pic_arr.split(',')
       wx.previewImage({
         current: src,
-        urls: pic_arr
+        urls: imglist
       });
     },
     growthDaily: function(e) {

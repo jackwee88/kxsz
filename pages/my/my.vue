@@ -254,10 +254,10 @@
         <view>{{info.follow_num}}</view>
         <text>关注</text>
       </navigator>
-      <navigator class="item" url="fans/fans">
+      <view class="item" @tap="myfans">
         <view>{{info.fans_num}}</view>
         <text>粉丝</text>
-      </navigator>
+      </view>
     </view>
 
     <view class="block"></view>
@@ -385,6 +385,7 @@ export default {
   },
 
   onLoad() {},
+
   // 监听页面显示
   onShow() {
     var token = uni.getStorageSync("loginToken");
@@ -416,6 +417,12 @@ export default {
         url: "../dakaLog/dakaLog"
       });
     },
+		myfans:function(e){
+			let param = {keyword:this.info.nickname}
+			uni.navigateTo({
+				url: 'fans/fans?fans=' + encodeURIComponent(JSON.stringify(param))
+			});
+		},
     loginout() {
       console.log("123");
       uni.removeStorageSync("loginToken");

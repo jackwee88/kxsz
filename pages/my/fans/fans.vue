@@ -8,11 +8,18 @@
 						<view class="name">{{ item.nickname }}</view>
 						<view class="account">开心号{{ item.number }}</view>
 					</view>
-					<view class="btn" v-if="item.type === 'only'">
+					<view class="btn" v-if="item.type === 'only'" 
+					@tap="follow" 
+					:data-id="item.id" 
+					:data-type="item.type">
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
 					</view>
-					<view class="btn" v-if="item.type === 'mutual'">
+					<view class="btn" v-if="item.type === 'mutual'" 
+					@tap="follow" 
+					:data-id="item.id"
+					:data-type="item.type"
+					>
 						<image src="../../../static/my/hxgz.png" class="ygz"></image>
 						互相关注
 					</view>
@@ -26,30 +33,67 @@
 import { ajax } from '../../../utils/public.js';
 export default {
 	data() {
-		return { fansList: [] };
+		return { fansList: [],type:'',keyword:'' };
 	},
 	mounted() {
-		ajax({
-			url: 'friend/myFansList',
-			data: {
-				token:'60f14aca9f2b3cf023e25639d5e120e2',
-				keyword: '雨季'
-			},
-			method: 'POST',
-			success: res => {
-				const { count, list } = res.data.data;
-				this.fansList = list;
-			},
-			error: function() {}
-		});
+
+	},
+	onLoad(event){
+		console.log(event);
+		this.banner = JSON.parse(decodeURIComponent(event.fans));
+		console.log(this.banner);
+		this.keyword = this.banner.keyword;
+		this.getdata()
 	},
 	methods:{
+		getdata(){
+			ajax({
+				url: 'friend/myFansList',
+				data: {
+					token:uni.getStorageSync('loginToken'),
+					keyword:this.keyword
+				},
+				method: 'POST',
+				success: res => {
+					const { count, list } = res.data.data;
+					this.fansList = list;
+					for(var i=0;i<list.length;i++){
+						this.type=list[i].type
+						
+					}
+				},
+				error: function() {}
+			});
+		},
 		gotoOtherInfo:function(e){
-			let param ={id:e.friend_uid,	}
+			let param ={id:e.friend_uid,}
 				console.log(param)
 			uni.navigateTo({
 				url: '../../userInfo/otherInfo?userInfo=' + encodeURIComponent(JSON.stringify(param))
 			});
+		},
+		follow(e){
+			let type = e.currentTarget.dataset.type
+			console.log(type+'type')
+			ajax({
+			     url: 'friend/follow',
+			     data: {
+						friend_uid :e.currentTarget.dataset.id
+			     },
+			     method: 'POST',
+			     success: (res) =>{
+						 if(res.data.status==1){
+							 this.type=='only'
+						 }else if(res.data.status==2){
+							 console.log(res.data.msg)
+							 this.type== 'mutual'
+						 }
+						 this.getdata()
+			     },
+			     error: function() {
+						 console.log("111")
+					 }
+			    })
 		},
 	}
 };

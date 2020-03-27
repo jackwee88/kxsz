@@ -15,13 +15,9 @@
 						<view class="name">{{item.nickname}}</view>
 						<view class="account">开心号：{{item.number}}</view>
 					</view>
-					<view class="btn" v-if="item.type === 'only'" @tap="follow" :data-id="item.id">
+					<view class="btn had_btn" v-if="item.type === 'only'" @tap="follow" :data-id="item.id">
 						<image src="../../../static/my/ygz.png" class="ygz"  ></image>
 						已关注
-					</view>
-					<view class="btn" v-if="item.type === 'none'" @tap="follow" :data-id="item.id">
-						<image src="../../../static/my/ygz.png" class="ygz"></image>
-						关注
 					</view>
 					<view class="btn" v-if="item.type === 'mutual'" @tap="follow" :data-id="item.id">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
@@ -121,7 +117,41 @@ export default {
 		left: 90rpx;
 	}
 }
+.btn {
+			display: flex;
+			align-items: center;
+			line-height: 48rpx;
+			overflow: hidden;
+			word-break: break-all;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 1;
+			height: 48rpx;
+			padding: 0 18rpx;
+			font-size: 24rpx;
+			color: rgba(153, 153, 153, 1);
+			background: #fff;
+			border-radius: 26rpx;
+			border: 1px solid rgba(221, 221, 221, 1);
 
+			image {
+				width: 24rpx;
+				height: 24rpx;
+				margin-right: 10rpx;
+			}
+			.ygz {
+				height: 18rpx;
+			}
+
+			.hxgz {
+				height: 16rpx;
+			}
+		}
+		.had_btn {
+			color: #fff;
+			background: rgba(63, 174, 42, 1);
+		}
 .list {
 	padding: 0 36rpx 0 44rpx;
 

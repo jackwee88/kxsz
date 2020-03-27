@@ -130,52 +130,132 @@ export default {
 				this[key] = element
 			}
 		},
-		changeAvatar(){
-			uni.chooseImage({
-			    count: 1, //默认9
-			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-			    sourceType: ['album'], //从相册选择
-			    success: function (res) {
-						const tempFilePaths = res.tempFilePaths;
-						var that = this;
-						uni.uploadFile({
-						  url: url+'',
-						  filePath: tempFilePaths,
-						  name: 'file',
-						  formData: {
-								name: tempFilePaths,
-								key: that.dir + "/" + filename + ".png",
-								policy: that.policy,
-								OSSAccessKeyId: that.accessid,
-								success_action_status: "200",
-								signature: that.signature
-						  },
-						  success: function (res) {
-								uni.hideLoading()
+		changeAvatar: function() {
+		  let that = this;
+		
+		    wx.chooseImage({
+		      count: that.count - that.num,
+		      // 默认6
+		      sizeType: ["compressed"],
+		      // 可以指定是原图还是压缩图，默认二者都有
+		      sourceType: ["album", "camera"],
+		      // 可以指定来源是相册还是相机，默认二者都有
+		      success: res => {
+		        var imageSrc = res.tempFilePaths;
+		        imageSrc.forEach(function(value, index, arrSelf) {
+		          wx.showToast({
+		            title: "正在上传...",
+		            icon: "success",
+		            mask: true,
+		            duration: 10000
+		          });
+		          const timestamp = Date.parse(new Date()) / 1000;
+		          const filename =
+		            String(timestamp) + String(Math.floor(Math.random() * 50));
+		
+		          wx.uploadFile({
+		            url: that.host,
+		            filePath: value,
+		            name: "file",
+		            formData: {
+		              name: value,
+		              key: that.dir + "/" + filename + ".png",
+		              policy: that.policy,
+		              OSSAccessKeyId: that.accessid,
+		              success_action_status: "200",
+		              signature: that.signature
+		            },
+		            success: function(res) {
+		              util.ajaxs(
+		                "index/getProfilr",
+		                {
+		                  media_url:
+		                    that.host + "/" + that.dir + "/" + filename + ".png",
+		                  media_type: 2
+		                },
+		                res => {
+		                  var imgArr = that.imgArr;
+		                  var imgUrl =
+		                    that.host + "/" + that.dir + "/" + filename + ".png";
+		                  imgArr = imgArr.concat(imgUrl);
+		                  that.setData({
+		                    imgArr: imgArr,
+		                    num: imgArr.length
+		                  });
+		                  wx.hideToast();
+		                }
+		              );
+		            },
+		            fail: function(errMsg) {
+		              console.log(errMsg);
+		            }
+		          });
+		        });
+		        that.setData({
+		          imageSrc
+		        }); // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+		
+		        let tempFilePaths = res.tempFilePaths;
+		        that.setData({
+		          tempFilePaths: tempFilePaths
+		        });
+		        /**
+		         * 上传完成后把文件上传到服务器
+		         */
+		
+		        var count = 0;
+		      }
+		    });
+		    // wx.showToast({
+		    //   title: "上传数量已达上限"
+		    // });
+		},
+		// changeAvatar(){
+		// 	uni.chooseImage({
+		// 	    count: 1, //默认9
+		// 	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+		// 	    sourceType: ['album'], //从相册选择
+		// 	    success: function (res) {
+		// 				const tempFilePaths = res.tempFilePaths;
+		// 				var that = this;
+		// 				uni.uploadFile({
+		// 				  url: url+'',
+		// 				  filePath: tempFilePaths,
+		// 				  name: 'file',
+		// 				  formData: {
+		// 						name: tempFilePaths,
+		// 						key: that.dir + "/" + filename + ".png",
+		// 						policy: that.policy,
+		// 						OSSAccessKeyId: that.accessid,
+		// 						success_action_status: "200",
+		// 						signature: that.signature
+		// 				  },
+		// 				  success: function (res) {
+		// 						uni.hideLoading()
 								
-				      var infoMessage = JSON.parse(uploadFileRes.data);
-								if (infoMessage.code==1){
-									 that.imgUrl = infoMessage.data;      // 图片地址
-															    this.weburl=this.websiteUrl;         // 域名
-															    this.hear=this.weburl+that.imgUrl
-													             uni.showToast({
-													                title: '上传成功',
-													               	icon: 'none',
-													             })
-								}else{
-									uni.showToast({
-										title:infoMessage.message,
-										icon:'none'
-									})
-								}
-						  },
-						  fail: function (errMsg) {
-						    console.log(errMsg);
-						  }
-						});
-		},
-		});
-		},
+		// 		      var infoMessage = JSON.parse(uploadFileRes.data);
+		// 						if (infoMessage.code==1){
+		// 							 that.imgUrl = infoMessage.data;      // 图片地址
+		// 													    this.weburl=this.websiteUrl;         // 域名
+		// 													    this.hear=this.weburl+that.imgUrl
+		// 											             uni.showToast({
+		// 											                title: '上传成功',
+		// 											               	icon: 'none',
+		// 											             })
+		// 						}else{
+		// 							uni.showToast({
+		// 								title:infoMessage.message,
+		// 								icon:'none'
+		// 							})
+		// 						}
+		// 				  },
+		// 				  fail: function (errMsg) {
+		// 				    console.log(errMsg);
+		// 				  }
+		// 				});
+		// },
+		// });
+		// },
 		//性别选择点击
 		bindSexChange(e) {
 			this.uploadInfo.gender = e.target.value;

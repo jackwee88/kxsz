@@ -253,11 +253,21 @@
 				ajax({url:'comment/commentAdd', data:
 					param
 				, success:(res) => {
-					this.comment_content = ''
+					this.comment_content = '',
+					console.log(res.data.data)
+					uni.showModal({
+						title: '提示',
+						content: res.data.msg,
+						showCancel: false,
+						duration: 1000,
+						success: function(res) {}
+					});
 					ajax({url:'comment/commentMain', 
-					data:{
-						did:this.d_id,
-						id:this.id
+					data: {
+						d_id: that.d_id,
+						id: that.id,
+						page: that.page,
+						page_size: that.page_size
 					}, success:(res) => {
 							// this.details=res.data.data.main,
 							this.release=res=data.data.list,

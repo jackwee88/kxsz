@@ -15,7 +15,11 @@
 						<text class="conttext">{{ studyDetails.content }}</text>
 					</view>
 					<view class="middle-image">
-						<view v-for="(item, index) in studyDetails.picture_arr" :key="index"><image :src="item" style="width: 220rpx;height: 220rpx;" /></view>
+						<view v-for="(item, index) in studyDetails.picture_arr" :key="index"><image :src="item" style="width: 220rpx;height: 220rpx;"
+						@tap.stop="previewImg"
+						:data-effect_arr="studyDetails.picture_arr"
+						:data-src="item"
+						/></view>
 					</view>
 				</view>
 				<view class="smallicon">
@@ -229,13 +233,14 @@ export default {
 					});
 					ajax({
 						url: 'comment/comment',
-						data: { d_id: this.dy_id },
+						data: { d_id: this.dy_id},
 						success: (res) => {
 							console.log(res.data.data);
 							let list = res.data.data;
 							list.if_input = false;
 							this.release = res.data.list;
 							this.comment_num = res.data.count;
+							
 							var pages = getCurrentPages();
 							var prevPage = pages[pages.length - 2]; //上一个页面
 							var index = this.index;
@@ -288,7 +293,17 @@ export default {
 			});
 		},
 		//点赞
-		
+		previewImg(e) {
+			getApp().globalData.preview = false;
+			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接
+			var str= e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
+			var imgList= str.split(',')
+			uni.previewImage({
+				current: src,
+				// 当前显示图片的http链接
+				urls: imgList // 需要预览的图片http链接列表
+			});
+		},
 		praise(e) {
 			var that = this;
 			var index_ = that.index_;
