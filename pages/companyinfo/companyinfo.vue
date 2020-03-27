@@ -76,9 +76,7 @@ export default {
      ajax({url:'partner/partnerSeCate', data:{
         pid: this.pid
       }, success:(res) => {
-        that.setData({
-          list: res.data.list
-        });
+          this.list= res.data.data.list
       }});
     }
 

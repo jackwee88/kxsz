@@ -28,6 +28,9 @@ var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
+			page:1,
+			count:1,
+			pagesize:10,
       jifen: [
         {
           after: 0
@@ -36,12 +39,28 @@ export default {
 			userdata:[],
     };
   },
+	onReachBottom() {
+		util.ajaxs("index/getScore", {page:this.page,pagesize:this.pagesize}, res => {
+		  console.log(res.data.list);
+			if(page < res.data.count){
+			that.userdata= that.jifen.concat(res.data.list);
+			that.page= that.page+1
+			}else{
+				uni.showToast({
+				  title: "到底了...",
+				  icon: "none"
+				});
+			}
+		});
+	},
   onLoad: function(options) {
     var that = this;
-    util.ajaxs("index/getScore", {}, res => {
+    util.ajaxs("index/getScore", {page:this.page,pagesize:this.pagesize}, res => {
       console.log(res.data.list);
       that.jifen = res.data.list;
 			that.userdata= res.data.list;
+			that.page= that.page+1
+			this.count = count > 1 ? res.data.count : 1
     });
   }
 };

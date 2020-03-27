@@ -1,14 +1,9 @@
 <template>
   <!--pages/my/splb/splb.wxml-->
 
-  <view class="wrap">
-    <navigator
-      class="item"
-      v-for="(item, index) in dataList"
-      :key="index"
-      :url="'/pages/my/activeCode/activeCode?cl_id=' + item.cl_id"
-    >{{item.title}}</navigator>
-  </view>
+<view class="wrap">
+  <navigator class="item" v-for="(item, index) in dataList" :key="index" :url="'/pages/my/activeCode/activeCode?cl_id=' + item.cl_id">{{item.title}}</navigator>
+</view>
 </template>
 
 <script>

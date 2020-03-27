@@ -45,7 +45,7 @@ const ajax = (opt) => {
 			} else if(res.data.status == -1){
 				//无token
 				uni.navigateTo({
-					url:'../pages/login/login.vue',
+					url:'../login/login.vue',
 				})
 			}
 			else if (res.data.status == -10086) {

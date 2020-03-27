@@ -5,18 +5,16 @@
 <view class="Signature">
   <view class="nav">
     <image class="navlogo" src="../../../static/studySquare/Signaturelogo.png"></image>
-    <navigator>
       <view class="navinfouser">
         <text class="username">{{userinfo.nickname}}</text>
         <image class="usertoux" :src="userinfo.avatar"></image>
       </view>
-    </navigator>
   </view>
   <view class="banner">
     <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
     <block v-for="(item, index) in bannerUrl" :key="index">
       <swiper-item>
-        <image :src="item.pic_url" mode="aspectFill" :data-type="item.jump_type" :data-url="item.to_url" @tap="jump"></image>
+        <image :src="item.pic_url" mode="aspectFill" :data-type="item.jump_type" :data-url="item.to_url" @tap="jump" style="width: 100%;height: 300rpx;"></image>
       </swiper-item>
     </block>
   </swiper>

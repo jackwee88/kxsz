@@ -1,6 +1,9 @@
 /* pages/Signature/Signature.wxss */
-.nav {
+.Signature{
 	width: 750rpx;
+}
+.nav {
+	/* width: 750rpx; */
   height: 106rpx;
   line-height: 106rpx;
   background-color: #080;
@@ -19,7 +22,7 @@
 .navinfouser {
   height: 106rpx;
   position: absolute;
-  right: 30rpx;
+	right: 10rpx;
   top: 0;
 }
 
@@ -51,7 +54,8 @@
 
 .formcont {
   width: 100%;
-  padding: 20rpx 60rpx;
+  padding: 20rpx 30rpx;
+	box-sizing: border-box;
   display: inline-block;
 }
 

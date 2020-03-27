@@ -5,7 +5,7 @@
 		<view class="section_title"><text>请选择您要反馈的意见类型：</text></view>
 
 		<view class="feedback_types">
-			<view :class="{item: true, active: activeIndex == index}" v-for="(item, index) in typeList" :key="index" @click="selectType(index)">
+			<view :class="{item: true, active: activeIndex == index}" v-for="(item, index) in typeList" :key="index" @click="selectType(index)" :data-id="item.id">
 			{{item.name}}
 			</view>
 		</view>
@@ -39,18 +39,20 @@ export default {
 			content: '',
 			qq: '',
 			mobile: '',
+			id:''
 		};
 	},
 	
 	methods: {
 		selectType(i) {
 			this.activeIndex = i
+			this.id = this.activeIndex+1
 		},
-		submit(){
+		submit(e){
 			ajax({
 				url:'feedback/upload',
 				data:{
-					cate:++this.activeIndex,
+					cate:this.id,
 					content:this.content,
 					qq:this.qq,
 					mobile:this.mobile

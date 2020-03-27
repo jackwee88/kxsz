@@ -1,79 +1,88 @@
 <template>
-  <view>
-    <!-- 搜索框 -->
+<view>
+<!--pages/jctbxzjx/jctbxzjx.wxml-->
+<view>
+	<view class="status_bar"><!-- 这里是状态栏 --></view>
+  <view style="border-bottom:1rpx solid #e6e6e6;">
     <view class="searchcont">
       <view class="search">
-        <image class="searchicon" src="../../static/jctbxzjx/search.png" mode />
-        <input
-          type="text"
-          class="searchinput"
-          value
-          placeholder="请输入搜索的产品"
-          placeholder-class="inputPlace"
-        />
+        <image class="searchicon" src="/static/img/shuhuajs/search.png"></image>
+        <input class="searchinput"  placeholder="请输入搜索的产品" v-model="input"></input>
       </view>
     </view>
-    <!-- 主内容 -->
-    <view class="jctbxzjx">
-      <!-- 左侧 -->
-      <view class="catalogueleft">
-        <view
-          :class="data.id == catalogue.checkId ? 'navtab_item  nav-active' : 'navtab_item'  "
-          v-for="data in catalogue.catalogueData"
-          :key="data.id"
-          :id="data.id"
-          v-on:click="checkData"
-        >
-          <text>{{data.text}}</text>
+  </view>
+  <view class="jctbxzjx clear">
+    <view scroll-y class="cataloguelist catalogueleft">
+      <scroll-view class="catalogueleft_tab">
+        <!-- {{item.typeId == currentId ? 'nav-active':''}} -->
+        <view :class="'navtab_item ' + (item.id== currentId ? 'nav-active':'')" v-for="(item, index) in catalogue" :key="index" @tap.stop="handleTap" :data-id="item.id" :data-index="index">
+          <text class="text">{{item.name}}</text>
         </view>
-      </view>
-      <!-- 右侧 -->
-      <view class="catalogueright">
-        <view class="tabcont">
-          <view class="tabcontitem">
-            <view class="tableftimg tabfloct">
-              <navigator url>
-                <image
-                  class="productimg"
-                  src="https://pic.kaifadanao.cn/20190729/0031f95703e378620256cebb5bfe8cce.jpg"
-                  mode="widthFix"
-                />
-              </navigator>
-            </view>
-            <view class="tabright tabfloct">
-              <view class="title">识字第二课《金木水火土》</view>
-              <view class="renqi">473人气</view>
-              <view class v-on:click="collect">
-                <image class="collectimg" :src="collectClick.img" mode="widthFix" />
-                <text class="collecttext">{{collectClick.text}}</text>
-              </view>
-            </view>
-          </view>
-        </view>
-        <view class>
-          <uni-load-more :status="status" />
+      </scroll-view>
+    </view>
+
+    <view class="cataloguelist catalogueright clear">
+			<text class="recommend">精品推荐</text>
+      <view class="goods">
+        <view class="goodsitem" v-for="(item, index) in tabcontitem" :key="index">
+          <navigator class="goods-detail" :url="item.to_url">
+            <image class="productimg" :src="item.pic_url"></image>
+            <view class="title">{{item.name}}</view>
+          </navigator>
         </view>
       </view>
     </view>
   </view>
+</view>
+
+</view>
 </template>
 
 <script>
-// pages/catalogue/catalogue.js
-const app = getApp().globalData;
+
 var util = require("../../utils/util.js");
 import { ajax } from "../../utils/public.js";
 export default {
   data() {
     return {
-      catalogueList: [],
-      nameOne: "",
-      nameTow: "",
-      urlOne: "",
-      urlTow: "",
-      chec: 0,
-      proFixView: false,
-      navToUrl: ""
+			input:'',
+      pages: 1,
+      counts: 1,
+      vp_ids: '',
+      titles: '',
+      code: '',
+      is_code: false,
+      currentId: 0,
+      collectimg2: '/img/freeTeaching/shoucangyi.png',
+      collectimg: '/img/freeTeaching/shoucangwei.png',
+      tabcontitem: [],
+      content: '',
+      flag: true,
+      catalogue: [],
+      page: 1,
+      page_size: 10,
+      count: 1,
+      cl_id: 0,
+      p_id: '',
+			
+			currentIndex:0,
+      notice: '',
+      md_id: 7,
+      showModal: false,
+      banner: [],
+      section: [],
+      pagetitle: '一年级',
+      tabcontitems: [],
+      popupitem: [],
+      collecttext2: '已收藏',
+      collecttext: '收藏',
+      flags: true,
+      modelType: 1,
+      currentIds: 0,
+      type: "",
+      gd_id: "",
+      producturl: [],
+      keyword: ""
     };
   },
 
@@ -83,16 +92,9 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    var that = this;
+  onLoad: function (options) {
 
-    if (decodeURIComponent(options.scene)) {
-      var qrId = decodeURIComponent(options.scene);
-    } else {
-      var qrId = 0;
-    }
-
-    wx.setStorageSync("scene", qrId);
+  this.getcatelogList()
   },
 
   /**
@@ -100,41 +102,7 @@ export default {
    */
   onReady: function() {},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    let that = this;
-    that.setData({
-      nameOne: "",
-      nameTow: "",
-      urlOne: "",
-      urlTow: "",
-      chec: 0,
-      proFixView: false,
-      navToUrl: ""
-    });
-    wx.request({
-      url: getApp().globalData.requestUrl + "/api/cate/cateList",
-      method: "post",
-      data: "",
-      header: {
-        "content-type": "application/json",
-        token: wx.getStorageSync("token")
-      },
-      success: function(res) {
-        console.log(res.data.data);
-
-        if (res.data.status == 1) {
-          that.setData({
-            catalogueList: res.data.data
-          });
-        }
-      },
-      fail: function() {}
-    });
-  },
-
+ 
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -153,86 +121,171 @@ export default {
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () {
+    // this.getData();
+  },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {},
+  onShareAppMessage: function () {},
+
+ 
+	mounted() {
+		
+	},
   methods: {
-    setData(param) {
-      for (const key in param) {
-        const element = param[key];
-        this[key] = element;
-      }
-    },
-    //返回顶部
-    toTop(e) {
+    //点击切换
+		getcatelogList(){
+			ajax({
+				url:'cate/cateLeftList', 
+			  data:{
+					md_id: this.md_id
+				}, success:(res) => {
+					const {list}= res.data.data
+			    this.catalogue=list,
+			    this.currentId=list[0].id,
+					console.log(this.currentId)
+					this.tabcontitem = list[0].data
+					console.log(this.currentId)
+			  // this.getData();
+			}
+			});
+		},
+		getData(){
+			ajax({
+				url:'cate/cateLeftList', 
+			  data:{
+					md_id: this.md_id
+				}, success:(res) => {
+					const {list}= res.data.data
+			    this.catalogue=list,
+					this.tabcontitem = list[0].data
+					console.log(this.currentId)
+			}
+			});
+		},
+    handleTap: function (e) {
+      let index = e.currentTarget.dataset.index;
+			let id = e.currentTarget.dataset.id;
       var that = this;
-      that.pageScrollTo({
-        scrollTop: 0,
-        duration: 0
+          this.currentIndex= index
+					this.currentId = id
+          this.page= 1,
+          this.page_size= 10,
+          this.tabcontitem= [],
+          this.count= 1,
+					ajax({
+						url:'cate/cateLeftList', 
+					  data:{
+							md_id: this.md_id
+						}, success:(res) => {
+							const {list}= res.data.data
+							this.tabcontitem = list[this.currentIndex].data
+					}
+					});
+      },
+
+
+
+    // 弹出层函数
+    
+    changeInput(e) {
+      var val = e.detail.value;
+      this.setData({
+        code: val
+      });
+    },
+		searchGoods(){
+			ajax({
+				url:""
+			})
+		},
+    //点击切换
+    handleTapGoods: function (e) {
+      //gd_id
+      var that = this;
+      let index = e.currentTarget.dataset.index;
+      let gd_id = e.currentTarget.dataset.gd_id;
+      that.setData({
+        currentIds: index,
+        gd_id: gd_id,
+        pages: 1,
+        tabcontitems: [],
+        counts: 1
+      });
+      that.getDataGoods(); //请求数据
+    },
+
+    details(e) {
+      const p_id = e.currentTarget.dataset.p_id;
+      wx.navigateTo({
+        url: '/pages/onlinestore/productDetail/productDetail?p_id=' + p_id
       });
     },
 
-    //点击选择项目
-    toImage(e) {
-      let that = this;
-      that.setData({
-        nameOne: e.currentTarget.dataset.name_one,
-        nameTow: e.currentTarget.dataset.name_tow,
-        urlOne: e.currentTarget.dataset.url_one,
-        urlTow: e.currentTarget.dataset.url_tow
-      });
+    add(e) {
+      var that = this;
+      const p_id = e.currentTarget.dataset.p_id;
 
-      if (e.currentTarget.dataset.url_tow == "") {
-        wx.navigateTo({
-          url: e.currentTarget.dataset.url_one
+      if (p_id) {
+        var param = {
+          p_id: p_id
+        };
+        util.ajax('/api/cart/add', param, res => {
+          wx.showToast({
+            title: res.msg
+          });
         });
       } else {
-        that.setData({
-          proFixView: true
+        wx.showToast({
+          title: '网络异常..'
         });
       }
     },
 
-    //取消
-    activationQuxiao() {
-      let that = this;
-      that.setData({
-        nameOne: "",
-        nameTow: "",
-        urlOne: "",
-        urlTow: "",
-        chec: 0,
-        proFixView: false,
-        navToUrl: ""
-      });
-    },
-
-    //选择上下册
-    navTo(e) {
-      let that = this;
-      that.setData({
-        chec: e.currentTarget.dataset.id
-      });
-    },
-
-    //选择上下册完毕后，点击确定
-    yesBtn(e) {
-      console.log(e);
-      wx.navigateTo({
-        url: e.currentTarget.dataset.url
+    go: function () {
+      this.setData({
+        showModal: false
       });
     }
   }
 };
-</script>
+// </script>
 <style lang="less" scoped>
 @import "./catalogue.css";
 .status_bar {
-  height: var(--status-bar-height);
-  width: 100%;
-  background-color: #f8f8f8;
+	height: var(--status-bar-height);
+	width: 100%;
+	background-color: #f8f8f8;
 }
+.goods{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-right: 30rpx;
+	padding-left: 25rpx;
+}
+.goodsitem{
+	width: 219rpx;
+	height: auto;
+	text-align: center;
+	height: 250rpx;
+}
+.goods-detail{
+	margin: 0 auto;
+	.productimg{
+		width: 218rpx;
+		height: 146rpx;
+	}
+}
+.recommend{
+	font-size:32rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	padding-left: 60rpx;
+	color: #3e3d3d;
+	font-weight: 500;
+	}
 </style>

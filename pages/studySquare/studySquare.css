@@ -416,13 +416,12 @@ button::after {
 .dakatext {
   width: 144rpx;
   height: 144rpx;
-  line-height: 130rpx;
   text-align: center;
   font-size: 28rpx;
   color: #fff;
   display: inline-block;
   position: relative;
-  top: -70%;
+  top: -80%;
 }
 
 .more image {

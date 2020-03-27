@@ -16,25 +16,25 @@
 						<view class="form-item">
 							<picker mode="selector" :range="school" class="" @change="bindSchoolChange">
 								<text class="itemtitle">学校</text>
-								<view class="picker">
+								<view class="picker text">
 									{{school[uploadInfo.school]}}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
 						</view>
 						<view class="form-item">
-							<picker mode="selector" :range="array" class="" @change="bindClassChange">
-								<text class="itemtitle">年级</text>
-								<view class="picker">
-									{{array[uploadInfo.class]}}
+							<text class="itemtitle">年级</text>
+							<picker mode="selector" :range="array" @change="bindGradeChange">
+								<view class="picker text">
+									{{ array[uploadInfo.grade] }}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
 						</view>
 						<view class="form-item">
-							<picker mode="selector" :range="arrayClass" class="" @change="bindGradeChange">
+							<picker mode="selector" :range="arrayClass" class="" @change="bindClassChange">
 								<text class="itemtitle">班级</text>
-								<view class="picker">
+								<view class="picker text">
 									{{arrayClass[uploadInfo.classClass]}}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
@@ -43,7 +43,7 @@
 						<view class="form-item">
 							<view class="pickerpicker" @click="toggleTab">
 								<text class="itemtitle">家庭住址</text>
-								<view class="picker">
+								<view class="picker text">
 									<text v-if="uploadInfo.region.length==0"></text>
 									<text v-else class="pickerText">
 										{{uploadInfo.region[0]}}，{{uploadInfo.region[1]}}，{{uploadInfo.region[2]}}
@@ -56,11 +56,11 @@
 						</view>
 						<view class="form-item">
 							<text class="itemtitle" v-model="uploadInfo.addressdetail">详细住址</text>
-							<input  type="text" value="" class="input picker"/>
+							<input  type="text" value="" class="input picker text"/>
 						</view>
 						<view class="form-item">
 							<text class="itemtitle">联系方式</text>
-							<input maxlength="11" type="number" class="input picker" v-model="uploadInfo.mobile"/>
+							<input maxlength="11" type="number" class="input picker text" v-model="uploadInfo.mobile"/>
 						</view>
 						<view class="code-item">
 							<text class="codetxt">验证码</text>
@@ -96,7 +96,8 @@
 				      uploadInfo: {
 				        username: '',
 				        mobile: '',
-				        // grade: '',
+								class:'',
+				        grade: '',
 				        province: '',
 				        city: '',
 				        area: '',
@@ -107,7 +108,7 @@
 				      },
 				      userinfo: {},
 				      sms_zt: '发送验证码',
-				      second: 60,
+				      second: '',
 				      nullHouse1: false,
 				      nullHouse2: true,
 				      mySchool: '',
@@ -115,15 +116,19 @@
 				      noPhone: 'false',
 				      type: "",
 				      selected: false,
-				      selected1: false
+				      selected1: false,
 				}
 			},
 		
 		  onLoad: function (options) {
 		    let that = this;
 		    ajax({url:'index/getSchool', data:{}, success:(res) => {
-        const{list} = res.data.data
-		        this.school=list
+				const{list} = res.data.data
+				for(var i=0;i<list.length;i++){
+					// this.school.push(list[i].school_name)
+					this.school=this.school.concat(list[i].school_name)
+				}
+				console.log(this.school)
 		    }});
 		
 		    if (wx.getStorageSync('wxPhone')) {
@@ -149,29 +154,20 @@
     },
     // 日期选择
     bindDateChange(e) {
-      console.log(e);
-      this.setData({
-        'uploadInfo.birthday': e.detail.value
-      });
+        this.uploadInfo.birthday= e.detail.value
     },
 
     // 年级选择
     bindPickerChange(e) {
-      this.setData({
-        'uploadInfo.gender': Number(e.detail.value) + 1
-      });
+        this.uploadInfo.gender= Number(e.detail.value) + 1
     },
 
     bindClassChange(e) {
-      this.setData({
-        'uploadInfo.classes': Number(e.detail.value) + 1
-      });
+    	this.uploadInfo.class = e.target.value;
     },
 
     bindGradeChange(e) {
-      this.setData({
-        'uploadInfo.grade': Number(e.detail.value) + 1
-      });
+        this.uploadInfo.grade= Number(e.detail.value) + 1
     },
 
     // 省区选择
@@ -253,7 +249,12 @@
         }, 1000);
       });
     },
-
+bindCityChange(e) {
+			this.uploadInfo.province= e.checkArr[0];
+			this.uploadInfo.city= e.checkArr[1];
+			this.uploadInfo.area= e.checkArr[2];
+			this.uploadInfo.region=e.checkArr;
+		},
     getcode: function (e) {
       var phone = this.uploadInfo.mobile;
 
@@ -335,7 +336,9 @@
         mySchool: school[Number(e.detail.value)].school_name
       });
     },
-
+		toggleTab() {
+			this.$refs.region.show();
+		},
     writeSchool(e) {
       this.setData({
         school_index: 0,

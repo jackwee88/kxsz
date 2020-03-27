@@ -348,11 +348,10 @@ export default {
    */
   onReachBottom: function() {
     let that = this;
-    let page = that.page;
-    page++;
+
     that.getData();
     let param = {
-      page: page,
+      page: that.page,
       page_size: that.page_size,
       type: that.type
     };
@@ -360,7 +359,7 @@ export default {
       if (page < res.data.count) {
         that.setData({
           studyList: that.studylist.concat(res.data.list),
-          page: page
+          page: ++page
         });
       } else {
         uni.showToast({

@@ -80,6 +80,7 @@ export default {
 		return {
 			gender: ['男', '女'],
 			array: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+			accessid: "",
 			uploadInfo: {
 				nickname: '', //昵称
 				avatar: '',
@@ -135,28 +136,38 @@ export default {
 			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 			    sourceType: ['album'], //从相册选择
 			    success: function (res) {
-						console.log(JSON.stringify(res.tempFilePaths));
-						var imageSrc = JSON.stringify(res.tempFilePaths);
+						const tempFilePaths = res.tempFilePaths;
+						var that = this;
 						uni.uploadFile({
-						  url: that.host,
-						  filePath: imageSrc,
+						  url: url+'',
+						  filePath: tempFilePaths,
 						  name: 'file',
 						  formData: {
+								name: tempFilePaths,
+								key: that.dir + "/" + filename + ".png",
+								policy: that.policy,
+								OSSAccessKeyId: that.accessid,
+								success_action_status: "200",
+								signature: that.signature
 						  },
 						  success: function (res) {
-						    util.ajax('/api/index/checkMedia', {
-						      media_url: that.host + '/' + that.dir + '/' + filename + '.png',
-						      media_type: 2
-						    }, res => {
-						      var imgArr = that.imgArr;
-						      var imgUrl = that.host + '/' + that.dir + '/' + filename + '.png';
-						      imgArr = imgArr.concat(imgUrl);
-						      that.setData({
-						        imgArr: imgArr,
-						        num: imgArr.length
-						      });
-						      wx.hideToast();
-						    });
+								uni.hideLoading()
+								
+				      var infoMessage = JSON.parse(uploadFileRes.data);
+								if (infoMessage.code==1){
+									 that.imgUrl = infoMessage.data;      // 图片地址
+															    this.weburl=this.websiteUrl;         // 域名
+															    this.hear=this.weburl+that.imgUrl
+													             uni.showToast({
+													                title: '上传成功',
+													               	icon: 'none',
+													             })
+								}else{
+									uni.showToast({
+										title:infoMessage.message,
+										icon:'none'
+									})
+								}
 						  },
 						  fail: function (errMsg) {
 						    console.log(errMsg);

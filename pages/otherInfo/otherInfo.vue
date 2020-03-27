@@ -33,7 +33,7 @@ export default {
       util.ajaxs(
         "partner/partner",
         {
-          id: '18'
+          id: this.id
         },
         res => {
           that.detail = res.data;

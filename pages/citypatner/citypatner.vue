@@ -1,68 +1,53 @@
 <template>
+	<view>
   <view>
-    <!--pages/cityPartner/cityPartner.wxml-->
+    <view class="title">{{detail}}</view>
+    <view class="img-box" style="padding-bottom:200rpx;">
+      <image :src="item.image" class="img" v-for="(item, index) in imgList" 
+			:key="index" :data-id="item.id" 
+			 @tap.stop="toOther"
+			></image>
+    </view>
+  <view class="btn" @tap.stop="showOver">申请加入</view>
+</view>
 
-    <view style="page">
-      <view>
-        <view class="title">{{detail}}</view>
-        <view class="img-box" style="padding-bottom:200rpx;">
-          <image
-            :src="item.image"
-            class="img"
-            v-for="(item, index) in imgList"
-            :key="index"
-            :data-id="item.id"
-            @tap="jump(item.jump,item.id)"
-          />
-        </view>
-      </view>
-      <view class="btn" @tap.stop="showOver">申请加入</view>
+<view class="big-box" v-if="if_over">
+  <view class="info-box">
+    <view class="h1">申请加入</view>
+    <view class="input">
+      <text class="text">姓名：</text>
+      <input type="text" :value="username" data-type="username" v-model="uploadInfo.username" class="text"></input>
+    </view>
+    <view class="input">
+      <text class="text">电话：</text>
+      <input type="number" :value="phone" data-type="phone" v-model="uploadInfo.mobile" class="text"></input>
+    </view>
+    <view>
+       <view class="pickerpicker">
+						<text class="text">地址:</text>
+						<view  @click="toggleTab">
+							<view class="picker">
+								<view v-if="uploadInfo.region.length == 0" style="color:#595959;padding-left:10rpx">请选择省市县
+								<image src="/static/img/freeTeaching/arrow-rt.png" style="float:right;width:20rpx;height:30rpx;position:relative;top:10rpx;right:10rpx"></image>
+								</view>
+								<text v-else class="text">{{ uploadInfo.region[0] }}，{{ uploadInfo.region[1] }}，{{ uploadInfo.region[2] }}</text>
+							</view>
+						</view>
+						<w-picker mode="region" @confirm="bindCityChange" ref="region"></w-picker>
+					</view>
+
+    </view>
+    <view class="input" style="claer:both;margin-top:20rpx;">
+      <text class="text">邮箱：</text>
+      <input class="text" :value="email" data-type="email" v-model="uploadInfo.email"></input>
     </view>
 
-    <view class="big-box" v-if="if_over">
-      <view class="info-box">
-        <view class="h1">申请加入</view>
-        <view class="input">
-          <text class="text">姓名：</text>
-          <input type="text" :value="username" data-type="username" @input="inputChange" />
-        </view>
-        <view class="input">
-          <text class="text">电话：</text>
-          <input type="number" :value="phone" data-type="phone" @input="inputChange" />
-        </view>
-        <view>
-          <view @click="toggleTab" :range="region">
-            <label class="text" style="float:left">地址:</label>
-            <view class="picker clear" v-if="region != ''" style="float:right">
-              <text style="font-size:24rpx;">{{region[0]}},{{region[1]}},{{region[2]}}</text>
-            </view>
-            <view class="picker" v-else>
-              <text style="color:#595959;padding-left:10rpx">请选择省市县</text>
-              <image
-                src="/static/img/freeTeaching/arrow-rt.png"
-                style="float:right;width:20rpx;height:30rpx;position:relative;top:10rpx;right:10rpx"
-              />
-            </view>
-            <w-picker mode="region" @confirm="bindRegionChange" @cancel="cancel" ref="region"></w-picker>
-          </view>
-        </view>
-        <view class="input" style="claer:both;margin-top:20rpx;">
-          <text class="text">邮箱：</text>
-          <input class="text" :value="email" data-type="email" @input="inputChange" />
-        </view>
-
-        <textarea
-          placeholder="请输入您的留言内容"
-          style="width:418rpx;height:213rpx;"
-          data-type="content"
-          @input="inputChange"
-          :value="content"
-        ></textarea>
-        <view class="submit" @tap.stop="submit">提交</view>
-        <image src="../../static/close.png" class="svg" @tap.stop="close" />
-      </view>
-    </view>
+    <textarea placeholder="请输入您的留言内容" style="width:418rpx;height:213rpx;" data-type="content" v-model="uploadInfo.remark" :value="content"></textarea>
+    <view class="submit" @tap.stop="submit">提交</view>
+    <image src="../../static/close.png" class="svg" @tap.stop="close"></image>
   </view>
+	</view>
+	</view>
 </template>
 
 <script>
@@ -72,24 +57,27 @@ import { ajax } from "../../utils/public.js";
 export default {
   data() {
     return {
-      uploadInfo: {
-        username: "", //昵称
-        mobile: "", //手机
-        email: "",
-        province: "", //省份
-        city: "", //城市
-        area: "", //地区
-        region: []
-      },
+			uploadInfo: {
+				nickname: '', //昵称
+				mobile: '', //手机
+				province: '', //省份
+				city: '', //城市
+				area: '', //地区
+				region: [],
+				classes: [],
+				remark:''
+			},
       detail: {},
       imgList: [],
       region: [],
       if_over: false,
-      username: "",
-      phone: "",
-      content: "",
-      email: "",
-      type: ""
+      username: '',
+      phone: '',
+      content: '',
+      email: '',
+      type: "",
+			timetext:'请选择地区',
+			array: ['中国', '美国', '巴西', '日本'],
     };
   },
 
@@ -136,15 +124,13 @@ export default {
   },
 
   methods: {
-    cancel() {
-      this.$refs.region.hide();
-    },
-    setData(param) {
-      for (const key in param) {
-        const element = param[key];
-        this[key] = element;
-      }
-    },
+		toggleTab() {
+			this.$refs.region.show();
+		},
+		yearChange : function(e){
+		                console.log(e)
+		                this.timetext = e.detail.value;
+		            } ,
     getevalue() {
       // util.ajax('evaluate/getEvaluateHeadLableList', { goods_id: that.data.p_id }, res => {
       //      that.setData({
@@ -152,19 +138,19 @@ export default {
       //      })
       //    })
     },
-    jump(type, id) {
-      if (type == "cate") {
-        uni.navigateTo({
-          url: "/pages/companyInfo/companyInfo?id=" + id
-        });
-      } else {
-        uni.navigateTo({
-          url: "/pages/otherInfo/otherInfo?id=" + id
-        });
-      }
+
+    toCompanyInfo(e) {
+			console.log('company')
+      uni.navigateTo({
+        url: '../companyInfo/companyInfo?id=' + e.currentTarget.dataset.id
+      });
     },
-    toggleTab() {
-      this.$refs.region.show();
+
+    toOther(e) {
+			console.log('partner')
+      uni.navigateTo({
+        url: '../otherInfo/otherInfo?id=' + e.currentTarget.dataset.id
+      });
     },
     //地址选择
     bindRegionChange(e) {
@@ -196,9 +182,14 @@ export default {
         [type]: e.detail.value
       });
     },
-
+bindCityChange(e) {
+			this.uploadInfo.province= e.checkArr[0];
+			this.uploadInfo.city= e.checkArr[1];
+			this.uploadInfo.area= e.checkArr[2];
+			this.uploadInfo.region=e.checkArr;
+		},
     submit(e) {
-      var username = this.username;
+      var username = this.uploadInfo.username;
 
       if (!username) {
         wx.showToast({
@@ -208,7 +199,7 @@ export default {
         return;
       }
 
-      var phone = this.phone;
+      var phone = this.uploadInfo.mobile;
 
       if (!phone) {
         wx.showToast({
@@ -224,8 +215,8 @@ export default {
           icon: "none"
         });
         return false;
-      }
-      if (this.content == "") {
+      } 
+      if (this.uploadInfo.remark == '') {
         wx.showToast({
           title: "请输入留言",
           icon: "none"
@@ -233,14 +224,14 @@ export default {
         return;
       }
 
-      var email = this.email;
+      var email = this.uploadInfo.email;
 
       var reg = new RegExp(
         "^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$"
       ); //正则表达式
 
-      if (this.email != "") {
-        if (!reg.test(this.email)) {
+      if (email != '') {
+        if (!reg.test(email)) {
           wx.showToast({
             title: "邮箱格式错误",
             icon: "none"
@@ -253,35 +244,28 @@ export default {
       var obj = {
         realname: username,
         phone: phone,
-        province: this.region[0],
-        city: this.region[1],
-        area: this.region[2],
-        email: this.email,
-        content: this.content
+        province: this.uploadInfo.region[0],
+        city: this.uploadInfo.region[1],
+        area: this.uploadInfo.region[2],
+        email: email,
+        content: this.uploadInfo.remark
       };
-      util.ajax({
-        url: "/partner/upload",
-        data: obj,
-        success: res => {
-          uni.showToast({
-            title: res.data.msg
-          });
-          that.close();
-        }
-      });
+      ajax({url:'/partner/upload',data:obj, success:(res) => {
+        uni.showToast({
+          title: res.data.msg
+        });
+        that.close();
+      }});
     },
 
     getDataCate() {
       var that = this;
       ajax({
-        url: "partner/partnerCate",
-        data: {},
-        success: res => {
-          console.log(res.data.data);
-          this.imgList = res.data.data.list;
-          console.log(res.data.data.list[0].jump);
-        }
-      });
+				url:'partner/partnerCate', data:{}, success:(res) => {
+				  console.log(res.data.data);
+				    this.imgList= res.data.data.list
+				}
+			});
     },
 
     getData() {
@@ -298,6 +282,13 @@ export default {
   }
 };
 </script>
-<style>
-@import "./cityPartner.css";
+<style lang="less" scoped>
+
+@import "./cityPartner.css";	
+.pickerpicker{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	// margin-bottom: 20rpx;
+}
 </style>

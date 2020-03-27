@@ -8,7 +8,7 @@
 }
 
 .search {
-  width: 100%;
+  width: 90%;
   height: 70rpx;
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -50,7 +50,7 @@
 }
 
 .catalogueleft {
-  width: 23%;
+  width: 30%;
   height: 100%;
   background-color: #f2f2f2;
   margin-right: 25rpx;
@@ -68,9 +68,16 @@
   height: 80rpx;
   line-height: 80rpx;
   font-size: 28rpx;
-  border-bottom: 1rpx solid #c6c5c5;
-  display: inline-block;
+  /* border-bottom: 1rpx solid #c6c5c5; */
   text-align: center;
+	overflow: hidden;
+	padding-right: 10rpx;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	word-break: break-all;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	
 }
 
 .nav-active text {
@@ -84,8 +91,8 @@
 }
 
 .catalogueright {
-  width: 78%;
-  margin-left: 25%;
+  width:70%;
+  margin-left: 30%;
 }
 
 .tabcont {
@@ -119,7 +126,7 @@
 }
 
 .title {
-  font-size: 30rpx;
+  font-size: 24rpx;
   color: #000;
   margin-bottom: 10rpx;
   overflow: hidden;
