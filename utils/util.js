@@ -104,7 +104,7 @@ const ajax = opt => {
     complete: function() {}
   });
 };
-const ajaxs = (url, data, success) => {
+const ajaxs = (url, data, success, header='application/x-www-form-urlencoded') => {
   let opt = {};
   opt.url = url;
   opt.data = data;
@@ -123,7 +123,7 @@ const ajaxs = (url, data, success) => {
     method: opt.method,
     header: {
       token: uni.getStorageSync('loginToken'),
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': header
     },
     dataType: 'json',
     success: function(res) {

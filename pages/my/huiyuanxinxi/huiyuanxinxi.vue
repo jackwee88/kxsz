@@ -115,16 +115,16 @@ export default {
         birthday: res.data.birthday,
         mobile: res.data.mobile,
         grade: res.data.grade,
-        province: res.data.province,
-        city: res.data.city,
-        area: res.data.area,
-        region: [res.data.province, res.data.city, res.data.area],
+        province: res.data.provincename,
+        city: res.data.cityname,
+        area: res.data.areaname,
+        region: [res.data.provincename, res.data.cityname, res.data.areaname],
         type: ""
       };
       if (
-        res.data.province == "" ||
-        res.data.province == undefined ||
-        res.data.province == null
+        res.data.provincename == "" ||
+        res.data.provincename == undefined ||
+        res.data.provincename == null
       ) {
         data.region = ["请选择省", "市", "区"];
       }
@@ -229,15 +229,19 @@ export default {
     //保存点击
     sengjibtn() {
       const uploadInfo = this.uploadInfo;
-      console.log(uploadInfo);
-      util.ajaxs("index/xcxProfile", uploadInfo, res => {
-        wx.showToast({
-          title: "更新成功"
-        });
-        // setTimeout(function () {
-        // 	wx.navigateBack({});
-        // }, 1000);
-      });
+      util.ajaxs(
+        "index/xcxProfile",
+        uploadInfo,
+        res => {
+          wx.showToast({
+            title: "更新成功"
+          });
+          // setTimeout(function () {
+          // 	wx.navigateBack({});
+          // }, 1000);
+        },
+        "application/json"
+      );
     },
     getAli() {
       var that = this;
