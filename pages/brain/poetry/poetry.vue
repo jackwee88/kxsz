@@ -1,120 +1,194 @@
 <template>
-<view>
-<view class="page" :style="'background-image: url(' + backgroundImg + ')'">
-  <image src="/static/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:6rpx;" @tap.stop="goBack"></image>
-  <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
-  <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
-  <audio controls loop :src="audio" id="audioID" :action="action"></audio>
-  <text v-if="ids" class="where">第{{ids}}关</text>
-  <text v-else class="where">第1关</text>
-  <view class="topic">
-    <image src="https://kxsx.kaifadanao.cn/assets/img/pig.png" class="pig"></image>
-    <!-- <text style="position:absolute;top:-140rpx;right:46rpx;fint-size:60rpx;color:#8FD6F2;font-weight:bolder" wx:if="{{id}}">{{id}}</text> -->
-    <!-- <text style="position:absolute;top:-120rpx;right:64rpx;fint-size:60rpx;color:#8FD6F2;font-weight:bolder" wx:else>1</text> -->
-    <view class="topic-box" style="float:left;width:17%">
-      <view v-for="(item, index) in topicLeft" :key="index">
-        <view class="item item-has" v-if="item.select == true" :data-select="item.select" @touchstart="clickLeft" :data-k="item.key" :data-index="index" :data-name="item.key">{{item.name}}</view>
-        <view class="item item-none" v-if="item.select == false" @touchstart="clickLeft" :data-k="item.key" :data-index="index" :data-select="item.select" :data-name="item.key">{{item.name}}</view>
+  <view>
+    <view class="page" :style="'background-image: url(' + backgroundImg + ')'">
+      <image
+        src="/static/index/backs1.png"
+        style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:6rpx;"
+        @tap.stop="goBack"
+      />
+      <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
+      <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
+      <text v-if="ids" class="where">第{{ids}}关</text>
+      <text v-else class="where">第1关</text>
+      <view class="topic">
+        <image src="https://kxsx.kaifadanao.cn/assets/img/pig.png" class="pig" />
+        <!-- <text style="position:absolute;top:-140rpx;right:46rpx;fint-size:60rpx;color:#8FD6F2;font-weight:bolder" wx:if="{{id}}">{{id}}</text> -->
+        <!-- <text style="position:absolute;top:-120rpx;right:64rpx;fint-size:60rpx;color:#8FD6F2;font-weight:bolder" wx:else>1</text> -->
+        <view class="topic-box" style="float:left;width:17%">
+          <view v-for="(item, index) in topicLeft" :key="index">
+            <view
+              class="item item-has"
+              v-if="item.select == true"
+              :data-select="item.select"
+              @touchstart="clickLeft"
+              :data-k="item.key"
+              :data-index="index"
+              :data-name="item.key"
+            >{{item.name}}</view>
+            <view
+              class="item item-none"
+              v-if="item.select == false"
+              @touchstart="clickLeft"
+              :data-k="item.key"
+              :data-index="index"
+              :data-select="item.select"
+              :data-name="item.key"
+            >{{item.name}}</view>
+          </view>
+        </view>
+        <canvas
+          style="height:100%;width:64%;background-color:transparent;z-index:1;float:left;"
+          canvas-id="customCanvas"
+          :class="is_canvas?'':'can'"
+        ></canvas>
+        <view class="topic-box" style="float:left;width:17%">
+          <view v-for="(item, index) in topicRight" :key="index">
+            <view
+              class="item item-has"
+              v-if="item.select == true"
+              @touchstart="clickRight"
+              :data-index="index"
+              :data-k="item.key"
+              :data-select="item.select"
+              :data-name="item.key"
+            >{{item.name}}</view>
+            <view
+              class="item item-none"
+              v-if="item.select == false"
+              @touchstart="clickRight"
+              :data-k="item.key"
+              :data-index="index"
+              :data-select="item.select"
+              :data-name="item.key"
+            >{{item.name}}</view>
+          </view>
+        </view>
       </view>
-
-    </view>
-    <canvas style="height:100%;width:64%;background-color:transparent;z-index:1;float:left;" canvas-id="customCanvas" :class="is_canvas?'':'can'"></canvas>
-    <view class="topic-box" style="float:left;width:17%">
-      <view v-for="(item, index) in topicRight" :key="index">
-        <view class="item item-has" v-if="item.select == true" @touchstart="clickRight" :data-index="index" :data-k="item.key" :data-select="item.select" :data-name="item.key">{{item.name}}</view>
-        <view class="item item-none" v-if="item.select == false" @touchstart="clickRight" :data-k="item.key" :data-index="index" :data-select="item.select" :data-name="item.key">{{item.name}}</view>
-      </view>
-    </view>
-
-  </view>
-<image src="/static/img/index/ts.png" style="width:153px;height:65px;position:absolute;top:25%;left:5%;" v-if="sequence"></image>
-  <view class="btn-boxs">
-    <button class="btn share" open-type="share" id="share" style="background-color:transparent;border:none;"></button>
-    <view class="btn level" @tap.stop="showLevel"></view>
-    <view class="btn next" @tap="next" v-if="next_id!=0"></view>
-  </view>
-
-</view>
-
-<block data-type="template" data-is="failItem" data-attr="id:id,failImg:failImg" v-if="is_wrong">
-  <view class="popup">
-    <view class="popupcont"></view>
-    <view class="bg-img bg-fail" :style="'background-image: url(' + failImg + ')'">
-
-
-      <view class="btn-box1 clear">
-        <!-- <view class="exit reset-fail" data-id="{{id}}" bindtap=''></view> -->
-        <button class="exit reset-fail" open-type="share" id="share"></button>
-        <view class="exit reset" :data-id="id" @tap="reset"></view>
-      </view>
-    </view>
-  </view>
-
-</block>
-<block data-type="template" data-is="succItem" data-attr="id:id,succImg:succImg" v-if="is_succ">
-  <view class="popup">
-    <view class="popupcont"></view>
-    <view class="bg-img bg-succ" :style="'background-image: url(' + succImg + ')'">
-
-
-      <view class="btn-box1 clear" style="justify-content:space-around;">
-        <view class="exit reset" :data-id="id" @tap="reset"></view>
-        <view class="exit next" :data-id="id" @tap="next"></view>
-      </view>
-    </view>
-  </view>
-
-</block>
-<block data-type="template" data-is="levelItem" data-attr="levelList:levelList,counts:counts,pageId:pageId" v-if="isLevel">
-  <view class="popup">
-    <view class="popupcont"></view>
-    <view>
-      <image class="prevPage" @tap.stop="prevPage" src="/static/img/index/Arrow_inactive.png" v-if="pageId==0"></image>
-      <image class="prevPage" @tap.stop="prevPage" src="/static/img/index/Arrowicon2.png" v-if="pageId!=0"></image>
-      <image class="nextPage" @tap.stop="nextPage" src="/static/img/index/Arrow_inactives.png" v-if="pageId==counts.length-1"></image>
-      <image class="nextPage" @tap.stop="nextPage" src="/static/img/index/Arrowicon.png" v-if="pageId!=counts.length-1"></image>
-      <view class="bg-img bg-level" @touchstart="touchstart" @touchend="touchend">
-        <!-- <view class="level-item {{item.pass==false?'level-false':''}}" wx:for="{{levelList}}" bindtap='{{item.pass==true&&"toDetail"}}' data-id="{{item.id}}">{{item.id}}</view> -->
-        <view :class="'level-item ' + (item.pass==false?'level-false':'')" v-for="(item, index) in levelList" :key="index" @tap="toDetail" :data-id="item.id">{{item.id}}</view>
-        <view class="cancle" @tap="closeLevel"></view>
-      </view>
-      <view style="position:absolute;bottom:25%;position:absolute;bottom:24%;left:0;right:0;display:flex;justify-content:center;">
-        <view :class="'yuan ' + (pageId==index?'yuan_':'')" v-for="(item, index) in counts" :key="index" @tap="toGetLevel" :data-page="item" :data-index="index"></view>
-
+      <image
+        src="/static/img/index/ts.png"
+        style="width:153px;height:65px;position:absolute;top:25%;left:5%;"
+        v-if="sequence"
+      />
+      <view class="btn-boxs">
+        <button
+          class="btn share"
+          open-type="share"
+          id="share"
+          style="background-color:transparent;border:none;"
+        ></button>
+        <view class="btn level" @tap.stop="showLevel"></view>
+        <view class="btn next" @tap="next" v-if="next_id!=0"></view>
       </view>
     </view>
-  </view>
 
-</block>
-<block data-type="template" data-is="limitItem" data-attr="limitImg:limitImg" v-if="is_limit">
-  <view class="popup">
-    <view class="popupcont"></view>
-    <view class="bg-img bg-limit" :style="'background-image: url(' + limitImg + ')'">
-
-
-      <view class="btn-box1 clear">
-
-        <view class="exit sure" :data-id="id" @tap="exit"></view>
+    <block
+      data-type="template"
+      data-is="failItem"
+      data-attr="id:id,failImg:failImg"
+      v-if="is_wrong"
+    >
+      <view class="popup">
+        <view class="popupcont"></view>
+        <view class="bg-img bg-fail" :style="'background-image: url(' + failImg + ')'">
+          <view class="btn-box1 clear">
+            <!-- <view class="exit reset-fail" data-id="{{id}}" bindtap=''></view> -->
+            <button class="exit reset-fail" open-type="share" id="share"></button>
+            <view class="exit reset" :data-id="id" @tap="reset"></view>
+          </view>
+        </view>
       </view>
-    </view>
-  </view>
-
-</block>
-<block data-type="template" data-is="lastItem" data-attr="lastImg:lastImg" v-if="is_last">
-  <view class="popup">
-    <view class="popupcont"></view>
-    <view class="bg-img last-limit" :style="'background-image: url(' + lastImg + ')'">
-
-
-      <view class="btn-box1 clear">
-
-        <view class="exit last" :data-id="id" @tap="goBack"></view>
+    </block>
+    <block data-type="template" data-is="succItem" data-attr="id:id,succImg:succImg" v-if="is_succ">
+      <view class="popup">
+        <view class="popupcont"></view>
+        <view class="bg-img bg-succ" :style="'background-image: url(' + succImg + ')'">
+          <view class="btn-box1 clear" style="justify-content:space-around;">
+            <view class="exit reset" :data-id="id" @tap="reset"></view>
+            <view class="exit next" :data-id="id" @tap="next"></view>
+          </view>
+        </view>
       </view>
-    </view>
+    </block>
+    <block
+      data-type="template"
+      data-is="levelItem"
+      data-attr="levelList:levelList,counts:counts,pageId:pageId"
+      v-if="isLevel"
+    >
+      <view class="popup">
+        <view class="popupcont"></view>
+        <view>
+          <image
+            class="prevPage"
+            @tap.stop="prevPage"
+            src="/static/img/index/Arrow_inactive.png"
+            v-if="pageId==0"
+          />
+          <image
+            class="prevPage"
+            @tap.stop="prevPage"
+            src="/static/img/index/Arrowicon2.png"
+            v-if="pageId!=0"
+          />
+          <image
+            class="nextPage"
+            @tap.stop="nextPage"
+            src="/static/img/index/Arrow_inactives.png"
+            v-if="pageId==counts.length-1"
+          />
+          <image
+            class="nextPage"
+            @tap.stop="nextPage"
+            src="/static/img/index/Arrowicon.png"
+            v-if="pageId!=counts.length-1"
+          />
+          <view class="bg-img bg-level" @touchstart="touchstart" @touchend="touchend">
+            <!-- <view class="level-item {{item.pass==false?'level-false':''}}" wx:for="{{levelList}}" bindtap='{{item.pass==true&&"toDetail"}}' data-id="{{item.id}}">{{item.id}}</view> -->
+            <view
+              :class="'level-item ' + (item.pass==false?'level-false':'')"
+              v-for="(item, index) in levelList"
+              :key="index"
+              @tap="toDetail"
+              :data-id="item.id"
+            >{{item.id}}</view>
+            <view class="cancle" @tap="closeLevel"></view>
+          </view>
+          <view
+            style="position:absolute;bottom:25%;position:absolute;bottom:24%;left:0;right:0;display:flex;justify-content:center;"
+          >
+            <view
+              :class="'yuan ' + (pageId==index?'yuan_':'')"
+              v-for="(item, index) in counts"
+              :key="index"
+              @tap="toGetLevel"
+              :data-page="item"
+              :data-index="index"
+            ></view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block data-type="template" data-is="limitItem" data-attr="limitImg:limitImg" v-if="is_limit">
+      <view class="popup">
+        <view class="popupcont"></view>
+        <view class="bg-img bg-limit" :style="'background-image: url(' + limitImg + ')'">
+          <view class="btn-box1 clear">
+            <view class="exit sure" :data-id="id" @tap="exit"></view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block data-type="template" data-is="lastItem" data-attr="lastImg:lastImg" v-if="is_last">
+      <view class="popup">
+        <view class="popupcont"></view>
+        <view class="bg-img last-limit" :style="'background-image: url(' + lastImg + ')'">
+          <view class="btn-box1 clear">
+            <view class="exit last" :data-id="id" @tap="goBack"></view>
+          </view>
+        </view>
+      </view>
+    </block>
   </view>
-
-</block>
-</view>
 </template>
 
 <script>
@@ -130,60 +204,66 @@ function unique(arr) {
 export default {
   data() {
     return {
-      lastImg: '',
+      lastImg: "",
       is_last: false,
       sequence: false,
-      succImg: '',
-      failImg: '',
-      limitImg: '',
-      backGroundImg: '',
-      c: '',
+      succImg: "",
+      failImg: "",
+      limitImg: "",
+      backGroundImg: "",
+      c: "",
       pageId: 0,
       levelList: [],
       counts: 0,
       is_succ: false,
       is_limit: false,
-      l: '',
-      r: '',
+      l: "",
+      r: "",
       ansList: [],
-      id: '',
-      next_id: '',
-      curTarL: '',
-      curTarR: '',
-      list: '',
+      id: "",
+      next_id: "",
+      curTarL: "",
+      curTarR: "",
+      list: "",
       objs: {},
-      ctx: '',
+      ctx: "",
       beginX: 0,
       beginY: 0,
       endX: 0,
       endY: 0,
       topicLeft: [],
       topicRight: [],
-      audio: '',
+      audio: "",
       action: {
-        method: 'pause'
+        method: "pause"
       },
-      is_p: false,
-      canvasWidth: '',
-      canvasHeight: '',
+      is_p: true,
+      innerAudioContext: null,
+      canvasWidth: "",
+      canvasHeight: "",
       pagesize: 12,
       page: 1,
       is_canvas: true,
-      ids: '',
+      ids: "",
       nowPgae: 1,
       startX: 0,
       slider: false,
       animationData: {},
-      cardInfoList: [{
-        name: 1
-      }, {
-        name: 2
-      }, {
-        name: 3
-      }, {
-        name: 4
-      }],
-      toIndex: '',
+      cardInfoList: [
+        {
+          name: 1
+        },
+        {
+          name: 2
+        },
+        {
+          name: 3
+        },
+        {
+          name: 4
+        }
+      ],
+      toIndex: "",
       select: false,
       backgroundImg: "",
       is_wrong: false,
@@ -195,13 +275,13 @@ export default {
 
   components: {},
   props: {},
-  onShow: function () {
-    var ctx = wx.createCanvasContext('customCanvas');
-    this.ctx= ctx
+  onShow: function() {
+    var ctx = wx.createCanvasContext("customCanvas");
+    this.ctx = ctx;
   },
 
   onLoad(options) {
-    this.playorpause();
+    this.getAudio();
     this.backGroundImgFun();
     this.succImgFun();
     this.failImgFun();
@@ -209,41 +289,47 @@ export default {
     this.lastImgFun();
 
     if (options.is_share) {
-      this.toIndex= 1
+      this.toIndex = 1;
     }
 
-    var myCanvasWidth = '';
-    var myCanvasHeight = '';
+    var myCanvasWidth = "";
+    var myCanvasHeight = "";
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         myCanvasWidth = res.windowWidth - 56;
         myCanvasHeight = res.windowHeight - 200;
       }
     });
-    this.canvasWidth= myCanvasWidth,
-    this.canvasHeight= myCanvasHeight
-    this.l= '',
-    this.r= '',
-    this.ansList= [],
-    this.curTarL= '',
-    this.curTarR= '',
-    this.list= '',
-    this.objs= {},
-    this.beginX= 0,
-    this.beginY= 0,
-    this.endX= 0,
-    this.endY= 0
+    (this.canvasWidth = myCanvasWidth), (this.canvasHeight = myCanvasHeight);
+    (this.l = ""),
+      (this.r = ""),
+      (this.ansList = []),
+      (this.curTarL = ""),
+      (this.curTarR = ""),
+      (this.list = ""),
+      (this.objs = {}),
+      (this.beginX = 0),
+      (this.beginY = 0),
+      (this.endX = 0),
+      (this.endY = 0);
     this.topicList();
     this.getLevel();
-    
   },
 
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     return {
-      title: '发现一个很好玩的文字游戏，快来跟我一起玩吧！',
-      path: '/pages/brain/poetry/poetry?is_share=1',
-      success: function (res) {}
+      title: "发现一个很好玩的文字游戏，快来跟我一起玩吧！",
+      path: "/pages/brain/poetry/poetry?is_share=1",
+      success: function(res) {}
     };
+  },
+
+  onHide: function() {
+    this.innerAudioContext.pause();
+  },
+  onBackPress() {
+    this.innerAudioContext.destroy();
+    this.innerAudioContext = null;
   },
   methods: {
     //   //绑定出没开始事件，记录起点
@@ -254,7 +340,7 @@ export default {
     //     startY:e.touches[0].y
     //   });
     // },
-    beginCanvas: function () {
+    beginCanvas: function() {
       var that = this;
 
       if (this.ansList.length > 4) {
@@ -262,7 +348,7 @@ export default {
       }
 
       this.ctx.beginPath();
-      this.list.forEach(function (item, index) {
+      this.list.forEach(function(item, index) {
         that.ctx.moveTo(item.beginX, item.beginY);
         that.ctx.lineTo(item.endX, item.endY);
       });
@@ -277,82 +363,60 @@ export default {
     setData(param) {
       for (const key in param) {
         const element = param[key];
-        this[key] = element
+        this[key] = element;
       }
     },
-    // canvasBindMove:function(e){
-    //   var that = this;
-    //   that.setData({
-    //     endX:e.touches[0].x,//重点touches后边一定要加索引[0],不然读取不到坐标
-    //     endY:e.touches[0].y,//重点touches后边一定要加索引[0],不然读取不到坐标
-    //   });
-    //   console.log(e.touches[0].x);//重点touches后边一定要加索引[0],不然读取不到坐标
-    //   //记录上下文
-    //   var context = wx.createContext();
-    //   //设置线条粗细
-    //   context.setLineWidth(4);
-    //   //设置直线的起点
-    //   context.lineTo(that.data.startX, that.data.startY)
-    //   //设置直线的终点
-    //   context.lineTo(that.data.endX, that.data.endY)
-    //   //设置描边，记住画直线一定要设置描边，否则没有图像
-    //   context.stroke()
-    //    wx.drawCanvas({
-    //     canvasId: 1,
-    //     actions: context.getActions()
-    //   });
-    // },
     clickLeft(e) {
       let that = this;
-      this.beginX= 0,
-      this.beginY= e.currentTarget.offsetTop,
-      this.l= e.currentTarget.dataset.name
+      (this.beginX = 0),
+        (this.beginY = e.currentTarget.offsetTop),
+        (this.l = e.currentTarget.dataset.name);
       let index = e.currentTarget.dataset.index;
       let select = e.currentTarget.dataset.select;
       const topicLeft = that.topicLeft;
       let ansLis = this.ansList;
 
       if (ansLis.length == 0) {
-        topicLeft.forEach(function (item, index) {
+        topicLeft.forEach(function(item, index) {
           item.select = false;
         });
-        that.topicLeft= topicLeft
+        that.topicLeft = topicLeft;
       }
 
       if (select == false) {
-        ansLis.forEach(function (k, i) {
+        ansLis.forEach(function(k, i) {
           if (k[0] != e.currentTarget.dataset.k) {
             let selectLis = that.topicLeft;
-            selectLis.forEach(function (key, item) {
+            selectLis.forEach(function(key, item) {
               if (k[0] != key.key) {
                 key.select = false;
               }
             });
-            that.topicLeft= selectLis
+            that.topicLeft = selectLis;
           }
         });
 
         if (this.curTarL == e.currentTarget.dataset.k) {
-          const select = 'topicLeft[' + index + '].select';
-          that[select]= true
+          const select = "topicLeft[" + index + "].select";
+          that[select] = true;
         } else {
-          const select = 'topicLeft[' + index + '].select';
-          that[select]= !topicLeft[index].select
+          const select = "topicLeft[" + index + "].select";
+          that[select] = !topicLeft[index].select;
         }
       } else {
         var flag = false;
-        ansLis.forEach(function (k, i) {
+        ansLis.forEach(function(k, i) {
           if (k[0] == e.currentTarget.dataset.k) {
             flag = true;
           }
         });
 
         if (flag == false) {
-          const select = 'topicLeft[' + index + '].select';
-          that[select]= !topicLeft[index].select
+          const select = "topicLeft[" + index + "].select";
+          that[select] = !topicLeft[index].select;
         } else {
-          const select = 'topicLeft[' + index + '].select';
-          that[select]= true
+          const select = "topicLeft[" + index + "].select";
+          that[select] = true;
           return;
         }
       }
@@ -365,17 +429,17 @@ export default {
           endX: this.endX,
           endY: this.endY
         });
-        let ans = e.currentTarget.dataset.k + '' + this.r;
+        let ans = e.currentTarget.dataset.k + "" + this.r;
         var ansList = [];
         ansList.push(ans);
-        this.list= list.concat(this.list),
-        this.ansList= ansList.concat(this.ansList)
+        (this.list = list.concat(this.list)),
+          (this.ansList = ansList.concat(this.ansList));
         ansList = unique(this.ansList);
-        this.ansList= ansList
+        this.ansList = ansList;
         this.beginCanvas();
       }
 
-      this.curTarL= e.currentTarget.dataset.k
+      this.curTarL = e.currentTarget.dataset.k;
     },
 
     clickRight(e) {
@@ -386,7 +450,7 @@ export default {
       let ansLis = this.ansList;
 
       if (ansLis.length == 0) {
-        topicRight.forEach(function (item, index) {
+        topicRight.forEach(function(item, index) {
           item.select = false;
         });
         that.setData({
@@ -403,10 +467,10 @@ export default {
         //     })
         //   }
         // })
-        ansLis.forEach(function (k, i) {
+        ansLis.forEach(function(k, i) {
           if (k[0] != e.currentTarget.dataset.k) {
             let selectLis = that.topicRight;
-            selectLis.forEach(function (key, item) {
+            selectLis.forEach(function(key, item) {
               if (k[0] != key.key) {
                 key.select = false;
               }
@@ -418,31 +482,31 @@ export default {
         });
 
         if (this.curTarL == e.currentTarget.dataset.k) {
-          const select = 'topicRight[' + index + '].select';
+          const select = "topicRight[" + index + "].select";
           that.setData({
             [select]: true
           });
         } else {
-          const select = 'topicRight[' + index + '].select';
+          const select = "topicRight[" + index + "].select";
           that.setData({
             [select]: !topicRight[index].select
           });
         }
       } else {
         var flag = false;
-        ansLis.forEach(function (k, i) {
+        ansLis.forEach(function(k, i) {
           if (k[0] == e.currentTarget.dataset.k) {
             flag = true;
           }
         });
 
         if (flag == false) {
-          const select = 'topicRight[' + index + '].select';
+          const select = "topicRight[" + index + "].select";
           that.setData({
             [select]: !topicRight[index].select
           });
         } else {
-          const select = 'topicRight[' + index + '].select';
+          const select = "topicRight[" + index + "].select";
           that.setData({
             [select]: true
           });
@@ -464,7 +528,7 @@ export default {
           endX: this.endX,
           endY: this.endY
         });
-        let ans = this.l + '' + e.currentTarget.dataset.k;
+        let ans = this.l + "" + e.currentTarget.dataset.k;
         var ansList = [];
         ansList.push(ans);
         this.setData({
@@ -483,27 +547,31 @@ export default {
       });
     },
 
-    backGroundImgFun: function () {
+    backGroundImgFun: function() {
       var that = this;
-      util.ajaxs('index/getSystem', {
-        type: 9
-      }, res => {
-        that.setData({
-          backgroundImg: res.data
-        });
-      });
+      util.ajaxs(
+        "index/getSystem",
+        {
+          type: 9
+        },
+        res => {
+          that.setData({
+            backgroundImg: res.data
+          });
+        }
+      );
     },
-    reset: function (e) {
+    reset: function(e) {
       let id = e.currentTarget.dataset.id;
       this.topicList();
       this.setData({
         is_wrong: false,
-        currentId: '-1',
+        currentId: "-1",
         is_succ: false
       });
       this.ctx.draw();
     },
-    exit: function () {
+    exit: function() {
       // wx.navigateTo({
       //   url: '/pages/brain/brain',
       // })
@@ -511,21 +579,21 @@ export default {
         delta: 1
       });
     },
-    topicList: function () {
+    topicList: function() {
       let that = this;
 
-      if (wx.getStorageSync('game-pid')) {
+      if (wx.getStorageSync("game-pid")) {
         this.setData({
-          id: wx.getStorageSync('game-pid')
+          id: wx.getStorageSync("game-pid")
         });
       }
 
       var param = {
         id: that.id
       };
-      util.ajaxs('game/ligature', param, res => {
+      util.ajaxs("game/ligature", param, res => {
         if (res.status == 2) {
-          if (res.msg == '今日答题数量已达上限') {
+          if (res.msg == "今日答题数量已达上限") {
             that.setData({
               is_limit: true
             });
@@ -538,7 +606,7 @@ export default {
             });
             let pages = getCurrentPages();
             let prevPage = pages[pages.length - 2];
-            setTimeout(function () {
+            setTimeout(function() {
               wx.navigateBack({
                 delta: 1
               });
@@ -550,12 +618,12 @@ export default {
             sequence: true,
             id: that.ids
           });
-          setTimeout(function () {
+          setTimeout(function() {
             that.setData({
               sequence: false
             });
           }, 2000);
-          wx.setStorageSync('game-pid', that.id);
+          wx.setStorageSync("game-pid", that.id);
           return;
         }
 
@@ -567,30 +635,30 @@ export default {
             id: res.data.id,
             ids: res.data.id
           });
-          wx.setStorageSync('game-pid', res.data.id);
+          wx.setStorageSync("game-pid", res.data.id);
         }
       });
     },
-    answer: function () {
+    answer: function() {
       let that = this;
       var param = {
         is_canvas: false,
         id: this.id,
         answer: that.ansList
       };
-      util.ajaxs('game/ligatureAnswer', param, res => {
+      util.ajaxs("game/ligatureAnswer", param, res => {
         if (res.status == 1) {
           that.setData({
             is_succ: true
           }); // that.topicList()
 
           that.setData({
-            l: '',
-            r: '',
+            l: "",
+            r: "",
             ansList: [],
-            curTarL: '',
-            curTarR: '',
-            list: '',
+            curTarL: "",
+            curTarR: "",
+            list: "",
             objs: {},
             beginX: 0,
             beginY: 0,
@@ -601,12 +669,12 @@ export default {
         } else {
           that.setData({
             is_wrong: true,
-            l: '',
-            r: '',
+            l: "",
+            r: "",
             ansList: [],
-            curTarL: '',
-            curTarR: '',
-            list: '',
+            curTarL: "",
+            curTarR: "",
+            list: "",
             objs: {},
             beginX: 0,
             beginY: 0,
@@ -625,7 +693,7 @@ export default {
         page: this.page,
         page_size: this.pagesize
       };
-      util.ajaxs('game/guanqia', param, res => {
+      util.ajaxs("game/guanqia", param, res => {
         var counts = [];
 
         if (res.status == 1) {
@@ -641,7 +709,8 @@ export default {
             counts: counts,
             c: res.data.count
           });
-        } else {}
+        } else {
+        }
       });
     },
 
@@ -651,8 +720,8 @@ export default {
         is_canvas: true,
         list: [],
         ansList: [],
-        curTarL: '',
-        curTarR: '',
+        curTarL: "",
+        curTarR: "",
         objs: {},
         beginX: 0,
         beginY: 0,
@@ -675,12 +744,12 @@ export default {
       this.setData({
         id: e.currentTarget.dataset.id,
         isLevel: false,
-        ans: '',
-        currentId: '-1',
+        ans: "",
+        currentId: "-1",
         list: [],
         ansList: [],
-        curTarL: '',
-        curTarR: '',
+        curTarL: "",
+        curTarR: "",
         objs: {},
         beginX: 0,
         beginY: 0,
@@ -688,7 +757,7 @@ export default {
         endY: 0,
         is_canvas: true
       });
-      wx.setStorageSync('game-pid', e.currentTarget.dataset.id);
+      wx.setStorageSync("game-pid", e.currentTarget.dataset.id);
       this.topicList();
       this.ctx.draw();
     },
@@ -711,16 +780,16 @@ export default {
       this.setData({
         id: this.next_id
       });
-      wx.setStorageSync('game-pid', this.id);
+      wx.setStorageSync("game-pid", this.id);
       this.topicList();
       this.setData({
         is_succ: false,
-        ans: '',
-        currentId: '-1',
+        ans: "",
+        currentId: "-1",
         list: [],
         ansList: [],
-        curTarL: '',
-        curTarR: '',
+        curTarL: "",
+        curTarR: "",
         objs: {},
         beginX: 0,
         beginY: 0,
@@ -740,29 +809,51 @@ export default {
     },
 
     pause() {
-      this.$audio.pause()
+      this.$audio.pause();
     },
-    playorpause: function () {
-      if (this.$audio.paused) {
-        //若当前是暂停，则点击后播放
-        this.is_p = true
-        this.$audio.play()
-      } else {
-        //若当前是播放，则点击后暂停
-        this.is_p = false;
-        this.$audio.pause()
+    initAudio() {
+      if (this.innerAudioContext != null) {
+        if (this.is_p) {
+          this.innerAudioContext.play();
+        }
+        return;
       }
+      const innerAudioContext = uni.createInnerAudioContext();
+      innerAudioContext.autoplay = true;
+      innerAudioContext.loop = true;
+      innerAudioContext.src = this.audio;
+      innerAudioContext.onCanplay(() => {
+        console.log("可以播放");
+      });
+      this.innerAudioContext = innerAudioContext;
     },
-    initaudio() {
-      if (this.$audio.paused) {
-        //若当前是暂停，则点击后播放
-        this.is_p = false
-      } else {
-        //若当前是播放，则点击后暂停
-        this.is_p = true;
-      }
-    },
+    playorpause: function(e) {
+      var that = this;
 
+      if (this.innerAudioContext.paused) {
+        //若当前是暂停，则点击后播放
+        that.is_p = true;
+        this.innerAudioContext.play();
+      } else {
+        //若当前是播放，则点击后暂停
+        that.is_p = false;
+        this.innerAudioContext.pause();
+      }
+    },
+    getAudio() {
+      let that = this;
+      util.ajax({
+        url: "index/getSystem",
+        data: {
+          type: 8
+        },
+        success: function(res) {
+          uni.hideLoading();
+          that.audio = res.data;
+          that.initAudio();
+        }
+      });
+    },
     goBack() {
       var that = this;
       var actionPause = {
@@ -776,7 +867,7 @@ export default {
 
       if (this.toIndex == 1) {
         wx.switchTab({
-          url: '/pages/index/index'
+          url: "/pages/index/index"
         });
       } else {
         wx.navigateBack({
@@ -810,14 +901,12 @@ export default {
           return;
         }
 
-        ;
         this.setData({
           page: this.page + 1,
           pageId: this.pageId + 1
         });
         this.getLevel();
       } // 上一页
-
 
       if (endX - startX > 30) {
         this.setData({
@@ -832,7 +921,6 @@ export default {
           return;
         }
 
-        ;
         this.setData({
           page: this.page - 1,
           pageId: this.pageId - 1
@@ -847,7 +935,6 @@ export default {
         return;
       }
 
-      ;
       this.setData({
         page: this.page + 1,
         pageId: this.pageId + 1
@@ -861,7 +948,6 @@ export default {
         return;
       }
 
-      ;
       this.setData({
         page: this.page - 1,
         pageId: this.pageId - 1
@@ -871,40 +957,55 @@ export default {
 
     failImgFun() {
       var that = this;
-      util.ajaxs('index/getSystem', {
-        type: 11
-      }, res => {
-        that.failImg= res.data
-      });
+      util.ajaxs(
+        "index/getSystem",
+        {
+          type: 11
+        },
+        res => {
+          that.failImg = res.data;
+        }
+      );
     },
 
     succImgFun() {
       var that = this;
-      util.ajaxs('index/getSystem', {
-        type: 10
-      }, res => {
-        that.succImg= res.data
-      });
+      util.ajaxs(
+        "index/getSystem",
+        {
+          type: 10
+        },
+        res => {
+          that.succImg = res.data;
+        }
+      );
     },
 
     limitImgFun() {
       var that = this;
-      util.ajaxs('index/getSystem', {
-        type: 12
-      }, res => {
-        that.limitImg= res.data
-      });
+      util.ajaxs(
+        "index/getSystem",
+        {
+          type: 12
+        },
+        res => {
+          that.limitImg = res.data;
+        }
+      );
     },
 
     lastImgFun() {
       var that = this;
-      util.ajaxs('index/getSystem', {
-        type: 13
-      }, res => {
-        that.lastImg= res.data
-      });
+      util.ajaxs(
+        "index/getSystem",
+        {
+          type: 13
+        },
+        res => {
+          that.lastImg = res.data;
+        }
+      );
     }
-
   }
 };
 </script>

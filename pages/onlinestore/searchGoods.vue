@@ -61,7 +61,7 @@ export default {
 			};
 			console.log(param);
 			uni.navigateTo({
-				url: '../product-detail/product-detail?productDetail=' + encodeURIComponent(JSON.stringify(param))
+				url: '../product-detail/product-detail?gd_id=' + e.p_id
 			});
 		},
 		searchGoods(){

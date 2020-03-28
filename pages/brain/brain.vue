@@ -1,33 +1,33 @@
 <template>
-<view class="page" :style="'background-image: url(' + backgroundImg + ')'">
-<view>
-  <!-- <view class="bg">
+  <view class="page" :style="'background-image: url(' + backgroundImg + ')'">
+    <view>
+      <!-- <view class="bg">
    
 
-  </view> -->
-  <!-- <view class="text"></view>
-  <view class="children"></view> -->
-  <image src="/static/index/backs1.png" style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:4rpx;" @tap.stop="goBack"></image>
-<view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
-  <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
-  <audio controls loop :src="audio" id="audioID" :action="action"></audio>
-  <view>
-
-    <navigator url="poetry/poetry" style="position:relative" >
-      <image src="https://kxsx.kaifadanao.cn/assets/img/pig.png" class="pig"></image>
-      <view class="btn btn-f" hover-class="wsui-btn__hover_btn" hover-stay-time="3000"></view>
-    </navigator> 
-    <navigator url="./choice/choice" >
-      <view class="btn btn-c" hover-class="wsui-btn__hover_btn1" hover-stay-time="3000"></view>
-    </navigator>
-    <navigator url="./fillBlanks/fillBlanks" >
-      <view class="btn btn-p" hover-class="wsui-btn__hover_btn2" hover-stay-time="3000"></view>
-    </navigator>
-
-
+      </view>-->
+      <!-- <view class="text"></view>
+      <view class="children"></view>-->
+      <image
+        src="/static/index/backs1.png"
+        style="width:84rpx;height:84rpx;position:fixed;top:64rpx;left:4rpx;"
+        @tap.stop="goBack"
+      />
+      <view class="aud" @tap.stop="playorpause" v-if="is_p==false"></view>
+      <view class="audio" @tap.stop="playorpause" v-if="is_p==true"></view>
+      <view>
+        <navigator url="poetry/poetry" style="position:relative">
+          <image src="https://kxsx.kaifadanao.cn/assets/img/pig.png" class="pig" />
+          <view class="btn btn-f" hover-class="wsui-btn__hover_btn" hover-stay-time="3000"></view>
+        </navigator>
+        <navigator url="./choice/choice">
+          <view class="btn btn-c" hover-class="wsui-btn__hover_btn1" hover-stay-time="3000"></view>
+        </navigator>
+        <navigator url="./fillBlanks/fillBlanks">
+          <view class="btn btn-p" hover-class="wsui-btn__hover_btn2" hover-stay-time="3000"></view>
+        </navigator>
+      </view>
+    </view>
   </view>
-</view>
-</view>
 </template>
 
 <script>
@@ -35,13 +35,37 @@ var utils = require("../../utils/util.js");
 export default {
   data() {
     return {
-      backgroundImg: 'https://kxsx.kaifadanao.cn/assets/img/gamebackground.png',
-      imgList: [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 2,, 2, 2, 2, 3, 2, 2, 2, 2],
+      innerAudioContext: null,
+      backgroundImg: "https://kxsx.kaifadanao.cn/assets/img/gamebackground.png",
+      imgList: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        5,
+        4,
+        3,
+        2,
+        2,
+        2,
+        2,
+        ,
+        2,
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        2
+      ],
       action: {
-        method: 'pause'
+        method: "pause"
       },
-      audio: '',
-      is_p: false
+      audio: "",
+      is_p: true
     };
   },
   components: {},
@@ -50,126 +74,106 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     this.backGroundImg();
-
     var _this = this;
-
     uni.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         let nav_top = res.statusBarHeight;
 
-        if (res.platform.toLowerCase() == 'android') {
+        if (res.platform.toLowerCase() == "android") {
           nav_top += 4;
         }
       }
     });
     this.getAudio();
-    this.playorpause();
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function (e) {
-    
+  onHide: function() {
+    this.innerAudioContext.pause();
+  },
+  onBackPress() {
+    this.innerAudioContext.destroy();
+    this.innerAudioContext = null;
   },
   methods: {
-    getData: function () {
+    getData: function() {
       let pramp = {
         answer: _this.answer
       };
     },
-    playorpause: function (e) {
+    initAudio() {
+      if (this.innerAudioContext != null) {
+        if (this.is_p) {
+          this.innerAudioContext.play();
+        }
+        return;
+      }
+      const innerAudioContext = uni.createInnerAudioContext();
+      innerAudioContext.autoplay = true;
+      innerAudioContext.loop = true;
+      innerAudioContext.src = this.audio;
+      innerAudioContext.onCanplay(() => {
+        console.log("可以播放");
+      });
+      this.innerAudioContext = innerAudioContext;
+    },
+    playorpause: function(e) {
       var that = this;
-      var actionPlay = {
-        method: "play"
-      }; //定义播放
 
-      var actionPause = {
-        method: "pause"
-      }; //定义暂停
-
-      if (that.action.method == "pause") {
+      if (this.innerAudioContext.paused) {
         //若当前是暂停，则点击后播放
-        that.action = actionPlay
-        that.is_p = true
+        that.is_p = true;
+        this.innerAudioContext.play();
       } else {
         //若当前是播放，则点击后暂停
-        that.action = actionPause
-        that.is_p = false
+        that.is_p = false;
+        this.innerAudioContext.pause();
       }
     },
 
     getAudio() {
       let that = this;
       utils.ajax({
-        url: 'index/getSystem',
+        url: "index/getSystem",
         data: {
           type: 8
         },
-        success: function (res) {
+        success: function(res) {
           uni.hideLoading();
-          that.audio = res.data.data
+          that.audio = res.data;
+          that.initAudio();
         }
       });
     },
 
     goBack() {
       var that = this;
-      var actionPause = {
-        method: "pause"
-      }; //定义暂停
-
-      this.action= actionPause,
-        this.is_p=false
       uni.navigateBack({
-          delta: 1
+        delta: 1
       });
     },
 
     to(e) {
       utils.ajax({
-        url:'index/getProfile', 
-        data:{}, 
-        success:res => {
+        url: "index/getProfile",
+        data: {},
+        success: res => {
           var that = this;
           var actionPause = {
             method: "pause"
           }; //定义暂停
 
-          this.action= actionPause,
-          this.is_p= false
+          (this.action = actionPause), (this.is_p = false);
           let url = e.currentTarget.dataset.url;
           wx.navigateTo({
             url: url
@@ -178,19 +182,19 @@ export default {
       });
     },
 
-    backGroundImg: function () {
+    backGroundImg: function() {
       var that = this;
       utils.ajax({
-        url: 'index/getSystem',
+        url: "index/getSystem",
         data: {
           type: 8
         },
-        success: function (res) {
-          this.backgroundImg = res.data
+        success: function(res) {
+          this.backgroundImg = res.data;
         }
       });
     },
-    setStorageSync: function (k, v, time) {
+    setStorageSync: function(k, v, time) {
       uni.setStorageSync(k, v);
       var t = time ? time : 24;
       var seconds = parseInt(t * 3600);
@@ -203,7 +207,7 @@ export default {
         uni.removeStorageSync(k + postfix);
       }
     },
-    getStorageSync: function (k, def) {
+    getStorageSync: function(k, def) {
       var deadtime = parseInt(uni.getStorageSync(k + postfix));
 
       if (deadtime) {

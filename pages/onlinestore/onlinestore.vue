@@ -49,7 +49,7 @@
 			<view class="limitedTime">
 				<image src="../../static/onlineStore/xsms.png" style="width: 150rpx;height: 98rpx;" mode="aspectFit"></image>
 				<view class="flex">
-					<text style="font-size: 24rpx;" @tap="xsmsDetails" :data-id="flashSale.p_id" :data-hour="hour" :data-minute="minute" :data-second="second">{{ flashSale.p_name }}</text>
+					<text style="font-size: 24rpx;" @tap="xsmsDetails(flashSale.p_id)" :data-id="flashSale.p_id" :data-hour="hour" :data-minute="minute" :data-second="second">{{ flashSale.p_name }}</text>
 					<text class="red">时间仅剩</text>
 					<uni-countdown backgroundColor="#545458" color="#ffffff" :hour="hour" :minute="minute" :second="second" :showDay="false"></uni-countdown>
 				</view>
@@ -58,7 +58,7 @@
 			<view class="recommend-banner">
 				<swiper previous-margin="96rpx" circular="true" next-margin="360rpx">
 					<swiper-item class="flex" v-for="(item, index) in productList" :key="index">
-						<view class="banner-item" :data-id="item.p_id" @tap.stop="gotoDetails">
+						<view class="banner-item" :data-id="item.p_id" @tap.stop="gotoDetails(item.p_id)">
 							<image class="banner-icon" :src="item.image" />
 							<view class="goods-price">¥{{ item.price }}</view>
 						</view>
@@ -70,7 +70,7 @@
 			<!-- 商品推荐 -->
 			<view class="recommend-footer">
 				<view class="recommend-list" v-for="(item, index) in joinAssembleList" :key="index">
-					<view class="uni-product" @tap.stop="gotoDetails" :data-id="item.goods.p_id">
+					<view class="uni-product" @tap.stop="gotoDetails(item.goods.p_id)" :data-id="item.goods.p_id">
 						<view class="image-view">
 							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
 							<image :src="item.goods.icon" style="width:220rpx ;height: 200rpx;" mode="aspectFit"></image>
@@ -96,7 +96,7 @@
 					<view class="uni-ruler" v-for="(item, index) in productList" :key="index">
 						<view class="image-ruler">
 							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
-							<image :src="item.image" style="width:330rpx ;height: 350rpx;" :data-id="item.p_id" @tap.stop="gotoDetails"></image>
+							<image :src="item.image" style="width:330rpx ;height: 350rpx;" :data-id="item.p_id" @tap.stop="gotoDetails(item.p_id)"></image>
 						</view>
 						<view class="goods-detail">
 							<view class="uni-product-title">{{ item.p_name }}</view>
@@ -205,13 +205,9 @@ export default {
 			});
 		},
 		// 秒杀详情
-		xsmsDetails: function(e) {
-			let param = {
-				id: e.currentTarget.dataset.id
-			};
-			// console.log(param)
+		xsmsDetails: function(id) {
 			uni.navigateTo({
-				url: '../product-detail/product-detail?productDetail=' + encodeURIComponent(JSON.stringify(param))
+				url: '../product-detail/product-detail?gd_id=' + id
 			});
 		},
 		getData() {
@@ -300,14 +296,9 @@ export default {
 				}
 			});
 		},
-		gotoDetails: function(e) {
-			let param = {
-				// id: e.goods.p_id
-				p_id:e.currentTarget.dataset.p_id
-			};
-			console.log(param);
+		gotoDetails: function(id) {
 			uni.navigateTo({
-				url: '../product-detail/product-detail?productDetail=' + encodeURIComponent(JSON.stringify(param))
+				url: '../product-detail/product-detail?gd_id=' + id
 			});
 		},
 		getHotGoods() {

@@ -331,13 +331,14 @@ export default {
 		};
 	},
 	onLoad(event) {
-		this.banner = JSON.parse(decodeURIComponent(event.productDetail));
-		console.log(this.banner);
-		if(this.banner.p_id){
-			this.pid = this.banner.id
-		}else{
-			this.pid = this.banner.id;
-		}
+		// this.banner = JSON.parse(decodeURIComponent(event.gd_id));
+		// console.log(this.banner);
+		// if(this.banner.p_id){
+		// 	this.pid = this.banner.id
+		// }else{
+		// 	this.pid = this.banner.id;
+		// }
+		this.pid = event.gd_id
 		this.getData();
 		this.getEvaluateList();
 	},

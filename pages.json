@@ -352,14 +352,10 @@
 		}, {
 			"path": "pages/brain/brain",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "大脑开发"
 			}
-		}, {
-			"path": "pages/brain/poetry/poetry",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
+		},{
 			"path": "pages/brain/choice/choice",
 			"style": {
 				"navigationStyle": "custom",
@@ -576,10 +572,6 @@
             "style": {
             	"navigationStyle":"custom"
             }
-        }
-        ,{
-            "path" : "cityPartner/cityPartner",
-            "style" : {}
         }
     ],
 
