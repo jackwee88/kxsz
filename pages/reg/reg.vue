@@ -35,7 +35,7 @@
 							<picker mode="selector" :range="arrayClass" class="" @change="bindClassChange">
 								<text class="itemtitle">班级</text>
 								<view class="picker text">
-									{{arrayClass[uploadInfo.classClass]}}
+									{{arrayClass[uploadInfo.class]}}
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</picker>
@@ -65,7 +65,7 @@
 						<view class="code-item">
 							<text class="codetxt">验证码</text>
 							<input type="text" value="" class="code" maxlength="6" />
-							<text v-if="second == ''" class="get_code" @click="getcode">获取验证码</text>
+							<text v-if="second == ''||second==0" class="get_code" @click="getcode">获取验证码</text>
 							<text v-else class="get_code">{{ second }}s</text>
 						</view>
 						<view class="lijishengji">
@@ -96,7 +96,7 @@
 				      uploadInfo: {
 				        username: '',
 				        mobile: '',
-								class:'',
+						class:'',
 				        grade: '',
 				        province: '',
 				        city: '',
@@ -224,8 +224,8 @@
       //   return false;
       // }
 
-      util.ajax('/api/index/registerProfile', uploadInfo, res => {
-        if (res.status == 1) {
+     ajax({url:'/index/registerProfile', data:uploadInfo,success:(res)  => {
+        if (res.data.status == 1) {
           wx.showToast({
             title: '成功',
             icon: 'none',
@@ -233,7 +233,7 @@
           });
         } else {
           wx.showToast({
-            title: res.msg,
+            title: res.data.msg,
             icon: 'none',
             mask: 'true'
           });
@@ -247,7 +247,7 @@
             delta: 1
           });
         }, 1000);
-      });
+      }});
     },
 bindCityChange(e) {
 			this.uploadInfo.province= e.checkArr[0];
@@ -256,23 +256,35 @@ bindCityChange(e) {
 			this.uploadInfo.region=e.checkArr;
 		},
     getcode: function (e) {
-      var phone = this.uploadInfo.mobile;
+		var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+		      if (!myreg.test(this.uploadInfo.mobile)) {
+		        this.loading = false;
+		        uni.showModal({
+		        	title:'错误',
+					content:'请输入正确的手机号'
+		        })
+		      }else{
+			let _self=this
+			let s=60
+			let stime=setInterval(function(){
+				s--;
+				if(s==0){
+					_self.second=''
+					clearInterval(stime)
+				}else{
+					_self.second=s
+				}
+			},1000)
+			var that = this;
+			ajax({url:'user/sendUpgradeMembershipCode', data:{
+			  mobile: this.uploadInfo.mobile
+			}, success:(res) => {
+			  if (res.data.status == '1') {
+			    that.countdown();
+			  }
+			}});
 
-      if (!phone) {
-        wx.showToast({
-          title: '请输入手机号',
-          icon: 'none'
-        });
-      } else {
-        var that = this;
-        util.ajax('/api/user/sendUpgradeMembershipCode', {
-          mobile: phone
-        }, res => {
-          if (res.status == '1') {
-            that.countdown();
-          }
-        });
-      }
+		}	
     },
 
     codeChange(e) {
@@ -290,22 +302,17 @@ bindCityChange(e) {
 
       if (second == 0) {
         // console.log("Time Out...");
-        that.setData({
-          selected: false,
-          selected1: true,
-          second: 60,
-          nullHouse1: false,
-          nullHouse2: true
-        });
-        return;
+          this.selected= false,
+          this.selected1= true,
+          this.second= 60,
+          this.nullHouse1= false,
+          this.nullHouse2= true
       }
 
       var time = setTimeout(function () {
-        that.setData({
-          second: second - 1,
-          nullHouse1: true,
-          nullHouse2: false
-        });
+          this.second=second - 1,
+          this.nullHouse1= true,
+          this.nullHouse2= false
         that.countdown();
       }, 1000);
     },
@@ -330,11 +337,9 @@ bindCityChange(e) {
       var that = this;
       var school = this.school;
       var id = that.school[e.detail.value].id;
-      this.setData({
-        school_index: Number(e.detail.value),
-        'uploadInfo.school': id,
-        mySchool: school[Number(e.detail.value)].school_name
-      });
+        this.school_index= Number(e.detail.value),
+        this.uploadInfo.school= e.detail.value,
+        this.mySchool=school[Number(e.detail.value)].school_name
     },
 		toggleTab() {
 			this.$refs.region.show();
