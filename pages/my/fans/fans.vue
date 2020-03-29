@@ -86,10 +86,10 @@ export default {
 			     method: 'POST',
 			     success: (res) =>{
 						 if(res.data.status==1){
-							 this.myFansList.type='only'
+							 this.myFansList[index].type ='only'
 						 }else if(res.data.status==2){
 							 console.log(res.data.msg)
-							 this.myFansList.type= 'mutual'
+							 this.myFansList[index].type = 'mutual'
 						 }
 						 this.getdata()
 			     },

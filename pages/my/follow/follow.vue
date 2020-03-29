@@ -15,17 +15,13 @@
 						<view class="name">{{item.nickname}}</view>
 						<view class="account">开心号：{{item.number}}</view>
 					</view>
-					<view class="btn had_btn" v-if="item.type == 'only'" @tap="follow" :data-id="item.id" :data-index="index">
+					<view class="btn" v-if="item.type == 'only'" @tap="follow" :data-id="item.id" :data-index="index">
 						<image src="../../../static/my/ygz.png" class="ygz"  ></image>
 						取消关注
 					</view>
-					<view class="btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index">
+					<view class="btn had_btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index">
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
-					</view>
-					<view class="btn" v-if="item.type == 'mutual'" @tap="follow" :data-id="item.id" :data-index="index">
-						<image src="../../../static/my/hxgz" class="ygz"></image>
-						相互关注
 					</view>
 				</view>
 			</view>
@@ -69,31 +65,7 @@ export default {
 				url: '../../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
-		// var that = this;
-		
-		// 	const index = e.currentTarget.dataset.index;
-		// 	const dy_id = e.currentTarget.dataset.dy_id;
-		// 	console.log('123' + dy_id);
-		// 	ajax({
-		// 		url: 'study/praiseStudy',
-		// 		data: {
-		// 			dy_id: dy_id
-		// 		},
-		// 		success: res => {
-		// 			const daily = that.studylist;
-		// 			const is_give = 'daily[' + index + '].is_give';
-		// 			const thumbs_times = 'daily[' + index + '].thumbs_times';
-		// 			if (res.data.data.is_ok == true) {
-		// 				(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times + 1);
-		// 				uni.showToast({
-		// 					title: '点赞成功',
-		// 					icon: 'none'
-		// 				});
-		// 			} else {
-		// 				(this.studylist[index].is_give = !daily[index].is_give), (this.studylist[index].thumbs_times = daily[index].thumbs_times - 1);
-		// 			}
-		// 		}
-		// 	});
+
 		
 		follow(e){
 			// let type = e.type
@@ -109,11 +81,12 @@ export default {
 						 if(res.data.status==1){
 							 console.log(index)
 							 console.log(res.data.msg)
-							 this.myFriendList[index].type='only'	
+							 this.myFriendList[index].type='none'	
 							 console.log(this.myFriendList[index].type)
 						 }else if(res.data.status==2){
 							 console.log(res.data.msg)
-							 this.myFriendList[index].type='none'
+							 this.myFriendList[index].type='only'
+							 console.log(this.myFriendList[index].type)
 						 }
 						 // this.getData()
 			     },
