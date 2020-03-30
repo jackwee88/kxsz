@@ -1,72 +1,119 @@
 <template>
-<view>
-<view v-if="carts.length != 0">
-  <view class="cart-box">
-    <!-- wx:for 渲染购物车列表 -->
-    <view v-for="(item, index) in carts" :key="index" class="shopcartitem">
-
-      <!-- wx:if 是否选择显示不同图标 -->
-      <view class="rodio">
-        <icon v-if="item.selected" type="success" color="#48DB8D" size="20" @tap="selectList" :data-index="index"></icon>
-        <icon v-else type="circle" size="20" @tap="selectList" :data-index="index"></icon>
-      </view>
-
-      <!-- 点击商品图片可跳转到商品详情 -->
-      <view class="sahngpin">
-        <view class="left floctcont">
-          <view :data-p_id="item.p_id" @tap="details" class="navigator">
-            <image class="cart-thumb" :src="item.goods_sku.spec_image?item.goods_sku.spec_image:item.goods.image" mode="scaleToFill"></image>
+  <view>
+    <view v-if="carts.length != 0">
+      <view class="cart-box">
+        <!-- wx:for 渲染购物车列表 -->
+        <view v-for="(item, index) in carts" :key="index" class="shopcartitem">
+          <!-- wx:if 是否选择显示不同图标 -->
+          <view class="rodio">
+            <icon
+              v-if="item.selected"
+              type="success"
+              color="#48DB8D"
+              size="20"
+              @tap="selectList"
+              :data-index="index"
+            ></icon>
+            <icon v-else type="circle" size="20" @tap="selectList" :data-index="index"></icon>
           </view>
-        </view>
-        <view class="right floctcont">
-          <text class="itemtitle" :data-p_id="item.goods.p_id" @tap="details">{{item.goods.p_name}}</text>
-          <!-- <text class='haoping' data-p_id="{{item.p_id}}" bindtap='details'>999+好评爆款{{item.haoping}}</text> -->
-          <!-- 删除按钮 -->
-          <image @tap="deleteList" :data-ct_id="item.ct_id" :data-index="index" class="deleteimg" src="/static/img/onlinestore/delete.png"></image>
-          <!-- 增加减少数量按钮 -->
-          <text class="price sku" style="color:#999;font-size:26rpx;">{{item.goods_sku.goods_attr}}</text>
-          <view style="position:relative;margin-top:10rpx;height:60rpx;">
-            <text class="price">￥{{item.goods_sku.goods_price}}</text>
-            <view class="numbtn">
-              <text @tap="minusCount" class="jiannun numbtncont" :data-ct_id="item.ct_id" :data-index="index">-</text>
-              <input class="numbtncont num" type="number" :data-ct_id="item.ct_id" :value="item.quantity" @input="changeNum" :data-index="index" :data-coupon_price="item.coupon_price" min="1"></input>
-              <text @tap="addCount" catchlongtap="addnum" class="addnum numbtncont" :data-ct_id="item.ct_id" :data-index="index">+</text>
+
+          <!-- 点击商品图片可跳转到商品详情 -->
+          <view class="sahngpin">
+            <view class="left floctcont">
+              <view @tap="details(item.goods_id)" class="navigator">
+                <image
+                  class="cart-thumb"
+                  :src="item.goods_sku.spec_image?item.goods_sku.spec_image:item.goods.image"
+                  mode="scaleToFill"
+                />
+              </view>
+            </view>
+            <view class="right floctcont">
+              <text class="itemtitle" @tap="details(item.goods.p_id)">{{item.goods.p_name}}</text>
+              <!-- <text class='haoping' data-p_id="{{item.p_id}}" bindtap='details'>999+好评爆款{{item.haoping}}</text> -->
+              <!-- 删除按钮 -->
+              <image
+                @tap="deleteList"
+                :data-ct_id="item.ct_id"
+                :data-index="index"
+                class="deleteimg"
+                src="/static/img/onlinestore/delete.png"
+              />
+              <!-- 增加减少数量按钮 -->
+              <text
+                class="price sku"
+                style="color:#999;font-size:26rpx;"
+              >{{item.goods_sku.goods_attr}}</text>
+              <view style="position:relative;margin-top:10rpx;height:60rpx;">
+                <text class="price">￥{{item.goods_sku.goods_price}}</text>
+                <view class="numbtn">
+                  <text
+                    @tap="minusCount"
+                    class="jiannun numbtncont"
+                    :data-ct_id="item.ct_id"
+                    :data-index="index"
+                  >-</text>
+                  <input
+                    class="numbtncont num"
+                    type="number"
+                    :data-ct_id="item.ct_id"
+                    :value="item.quantity"
+                    @input="changeNum"
+                    :data-index="index"
+                    :data-coupon_price="item.coupon_price"
+                    min="1"
+                  />
+                  <text
+                    @tap="addCount"
+                    catchlongtap="addnum"
+                    class="addnum numbtncont"
+                    :data-ct_id="item.ct_id"
+                    :data-index="index"
+                  >+</text>
+                </view>
+              </view>
             </view>
           </view>
-
         </view>
       </view>
+      <view class="whiteView"></view>
+      <!-- 底部操作栏 -->
+      <view class="shopcart_bottom">
+        <view style="float:left">
+          <icon
+            v-if="selectAllStatus"
+            type="success_circle"
+            size="20"
+            class="quanxuanicon"
+            color="#48DB8D"
+            @tap="selectAll"
+          ></icon>
+          <icon
+            v-else
+            type="circle"
+            class="quanxuanicon"
+            size="20"
+            color="#CACACA"
+            @tap="selectAll"
+          ></icon>
+          <text class="quanxuan" @tap="selectAll">全选</text>
+        </view>
+        <!-- 总价 -->
+        <text class="zongjia">总计：￥{{totalPrice}}</text>
+        <button class="jiesuanbtn" @tap="orderDown">结算</button>
+      </view>
     </view>
-  </view>
-  <view class="whiteView">
-  </view>
-  <!-- 底部操作栏 -->
-  <view class="shopcart_bottom">
-  
-    <view style="float:left">
-      <icon v-if="selectAllStatus" type="success_circle" size="20" class="quanxuanicon" color="#48DB8D" @tap="selectAll"></icon>
-      <icon v-else type="circle" class="quanxuanicon" size="20" color="#CACACA" @tap="selectAll"></icon>
-      <text class="quanxuan" @tap="selectAll">全选</text>
+    <view v-if="carts.length==0" class="none">
+      <image src="/static/my/wujieguo.png" class="wujieguo" />
+      <view class="none none-text">购物车空空如也</view>
     </view>
-    <!-- 总价 -->
-    <text class="zongjia">总计：￥{{totalPrice}}</text>
-    <button class="jiesuanbtn" @tap="orderDown">结算</button>
+
+    <template is="toTop"></template>
   </view>
-</view>
-<view v-if="carts.length==0" class="none">
-  <image src="/static/my/wujieguo.png" class="wujieguo"></image>
-  <view class="none none-text">购物车空空如也</view>
-</view>
-
-
-
-
-<template is="toTop"></template>
-</view>
 </template>
 
 <script>
-const util = require('../../utils/util')
+const util = require("../../utils/util");
 
 export default {
   data() {
@@ -94,19 +141,19 @@ export default {
     // if (uni.getStorageSync("modelType") == 1) {
     //   app.shopModel()
     // }
-    this.page= 1,
-    this.carts= [],
-    this.count= 1,
-    this.selectAllStatus= false,
-    this.totalPrice= 0
+    (this.page = 1),
+      (this.carts = []),
+      (this.count = 1),
+      (this.selectAllStatus = false),
+      (this.totalPrice = 0);
     this.getData();
   },
 
-  onLoad: function (options) {
-    this.selectAllStatus= false
+  onLoad: function(options) {
+    this.selectAllStatus = false;
   },
-  onReachBottom: function () {
-    this.page= that.page // carts: [],
+  onReachBottom: function() {
+    this.page = that.page; // carts: [],
     this.getData();
   },
   methods: {
@@ -123,8 +170,7 @@ export default {
         }
       }
 
-      this.carts= carts,
-      this.totalPrice= total.toFixed(2)
+      (this.carts = carts), (this.totalPrice = total.toFixed(2));
     },
 
     selectList(e) {
@@ -137,19 +183,19 @@ export default {
       carts[index].selected = !selected; // 改变状态
 
       let selectAll = true;
-      carts.forEach(function (item, index, arrSelf) {
+      carts.forEach(function(item, index, arrSelf) {
         if (item.selected == false) {
           selectAll = false;
         }
       });
 
       if (selectAll) {
-        this.selectAllStatus= true
+        this.selectAllStatus = true;
       } else {
-        this.selectAllStatus= false
+        this.selectAllStatus = false;
       }
 
-      this.carts= carts
+      this.carts = carts;
       this.getTotalPrice(); // 重新获取总价
     },
 
@@ -163,8 +209,7 @@ export default {
         carts[i].selected = selectAllStatus; // 改变所有商品状态
       }
 
-      this.selectAllStatus= selectAllStatus,
-      this.carts= carts
+      (this.selectAllStatus = selectAllStatus), (this.carts = carts);
       this.getTotalPrice(); // 重新获取总价
     },
 
@@ -182,14 +227,14 @@ export default {
         quantity: quantity
       };
       util.ajax({
-		  url:'cart/edit', 
-		  data: param, 
-		  success: res => {
-		    carts[index].quantity = quantity;
-		    that.carts= carts
-		    that.getTotalPrice();
-		  }
-	  });
+        url: "cart/edit",
+        data: param,
+        success: res => {
+          carts[index].quantity = quantity;
+          that.carts = carts;
+          that.getTotalPrice();
+        }
+      });
     },
 
     // 减少数量
@@ -211,14 +256,14 @@ export default {
         quantity: quantity
       };
       util.ajax({
-		  url: 'cart/edit', 
-		  data:param,
-		  success: res => {
-		    carts[index].quantity = quantity;
-		    that.carts= carts
-		    that.getTotalPrice();
-		  }
-	  });
+        url: "cart/edit",
+        data: param,
+        success: res => {
+          carts[index].quantity = quantity;
+          that.carts = carts;
+          that.getTotalPrice();
+        }
+      });
     },
 
     deleteList(e) {
@@ -231,18 +276,18 @@ export default {
       }; ///api/cart/del
 
       util.ajax({
-		  url:'cart/del', 
-		  data:param,
-		  success:res => {
-		    carts.splice(index, 1); // 删除购物车列表里这个商品
-		  
-		    uni.showToast({
-		      title: '删除成功'
-		    });
-		    that.carts= carts
-		    this.getTotalPrice();
-		  }
-	  });
+        url: "cart/del",
+        data: param,
+        success: res => {
+          carts.splice(index, 1); // 删除购物车列表里这个商品
+
+          uni.showToast({
+            title: "删除成功"
+          });
+          that.carts = carts;
+          this.getTotalPrice();
+        }
+      });
       this.getTotalPrice(); // if (!carts.length) { // 如果购物车为空
       //   this.setData({
       //     hasList: false // 修改标识为false，显示购物车为空页面
@@ -261,43 +306,42 @@ export default {
 
       if (that.count < that.page) {
         uni.showToast({
-          title: '暂无更多信息'
+          title: "暂无更多信息"
         });
       } else {
         util.ajax({
-          url:'cart/index', 
-          data:param,
-          success:res => {
+          url: "cart/index",
+          data: param,
+          success: res => {
             var carts = that.carts;
-            that.page= that.page + 1,
-            that.count= res.data.count > 1 ? res.data.count : 1,
-            that.carts= carts.concat(res.data.list)
+            (that.page = that.page + 1),
+              (that.count = res.data.count > 1 ? res.data.count : 1),
+              (that.carts = carts.concat(res.data.list));
             uni.stopPullDownRefresh();
           }
         });
       }
     },
 
-    details(e) {
-      const p_id = e.currentTarget.dataset.p_id;
+    details(p_id) {
       uni.navigateTo({
-        url: '/pages/onlinestore/productDetail/productDetail?p_id=' + p_id
+        url: "/pages/product-detail/product-detail?gd_id=" + p_id
       });
     },
 
-    changeNum: function (e) {
+    changeNum: function(e) {
       var that = this;
       const index = e.currentTarget.dataset.index;
       const coupon_price = e.currentTarget.dataset.coupon_price;
       let carts = that.carts;
       carts[index].quantity = e.detail.value; // var new_tol = e.detail.value * coupon_price
 
-	  this.carts= carts
-	   // if (carts[index].quantity <= 0) {
+      this.carts = carts;
+      // if (carts[index].quantity <= 0) {
       //   carts[index].quantity = 1
       //   that.setData({
       //     carts: carts,
-      //   })  
+      //   })
       // }
 
       const ct_id = e.currentTarget.dataset.ct_id;
@@ -307,8 +351,10 @@ export default {
         quantity: e.detail.value
       };
       util.ajax({
-		  url:'cart/edit', data:param,success:res => {}
-	  });
+        url: "cart/edit",
+        data: param,
+        success: res => {}
+      });
       that.getTotalPrice(); // util.ajax('/api/cart/edit', param, res => {
       // })
     },
@@ -321,8 +367,8 @@ export default {
 
       if (that.totalPrice <= 0) {
         uni.showToast({
-          title: '请至少选择一个商品',
-          icon: 'none'
+          title: "请至少选择一个商品",
+          icon: "none"
         });
         return;
       }
@@ -335,16 +381,25 @@ export default {
         }
       }
 
-      var ct_id = selectGoods.join(',');
+      var ct_id = selectGoods.join(",");
 
       if (ct_id) {
+        // uni.navigateTo({
+        //   url: './sureorder/sureorder?type=2&ids=' + ct_id
+        // });
+        let param = {
+          type: 2,
+          ids: ct_id
+        };
         uni.navigateTo({
-          url: './sureorder/sureorder?type=2&ids=' + ct_id
+          url:
+            "/pages/product-detail/sureOrder/sureOrder?sureOrder=" +
+            encodeURIComponent(JSON.stringify(param))
         });
       } else {
         uni.showToast({
-          title: '请至少选择一个商品',
-          icon: 'none'
+          title: "请至少选择一个商品",
+          icon: "none"
         });
       } // util.ajax('/api/cart/index', param, res => {
       // })
@@ -352,7 +407,6 @@ export default {
       //   carts: carts,
       //   totalPrice: total.toFixed(2)
       // });
-
     },
 
     toTop(e) {
@@ -362,7 +416,6 @@ export default {
         duration: 0
       });
     }
-
   }
 };
 </script>

@@ -463,8 +463,6 @@ export default {
 				}
 			if (this.now_buy == 1) {
 				console.log(this.remarks);
-
-				
 				var param = {
 					ct_id: this.ct_id,
 					p_id: this.goods[0].p_id,
@@ -472,7 +470,7 @@ export default {
 					score: this.selected_integral,
 					cp_id: this.discount,
 					quantity: this.buy_num,
-					invoiceArr: uni.getStorageSync('invoiceArr'),
+					invoiceArr: JSON.stringify(uni.getStorageSync('invoiceArr')),
 					account: account,
 					account_type: account_type,
 					goods_sku_id: that.goods_sku_id,
@@ -487,7 +485,7 @@ export default {
 					ar_id: this.address.ar_id,
 					score: this.selected_integral,
 					cp_id: this.discount,
-					invoiceArr: this.invoiceArr,
+					invoiceArr: JSON.stringify(this.invoiceArr),
 					account: this.invoiceArr.content,
 					account_type: this.invoiceArr.acc_type,
 					goods_sku_id: that.goods_sku_id,
@@ -500,6 +498,9 @@ export default {
 				ajax({
 					url: 'goods/downOrder',
 					data: param,
+					header: {
+						'content-type': 'application/json'
+					},
 					success: (res) => {
 							this.order_id=res.data.order_id
 						ajax({
@@ -537,6 +538,9 @@ export default {
 				ajax({
 					url:'goods/downOrder', 
 					data:param, 
+					header: {
+						'content-type': 'application/json'
+					},
 					success:(res) => {
 						console.log(res)
 					if (res.status == 2) {
