@@ -1,6 +1,5 @@
 <template>
   <view>
-    <!--pages/studySquare/studySquare.wxml-->
 
     <view class="studySquare">
       <!-- <view class="tabbox">
@@ -19,7 +18,6 @@
     <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
       <text>更多</text>
       <image src="/img/studySquare/more.png">
-      <view class="drop" wx:if="{{show}}">
         <navigator url='/pages/shuhuajs/shuhuajs'>
           <view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view>
         </navigator>
@@ -66,7 +64,6 @@
         <!-- <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
       <text>更多</text>
       <image src="/img/studySquare/more.png">
-      <view class="drop" wx:if="{{show}}">
         <navigator url='/pages/shuhuajs/shuhuajs'>
           <view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view>
         </navigator>
@@ -316,17 +313,6 @@ export default {
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {},
-  // init:function() {
-  //   var that = this;
-  //   var myobject= {
-  //     type :1
-  //   }
-  //   util.ajax('/api/study/studyList',myobject,res=>{
-  //     that.setData({
-  //       studylist:res.data.list
-  //     })
-  //   })
-  // },
 
   /**
    * 生命周期函数--监听页面显示

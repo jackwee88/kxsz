@@ -1,7 +1,7 @@
-.list.data-v-4cfc860a {
+.list.data-v-3ce8be90 {
   padding: 0 36rpx 0 44rpx;
 }
-.list .item.data-v-4cfc860a {
+.list .item.data-v-3ce8be90 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -11,15 +11,15 @@
   padding: 30rpx 0;
   border-bottom: 1rpx solid #ddd;
 }
-.list .item.data-v-4cfc860a:last-of-type {
+.list .item.data-v-3ce8be90:last-of-type {
   border: 0;
 }
-.list .item image.data-v-4cfc860a {
+.list .item image.data-v-3ce8be90 {
   width: 100rpx;
   height: 100rpx;
   margin-right: 24rpx;
 }
-.list .item .info_wrap.data-v-4cfc860a {
+.list .item .info_wrap.data-v-3ce8be90 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
@@ -33,17 +33,17 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
 }
-.list .item .info_wrap .left_side .name.data-v-4cfc860a {
+.list .item .info_wrap .left_side .name.data-v-3ce8be90 {
   font-size: 36rpx;
   color: #323232;
   line-height: 50rpx;
 }
-.list .item .info_wrap .left_side .account.data-v-4cfc860a {
+.list .item .info_wrap .left_side .account.data-v-3ce8be90 {
   font-size: 28rpx;
   color: #999999;
   line-height: 40rpx;
 }
-.list .item .info_wrap .btn.data-v-4cfc860a {
+.list .item .info_wrap .btn.data-v-3ce8be90 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -58,7 +58,7 @@
   background: #3fae2a;
   border-radius: 26rpx;
 }
-.list .item .info_wrap .btn image.data-v-4cfc860a {
+.list .item .info_wrap .btn image.data-v-3ce8be90 {
   width: 24rpx;
   height: 24rpx;
   margin-right: 10rpx;

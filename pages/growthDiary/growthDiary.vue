@@ -117,7 +117,7 @@
                 <!--前提一个播放的按钮-->
               </view>
 
-              <view class="hr"></view>
+              <!-- <view class="hr"></view> -->
               <view class="thirdlineblock">
                 <view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
                   <image
@@ -134,7 +134,7 @@
                   />
                   <text>{{item.thumbs_times}}</text>
                 </view>
-                <button
+                <view
                   class="thirdline share"
                   :data-dy_id="item.dy_id"
                   open-type="share"
@@ -146,10 +146,9 @@
                     class="shareicon img-share"
                     src="../../static/index/zf.png" 
 										mode=""
-                    style="top:-23rpx;"
                   />
-                  <text class="text-share">转发</text>
-                </button>
+                  <text>转发</text>
+                </view>
                 <view
                   class="thirdline share"
                   @tap.stop="details"
@@ -616,14 +615,15 @@ export default {
     //     })
     //   }
     // },
-    previewImg: function(e) {
-      let src = e.currentTarget.dataset.src;
-      let pic_arr = e.currentTarget.dataset.effect_pic;
-      wx.previewImage({
-        currrent: src,
-        urls: pic_arr
-      });
-    },
+   previewImg: function(e) {
+     let src = e.currentTarget.dataset.src;
+     let pic_arr = e.currentTarget.dataset.effect_pic;
+   	var imglist=pic_arr.split(',')
+     wx.previewImage({
+       current: src,
+       urls: imglist
+     });
+   },
 		details(e) {
 			let param = {
 				dy_id: e.currentTarget.dataset.dy_id,

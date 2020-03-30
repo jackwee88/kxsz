@@ -1,66 +1,67 @@
 /* pages/commentList/commentList.wxss */
-.checked{
-  color:red
+.checked {
+  color: red;
 }
-.active{
-  color:pink
+.active {
+  color: pink;
 }
-page{
+page {
   background: #fff;
 }
 /*评价标签*/
-.evaluate{
-  margin:0 40rpx;
+.evaluate {
+  margin: 0 40rpx;
   overflow: hidden;
 }
-.evaluateHeight{
-  height: 50rpx;
+.evaluateHeight {
+  height: 55rpx;
 }
-.LaberList{
+.LaberList {
   float: left;
   height: 50rpx;
   line-height: 50rpx;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #eeeeee;
   border-radius: 50rpx;
   padding: 0 20rpx;
   font-size: 24rpx;
-  color: #A7A7A7;
+  color: #a7a7a7;
   text-align: center;
   margin-right: 20rpx;
   margin-bottom: 20rpx;
 }
-.checkLaber{
-  border: 1px solid #FE7E44;
-  color: #FE7E44;
+.checkLaber {
+  border: 1px solid #fe7e44;
+  color: #fe7e44;
 }
-.showImg{
+.showImg {
   text-align: center;
   margin-top: 10rpx;
 }
-.topImg{
-  width: 24rpx;
+.topImg {
+  width: 29rpx;
+  height: 17rpx;
 }
 /*评价标签结束*/
 /*评价主内容*/
-.evaluateList{
+.evaluateList {
   margin: 30rpx 40rpx 0 40rpx;
 }
-.userImg{
+.userImg {
   height: 60rpx;
   width: 60rpx;
   border-radius: 50%;
   margin-right: 20rpx;
   float: left;
 }
-.evaluateValueRight{
+.evaluateValueRight {
   float: left;
 }
-.evaluateName{
+.evaluateName {
   color: #000;
   font-size: 28rpx;
   /* line-height: 60rpx; */
 }
-.evaluateTitle{
+.evaluateTitle {
   font-size: 24rpx;
   color: #999;
   width: 550rpx;
@@ -70,28 +71,28 @@ page{
   line-height: 28rpx;
   /* margin-top: 16rpx; */
 }
-.evaluateDetails{
+.evaluateDetails {
   font-size: 28rpx;
   color: #000;
   width: 100%;
   /* margin: auto; */
   margin-top: 20rpx;
 }
-.evaluateDetailsImg{
+.evaluateDetailsImg {
   /* width: 510rpx; */
   margin: auto;
   margin-top: 20rpx;
 }
-.videoUrlImg{
+.videoUrlImg {
   float: left;
   width: calc(100% / 3);
   text-align: center;
-  position:relative;
+  position: relative;
   height: 200rpx;
   margin-bottom: 20rpx;
   overflow: hidden;
 }
-.evaluateDetailsImgList{
+.evaluateDetailsImgList {
   float: left;
   width: calc(100% / 3);
   text-align: center;
@@ -99,7 +100,7 @@ page{
   margin-bottom: 20rpx;
   overflow: hidden;
 }
-.evaluateDetailsImgList image{
+.evaluateDetailsImgList image {
   width: 90%;
   border-radius: 10rpx;
 }
@@ -113,10 +114,10 @@ page{
 /*固定底部导航栏*/
 .twobtn {
   width: 100%;
-  position:fixed;
-  bottom:0;
-  background:white;
-  height:100rpx;
+  position: fixed;
+  bottom: 0;
+  background: white;
+  height: 100rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -129,7 +130,7 @@ page{
   float: left;
   height: 67rpx;
   line-height: 67rpx;
-  margin:20rpx 0;
+  margin: 20rpx 0;
 }
 .add {
   width: 210rpx;
@@ -140,8 +141,8 @@ page{
   font-size: 30rpx;
   border-radius: 33rpx;
   outline: none;
-  background: -webkit-linear-gradient(left,#fe6200,#fe6400);
-  background: linear-gradient(to right,#fe6200,#fe6400);
+  background: -webkit-linear-gradient(left, #fe6200, #fe6400);
+  background: linear-gradient(to right, #fe6200, #fe6400);
 }
 .buy {
   width: 250rpx;
@@ -152,8 +153,8 @@ page{
   font-size: 30rpx;
   border-radius: 33rpx;
   outline: none;
-  background: -webkit-linear-gradient(left,#ffc201,#fe9b01);
-  background: linear-gradient(to right,#ffc201,#fe9b01);
+  background: -webkit-linear-gradient(left, #ffc201, #fe9b01);
+  background: linear-gradient(to right, #ffc201, #fe9b01);
 }
 .add {
   width: 210rpx;
@@ -164,8 +165,8 @@ page{
   font-size: 30rpx;
   border-radius: 33rpx;
   outline: none;
-  background: -webkit-linear-gradient(left,#fe6200,#fe6400);
-  background: linear-gradient(to right,#fe6200,#fe6400);
+  background: -webkit-linear-gradient(left, #fe6200, #fe6400);
+  background: linear-gradient(to right, #fe6200, #fe6400);
 }
 /*固定底部导航栏结束*/
 

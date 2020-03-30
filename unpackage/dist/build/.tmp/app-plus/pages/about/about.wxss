@@ -1,6 +1,14 @@
 .about_page {
   padding: 70rpx 44rpx 0;
 }
+.Copyright {
+  color: #999999;
+  font-size: 28rpx;
+  width: 390rpx;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 50rpx;
+}
 .title {
   margin-top: 88rpx;
   margin-bottom: 32rpx;

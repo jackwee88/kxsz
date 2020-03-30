@@ -435,12 +435,10 @@ export default {
 	},
 	onPullDownRefresh: function() {
 		var that = this;
-		that.setData({
-			page: 1,
-			producturl: [],
-			daily: [],
-			count: 1
-		});
+			this.page= 1,
+			this.producturl= [],
+			this.daily= [],
+			this.count= 1
 
 		if (that.modelType == 1) {
 			that.getIndexData();
@@ -1358,10 +1356,6 @@ export default {
 			line-height: 34rpx;
 		}
 
-		.gallery {
-			display: flex;
-			flex-direction: row;
-		}
 
 		.actions {
 			display: flex;

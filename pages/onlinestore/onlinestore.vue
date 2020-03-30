@@ -48,18 +48,18 @@
 			<!-- 限时秒杀 -->
 			<view class="limitedTime">
 				<image src="../../static/onlineStore/xsms.png" style="width: 150rpx;height: 98rpx;" mode="aspectFit"></image>
-				<view class="flex">
+				<view class="flex" style="margin-left: 20rpx;">
 					<text style="font-size: 24rpx;" @tap="xsmsDetails(flashSale.p_id)" :data-id="flashSale.p_id" :data-hour="hour" :data-minute="minute" :data-second="second">{{ flashSale.p_name }}</text>
-					<text class="red">时间仅剩</text>
+					<!-- <text class="red">时间仅剩</text> -->
 					<uni-countdown backgroundColor="#545458" color="#ffffff" :hour="hour" :minute="minute" :second="second" :showDay="false"></uni-countdown>
 				</view>
 			</view>
 			<!-- 商品推荐 -->
 			<view class="recommend-banner">
-				<swiper previous-margin="96rpx" circular="true" next-margin="360rpx">
-					<swiper-item class="flex" v-for="(item, index) in productList" :key="index">
-						<view class="banner-item" :data-id="item.p_id" @tap.stop="gotoDetails(item.p_id)">
-							<image class="banner-icon" :src="item.image" />
+				<swiper previous-margin="96rpx" circular="true" next-margin="360rpx" style="height: 350rpx;">
+					<swiper-item class="flex" v-for="(item, index) in bannerList" :key="index">
+						<view class="banner-item" :data-id="item.goods.p_id" @tap.stop="gotoDetails(item.goods.p_id)">
+							<image class="banner-icon" :src="item.goods.icon" />
 							<view class="goods-price">¥{{ item.price }}</view>
 						</view>
 					</swiper-item>
@@ -144,32 +144,8 @@ export default {
 			second: 0,
 			moveTimes: 8,
 			p_id: '',
-			bannerList: [
-				{
-					item: [
-						{
-							title: '200.00'
-						},
-						{
-							title: '200.00'
-						}
-					]
-				},
-				{
-					item: [
-						{
-							title: '200.00',
-							goods: {
-								name: '1'
-							}
-						},
-						{
-							title: '200.00'
-						}
-					]
-				}
-			],
-			swiperHeight: 0
+			swiperHeight: 0,
+			bannerList:[]
 		};
 	},
 	components: {
@@ -221,6 +197,7 @@ export default {
 				success: res => {
 					const { list, count } = res.data.data;
 					this.joinAssembleList = list;
+					this.bannerList = list
 					// console.log(count);
 				},
 				error: function() {}
@@ -255,16 +232,18 @@ export default {
 				data: {},
 				success: res => {
 					const { count, list } = res.data.data;
-					this.flashSale = list.goods;
-					console.log(this.flashSale.p_id);
+					this.flashSale = list[0].goods;
+					this.bannerList = list
+					console.log(this.bannerList)
+					console.log(this.flashSale);
 					// 获取当前时间戳
 					let timeNoew = new Date().getTime() / 1000;
-					if (timeNoew > list.endtime) {
+					if (timeNoew > list[0].endtime) {
 						console.log('秒杀结束');
-					} else if (timeNoew < list.createTime) {
+					} else if (timeNoew < list[0].createTime) {
 						console.log('秒杀未开始');
 					} else {
-						var lastTime = list.endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						var lastTime = list[0].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
 						// 然后将秒转化成时间  (定时器每秒更新一次)
 						this.timeChange(lastTime);
 					}

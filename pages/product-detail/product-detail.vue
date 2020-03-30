@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="top_title">
-			<navigator open-type="navigateBack"><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1" /></navigator>
+			<navigator open-type="navigateBack" url=''><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1" /></navigator>
 			<navigator url="../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" class="icon2" /></navigator>
 		</view>
 		<!-- 商品详情 -->
@@ -22,10 +22,10 @@
 			<view class="back-red">
 				<view class="back-red-txt">
 					<text style="color: #ffffff;font-size: 32rpx;">¥</text>
-					<text style="color: #ffffff;font-size: 52rpx;">{{ detail.countyprice }}</text>
+					<text style="color: #ffffff;font-size: 52rpx;">{{ detail.sale_detail.price }}</text>
 					<view style="color: #E5E5E5;font-size: 24rpx;" class="origin-price">¥{{ detail.coupon_price }}</view>
 				</view>
-				<view class="cheap">已抢{{ detail.sale }}件</view>
+				<view class="cheap">已抢{{ detail.sale_detail.num }}件</view>
 			</view>
 			<view class="back-yello">
 				<text style="color: #E44A54;font-size: 32rpx; padding-left: 15rpx;">距结束</text>
@@ -124,11 +124,7 @@
 			<!-- <view class="choose-address">选择收货地址</view> -->
 			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
 		</view>
-		<view class="address">
-			<text class="txt-address">参数</text>
-			<view class="choose-address productTxt">{{ detail.p_detail }}</view>
-			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
-		</view>
+
 		<!-- 		  <view class="comment-wrap">
 		    <view class="comment-title">
 		      <text>宝贝评价({{evaluateList.total}})</text>
@@ -200,7 +196,6 @@
 						@tap="selectAttrValue"
 						:data-value="value.spec_value"
 						:data-key="value.item_id"
-						:data-code="attrCode"
 						:data-index="attrIndex"
 						:data-selectedvalue="attrValueObj.selectedValue"
 						:key="valueIndex"
@@ -218,7 +213,7 @@
 				<view class="buyNumRight">
 					<text :class="'buyNumReduce ' + (buyQuantity >= 1 ? 'buyNumReducebj' : '')" @tap="minusCount" style="display:flex;align-item:center;justify-content:center;">-</text>
 					<text class="buyNumSum">{{ buyQuantity }}</text>
-					<text :class="'buyNumAdd ' + (buyQuantity >= shopGooesNum ? 'buyNumAddbg' : '')" @tap="addCount" style="display:flex;align-item:center;justify-content:center;">+</text>
+				<text :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')" @tap="addCount" style="display:flex;align-item:center;justify-content:center;">+</text>
 				</view>
 			</view>
 
@@ -229,7 +224,7 @@
 			<view class="bg"></view>
 			<view class="content_wrap">
 				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
-				<view class="list">
+				<view class="list" v-for="(data, index) in teamlist">
 					<view class="item">
 						<image src="../../static/reg/log.png" class="avatar"></image>
 		
@@ -238,13 +233,16 @@
 						<view class="num_n_time">
 							<view class="num">
 								差
-								<text>1</text>
+								<text>{data.num}</text>
 								人拼成
 							</view>
 		
-							<view class="time">剩余23:59:59</view>
+							<view class="time">
+								<text>剩余</text>
+							<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+							</view>
 						</view>
-						<view class="cantuan">
+						<view class="cantuan" @tap="assmebleOrder">
 							参团
 							<image src="../../static/index/qj.png" mode=""></image>
 						</view>
@@ -379,7 +377,7 @@ export default {
 		},
 		assmebleOrder(){
 			let param={
-				"ar_id": 338,
+				    "ar_id": 338,
 				    "cp_id": "",
 				    "ct_id": "",
 				    "goods_sku_id": "2",
@@ -390,14 +388,17 @@ export default {
 				    "score": false,
 				    "type": 2
 			}
+			ajax({
+				url:'',
+				data:param,
+				success:(res)=>{
+					
+				}
+			})
 		},
 		assmbleDetail: function() {
-			uni.navigateTo({
-				url: '../assemble/assemble',
-				success: res => {},
-				fail: () => {},
-				complete: () => {}
-			});
+			
+			this.visible = true
 		},
 		getData() {
 			ajax({
@@ -408,8 +409,6 @@ export default {
 				},
 				method: 'POST',
 				success: res => {
-					console.log(res.data.data);
-					console.log(res.data.data.spec[0].goods_spec_id);
 					res.data.data.coupon_price = res.data.data.spec ? res.data.data.spec[0].goods_price : res.data.data.coupon_price;
 					res.data.data.image = res.data.data.spec ? res.data.data.spec[0].spec_image : res.data.data.image;
 					(this.detail = res.data.data), (this.collect_p = res.data.data.if_collect);
@@ -420,6 +419,16 @@ export default {
 					}
 					if(res.data.data.sale_status==2){
 						this.getflashtime()
+						// let timeNoew = new Date().getTime() / 1000;
+						// if (timeNoew > this.detail.sale_detail.endtime) {
+						// 	console.log('秒杀结束');
+						// } else if (timeNoew < this.detail.createTime) {
+						// 	console.log('秒杀未开始');
+						// } else {
+						// 	var lastTime = this.detail.sale_detail.endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						// 	// 然后将秒转化成时间  (定时器每秒更新一次)
+						// 	this.timeChange(lastTime);
+						// }
 					}
 					this.goods_spec_id = res.data.data.spec[0].goods_spec_id;
 					this.valueStrNum = res.data.data.spec[0].spec_sku_id;
@@ -451,16 +460,15 @@ export default {
 				data: {},
 				success: res => {
 					const { count, list } = res.data.data;
-					this.flashSale = list.goods;
-					console.log(this.flashSale.p_id);
+					this.flashSale = list[0].goods;
 					// 获取当前时间戳
 					let timeNoew = new Date().getTime() / 1000;
-					if (timeNoew > list.endtime) {
+					if (timeNoew > list[0].endtime) {
 						console.log('秒杀结束');
-					} else if (timeNoew < list.createTime) {
+					} else if (timeNoew < list[0].createTime) {
 						console.log('秒杀未开始');
 					} else {
-						var lastTime = list.endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						var lastTime = list[0].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
 						// 然后将秒转化成时间  (定时器每秒更新一次)
 						this.timeChange(lastTime);
 					}
@@ -750,7 +758,6 @@ export default {
 						uni.navigateTo({
 							url: 'sureOrder/sureOrder?sureOrder=' + encodeURIComponent(JSON.stringify(param))
 						});
-						console.log(this.detail.specData);
 						if (that.detail.specData) {
 							that.closeSku();
 							console.log('beij');

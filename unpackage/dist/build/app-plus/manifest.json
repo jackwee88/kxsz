@@ -119,6 +119,13 @@
           "biaocount": 0
         },
         {
+          "pagePath": "pages/fenleiList/fenleiList",
+          "text": "分类",
+          "iconPath": "/static/index/mulv.png",
+          "selectedIconPath": "/static/index/mulvYes.png",
+          "biaocount": 1
+        },
+        {
           "pagePath": "pages/message/message",
           "text": "消息",
           "iconPath": "/static/index/message.png",

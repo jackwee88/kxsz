@@ -1,2 +1,1 @@
-setCssToHead(["body{ background-color: #f5f5f5; }\n.",[1],"title{ font-weight:bold; margin-bottom:",[0,40],"; text-align: center; }\n.",[1],"content{ font-size: 16px; }\n",],"Some selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute selectors.(./pages/dzxy/dzxy.wxss:2:1)",{path:"./pages/dzxy/dzxy.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/dzxy/dzxy.wxml') } }));

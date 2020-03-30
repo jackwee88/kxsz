@@ -151,8 +151,8 @@
 					<text>微信支付</text>
 					<!-- 判断是否选中状态 -->
 					<view class="rodio">
-						<icon v-if="selected" type="success" color="#48DB8D" size="20" :data-index="index"></icon>
-						<icon v-else type="circle" size="20" @tap="selectList" :data-index="index"></icon>
+						<icon v-if="selected" type="success" color="#48DB8D" size="20"></icon>
+						<icon v-else type="circle" size="20" @tap="selectList"></icon>
 					</view>
 				</view>
 			</view>
@@ -164,8 +164,8 @@
 					<text>可用积分{{ integral }}</text>
 					<!-- 判断是否选中状态 -->
 					<view class="rodio">
-						<icon v-if="selected_integral" type="success" color="#48DB8D" size="20" @tap="selectList" :data-index="index"></icon>
-						<icon v-else type="circle" size="20" @tap="selectList" :data-index="index"></icon>
+						<icon v-if="selected_integral" type="success" color="#48DB8D" size="20" @tap="selectList" ></icon>
+						<icon v-else type="circle" size="20" @tap="selectList" ></icon>
 					</view>
 				</view>
 				<view class="wechatzhifu" @tap.stop="invoice" style="display:flex;justify-content:space-between;align-item:center">
@@ -191,8 +191,8 @@
 					<text>是否代付款</text>
 
 					<view class="rodio">
-						<icon v-if="selected_other" type="success" color="#48DB8D" size="20" @tap="selectListOther" :data-index="index"></icon>
-						<icon v-else type="circle" size="20" @tap="selectListOther" :data-index="index"></icon>
+						<icon v-if="selected_other" type="success" color="#48DB8D" size="20" @tap="selectListOther" ></icon>
+						<icon v-else type="circle" size="20" @tap="selectListOther" ></icon>
 					</view>
 				</view>
 
@@ -321,19 +321,19 @@ export default {
 		wx.setStorageSync('a', []);
 		console.log(event);
 		this.banner = JSON.parse(decodeURIComponent(event.sureOrder));
+		console.log(this.banner.now_buy+'this.nowbuy')
 		if (this.banner.now_buy == 1) {
-			(this.now_buy = 1),
+			  (this.now_buy = 1),
 				(this.goods_sku_id = this.banner.goods_sku_id),
 				(this.goods_num = this.banner.goods_num),
 				(this.buy_num = this.banner.goods_num),
 				(this.goods_spec_id = this.banner.goods_spec_id);
 		}
-
 		var that = this;
 		this.dzxyFun();
-
 		if (that.banner.type && (that.banner.type == 1 || that.banner.type == 2)) {
 			this.type = that.banner.type;
+			console.log(this.type+'165465465')
 		}
 
 		if (!that.banner.ids) {
@@ -452,9 +452,19 @@ export default {
 			//     title: '请先选择收货地址', icon: 'none'
 			//   })
 			// }else{
-
+				var account;var account_type;var invoiceArr;
+				console.log(this.invoiceArr+'invoicearr')
+				if(this.invoiceArr.content==undefined){
+					account=" "
+					account_type= ""
+				}else{
+					account = this.invoiceArr.content
+					account_type=this.invoiceArr.acc_type
+				}
 			if (this.now_buy == 1) {
 				console.log(this.remarks);
+
+				
 				var param = {
 					ct_id: this.ct_id,
 					p_id: this.goods[0].p_id,
@@ -462,13 +472,14 @@ export default {
 					score: this.selected_integral,
 					cp_id: this.discount,
 					quantity: this.buy_num,
-					invoiceArr: this.invoiceArr,
-					account: this.invoiceArr.content,
-					account_type: this.invoiceArr.acc_type,
+					invoiceArr: uni.getStorageSync('invoiceArr'),
+					account: account,
+					account_type: account_type,
 					goods_sku_id: that.goods_sku_id,
-					mark: this.remarks // goods_spec_id: this.data.goods[0].goods_sku.goods_spec_id
+					mark: this.remarks
 				};
 			} else {
+				// 购物车跳转
 				console.log(this.remarks);
 				var param = {
 					ct_id: this.ct_id,
@@ -488,8 +499,8 @@ export default {
 				//找他人代付
 				ajax({
 					url: 'goods/downOrder',
-					data: { param },
-					success: res => {
+					data: param,
+					success: (res) => {
 							this.order_id=res.data.order_id
 						ajax({
 							url:'goods/repay_other',
@@ -527,7 +538,9 @@ export default {
 					url:'goods/downOrder', 
 					data:param, 
 					success:(res) => {
+						console.log(res)
 					if (res.status == 2) {
+						console.log('res'+res)
 						uni.showToast({
 							title: res.msg,
 							icon: 'none'
@@ -610,37 +623,25 @@ export default {
 
 			var int = this.integral / 100;
 			var integral = parseFloat(int.toFixed(2));
-			this.setData({
-				selected_integral: !this.selected_integral
-			});
+				this.selected_integral= !this.selected_integral
 
 			if (this.selected_integral == true) {
 				if (this.flag_y == false) {
-					this.setData({
-						flag_n: false
-					});
+						this.flag_n= false
 					var new_total = (this.totals - integral).toFixed(2);
 
 					if (new_total <= 0) {
 						new_total = 0.01;
 					}
-
-					this.jf(); // this.setData({
-					//   totals: new_total
-					// })
+					this.jf();
 				}
 			} else {
 				if (this.flag_n == false) {
-					var new_total = (parseFloat(this.totals) + parseFloat(integral)).toFixed(2); // this.setData({
-					//   totals: new_total
-					// })
-
+					var new_total = (parseFloat(this.totals) + parseFloat(integral)).toFixed(2); 
 					this.jf();
 				}
 
-				this.setData({
-					flag_y: false
-				});
+					this.flag_y= false
 			}
 		},
 
@@ -705,11 +706,8 @@ export default {
 		},
 		jf: function() {
 			if (!this.address) {
-				this.setData({
-					address: ''
-				});
+					this.address= ''
 			}
-
 			console.log(this.buy_num);
 			var param = {
 				ct_id: this.ct_id,
@@ -721,24 +719,18 @@ export default {
 				goods_sku_id: this.goods_sku_id
 			};
 			var that = this;
-			util.ajax('/api/goods/OrderMoney', param, res => {
-				that.setData({
-					integral: res.data.use_integral,
-					totals: res.data.amount.toFixed(2),
-					price: res.data.prices,
-					transport_total: res.data.transport
-				});
-			});
+			ajax({url:'goods/OrderMoney', data:param,success:(res) => {
+					this.integral= res.data.data.use_integral,
+					this.totals= res.data.data.amount.toFixed(2),
+					this.price= res.data.data.prices,
+					this.transport_total= res.data.data.transport
+			}});
 		},
 		selectListOther: function(e) {
-			this.setData({
-				selected_other: !this.selected_other
-			});
+				this.selected_other= !this.selected_other
 		},
 		closeEwm: function() {
-			this.setData({
-				is_ewm: false
-			});
+				this.is_ewm= false
 			wx.redirectTo({
 				url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + this.order_id
 			});
@@ -749,14 +741,10 @@ export default {
 			});
 		},
 		explainFun: function() {
-			this.setData({
-				is_dzxy: true
-			});
+				this.is_dzxy= true
 		},
 		hideExplain: function() {
-			this.setData({
-				is_dzxy: false
-			});
+				this.is_dzxy=false
 		},
 		//获取协议
 		dzxyFun() {
@@ -792,9 +780,7 @@ export default {
 		},
 
 		bindRemarksAreaBlur(e) {
-			this.setData({
-				remarks: e.detail.value
-			});
+				this.remarks= e.detail.value
 		}
 	}
 };

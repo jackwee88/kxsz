@@ -1,6 +1,7 @@
 /* pages/shuhuajs/shuhuajs.wxss */
 page {
   background-color: #f5f5f5;
+  box-sizing: border-box;
 }
 .shuhuajs {
   width: 100%;
@@ -43,7 +44,6 @@ page {
   padding: 26rpx 30rpx;
 }
 .search {
-  width: 100%;
   height: 78rpx;
   line-height: 78rpx;
   background-color: #e5e4e4;
@@ -59,7 +59,6 @@ page {
   background-size: 100% 100%;
 }
 .searchinput {
-  width: 100%;
   height: 78rpx;
   line-height: 78rpx;
   font-size: 30rpx;
@@ -68,15 +67,15 @@ page {
   padding-left: 40rpx;
 }
 .place-hoder {
-    color: #b5b7b4;
+  color: #b5b7b4;
 }
 .swiperlist {
-  width: 100%;
   display: inline-block;
 }
 .swiperitem {
   /* width:335rpx; */
-  width:47%;
+  box-sizing: border-box;
+  width: 47%;
   height: auto;
   border-radius: 8rpx;
   background-color: #fff;
@@ -85,10 +84,10 @@ page {
   margin-bottom: 26rpx;
 }
 .swiperitem_left {
- margin: 0 10rpx;
+  margin: 0 10rpx 26rpx;
 }
 .swiperitemimg {
-  /* width: 290rpx; */
+  width: 290rpx;
   height: 290rpx;
   background-size: 100% 100%;
   border-radius: 8rpx;
@@ -97,10 +96,10 @@ page {
   font-size: 26rpx;
   line-height: 0;
 }
-.texts{
+.texts {
   text-align: center
 }
-.active{
+.active {
   border-bottom: 1rpx solid #008800
 }
 

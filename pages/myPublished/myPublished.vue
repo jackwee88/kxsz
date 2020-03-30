@@ -114,7 +114,6 @@ export default {
 	},
 	onLoad(event) {
 		console.log(event);
-		// this.getData()
 		const { dy_id, browse_times, comment_count, thumbs_times ,type,index} = JSON.parse(decodeURIComponent(event.pulishedDetail));
 		if (dy_id) {
 			this.dy_id = dy_id;
@@ -125,38 +124,29 @@ export default {
 			setTimeout(function() {
 				var pages = getCurrentPages();
 				var prevPage = pages[pages.length - 2]; //上一个页面
-				// var that = this;
-				// var index = index;
 				if (type == 1) {
-					//type:1首页，2学习广场,3打卡,
-					var up = 'studylist[' + index + '].browse_times';
-					console.log(up+'123')
+					let times = browse_times
+					prevPage.studylist[index].browse_times = ++times;
 				} else if (type==2) {
-					var up = 'studylist[' + index + '].browse_times';
+					let times = browse_times
+					prevPage.studylist[index].browse_times = ++times;
 				} else if (type == 3) {
-					var up ='dakalog[' + index + '].browse_times';
+					let times = browse_times
+					prevPage.dakalog[index].browse_times = ++times;
 				}
-				console.log('thumbs_times'+browse_times)
-				let times = browse_times
-				var newp = ++times;
-				console.log('newp'+newp)
-				if (prevPage) {
-					// 可以修改上一页的数据
-					prevPage.setData({
-						times: newp
-					});
-				}
-				// uni.navigateBack()
 			}, 1000);
+			
 			this.getData();
 			this.comment();
-		} else if (options.scene) {
-			that.setData({
-				dy_id: decodeURIComponent(options.scene)
-			});
-			this.getData();
-			this.comment();
-		} else {
+		} 
+		// else if (options.scene) {
+		// 	that.setData({
+		// 		this.dy_id= decodeURIComponent(options.scene)
+		// 	});
+		// 	this.getData();
+		// 	this.comment();
+		// } 
+		else {
 			uni.redirectTo({
 				url: '../index/index'
 			});
@@ -245,37 +235,13 @@ export default {
 							var prevPage = pages[pages.length - 2]; //上一个页面
 							var index = this.index;
 							if (that.type == 1) {
-								var up = 'daily[' + index + '].comment_count';
+								prevPage.studyList[index].comment_count = 'daily[' + index + '].comment_count';
 							} else if (that.type == 2) {
 								var up = 'studyList[' + index + '].comment_count';
 							} else if (that.type == 3 || that.type == 4) {
 								var up = 'daka[' + index + '].comment_count';
 							}
-
-							var newp = ++that.comment_count; // that.setData({
-							//   comment_count:newp
-							// })
-
-							if (prevPage) {
-								可以修改上一页的数据
-								prevPage.setData({
-								  [up]: newp
-								})
-							}
-
-							var prevPages = pages[pages.length - 3];
-
-							if (prevPages) {
-								if (prevPages.__route__ == 'pages/index/index') {
-									var up = 'daily[' + index + '].comment_count';
-								} else if (prevPages.__route__ == 'pages/my/my') {
-									var up = 'daka[' + index + '].comment_count';
-								} else if (prevPages.__route__ == 'pages/studySquare/studySquare') {
-									var up = 'studylist[' + index + '].comment_count';
-								} // prevPages.setData({
-								//   [up]: newp
-								// })
-							}
+							var newp = ++that.comment_count; 
 						}
 					});
 				}
@@ -329,9 +295,10 @@ export default {
 					
 					var prepage = pages[pages.length - 2]; //上一页面指针 
 					console.log(prepage)
-					wx.setStorageSync('a', arr);
-					if (that.type == 1) {//
+					if (that.type == 1) {
 					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					console.log('thumbstime+'+this.studyDetails.thumbs_times)
+					console.log('type'+this.type)
 					prepage.studylist[index].is_give = this.studyDetails.is_give
 					} else if (that.type ==2) {
 					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
@@ -340,9 +307,7 @@ export default {
 					prepage.loglist[index].thumbs_times = this.studyDetails.thumbs_times
 					prepage.loglist[index].is_give = this.studyDetails.is_give
 					}
-					wx.navigateBack({
-					  delta: 1
-					}); 
+
 				},
 				error: function() {}
 			});

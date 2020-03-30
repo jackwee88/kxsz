@@ -332,8 +332,13 @@ export default {
       wx.setStorageSync('a', arr);
 
       if (this.no_invoice == false) {
-				console.log('nihao'+arr)
-        prepage.invoiceArr= arr,
+        var invoiceArr= {
+					type: 1,
+					acc_type: parseInt(this.way) + 1,
+					content: this.phone_number
+				};
+				uni.setStorageSync('invoiceArr',invoiceArr)
+				prepage.invoiceArr = invoiceArr
         prepage.is_fp= '电子发票' //操作上一页面 
       } else {
         prepage.invoiceArr= {},

@@ -128,6 +128,19 @@ export default {
 				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
+		previewImg(e) {
+			getApp().globalData.preview = false;
+			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接
+			
+			var str= e.currentTarget.dataset.effect_pic; //获取data-effect_pic   图片列表
+			var imgList= str.split(',')
+			//图片预览
+			uni.previewImage({
+				current: src,
+				// 当前显示图片的http链接
+				urls: imgList // 需要预览的图片http链接列表
+			});
+		},
 		//点赞
 		praise(e) {
 		  var that = this;

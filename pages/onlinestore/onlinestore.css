@@ -165,7 +165,7 @@
 }
 .uni-ruler{
 	padding-bottom: 20rpx;
-	width: 350rpx;
+	width: 330rpx;
 	/* margin-right: 5rpx; */
 	/* background-color: pink; */
 }
@@ -193,7 +193,7 @@
   height: 40rpx;
   line-height: 40rpx;
   position: relative;
-  width: 100%;
+  width: 1000000px;
   overflow: hidden;
 }
 .marquee_text {
@@ -203,6 +203,7 @@
   white-space: nowrap;
   animation: around var(--allTs--) infinite linear;
 }
+
 @keyframes around {
   from {
     margin-left: 100%;

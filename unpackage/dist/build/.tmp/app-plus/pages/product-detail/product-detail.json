@@ -1,6 +1,5 @@
 {
-  "navigationStyle": "custom",
-  "titleNView": false,
+  "navigationBarTitleText": "商品详情",
   "usingComponents": {
     "uni-countdown": "/components/uni-countdown/uni-countdown"
   }

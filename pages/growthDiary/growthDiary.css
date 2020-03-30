@@ -232,6 +232,7 @@
 
 .thirdlineblock {
   display: inline-block;
+	display: flex;flex-direction: row;justify-content: space-around;align-items: center;
 }
 
 .thirdline image {
@@ -250,7 +251,19 @@
   width: 35rpx;
   height: 34rpx;
 }
+.gallery {
+			display: flex;
 
+			image {
+				width: 220rpx;
+				height: 220rpx;
+				margin-right: 14rpx;
+
+				&:nth-of-type(3n) {
+					margin-right: 0;
+				}
+			}
+		}
 .messageicon {
   width: 38rpx;
   height: 35rpx;
@@ -287,8 +300,17 @@
 
 .img-box {
   margin-top: 20rpx;
+	
 }
+.img-box image {
+				width: 220rpx;
+				height: 220rpx;
+				margin-right: 14rpx;
 
+				&:nth-of-type(3n) {
+					margin-right: 0;
+				}
+			}
 .audio {
   background-color: none;
   width: 100%;

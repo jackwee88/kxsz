@@ -71,7 +71,7 @@
 							:key="index2"
 							:src="items"
 							@tap.stop="previewImg"
-							:data-effect_pic="item.picture_idss"
+							:data-effect_pic="item.picture_ids"
 							:data-src="items"
 							mode="aspectFill"
 							:data-index="index"
@@ -226,7 +226,16 @@ export default {
 		    }
 		  );
 			},
-		
+		previewImg: function(e) {
+		  let src = e.currentTarget.dataset.src;
+		  let pic_arr = e.currentTarget.dataset.effect_pic;
+			console.log(pic_arr)
+			var imglist=pic_arr.split(',')
+		  wx.previewImage({
+		    current: src,
+		    urls: imglist
+		  });
+		},
 		getDakalog(){
 			let that = this;
 			  this.loglist= []
