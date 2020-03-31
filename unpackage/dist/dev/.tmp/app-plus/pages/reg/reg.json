@@ -1,8 +1,6 @@
 {
-  "navigationBarTitleText": "开心书写",
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
+  "navigationStyle": "custom",
+  "titleNView": false,
   "usingComponents": {
     "w-picker": "/components/w-picker/w-picker"
   }

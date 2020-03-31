@@ -13,7 +13,7 @@
 		</view>
 					<!-- 商品推荐 -->
 					<view class="recommend-footer">
-						<view class="recommend-list" v-for="(item, index) in productList">
+						<view class="recommend-list" v-for="(item, index) in productList" :key="index">
 							<view class="uni-product" @click="gotoDetails(item)">
 								<view class="image-view">
 									<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->

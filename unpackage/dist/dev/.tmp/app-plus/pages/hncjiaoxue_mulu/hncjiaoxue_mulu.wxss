@@ -1,84 +1,184 @@
-page{
-	background-color:#f5f5f5;
+/* pages/hncjiaoxue_mulu/hncjiaoxue_mulu.wxss */
+page {
+    background-color: #f5f5f5;
 }
-.wenzijiema{
-	padding:20rpx;
+.wenzijiema {
+    padding: 20rpx;
 }
-/*介绍*/
-.rumenkecheng{
-	width:100%;
-	border:1rpx solid #c9c9c9;
-	padding:35rpx 25rpx;
-	box-sizing: border-box;
+.rumenkecheng {
+    min-height: 320rpx;
+    border: 1rpx solid #c9c9c9;
+    padding: 35rpx 25rpx 20rpx;
+    height: auto;
 }
-.topcont{
-	width:67%;
-	margin-right:25rpx;
+.clear:after {
+    content: "";
+    display: block;
+    clear: both;
 }
-.title{
-	color:#5b5b5b;
-	font-size:30rpx;
-	border-bottom:1rpx solid #bfbfbf;
-	padding-bottom:20rpx;
-	text-align:justify;
+.topcont {
+    float: left;
 }
-.kechenglist{
-	display:inline-block;
-	padding-top:30rpx;
-	clear: both;
+.topleft {
+    width: 67%;
+    margin-right: 25rpx;
 }
-.topright{
-	width:190rpx;
-	height:268rpx;
-	border:1rpx solid #bfbfbf;
-	box-sizing: border-box;
-	margin: 0;
+.topright {
+    width: 190rpx;
+    height: 268rpx;
+    border: 1rpx solid #bfbfbf;
 }
-.topcont{
-	float: left;
+.titles {
+    color: #5b5b5b;
+    font-size: 30rpx;
+    border-bottom: 1rpx solid #bfbfbf;
+    padding-bottom: 20rpx;
 }
-.topcontimg{
-	width: 100%;
-	height: 100%;
+.kechenglist {
+    display: inline-block;
+    padding-top: 30rpx;
 }
-/*介绍结束*/
-/*目录*/
-.mulu{
-	color:#5B5B5B;
-	font-size:30rpx;
-	margin:27rpx 0;
+.kechengitem {
+    margin-bottom: 10rpx;
 }
-.cataloguelist{
-	width:100%;
-	border:1rpx solid #C9C9C9;
-	display:inline-block;
-	padding:0 5rpx;
-	box-sizing: border-box;
+.kechengitem text {
+    font-size: 30rpx;
+    color: #5b5b5b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
-.catalogueitem{
-	width:100%;
-	height:87rpx;
-	line-height:87rpx;
-	border-bottom:1rpx solid #C9C9C9;
-	font-size:30rpx;
-	color:#5B5B5B;
-	position:relative;
-	padding:0 15rpx;
-	box-sizing: border-box;
+.mulu {
+    color: #5b5b5b;
+    font-size: 30rpx;
+    margin: 27rpx 0;
 }
-.itemtitle{
-	margin-right:20rpx;
+.cataloguelist {
+    border: 1rpx solid #c9c9c9;
+    display: inline-block;
+    padding: 0 5rpx;
 }
-.linkrighticon{
-	width:28rpx;
-	height:28rpx;
-	background-size:100% 100%;
-	position:absolute;
-	right:15rpx;
-	top:35%;
+.catalogueitem {
+    height: 87rpx;
+    line-height: 87rpx;
+    border-bottom: 1rpx solid #c9c9c9;
+    font-size: 30rpx;
+    color: #5b5b5b;
+    position: relative;
+    padding: 0 15rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
-.cataloguelist .catalogueitem:last-child{
-	border-bottom:0
+.itemtitle {
+    margin-right: 20rpx;
 }
-/*目录结束*/
+.linkrighticon {
+    width: 28rpx;
+    height: 28rpx;
+    background-size: 100% 100%;
+    position: absolute;
+    right: 15rpx;
+    top: 35%;
+}
+
+/* pages/hncjiaoxue/hncjiaoxue.wxss */
+.hncjiaoxue {
+    padding: 25rpx 30rpx;
+}
+.search {
+    width: 100%;
+    height: 70rpx;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding-left: 20rpx;
+    position: relative;
+    margin-bottom: 35rpx;
+}
+.searchicon {
+    width: 25rpx;
+    height: 25rpx;
+    background-size: 100% 100%;
+    position: relative;
+    top: 9rpx;
+}
+.searchinput {
+    width: 100%;
+    height: 70rpx;
+    line-height: 70rpx;
+    font-size: 30rpx;
+    position: absolute;
+    top: 0;
+    padding-left: 40rpx;
+}
+.place-hoder {
+    color: #b2afaf;
+}
+.hncjiaoxuelist {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+.hncjiaoxueitem {
+    height: 210rpx;
+    border-bottom: 1rpx solid #D8D8D8;
+    padding: 25rpx 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+            justify-content: flex-start;
+}
+.leftitem {
+    width: 394rpx;
+    /* float: left; */
+}
+.leftitem_left {
+    width: 240rpx;
+    height: 150rpx;
+    margin-right: 20rpx;
+}
+.title {
+    color: #585757;
+    font-size: 28rpx;
+    margin-bottom: 28rpx;
+
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.renqi {
+    color: #A9A5A5;
+    font-size: 24rpx;
+    margin-bottom: 15rpx;
+    float: left;
+    margin-right: 20rpx;
+}
+.collect {
+    position: relative;
+    top: -8rpx;
+}
+.collectimg {
+    width: 28rpx;
+    height: 26rpx;
+    background-size: 100% 100%;
+    margin-right: 15rpx;
+}
+.collecttext {
+    color: #A9A5A5;
+    font-size: 24rpx;
+    position: absolute;
+    top: 10rpx;
+}
+.green {
+    color: #008800
+}
 

@@ -224,8 +224,11 @@
 			<view class="bg"></view>
 			<view class="content_wrap">
 				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
-				<view class="list" v-for="(data, index) in teamlist">
-					<view class="item">
+				<view class="list" v-for="(item, index) in teamlist" :key="index">
+					<view class="item" 
+					data-index="index" 
+					data-orderid="item.assemeble_order_id"
+					>
 						<image src="../../static/reg/log.png" class="avatar"></image>
 		
 						<view class="name">1</view>
@@ -375,21 +378,24 @@ export default {
 				this[key] = element;
 			}
 		},
-		assmebleOrder(){
+		assmebleOrder(e){
+			uni.showToast({
+				title:'请先选择收货地址'
+			})
+			// uni.navigateTo({
+			// 	url:'../shoppingcart/shaddress/shaddress+'
+			// })
 			let param={
-				    "ar_id": 338,
-				    "cp_id": "",
-				    "ct_id": "",
-				    "goods_sku_id": "2",
-				    "invoiceArr": {},
-				    "mark": "",
-				    "p_id": 1201,
-				    "quantity": "1",
-				    "score": false,
-				    "type": 2
+				    ar_id: 338,
+				    goods_sku_id: this.valueStrNum,
+						goods_spec_id:this.goods_spec_id,
+				    p_id: this.pid,
+				    quantity: 1,
+				    type: 2,
+						assemble_order_id:e.currentTarget.dataset.orderid
 			}
 			ajax({
-				url:'',
+				url:'goods/assembleOrder',
 				data:param,
 				success:(res)=>{
 					

@@ -18,7 +18,7 @@
 			</block>
 		</swiper>
 		<view class="menu_wrap">
-			<view class="menu_item" v-for="(item, index) in indexList">
+			<view class="menu_item" v-for="(item, index) in indexList" :key="index">
 				<navigator :url="item.to_url">
 					<image :src="item.pic_url" mode=""></image>
 					<text>{{ item.content }}</text>
@@ -60,10 +60,10 @@
 						<view class="avatar"><image :src="item.avatar" class="avatar" @tap.stop="gotoUserInfo" :data-uid="item.uid"></image></view>
 						<view class="date">
 							<view class="username">{{ item.nickname }}</view>
-							<view>{{ item.createtime }}</view>
+							<view>{{item.createtime }}</view>
 						</view>
 					</view>
-					<text class="view_count">浏览{{ item.browse_times }}次</text>
+					<text class="view_count">浏览{{item.browse_times }}次</text>
 				</view>
 				<view
 					class="msg"
@@ -390,7 +390,6 @@ export default {
 
 		if (decodeURIComponent(options.scene)) {
 			var qrId = decodeURIComponent(options.scene);
-			console.log(qrId, 333);
 		} else {
 			var qrId = 0;
 		}
@@ -488,7 +487,6 @@ export default {
 		// this.init();
 	},
 	onPullDownRefresh() {
-		console.log('下拉');
 		setTimeout(function() {
 			uni.stopPullDownRefresh(); //结束下拉动画
 		}, 1000);
@@ -535,7 +533,6 @@ export default {
 				url: 'shop/goods',
 				data: {},
 				success: res => {
-					console.log(res.data.data);
 					const { count, list } = res.data.data;
 					this.hotGoods = list;
 				}
@@ -591,7 +588,6 @@ export default {
 			});
 		},
 		gotoUserInfo: function(e) {
-			console.log(e.currentTarget.dataset.uid + '123');
 			let param = {
 				uid: e.currentTarget.dataset.uid
 			};
@@ -608,7 +604,6 @@ export default {
 					type: this.type
 				},
 				success: res => {
-					console.log(res);
 					const { list, count } = res.data.data;
 					// for (var i = 0; i < list.length; i++) {
 					// 	list[i].isPlaying = false;
@@ -621,7 +616,6 @@ export default {
 					(this.page = this.page + 1), 
 					(this.count = res.data.count > 1 ? res.data.count : 1), 
 					(this.studylist = list);
-					console.log(typeof(this.studylist[2].picture_arr))
 				},
 				error: function() {}
 			});
@@ -630,7 +624,6 @@ export default {
 			let param = {
 				id: e.p_id
 			};
-			console.log(param);
 			uni.navigateTo({
 				url: '../product-detail/product-detail?gd_id=' + e.p_id
 			});
@@ -640,7 +633,6 @@ export default {
 
 			const index = e.currentTarget.dataset.index;
 			const dy_id = e.currentTarget.dataset.dy_id;
-			console.log('123' + dy_id);
 			ajax({
 				url: 'study/praiseStudy',
 				data: {
@@ -786,7 +778,6 @@ export default {
 			var type = e.currentTarget.dataset.type;
 			var types = e.currentTarget.dataset.types;
 			var url = e.currentTarget.dataset.url;
-			console.log(url);
 			wx.navigateTo({
 				url: url
 			});

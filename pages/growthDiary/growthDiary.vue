@@ -34,7 +34,6 @@
       <view class="studylist">
         <view class="studyitem" v-for="(item, index) in daka" :key="index">
           <view class="studyitem-right studylistflex">
-            <!-- <navigator url='/pages/myPublished/myPublished'> -->
             <view
               class="studyitem-top info clear"
               @tap.stop="details"
@@ -50,12 +49,10 @@
                 <text class="infoname">{{item.nickname}}</text>
                 <view class="time">
                   <text class="infodate">{{item.createtime}}</text>
-                  <!-- <text class='infotime'>{{item.time}}</text> -->
                   <text class="browse">浏览{{item.browse_times}}次</text>
                 </view>
               </view>
             </view>
-            <!-- </navigator> -->
             <view class="studyitem-middle">
               <text
                 class="impression"
@@ -114,10 +111,8 @@
                 :data-index="index"
               ></audio>
               <view>
-                <!--前提一个播放的按钮-->
               </view>
 
-              <!-- <view class="hr"></view> -->
               <view class="thirdlineblock">
                 <view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
                   <image
@@ -205,7 +200,6 @@
         </button>
       </view>
     </view>
-
     <template is="toTop"></template>
   </view>
 </template>
@@ -223,8 +217,7 @@ export default {
       uid: "",
       jionNum: "320",
       pieceNum: "225",
-      modulecont:
-        "超棒的一门课，已经完成前两门课，很系统，思路清晰。配套的练习很有意思.超棒的一门课",
+      modulecont:"",
       geqiancont: "#开心日记#开心日记！",
       daka: [],
       is_share: "",
@@ -275,7 +268,6 @@ export default {
         index_: options.index,
         type: options.type
       });
-			console.log('nihao'+this.uid)
     }
 
     this.getData();
@@ -421,14 +413,7 @@ export default {
           success: function(res) {}
         };
       }
-    } // else{
-    //   var tourl = '/pages/growthDiary/growthDiary?uid=' + that.data.uid
-    //
-    //   return {
-    //     title: '开心书写',
-    //     path: 'pages/index/index?myshare=1&tourl='+tourl  // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
-    //   }
-    // }
+    }
   },
   methods: {
     setData(param) {
@@ -491,7 +476,6 @@ export default {
           user: res.data.data.user,
           daka: list
         });
-				console.log()
       }});
     },
 
@@ -500,7 +484,6 @@ export default {
       var index = e.currentTarget.dataset.index;
       const dy_id = e.currentTarget.dataset.dy_id;
       var index_ = that.index_;
-			console.log(index+'index')
       util.ajaxs(
         "study/praiseStudy",
         {
@@ -512,12 +495,10 @@ export default {
           const thumbs_times = "daka[" + index + "].thumbs_times";
 
           if (res.data.is_ok==true) {
-						console.log('点赞成功')
               this.daka[index].is_give= !daka[index].is_give,
               this.daka[index].thumbs_times=daka[index].thumbs_times + 1,
               this.is_ok= "y"
           } else {
-						console.log('取消点赞')
               this.daka[index].is_give= !daka[index].is_give,
               this.daka[index].thumbs_times=daka[index].thumbs_times - 1,
               this.is_ok= "n"
@@ -533,26 +514,13 @@ export default {
             var prevPage = pages[pages.length - 2]; //上一个页面
 
             if (that.type == 1) {
-              var up = "daily[" + index_ + "].thumbs_times";
-              var is_give_ = "daily[" + index_ + "].is_give";
-              var newp = daka[index].thumbs_times;
-              var new_is_give = daka[index].is_give;
+
             } else if (that.type == 3 || that.type == 4) {
-              var up = "daka[" + index_ + "].thumbs_times";
-              var is_give_ = "daka[" + index_ + "].is_give";
-              var newp = daka[index].thumbs_times;
-              var new_is_give = daka[index].is_give;
+
             } else if (that.type == 2) {
-              var up = "studylist[" + index_ + "].thumbs_times";
-              var is_give_ = "studylist[" + index_ + "].is_give";
-              var newp = daka[index].thumbs_times;
-              var new_is_give = daka[index].is_give;
+
             }
 
-            prevPage.setData({
-              [up]: newp,
-              [is_give_]: new_is_give
-            });
           }
         } else {
           if (dy_id == that.p_id) {
@@ -560,61 +528,16 @@ export default {
             var prevPage = pages[pages.length - 2]; //上一个页面
 
             if (that.type == 1) {
-              var up = "daily[" + index_ + "].thumbs_times";
-              var is_give_ = "daily[" + index_ + "].is_give";
-              var newp = daka[index].thumbs_times;
-              var new_is_give = daka[index].is_give;
-            } else if (that.type == 3 || that.type == 4) {
-              var up = "daka[" + index_ + "].thumbs_times";
-              var is_give_ = "daka[" + index_ + "].is_give";
-              var newp = daka[index].thumbs_times;
-              var new_is_give = daka[index].is_give;
-            } else if (that.type == 2) {
-              var up = "studylist[" + index_ + "].thumbs_times";
-              var is_give_ = "studylist[" + index_ + "].is_give";
-              var newp = daka[index].thumbs_times;
-              var new_is_give = daka[index].is_give;
-            }
 
-            prevPage.setData({
-              [up]: newp,
-              [is_give_]: new_is_give
-            });
+            } else if (that.type == 3 || that.type == 4) {
+
+            } else if (that.type == 2) {
+
+            }
           }
         }
       }, 1000);
     },
-
-    // getuserdata: function () {
-    //   var that = this;
-    //   util.ajax('/api/UserCenter/UserCenter', {uid:that.data.uid}, res => {
-    //     that.setData({
-    //       userdata: res.data
-    //     })
-    //   })
-    //   if (that.data.count < that.data.page) {
-    //     wx.showToast({
-    //       title: '暂无更多信息',
-    //     })
-    //   } else {
-    //     util.ajax('/api/index/myDaily', '', res => {
-    //       let list = res.data.list;
-    //       for (var i = 0; i < list.length; i++) {
-    //         list[i].if_input = false;
-    //         list[i].fullScreen = false;
-    //         list[i].poster = list[i].picture_idss[0];
-    //         list[i].name = list[i].nickname + '的音频';
-    //       }
-    //
-    //       that.setData({
-    //         daka: that.data.daka.concat(list),
-    //         page: that.data.page + 1,
-    //         count: res.data.count,
-    //       })
-    //       wx.stopPullDownRefresh();
-    //     })
-    //   }
-    // },
    previewImg: function(e) {
      let src = e.currentTarget.dataset.src;
      let pic_arr = e.currentTarget.dataset.effect_pic;
@@ -853,62 +776,6 @@ export default {
 
       ctx.restore();
     },
-
-    // uploadimg: function () {
-    //   var that = this
-    //   wx.canvasToTempFilePath({
-    //     canvasId: 'customCanvas',
-    //     success(res) {
-    //       wx.authorize({
-    //         scope: 'scope.writePhotosAlbum',
-    //         success() {
-    //           // wx.saveImageToPhotosAlbum({
-    //           //   filePath: res.tempFilePath,
-    //           //   success() {
-    //           const timestamp = Date.parse(new Date()) / 1000;
-    //           const filename = String(timestamp) + String(Math.floor(Math.random() * 50))
-    //           wx.uploadFile({
-    //             url: that.data.host,
-    //             filePath: res.tempFilePath,
-    //             name: 'file',
-    //             formData: {
-    //               name: res.tempFilePath,
-    //               key: that.data.dir + '/' + filename + '.png',
-    //               policy: that.data.policy,
-    //               OSSAccessKeyId: that.data.accessid,
-    //               success_action_status: "200",
-    //               signature: that.data.signature
-    //             },
-    //             success: function (res) {
-    //
-    //               var imgUrl = that.data.host + '/' + that.data.dir + '/' + filename + '.png'
-    //
-    //               let param1 = {
-    //                 dy_id: that.data.dy_id,
-    //                 img: imgUrl
-    //               }
-    //               util.ajax('/api/study/diaryImg', param1, res => { })
-    //               wx.hideToast()
-    //             },
-    //             fail: function (errMsg) {
-    //
-    //             }
-    //           })
-    //           //   }
-    //           // })
-    //         }
-    //       })
-    //     }
-    //   }, this)
-    // },
-    //转发
-    toTop(e) {
-      var that = this;
-      that.pageScrollTo({
-        scrollTop: 0,
-        duration: 0
-      });
-    }
   }
 };
 </script>

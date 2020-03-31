@@ -51,7 +51,6 @@
 									<image class="xaiicon" src="../../static/my/righticon.png" mode="widthFix"></image>
 								</view>
 							</view>
-							</picker>
 							<w-picker mode="region"  @confirm="bindCityChange" ref="region"></w-picker>
 						</view>
 						<view class="form-item">

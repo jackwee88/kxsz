@@ -14,8 +14,8 @@
 
 .topcont {
   display: inline-block;
-  float: left;
   margin-bottom: 25rpx;
+  float: left;
 }
 
 .usertoux {
@@ -258,7 +258,6 @@
 				width: 220rpx;
 				height: 220rpx;
 				margin-right: 14rpx;
-
 				&:nth-of-type(3n) {
 					margin-right: 0;
 				}

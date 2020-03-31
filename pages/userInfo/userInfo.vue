@@ -131,6 +131,7 @@ export default {
 	onload() {
 		var value = uni.getStorageSync('loginToken');
 		console.log(value + '123456');
+		this.getLoglist()
 	},
 	onShow:function(){
 		// this.getuserData();
@@ -185,7 +186,7 @@ export default {
 			getApp().globalData.preview = false;
 			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接
 			
-			var str= e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
+			var str= e.currentTarget.dataset.effect_pic; //获取data-effect_pic   图片列表
 			var imgList= str.split(',')
 			//图片预览
 			uni.previewImage({
@@ -195,25 +196,7 @@ export default {
 			});
 		},
 		getLoglist(){
-				      ajax({index:'index/myDaily', data:{}, success:(res) => {
-						  console.log(res.data.data)
-				        let list = res.data.list;
-				        var action = {
-				          method: "pause"
-				        };
-				
-				        for (var i = 0; i < list.length; i++) {
-				          list[i].if_input = false;
-				          list[i].fullScreen = false;
-				          list[i].action = action;
-				          list[i].poster = list[i].picture_idss[0];
-				          list[i].name = list[i].nickname + '的音频';
-				        }
-				
-				        that.setData({
-				          daka: list
-				        });
-				      }});
+
 			}
 		
 	},
@@ -230,6 +213,23 @@ export default {
 			},
 			//点赞
 		});
+		ajax({url:'index/myDaily', data:{}, success:(res) => {
+		console.log(res.data.data)
+		  const {list} = res.data.data;
+		  var action = {
+		    method: "pause"
+		  };
+						
+		  for (var i = 0; i < list.length; i++) {
+		    list[i].if_input = false;
+		    list[i].fullScreen = false;
+		    list[i].action = action;
+		    list[i].poster = list[i].picture_idss[0];
+		    list[i].name = list[i].nickname + '的音频';
+		  }
+						
+		    this.logList= list
+		}});
 	}
 
 };

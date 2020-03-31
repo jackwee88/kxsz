@@ -2,38 +2,6 @@
   <view>
 
     <view class="studySquare">
-      <!-- <view class="tabbox">
-    <view class="tabcon avtive" class='tabcon{{type==1?"active":""}}' data-type='1' bindtap='changeOil' style="background-color:#E78522">
-      成长日记
-    </view>
-    <view class="tabcon" class='tabcon{{type==2?"active":""}}' data-type='2'  bindtap='changeOil' style="background-color:#00C3A0">
-      大脑开发
-    </view>
-    <view class="tabcon" class='tabcon{{type==3?"active":""}}' data-type='3' bindtap='changeOil' style="background-color:#02A0C3">
-      阅读朗诵
-    </view>
-    <view class="tabcon" class='tabcon{{type==4?"active":""}}' data-type='4' bindtap='changeOil' style="background-color:#2B37C1">
-      家长分享
-    </view>
-    <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
-      <text>更多</text>
-      <image src="/img/studySquare/more.png">
-        <navigator url='/pages/shuhuajs/shuhuajs'>
-          <view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view>
-        </navigator>
-        <navigator url='/pages/Signature/Signature'>
-          <view class="drop-down" style="background-color:#E0BB0D">个性签名</view>
-        </navigator>
-         <navigator url='/pages/wzgs/wzgs'>
-          <view class="drop-down" style="background-color:#E0BB0D">文字故事</view>
-        </navigator>
-         <navigator url='/pages/worksfor/worksfor'>
-          <view class="drop-down" style="background-color:#E0BB0D">作品征集</view>
-        </navigator>
-     
-      </view>
-    </view>
-      </view>-->
       <view class="tabbox">
         <view
           class="tabcon avtive"
@@ -61,24 +29,6 @@
         <navigator url="shuhuajs/shuhuajs" class="tabcon">
           <view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view>
         </navigator>
-        <!-- <view class="tabcon more" bindtap="showmore" id="more" style="background-color:#FD0201;text-align:center">
-      <text>更多</text>
-      <image src="/img/studySquare/more.png">
-        <navigator url='/pages/shuhuajs/shuhuajs'>
-          <view class="drop-down" style="background-color:#E0BB0D">书画鉴赏</view>
-        </navigator>
-        <navigator url='/pages/Signature/Signature'>
-          <view class="drop-down" style="background-color:#E0BB0D">个性签名</view>
-        </navigator>
-         <navigator url='/pages/wzgs/wzgs'>
-          <view class="drop-down" style="background-color:#E0BB0D">文字故事</view>
-        </navigator>
-         <navigator url='/pages/worksfor/worksfor'>
-          <view class="drop-down" style="background-color:#E0BB0D">作品征集</view>
-        </navigator>
-     
-      </view>
-        </view>-->
       </view>
       <view class="studylist">
         <view class="studyitem" v-for="(item, index) in studylist" :key="index">
@@ -336,24 +286,6 @@ export default {
     let that = this;
 
     that.getData();
-    let param = {
-      page: that.page,
-      page_size: that.page_size,
-      type: that.type
-    };
-    util.ajaxs("study/studyList", param, res => {
-      if (page < res.data.count) {
-        that.setData({
-          studyList: that.studylist.concat(res.data.list),
-          page: ++page
-        });
-      } else {
-        uni.showToast({
-          title: "到底了...",
-          icon: "none"
-        });
-      }
-    });
   },
   //转发
   onShareAppMessage: function(e) {
@@ -466,10 +398,11 @@ gotoUserInfo: function(e) {
             page_size: this.page_size,
             type: this.type
           },
-          success: res => {
+          success: (res) => {
             console.log(res.data.data);
             const { list, count } = res.data.data;
             this.studylist = list;
+						const studylist = this.studylist
             var action = {
               method: "pause"
             };
@@ -486,9 +419,9 @@ gotoUserInfo: function(e) {
             }
 
             (this.page = this.page + 1),
-              (this.count = count > 1 ? res.data.count : 1);
-            // this.studylist= list
-            // wx.stopPullDownRefresh();
+              (this.count = count > 1 ? res.data.data.count : 1);
+							this.studylist=studylist.concat(list)
+							console.log(this.type)
           }
         });
       }
@@ -520,7 +453,7 @@ gotoUserInfo: function(e) {
       console.log("form发生了submit事件，携带数据为：", e.detail.value);
 
       if (e.detail.value.input == "") {
-        wx.showToast({
+        uni.showToast({
           title: "请输入内容"
         });
       } else {
@@ -553,6 +486,7 @@ gotoUserInfo: function(e) {
 			});
 		},
     changeOil: function(e) {
+			console.log('改变世界')
       console.log(e.target.dataset.type);
       const that = this;
       (this.type = e.target.dataset.type),
@@ -564,60 +498,47 @@ gotoUserInfo: function(e) {
     },
     toWhere(e) {
       var url = e.currentTarget.dataset.url;
-      wx.navigateTo({
+      uni.navigateTo({
         url: url
       });
     },
 
     getoShop() {
       var that = this;
-      wx.request({
+      uni.request({
         url: getApp().globalData.requestUrl + "/api/index/storeStartPage",
         method: "post",
         data: "",
         header: {
           "content-type": "application/json",
-          token: wx.getStorageSync("token")
+          token: uni.getStorageSync("token")
         },
         success: function(res) {
           that.setData({
             smodel: res.data.data.smodel,
             is_wait: 1
-          }); // setTimeout(function () {
-          // wx.switchTab({
-          //   url: '/pages/onlinestore/onlinestore',
-          // })
-          // }, 3000)
-
-          wx.navigateTo({
+          });
+          uni.navigateTo({
             url: "/pages/catalogues/catalogues"
           });
         },
         fail: function() {
-          wx.hideLoading();
-          wx.showModal({
+          uni.hideLoading();
+          uni.showModal({
             title: "网络错误",
             content: "网络出错，请刷新重试",
             showCancel: false
           });
           return typeof cb == "function" && cb(false);
         }
-      }); // wx.switchTab({
-      //       url: '/pages/onlinestore/onlinestore',
-      //     })
+      });
     },
 
-    // shuhuajs(){
-    //   console.log(12)
-    //   wx.navigateTo({
-    //     url: '/pages/shuhuajs/shuhuajs',
-    //   })
-    // }
     previewImg: function(e) {
       let src = e.currentTarget.dataset.src;
       let pic_arr = e.currentTarget.dataset.pic_arr;
 			var imglist=pic_arr.split(',')
-      wx.previewImage({
+      uni.previewImage({
         current: src,
         urls: imglist
       });
@@ -627,7 +548,7 @@ gotoUserInfo: function(e) {
       let pid = e.currentTarget.dataset.pid;
       let index = e.currentTarget.dataset.index;
       const thumbs_times = e.currentTarget.dataset.thumbs_times;
-      wx.navigateTo({
+      uni.navigateTo({
         url:
           "../myPublished/myPublished?uid=" +
           uid +
@@ -643,7 +564,7 @@ gotoUserInfo: function(e) {
 
     playVideo(e) {
       var src = e.currentTarget.dataset.src;
-      wx.navigateTo({
+      uni.navigateTo({
         url: "../video/video?src=" + src
       });
     },

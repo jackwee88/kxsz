@@ -77,7 +77,7 @@
         <text class="addrress">{{address}}</text>
         </view>-->
         <view class="address_right addresscont">
-          <picker @change="bindPickerChange" :value="index" :range="public">
+          <picker @change="bindPickerChange" v-model="index" :range="public">
             <image class="public_icon" src="/static/publishedDiary/public.png" />
             <!-- <text class='publictext'>{{publictext}}</text> -->
             <text class="publictext">{{public[index]}}</text>

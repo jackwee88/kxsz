@@ -4,7 +4,7 @@
     "iPhone",
     "iPad"
   ],
-  "id": "",
+  "id": "__UNI__3AB31B8",
   "name": "kxsxApp",
   "version": {
     "name": "1.0.0",
@@ -18,6 +18,7 @@
     "url": ""
   },
   "permissions": {
+    "VideoPlayer": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -41,16 +42,16 @@
     },
     "statusbar": {
       "immersed": "supportedDevice",
-      "style": "light",
-      "background": "#008800"
+      "style": "dark",
+      "background": "#ffffff"
     },
     "usingComponents": true,
     "distribute": {
       "splashscreen": {
         "android": {
-          "xhdpi": "C:/Users/dell/Desktop/logo.png",
-          "hdpi": "C:/Users/dell/Desktop/logo.png",
-          "xxhdpi": "C:/Users/dell/Desktop/logo.png"
+          "xhdpi": "",
+          "hdpi": "",
+          "xxhdpi": ""
         }
       },
       "google": {
@@ -81,6 +82,7 @@
       },
       "apple": {},
       "plugins": {
+        "ad": {},
         "audio": {
           "mp3": {
             "description": "Android平台录音支持MP3格式文件"
@@ -88,6 +90,7 @@
         }
       }
     },
+    "arguments": "{\"name\":\"\",\"path\":\"\",\"query\":\"\",\"id\":0}",
     "allowsInlineMediaPlayback": true,
     "safearea": {
       "background": "#ffffff",
@@ -96,7 +99,7 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "2.6.1",
+      "compilerVersion": "2.6.5",
       "control": "v8",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
@@ -115,6 +118,13 @@
           "iconPath": "/static/index/index.png",
           "selectedIconPath": "/static/index/index_check.png",
           "biaocount": 0
+        },
+        {
+          "pagePath": "pages/fenleiList/fenleiList",
+          "text": "分类",
+          "iconPath": "/static/index/mulv.png",
+          "selectedIconPath": "/static/index/mulvYes.png",
+          "biaocount": 1
         },
         {
           "pagePath": "pages/message/message",

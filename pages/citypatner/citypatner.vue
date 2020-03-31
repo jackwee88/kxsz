@@ -16,11 +16,11 @@
     <view class="h1">申请加入</view>
     <view class="input">
       <text class="text">姓名：</text>
-      <input type="text" :value="username" data-type="username" v-model="uploadInfo.username" class="text"></input>
+      <input type="text"  data-type="username" v-model="uploadInfo.username" class="text"/>
     </view>
     <view class="input">
       <text class="text">电话：</text>
-      <input type="number" :value="phone" data-type="phone" v-model="uploadInfo.mobile" class="text"></input>
+      <input type="number"  data-type="phone" v-model="uploadInfo.mobile" class="text"/>
     </view>
     <view>
        <view class="pickerpicker">
@@ -39,10 +39,10 @@
     </view>
     <view class="input" style="claer:both;margin-top:20rpx;">
       <text class="text">邮箱：</text>
-      <input class="text" :value="email" data-type="email" v-model="uploadInfo.email"></input>
+      <input class="text"  data-type="email" v-model="uploadInfo.email"/>
     </view>
 
-    <textarea placeholder="请输入您的留言内容" style="width:418rpx;height:213rpx;" data-type="content" v-model="uploadInfo.remark" :value="content"></textarea>
+    <textarea placeholder="请输入您的留言内容" style="width:418rpx;height:213rpx;" data-type="content" v-model="uploadInfo.remark" ></textarea>
     <view class="submit" @tap.stop="submit">提交</view>
     <image src="../../static/close.png" class="svg" @tap.stop="close"></image>
   </view>

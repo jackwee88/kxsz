@@ -42,8 +42,7 @@ export default {
 	onReachBottom() {
 		var that = this
 		util.ajaxs("index/getScore", {page:this.page,pagesize:this.pagesize}, res => {
-		  console.log(res.data.list);
-			if(this.page < res.data.count){
+			if(this.page <=res.data.count){
 			that.userdata= that.jifen.concat(res.data.list);
 			that.page= that.page+1
 			}else{

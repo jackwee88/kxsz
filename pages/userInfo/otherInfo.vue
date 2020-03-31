@@ -29,7 +29,7 @@
 		<view class="section_title"><text>最近打卡</text></view>
 
 		<view class="works_list">
-			<view class="work_item" v-for="(item,index) in loglist" :key="index" @click="gotoPublished()">
+			<view class="work_item" v-for="(item,index) in logList" :key="index" @click="gotoPublished()">
 				<view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
 					<view class="left_side">
 						<!-- <view class="avatar"><image :src="item.avatar" class="avatar" @tap="gotoUserInfo" :data-uid="item.uid"></image></view> -->
@@ -136,7 +136,7 @@ export default {
 		return {
 		 userinfo:'',
 		 id:'',
-		 loglist:[]
+		 logList:[]
 		};
 	},
 	onLoad(event) {
@@ -208,19 +208,19 @@ export default {
 		      dy_id: dy_id
 		    },
 		    res => {
-		      var loglist = that.loglist;
+		      var logList = that.logList;
 		      const is_give = "loglist[" + index + "].is_give";
 		      const thumbs_times = "loglist[" + index + "].thumbs_times";
 		
 		      if (res.data.is_ok==true) {
 						console.log('点赞成功')
-		          this.loglist[index].is_give= !loglist[index].is_give,
-		          this.loglist[index].thumbs_times=loglist[index].thumbs_times + 1,
+		          this.logList[index].is_give= !logList[index].is_give,
+		          this.logList[index].thumbs_times=logList[index].thumbs_times + 1,
 		          this.is_ok= "y"
 		      } else {
 						console.log('取消点赞')
-		          this.loglist[index].is_give= !loglist[index].is_give,
-		          this.loglist[index].thumbs_times=loglist[index].thumbs_times - 1,
+		          this.logList[index].is_give= !logList[index].is_give,
+		          this.logList[index].thumbs_times=logList[index].thumbs_times - 1,
 		          this.is_ok= "n"
 		      }
 		    }
@@ -238,7 +238,7 @@ export default {
 		},
 		getDakalog(){
 			let that = this;
-			  this.loglist= []
+			  this.logList= []
 			let parma = {
 			  uid: this.id
 			};
@@ -254,7 +254,7 @@ export default {
 			    list[i].name = list[i].nickname + "的音频";
 			  }
 			
-			    this.loglist= list
+			    this.logList= list
 				console.log()
 			}});
 		}

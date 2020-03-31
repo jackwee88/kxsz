@@ -9,7 +9,7 @@
             </view>
         </view>
         <view class="glay-bg">
-            <view class="white" v-for="(item,index) in tackList">
+            <view class="white" v-for="(item,index) in tackList" :key="index">
                 <view class="flex flex-space glay-item">
                     <view class="left-item">
                         <view class="flex">

@@ -1,7 +1,4 @@
 {
-  "navigationBarTitleText": "功能尺适用教学",
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
+  "navigationBarTitleText": "功能尺使用教学",
   "usingComponents": {}
 }

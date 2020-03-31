@@ -19,7 +19,7 @@
 			<view class="catalogueright">
 				<view class="tabcont">
 					<navigator url="">
-					<view class="tabcontitem"  v-for="(item,index) in productList">
+					<view class="tabcontitem"  v-for="(item,index) in productList" :key="index">
 						<view class="tableftimg tabfloct">
 								<image class="productimg" :src="item.url" mode="aspectFit"></image>
 						</view>

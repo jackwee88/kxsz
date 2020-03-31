@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "城市合伙人",
+  "usingComponents": {
+    "w-picker": "/components/w-picker/w-picker"
+  }
+}

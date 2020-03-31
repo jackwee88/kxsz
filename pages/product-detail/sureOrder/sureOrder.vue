@@ -32,7 +32,8 @@
 					</view>
 				</view>
 				<view class="title-send" v-if="item.video.length != 0"><text>配套视频包</text></view>
-				<view class="store" v-if="item.video.length != 0" v-for="(items, index2) in item.video" :key="index2">
+				<view v-if="item.video.length != 0" >
+					<view class="store" v-for="(items, index2) in item.video" :key="index2">
 					<view class>
 						<view class="store_left"><image class="storeimg" :src="items.thumb"></image></view>
 						<view class="store-flex">
@@ -42,9 +43,12 @@
 						</view>
 					</view>
 				</view>
+				</view>
+				
 
 				<view class="title-send" v-if="item.bindpacks.length != 0"><text>视频礼包</text></view>
-				<view class="store" v-if="item.bindpacks.length != 0" v-for="(items_, index2) in item.bindpacks" :key="index2">
+				<view  v-if="item.bindpacks.length != 0">
+				<view class="store" v-for="(items_, index2) in item.bindpacks" :key="index2">
 					<view class>
 						<view class="store_left"><image class="storeimg" :src="items_.icon"></image></view>
 						<view class="store-flex">
@@ -53,7 +57,9 @@
 							</view>
 						</view>
 					</view>
+				</view>	
 				</view>
+				
 			</block>
 
 			<!-- <view class='' wx:for="{{goods}}" wx:key="{{index}}">
@@ -319,9 +325,7 @@ export default {
 	 */
 	onLoad: function(event) {
 		wx.setStorageSync('a', []);
-		console.log(event);
 		this.banner = JSON.parse(decodeURIComponent(event.sureOrder));
-		console.log(this.banner.now_buy+'this.nowbuy')
 		if (this.banner.now_buy == 1) {
 			  (this.now_buy = 1),
 				(this.goods_sku_id = this.banner.goods_sku_id),
@@ -333,7 +337,6 @@ export default {
 		this.dzxyFun();
 		if (that.banner.type && (that.banner.type == 1 || that.banner.type == 2)) {
 			this.type = that.banner.type;
-			console.log(this.type+'165465465')
 		}
 
 		if (!that.banner.ids) {
@@ -365,7 +368,7 @@ export default {
 						icon: 'none'
 					});
 				} else {
-					(this.goods = res.data.data.goods), console.log(this.goods);
+					(this.goods = res.data.data.goods),
 					// quantity: res.data.goods.quantity,
 					(this.address = res.data.data.address),
 						(this.total = res.data.data.total),
@@ -437,7 +440,6 @@ export default {
 		//确认支付
 		pay: function() {
 			var that = this;
-			console.log('123');
 			if (!this.selected_explain) {
 				uni.showToast({
 					title: '请先同意电子协议',
@@ -452,8 +454,7 @@ export default {
 			//     title: '请先选择收货地址', icon: 'none'
 			//   })
 			// }else{
-				var account;var account_type;var invoiceArr;
-				console.log(this.invoiceArr+'invoicearr')
+				var account;var account_type;
 				if(this.invoiceArr.content==undefined){
 					account=" "
 					account_type= ""
@@ -462,7 +463,6 @@ export default {
 					account_type=this.invoiceArr.acc_type
 				}
 			if (this.now_buy == 1) {
-				console.log(this.remarks);
 				var param = {
 					ct_id: this.ct_id,
 					p_id: this.goods[0].p_id,
@@ -470,7 +470,7 @@ export default {
 					score: this.selected_integral,
 					cp_id: this.discount,
 					quantity: this.buy_num,
-					invoiceArr: JSON.stringify(uni.getStorageSync('invoiceArr')),
+					invoiceArr:"",
 					account: account,
 					account_type: account_type,
 					goods_sku_id: that.goods_sku_id,
@@ -478,7 +478,6 @@ export default {
 				};
 			} else {
 				// 购物车跳转
-				console.log(this.remarks);
 				var param = {
 					ct_id: this.ct_id,
 					p_id: this.goods[0].p_id,
@@ -542,7 +541,6 @@ export default {
 						'content-type': 'application/json'
 					},
 					success:(res) => {
-						console.log(res)
 					if (res.status == 2) {
 						console.log('res'+res)
 						uni.showToast({
@@ -555,17 +553,18 @@ export default {
 					ajax({
 						url:'paygoods/pay',
 						data:{
-							order_id: res.data.order_id
+							order_id: res.data.data.order_id
 						},
 						success:(ress) => {
-							uni.requestPayment({
+							wx.requestPayment({
 								timeStamp: String(ress.data.timeStamp),
 								nonceStr: ress.data.nonceStr,
 								package: ress.data.package,
 								signType: ress.data.signType,
 								paySign: ress.data.paySign,
 								success: function(payres) {
-									uni.redirectTo({
+									console.log('1321654654')
+									wx.redirectTo({
 										url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
 									});
 								},
@@ -650,69 +649,68 @@ export default {
 		},
 
 		// 增加数量
-		addCount(e) {
-			const index = e.currentTarget.dataset.index;
-			const ct_id = e.currentTarget.dataset.ct_id;
-			const coupon_price = e.currentTarget.dataset.goods_price;
-			let carts = this.goods;
+		// addCount(e) {
+		// 	const index = e.currentTarget.dataset.index;
+		// 	const ct_id = e.currentTarget.dataset.ct_id;
+		// 	const coupon_price = e.currentTarget.dataset.goods_price;
+		// 	let carts = this.goods;
 
-			if (parseFloat(carts[index].quantity) + 1 <= 1) {
-				return false;
-			}
+		// 	if (parseFloat(carts[index].quantity) + 1 <= 1) {
+		// 		return false;
+		// 	}
 
-			carts[index].quantity = parseFloat(carts[index].quantity) + 1;
-			var totals = parseFloat(coupon_price * carts[index].quantity) + parseFloat(this.transport_total);
-			this.setData({
-				goods: carts,
-				totals: totals.toFixed(2),
-				buy_num: carts[index].quantity
-			});
-			this.jf();
-		},
+		// 	carts[index].quantity = parseFloat(carts[index].quantity) + 1;
+		// 	var totals = parseFloat(coupon_price * carts[index].quantity) + parseFloat(this.transport_total);
+		// 	this.setData({
+		// 		goods: carts,
+		// 		totals: totals.toFixed(2),
+		// 		buy_num: carts[index].quantity
+		// 	});
+		// 	this.jf();
+		// },
 
-		// 减少数量
-		minusCount(e) {
-			var that = this;
-			const index = e.currentTarget.dataset.index;
-			const ct_id = e.currentTarget.dataset.ct_id;
-			const coupon_price = e.currentTarget.dataset.coupon_price;
-			let carts = this.goods;
+		// // 减少数量
+		// minusCount(e) {
+		// 	var that = this;
+		// 	const index = e.currentTarget.dataset.index;
+		// 	const ct_id = e.currentTarget.dataset.ct_id;
+		// 	const coupon_price = e.currentTarget.dataset.coupon_price;
+		// 	let carts = this.goods;
 
-			if (carts[index].quantity <= 1) {
-				return false;
-			}
+		// 	if (carts[index].quantity <= 1) {
+		// 		return false;
+		// 	}
 
-			carts[index].quantity = parseFloat(carts[index].quantity) - 1;
-			var totals = parseFloat(coupon_price * carts[index].quantity) + parseFloat(that.transport_total);
-			this.setData({
-				goods: carts,
-				totals: totals.toFixed(2),
-				buy_num: carts[index].quantity
-			});
-			this.jf();
-		},
+		// 	carts[index].quantity = parseFloat(carts[index].quantity) - 1;
+		// 	var totals = parseFloat(coupon_price * carts[index].quantity) + parseFloat(that.transport_total);
+		// 	this.setData({
+		// 		goods: carts,
+		// 		totals: totals.toFixed(2),
+		// 		buy_num: carts[index].quantity
+		// 	});
+		// 	this.jf();
+		// },
 
-		changeNum: function(e) {
-			var that = this;
-			const index = e.currentTarget.dataset.index;
-			const coupon_price = e.currentTarget.dataset.coupon_price;
-			let carts = that.goods;
-			carts[index].quantity = e.detail.value;
-			that.setData({
-				goods: carts,
-				buy_num: e.detail.value
-			});
-			var totals = parseFloat(coupon_price * e.detail.value) + parseFloat(that.transport_total);
-			that.setData({
-				totals: totals.toFixed(2)
-			});
-			this.jf();
-		},
+		// changeNum: function(e) {
+		// 	var that = this;
+		// 	const index = e.currentTarget.dataset.index;
+		// 	const coupon_price = e.currentTarget.dataset.coupon_price;
+		// 	let carts = that.goods;
+		// 	carts[index].quantity = e.detail.value;
+		// 	that.setData({
+		// 		goods: carts,
+		// 		buy_num: e.detail.value
+		// 	});
+		// 	var totals = parseFloat(coupon_price * e.detail.value) + parseFloat(that.transport_total);
+		// 	that.setData({
+		// 		totals: totals.toFixed(2)
+		// 	});
+		// 	this.jf();
+		// },
 		jf: function() {
 			if (!this.address) {
 					this.address= ''
 			}
-			console.log(this.buy_num);
 			var param = {
 				ct_id: this.ct_id,
 				p_id: this.goods[0].p_id,

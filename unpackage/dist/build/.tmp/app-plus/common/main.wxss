@@ -1,25 +1,8 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* @import "colorui/main.css";
 @import "colorui/icon.css"; */
 /*每个页面公共css */
-uni-page-head .uni-page-head__title{
-	font-weight: 300!important;
+uni-page-head .uni-page-head__title.data-v-279a102c {
+  font-weight: 300!important;
 }
 
 .flex {

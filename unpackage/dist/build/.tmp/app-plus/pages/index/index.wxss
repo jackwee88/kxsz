@@ -538,15 +538,6 @@
   color: #323232;
   line-height: 34rpx;
 }
-.works_list .work_item .gallery {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-}
 .works_list .work_item .actions {
   display: -webkit-box;
   display: -webkit-flex;

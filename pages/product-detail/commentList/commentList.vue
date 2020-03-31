@@ -63,7 +63,6 @@
               class="evaluateDetailsImgList"
               v-for="(items, index2) in item.image_array"
               :key="index2"
-              v-if="items"
             >
               <image
                 :src="items"

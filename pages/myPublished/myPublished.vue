@@ -123,8 +123,10 @@ export default {
 			this.index = index
 			setTimeout(function() {
 				var pages = getCurrentPages();
-				var prevPage = pages[pages.length - 2]; //上一个页面
-				if (type == 1) {
+				var prevPage = pages[pages.length - 2];
+				 console.log(type+'type')
+				 if(type){
+					 if (type == 1) {
 					let times = browse_times
 					prevPage.studylist[index].browse_times = ++times;
 				} else if (type==2) {
@@ -132,8 +134,13 @@ export default {
 					prevPage.studylist[index].browse_times = ++times;
 				} else if (type == 3) {
 					let times = browse_times
-					prevPage.dakalog[index].browse_times = ++times;
+					prevPage.logList[index].browse_times = ++times;
+				}else if(type == 4){
+					let times=browse_times
+					prevPage.daka[index].browse_times = ++times
 				}
+				 }//上一个页面
+				
 			}, 1000);
 			
 			this.getData();

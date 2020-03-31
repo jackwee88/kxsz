@@ -37,17 +37,11 @@
         <text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
       </navigator>
     </view>
-    <!-- 地址 -->
-    <navigator url class="address">
+   <view class="address"  @tap="linkTo">
       <text class="txt-address">地址</text>
-      <view class="choose-address">选择收货地址</view>
+      <view class="choose-address">{{ address.provice }}{{ address.city }}{{ address.area }}{{ address.address }}</view>
       <image src="../../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
-    </navigator>
-    <navigator url class="address">
-      <text class="txt-address">参数</text>
-      <view class="choose-address productTxt">{{ goodsDetail.introduce }}</view>
-      <image src="../../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
-    </navigator>
+    </view>
     <view class="pic-txt-detail">
       <view>图文详情</view>
       <view v-for="(item, index) in swiperImages" :key="index" class="detailPicture">
@@ -71,6 +65,9 @@ export default {
       detailPicture: [],
       swiperImages: [],
       goods_id: "",
+			address: {},
+			total: 0.0,
+			transport_total: 0,
       teamlist: [
         {
           name: "与女无瓜",
@@ -83,24 +80,24 @@ export default {
       ],
       goodsDetail: "",
       id: "",
-      ar_id: ""
+      ar_id: "",
+			ct_id:'',
+			
     };
   },
   onLoad(event) {
-    console.log(event);
     this.banner = JSON.parse(decodeURIComponent(event.productName));
-    console.log(this.banner);
     this.id = this.banner.goods_id;
   },
   mounted() {
     ajax({
       url: "integral/goodsDetail",
       data: {
-        // goods_id:this.id
-        goods_id: "1"
+        goods_id:this.id
+        // goods_id: "1"
       },
       method: "POST",
-      success: res => {
+      success: (res) => {
         this.goodsDetail = res.data.data;
         const { image_text } = res.data.data;
         this.swiperImages = image_text;
@@ -109,15 +106,18 @@ export default {
     });
   },
   methods: {
+		linkTo: function() {
+			wx.navigateTo({
+				url:'../../shoppingcart/shaddress/shaddress'
+					
+			});
+		},
     exchange() {
       ajax({
         url: "integral/placeOrder",
         data: {
-          // goods_id:this.id
-          goods_id: "1",
-          // 收货地址
-          // ar_id:this.ar_id
-          ar_id: "338"
+          goods_id:this.id,
+          ar_id: this.address.ar_id
         },
         method: "POST",
         success: res => {

@@ -23,13 +23,13 @@
   <form @submit="submitInfo" report-submit="true">
     <view class="formcont">
       <view class="section">
-        <text class="hint">姓名：</text><input class="input" placeholder-class="place-hoder" type="text" placeholder="请输入您的名字" @input="getName" v-model="name"></input>
+        <text class="hint">姓名：</text><input class="input" placeholder-class="place-hoder" type="text" placeholder="请输入您的名字" @input="getName" v-model="name"/>
       </view>
       <!-- <view class='section section2'>
         <text class="hint">生日：</text><input class='input' placeholder-class="place-hoder" type="text" placeholder='请输入您的生日'  bindinput="getBirthtime" value="{{birthtime}}" />
       </view> -->
       <view class="section section2">
-        <text class="hint">手机号：</text><input class="input" placeholder-class="place-hoder" type="number" placeholder="请输入您的手机号" @input="getMobile" v-model="mobile"></input>
+        <text class="hint">手机号：</text><input class="input" placeholder-class="place-hoder" type="number" placeholder="请输入您的手机号" @input="getMobile" v-model="mobile"/>
       </view>
        <view class="section section2 form-item datedirsday">
           <text class="hint borthday">生日:</text>
@@ -148,7 +148,6 @@ export default {
       // });
     },
 		getData(){
-			console.log('你好')
 			ajax(
 			{
 					 url:'index/getProfile', 

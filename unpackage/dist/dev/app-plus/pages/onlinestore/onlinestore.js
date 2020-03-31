@@ -1,2 +1,1 @@
-setCssToHead([],undefined,{path:"./pages/onlinestore/onlinestore.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/onlinestore/onlinestore.wxml') } }));

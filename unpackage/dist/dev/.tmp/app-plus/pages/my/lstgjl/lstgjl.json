@@ -1,7 +1,4 @@
 {
   "navigationBarTitleText": "历史投稿记录",
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
   "usingComponents": {}
 }

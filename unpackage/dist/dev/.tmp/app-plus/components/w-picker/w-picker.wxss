@@ -81,7 +81,7 @@
       font-size: 30rpx;
 }
 .w-picker .w-picker-hd:after {
-    content: ' ';
+    content: " ";
     position: absolute;
     left: 0;
     bottom: 0;

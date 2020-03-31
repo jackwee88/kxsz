@@ -1,8 +1,5 @@
 {
   "navigationBarTitleText": "会员信息",
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
   "usingComponents": {
     "w-picker": "/components/w-picker/w-picker"
   }

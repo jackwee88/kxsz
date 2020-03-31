@@ -22,8 +22,8 @@
       <view class="bottom">
         <view class="moren" @tap="defaultF" :data-index="index" :data-ar_id="item.ar_id">
           <view class="rodio">
-            <icon v-if="item.default == 1" type="success" color="#48DB8D" size="15" @tap="selectList" :data-index="index"></icon>
-            <icon v-else type="circle" size="15" @tap="selectList" :data-index="index"></icon>
+            <icon v-if="item.default == 1" type="success" color="#48DB8D" size="15" @tap="defaultF" :data-index="index"></icon>
+            <icon v-else type="circle" size="15" @tap="defaultF" :data-index="index"></icon>
           </view>
           <text class="rodio-default" v-if="item.default == 1">已设为默认</text>
           <text v-else class="morentext" :data-list="item">设为默认</text>
@@ -104,6 +104,18 @@ export default {
       success: res => {
         if (res.status == 1) {
           _this.catalogueitem= res.data.list
+					const list = res.data.list
+					console.log(list)
+					for(var i=0;i<list.length;i++){
+						if(list[i].default==1){
+							var pages = getCurrentPages(); //上一个页面实例对象
+							
+							var prePage = pages[pages.length - 2]; //关键在这里
+							// prePage.changeData(e.currentTarget.dataset.list)
+							
+							prePage.address= list[i];
+						}
+					}
         }
       }
     });
@@ -283,6 +295,7 @@ export default {
                   // prePage.changeData(e.currentTarget.dataset.list)
 
                   prePage.address= addr,
+
                   prePage.totals= res.data.amount.toFixed(2),
                   prePage.transport_total= res.data.transport //设置数据
 

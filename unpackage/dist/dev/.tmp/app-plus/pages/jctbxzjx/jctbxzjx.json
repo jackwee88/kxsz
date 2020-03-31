@@ -1,10 +1,4 @@
 {
-  "navigationBarTitleText": "教材同步学习教学",
-  "enablePullDownRefresh": false,
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
-  "usingComponents": {
-    "uni-load-more": "/components/uni-load-more/uni-load-more"
-  }
+  "navigationBarTitleText": "教材同步写字教学",
+  "usingComponents": {}
 }

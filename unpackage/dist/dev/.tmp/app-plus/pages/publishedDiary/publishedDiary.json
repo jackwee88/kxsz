@@ -1,7 +1,4 @@
 {
-  "navigationBarTitleText": "发表记录",
-  "titleNView": {
-    "titleSize": "28rpx"
-  },
+  "navigationBarTitleText": "发表日记",
   "usingComponents": {}
 }

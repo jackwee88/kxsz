@@ -11,8 +11,8 @@
 }
 .topcont {
   display: inline-block;
-  float: left;
   margin-bottom: 25rpx;
+  float: left;
 }
 .usertoux {
   width: 154rpx;
@@ -199,6 +199,9 @@
   } */
 .thirdlineblock {
   display: inline-block;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;-webkit-box-orient: horizontal;-webkit-box-direction: normal;-webkit-flex-direction: row;flex-direction: row;-webkit-justify-content: space-around;justify-content: space-around;-webkit-box-align: center;-webkit-align-items: center;align-items: center;
 }
 .thirdline image {
   background-size: 100% 100%;
@@ -213,6 +216,19 @@
 .collecticon {
   width: 35rpx;
   height: 34rpx;
+}
+.gallery {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+image {
+				width: 220rpx;
+				height: 220rpx;
+				margin-right: 14rpx;
+&:nth-of-type(3n) {
+					margin-right: 0;
+}
+}
 }
 .messageicon {
   width: 38rpx;
@@ -245,6 +261,14 @@
 }
 .img-box {
   margin-top: 20rpx;
+}
+.img-box image {
+				width: 220rpx;
+				height: 220rpx;
+				margin-right: 14rpx;
+&:nth-of-type(3n) {
+					margin-right: 0;
+}
 }
 .audio {
   background-color: none;
