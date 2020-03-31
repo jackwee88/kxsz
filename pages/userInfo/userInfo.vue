@@ -182,6 +182,13 @@ export default {
 		    }
 		  );
 		},
+		playVideo(e) {
+			getApp().globalData.preview = false;
+			var src = e.currentTarget.dataset.src;
+			wx.navigateTo({
+				url: '../video/video?src=' + src
+			});
+		},
 		previewImg(e) {
 			getApp().globalData.preview = false;
 			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接

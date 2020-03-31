@@ -121,6 +121,7 @@ export default {
 			this.comment_count = comment_count;
 			this.thumbs_times = thumbs_times;
 			this.index = index
+			this.type = type
 			setTimeout(function() {
 				var pages = getCurrentPages();
 				var prevPage = pages[pages.length - 2];
@@ -299,12 +300,12 @@ export default {
 					}
 					var pages = getCurrentPages();
 					var index = that.index;
-					
+					console.log(this.type)
 					var prepage = pages[pages.length - 2]; //上一页面指针 
 					console.log(prepage)
 					if (that.type == 1) {
 					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
-					console.log('thumbstime+'+this.studyDetails.thumbs_times)
+					console.log('thumbstime+'+prepage.studylist[index].thumbs_times)
 					console.log('type'+this.type)
 					prepage.studylist[index].is_give = this.studyDetails.is_give
 					} else if (that.type ==2) {

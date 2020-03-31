@@ -555,32 +555,18 @@ export default {
 						data:{
 							order_id: res.data.data.order_id
 						},
+
 						success:(ress) => {
-							wx.requestPayment({
-								timeStamp: String(ress.data.timeStamp),
-								nonceStr: ress.data.nonceStr,
-								package: ress.data.package,
-								signType: ress.data.signType,
-								paySign: ress.data.paySign,
-								success: function(payres) {
-									console.log('1321654654')
-									wx.redirectTo({
-										url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
-									});
-								},
-								fail: function() {
-									// wx.showModal({
-									//   title: '错误提示',
-									//   content: '支付失败',
-									//   showCancel: false
-									// })
-									wx.redirectTo({
-										url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.order_id
-									});
-								},
-								complete: function() {
-								}
-							});
+						uni.requestPayment({
+						    provider: 'alipay',
+						    orderInfo: 'orderInfo', //微信、支付宝订单数据
+						    success: function (res) {
+						        console.log('success:' + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log('fail:' + JSON.stringify(err));
+						    }
+						});
 						}
 					});
 				}

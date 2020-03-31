@@ -196,6 +196,13 @@ export default {
 			     error: function() {}
 			    })
 		},
+		playVideo(e) {
+			getApp().globalData.preview = false;
+			var src = e.currentTarget.dataset.src;
+			wx.navigateTo({
+				url: '../video/video?src=' + src
+			});
+		},
 		praise(e) {
 		  var that = this;
 		  var index = e.currentTarget.dataset.index;
