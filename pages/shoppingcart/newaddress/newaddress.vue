@@ -5,11 +5,11 @@
       <view class="form">
         <view class="name form_item">
           <label>姓名:</label>
-          <input class="input" @input="inputChange" data-value="name" :value="name" />
+          <input class="input"  data-value="name" :value="name" v-model="name" />
         </view>
         <view class="phone form_item">
           <label>联系电话:</label>
-          <input class="input" @input="inputChange" data-value="tel" :value="tel" />
+          <input class="input"  data-value="tel" :value="tel" v-model="tel"/>
         </view>
         <view class="area form_item">
           <icon class="righticon"></icon>
@@ -101,7 +101,7 @@ export default {
         this.type = "";
         return false;
       } else {
-        (that.type = 1), (that.ar_id = ar_id), (that.index = options.index);
+        (this.type = 1), (that.ar_id = ar_id), (that.index = options.index);
       }
       console.log("123+456");
       util.ajax({
