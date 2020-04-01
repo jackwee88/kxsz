@@ -1,14 +1,15 @@
 <template>
 	<view>
-		<view class="top_title">
-			<navigator open-type="navigateBack" url=''><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1" /></navigator>
+		<view class="status_bar"><!-- 这里是状态栏 --></view>
+		<!-- 		<view class="top_title">
+			<navigator open-type="navigateBack" url=""><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1" /></navigator>
 			<navigator url="../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" class="icon2" /></navigator>
-		</view>
+		</view> -->
 		<!-- 商品详情 -->
-		<cover-view class="team-position" v-if="!assemble == ''">
-			<view class="team-num">2人团</view>
-			<view class="team-total">已拼26件</view>
-		</cover-view>
+<!-- 		<cover-view class="team-position" v-if="assemble ===1">
+			<view class="team-num">{{assmebleTotal}}人团</view>
+			<view class="team-total">已拼{{}}件</view>
+		</cover-view> -->
 		<!-- 商品详情 -->
 		<swiper :autoplay="true" :interval="3000" :duration="1000" class="detailPicture">
 			<block v-for="(item, index) in detail.icon" :key="index">
@@ -60,32 +61,46 @@
 			</navigator>
 		</view>
 		<!-- 拼团 -->
-		<view class="team-buy" v-if="assemble === ''">
+		<view class="team-buy" v-if="assemble===1">
 			<view class="youhuiquan">
-				<text style="color: #333333;font-size:30rpx ;">10个团正在热拼，可直接参与</text>
+				<text style="color: #333333;font-size:30rpx ;">{{ assmebleTotal }}个团正在热拼，可直接参与</text>
 				<view @click="assmbleDetail()">
 					<text style="color: #666666;font-size:24rpx ;">查看全部</text>
 					<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
 				</view>
 			</view>
-			<view class="team-buy-detail" v-for="(data, index) in teamlist.splice(0, 2)" :key="index">
+			<view class="team-buy-detail" v-for="(item, index) in teamlist" :key="index">
 				<view class="assmebleleft">
-					<view class="circle-avator"><image src mode="aspectFit" /></view>
-					<view class="team-user">{{ data.name }}</view>
+					<view class="circle-avator">
+						<image
+							mode="aspectFit"
+							:src="item.user.avatar"
+							style="width: 80rpx;height: 80rpx;border-radius: 40rpx;"
+						/>
+					</view>
+					<view class="team-user">{{ item.user.nickname }}</view>
 				</view>
 				<view class="assmebleright">
 					<view>
 						<view class="pingtuan">
 							差
-							<text style="font-size: 28rpx;color:#E02020;">{{ data.num }}</text>
+							<text style="font-size: 28rpx;color:#E02020;">{{ item.need_number }}</text>
 							人拼成
 						</view>
 						<view class="timeSetting">
 							<text style="font-size: 28rpx;color: #999999;">剩余</text>
-							<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+							<uni-countdown
+								backgroundColor="#ffffff"
+								color="#999999"
+								splitorColor="#999999"
+								:hour="assembleHour"
+								:minute="assmebleMinute"
+								:second="assmebleSecond"
+								:showDay="false"
+							></uni-countdown>
 						</view>
 					</view>
-					<view class="cantuan" @tap="assmebleOrder">
+					<view class="cantuan" @tap="assmebleOrder" data-orderid="item.user_id">
 						参团
 						<image src="../../static/index/qj.png" mode=""></image>
 					</view>
@@ -170,7 +185,10 @@
 						</view>
 					</view>
 				</view>
-				<view>
+				<view v-if="assemble===1">
+					<button size="mini" class="btn-assmeble" @tap="showSku" data-type="1">发起拼团</button>
+				</view>
+				<view v-if="assemble===0">
 					<button size="mini" class="bth-gwc" @tap="showSku" data-type="2">加入购物车</button>
 					<button size="mini" class="btn-fastbuy" @tap="showSku" data-type="1">立即购买</button>
 				</view>
@@ -213,7 +231,7 @@
 				<view class="buyNumRight">
 					<text :class="'buyNumReduce ' + (buyQuantity >= 1 ? 'buyNumReducebj' : '')" @tap="minusCount" style="display:flex;align-item:center;justify-content:center;">-</text>
 					<text class="buyNumSum">{{ buyQuantity }}</text>
-				<text :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')" @tap="addCount" style="display:flex;align-item:center;justify-content:center;">+</text>
+					<text :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')" @tap="addCount" style="display:flex;align-item:center;justify-content:center;">+</text>
 				</view>
 			</view>
 
@@ -225,24 +243,21 @@
 			<view class="content_wrap">
 				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
 				<view class="list" v-for="(item, index) in teamlist" :key="index">
-					<view class="item" 
-					data-index="index" 
-					data-orderid="item.assemeble_order_id"
-					>
+					<view class="item" data-index="index" data-orderid="item.assemeble_order_id">
 						<image src="../../static/reg/log.png" class="avatar"></image>
-		
+
 						<view class="name">1</view>
-		
+
 						<view class="num_n_time">
 							<view class="num">
 								差
 								<text>{data.num}</text>
 								人拼成
 							</view>
-		
+
 							<view class="time">
 								<text>剩余</text>
-							<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+								<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
 							</view>
 						</view>
 						<view class="cantuan" @tap="assmebleOrder">
@@ -259,12 +274,11 @@
 <script>
 import { ajax } from '../../utils/public.js';
 var util = require('../../utils/util.js');
-import assmeble from '../assemble/assemble.vue'
+import assmeble from '../assemble/assemble.vue';
 export default {
 	data() {
 		return {
 			evaluateList: {
-				
 				total: 56,
 				count: 6,
 				list: [
@@ -275,7 +289,8 @@ export default {
 					}
 				]
 			},
-			visible:false,
+			assmebleTotal: 0,
+			visible: false,
 			//获取评论列表
 			// detail: {
 			// 	coupon_price: 0.0,
@@ -316,7 +331,10 @@ export default {
 			hour: 0,
 			minute: 0,
 			second: 0,
-			assemble: null,
+			assemble: 0,
+			assembleHour: 0,
+			assmebleSecond: 0,
+			assmebleMinute: 0,
 			teamlist: [
 				{
 					name: '与女无瓜',
@@ -339,9 +357,10 @@ export default {
 		// }else{
 		// 	this.pid = this.banner.id;
 		// }
-		this.pid = event.gd_id
+		this.pid = event.gd_id;
 		this.getData();
 		this.getEvaluateList();
+		this.getAssemble();
 	},
 
 	onShareAppMessage: function(res) {
@@ -378,33 +397,30 @@ export default {
 				this[key] = element;
 			}
 		},
-		assmebleOrder(e){
+		assmebleOrder(e) {
 			uni.showToast({
-				title:'请先选择收货地址'
-			})
+				title: '请先选择收货地址'
+			});
 			// uni.navigateTo({
 			// 	url:'../shoppingcart/shaddress/shaddress+'
 			// })
-			let param={
-				    ar_id: 338,
-				    goods_sku_id: this.valueStrNum,
-						goods_spec_id:this.goods_spec_id,
-				    p_id: this.pid,
-				    quantity: 1,
-				    type: 2,
-						assemble_order_id:e.currentTarget.dataset.orderid
-			}
+			let param = {
+				ar_id: 338,
+				goods_sku_id: this.valueStrNum,
+				goods_spec_id: this.goods_spec_id,
+				p_id: this.pid,
+				quantity: 1,
+				type: 2,
+				assemble_order_id: e.currentTarget.dataset.orderid
+			};
 			ajax({
-				url:'goods/assembleOrder',
-				data:param,
-				success:(res)=>{
-					
-				}
-			})
+				url: 'goods/assembleOrder',
+				data: param,
+				success: res => {}
+			});
 		},
 		assmbleDetail: function() {
-			
-			this.visible = true
+			this.visible = true;
 		},
 		getData() {
 			ajax({
@@ -423,24 +439,11 @@ export default {
 						const { spec_attr, spec_list } = res.data.data.specData;
 						this.sku_arr = spec_attr;
 					}
-					if(res.data.data.sale_status==2){
-						this.getflashtime()
-						// let timeNoew = new Date().getTime() / 1000;
-						// if (timeNoew > this.detail.sale_detail.endtime) {
-						// 	console.log('秒杀结束');
-						// } else if (timeNoew < this.detail.createTime) {
-						// 	console.log('秒杀未开始');
-						// } else {
-						// 	var lastTime = this.detail.sale_detail.endtime - timeNoew; //(当前时间距离秒杀结束的秒)
-						// 	// 然后将秒转化成时间  (定时器每秒更新一次)
-						// 	this.timeChange(lastTime);
-						// }
+					if (res.data.data.sale_status == 2) {
+						this.getflashtime();
 					}
 					this.goods_spec_id = res.data.data.spec[0].goods_spec_id;
 					this.valueStrNum = res.data.data.spec[0].spec_sku_id;
-					if (!res.data.data.assemble == '') {
-						this.getAssemble();
-					}
 				},
 				error: function() {}
 			});
@@ -456,6 +459,16 @@ export default {
 				success: res => {
 					const { count, list } = res.data.data;
 					this.teamlist = list;
+					this.assmebleTotal = list.length;
+					if(this.assmebleTotal>0){
+						this.assemble = 1;
+					}
+					for (var i = 0; i < list.length; i++) {
+						let timeNoew = new Date().getTime() / 1000;
+
+						var lastTime = list[i].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						this.AssmebleChange(lastTime);
+					}
 				},
 				error: function() {}
 			});
@@ -480,6 +493,29 @@ export default {
 					}
 				}
 			});
+		},
+		AssmebleChange(value) {
+			var lastTime = parseInt(value);
+			if (lastTime > 60) {
+				var middle = parseInt(lastTime / 60);
+				lastTime = parseInt(lastTime % 60);
+				if (middle > 60) {
+					var hour = parseInt(middle / 60);
+					middle = parseInt(middle % 60);
+					this.assembleHour = hour; //小时
+				}
+			}
+			var result = parseInt(lastTime);
+			this.assmebleSecond = result; //秒
+			if (middle > 0) {
+				var minute = parseInt(middle);
+				this.assmebleMinute = minute;
+			}
+			if (hour > 0) {
+				var hour = parseInt(hour);
+				this.assembleHour = hour;
+			}
+			return result;
 		},
 		timeChange(value) {
 			var lastTime = parseInt(value);
@@ -569,11 +605,29 @@ export default {
 		},
 		//打开sku弹窗
 		showSku(e) {
+			console.log(this.assemble + '你好');
 			if (this.sku_arr.length > 0) {
 				(this.sku_show = true), (this.type = e.currentTarget.dataset.type);
 			} else {
 				if (e.currentTarget.dataset.type == 1) {
-					this.buyNow();
+					if (assmeble == 1) {
+						let param = {
+							ar_id: 338,
+							goods_sku_id: this.valueStrNum,
+							goods_spec_id: this.goods_spec_id,
+							p_id: this.pid,
+							quantity: 1,
+							type: 2,
+							assemble_order_id: e.currentTarget.dataset.orderid
+						};
+						ajax({
+							url: 'goods/assembleOrder',
+							data: param,
+							success: res => {}
+						});
+					} else {
+						this.buyNow();
+					}
 				} else {
 					this.add();
 				}
@@ -712,7 +766,26 @@ export default {
 				return;
 			} else {
 				if (that.type == 1) {
-					that.buyNow();
+					if (this.assemble == 1) {
+						let param = {
+							ar_id: 338,
+							goods_sku_id: this.valueStrNum,
+							goods_spec_id: this.goods_spec_id,
+							p_id: this.pid,
+							quantity: 1,
+							type: 2,
+							assemble_order_id: 0
+						};
+						ajax({
+							url: 'goods/assembleOrder',
+							data: param,
+							success: res => {
+								this.sku_show = false;
+							}
+						});
+					} else {
+						that.buyNow();
+					}
 				} else {
 					that.add();
 				}
@@ -766,7 +839,6 @@ export default {
 						});
 						if (that.detail.specData) {
 							that.closeSku();
-							console.log('beij');
 						}
 					}
 				}
@@ -847,7 +919,6 @@ export default {
 			}
 
 			(this.valueStr = valueStr), (this.valueStrNum = valueStrNum);
-			console.log(this.valueStrNum, 'ggggggggggg');
 		}
 	}
 };

@@ -59,7 +59,7 @@
 				<swiper previous-margin="96rpx" circular="true" next-margin="360rpx" style="height: 350rpx;">
 					<swiper-item class="flex" v-for="(item, index) in bannerList" :key="index">
 						<view class="banner-item" :data-id="item.goods.p_id" @tap.stop="gotoDetails(item.goods.p_id)">
-							<image class="banner-icon" :src="item.goods.icon" />
+							<view class="banner-icon"><image :src="item.goods.icon" style="width: 248rpx;height: 242rpx;"/></view>
 							<view class="goods-price">¥{{ item.price }}</view>
 						</view>
 					</swiper-item>
@@ -84,7 +84,7 @@
 								</view>
 								<view style="font-size: 28rpx;">
 									团购价:
-									<text class="goods-price" style="font-size: 32rpx;">￥{{ item.goods.p_cityprice }}</text>
+									<text class="goods-price" style="font-size: 32rpx;">￥{{ item.assemble.price }}</text>
 								</view>
 							</view>
 						</view>
@@ -233,9 +233,8 @@ export default {
 				success: res => {
 					const { count, list } = res.data.data;
 					this.flashSale = list[0].goods;
-					this.bannerList = list
+					this.bannerList = this.joinAssembleList.concat(list)
 					console.log(this.bannerList)
-					console.log(this.flashSale);
 					// 获取当前时间戳
 					let timeNoew = new Date().getTime() / 1000;
 					if (timeNoew > list[0].endtime) {
@@ -365,8 +364,9 @@ page,
 /*商品推荐*/
 .recommend-banner {
 	.banner-icon {
-		width: 100%;
+		width: 250rpx;
 		height: 244rpx;
+		box-sizing: border-box;
 		border: 2rpx solid #3FAE2A;
 	}
 	.banner-item {
@@ -374,7 +374,6 @@ page,
 		width: 262rpx;
 		height: auto;
 		margin-right: 36rpx;
-		box-sizing: border-box;
 	}
 }
 /*時間僅剩*/

@@ -7,7 +7,7 @@
         </view>
         <view class="topRight topcont">
           <view class="pDiary">
-            <text class="name">{{user.nickname}}</text>
+            <text class="name">{{ user.nickname }}</text>
             <text class="fengexian"></text>
             <text class="pdiarytext">个人日记</text>
           </view>
@@ -17,13 +17,13 @@
             <image class="moduleicon" src="/static/img/growthDiary/module.png" />
             <text>模块介绍</text>
           </view>
-          <text class="jieshaocont">{{modulecont}}</text>
+          <text class="jieshaocont">{{ modulecont }}</text>
         </view>
         <view class="Signature">
           <view class="Signature_title">
             <image class="moduleicon" src="/static/img/growthDiary/qianming.png" />个性签名
           </view>
-          <text class="geqiancont">{{geqiancont}}</text>
+          <text class="geqiancont">{{ geqiancont }}</text>
         </view>
       </view>
 
@@ -46,10 +46,10 @@
             >
               <image :src="item.avatar" class="touxiangicon" />
               <view class="info-text">
-                <text class="infoname">{{item.nickname}}</text>
+                <text class="infoname">{{ item.nickname }}</text>
                 <view class="time">
-                  <text class="infodate">{{item.createtime}}</text>
-                  <text class="browse">浏览{{item.browse_times}}次</text>
+                  <text class="infodate">{{ item.createtime }}</text>
+                  <text class="browse">浏览{{ item.browse_times }}次</text>
                 </view>
               </view>
             </view>
@@ -62,7 +62,7 @@
                 :data-p_id="item.dy_id"
                 :data-index="index"
                 :data-comment_count="item.comment_count"
-              >{{item.content}}</text>
+              >{{ item.content }}</text>
 
               <view class="img-box">
                 <view style="position:relative;display:inline">
@@ -116,17 +116,17 @@
                 <view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
                   <image
                     class="collecticon"
-                    v-if="item.is_give==true"
+                    v-if="item.is_give == true"
                     src="../../static/index/collect.png"
                     style="margin-top:6rpx;"
                   />
                   <image
                     class="collecticon"
-                    v-if="item.is_give==false"
+                    v-if="item.is_give == false"
                     src="../../static/index/uncollect.png"
                     style="margin-top:6rpx;"
                   />
-                  <text>{{item.thumbs_times}}</text>
+                  <text>{{ item.thumbs_times }}</text>
                 </view>
                 <view
                   class="thirdline share"
@@ -150,7 +150,7 @@
                   :data-thumbs_times="item.thumbs_times"
                 >
                   <image class="shareicon" src="../../static/index/pl.png" />
-                  <text>{{item.comment_count}}</text>
+                  <text>{{ item.comment_count }}</text>
                 </view>
               </view>
             </view>
@@ -158,7 +158,7 @@
         </view>
       </view>
     </view>
-    <view class="dakaciclecont" v-if="is_share==1">
+    <view class="dakaciclecont" v-if="is_share == 1">
       <!-- <navigator class='dakatext' url='/pages/publishedDiary/publishedDiary?type={{type}}'>首页</navigator> -->
       <view class="dakatext" @tap="goindex">首页</view>
     </view>
@@ -773,3 +773,6 @@ export default {
   }
 };
 </script>
+<style>
+@import "./growthDiary.css";
+</style>

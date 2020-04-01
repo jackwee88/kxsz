@@ -32,34 +32,32 @@
 					</view>
 				</view>
 				<view class="title-send" v-if="item.video.length != 0"><text>配套视频包</text></view>
-				<view v-if="item.video.length != 0" >
+				<view v-if="item.video.length != 0">
 					<view class="store" v-for="(items, index2) in item.video" :key="index2">
-					<view class>
-						<view class="store_left"><image class="storeimg" :src="items.thumb"></image></view>
-						<view class="store-flex">
-							<view>
-								<text class="title">{{ items.title }}</text>
+						<view class>
+							<view class="store_left"><image class="storeimg" :src="items.thumb"></image></view>
+							<view class="store-flex">
+								<view>
+									<text class="title">{{ items.title }}</text>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				</view>
-				
 
 				<view class="title-send" v-if="item.bindpacks.length != 0"><text>视频礼包</text></view>
-				<view  v-if="item.bindpacks.length != 0">
-				<view class="store" v-for="(items_, index2) in item.bindpacks" :key="index2">
-					<view class>
-						<view class="store_left"><image class="storeimg" :src="items_.icon"></image></view>
-						<view class="store-flex">
-							<view>
-								<text class="title">{{ items_.title }}</text>
+				<view v-if="item.bindpacks.length != 0">
+					<view class="store" v-for="(items_, index2) in item.bindpacks" :key="index2">
+						<view class>
+							<view class="store_left"><image class="storeimg" :src="items_.icon"></image></view>
+							<view class="store-flex">
+								<view>
+									<text class="title">{{ items_.title }}</text>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>	
 				</view>
-				
 			</block>
 
 			<!-- <view class='' wx:for="{{goods}}" wx:key="{{index}}">
@@ -170,8 +168,8 @@
 					<text>可用积分{{ integral }}</text>
 					<!-- 判断是否选中状态 -->
 					<view class="rodio">
-						<icon v-if="selected_integral" type="success" color="#48DB8D" size="20" @tap="selectList" ></icon>
-						<icon v-else type="circle" size="20" @tap="selectList" ></icon>
+						<icon v-if="selected_integral" type="success" color="#48DB8D" size="20" @tap="selectList"></icon>
+						<icon v-else type="circle" size="20" @tap="selectList"></icon>
 					</view>
 				</view>
 				<view class="wechatzhifu" @tap.stop="invoice" style="display:flex;justify-content:space-between;align-item:center">
@@ -197,8 +195,8 @@
 					<text>是否代付款</text>
 
 					<view class="rodio">
-						<icon v-if="selected_other" type="success" color="#48DB8D" size="20" @tap="selectListOther" ></icon>
-						<icon v-else type="circle" size="20" @tap="selectListOther" ></icon>
+						<icon v-if="selected_other" type="success" color="#48DB8D" size="20" @tap="selectListOther"></icon>
+						<icon v-else type="circle" size="20" @tap="selectListOther"></icon>
 					</view>
 				</view>
 
@@ -313,7 +311,7 @@ export default {
 			goods_num: '',
 			goods_spec_id: '',
 			remarks: '',
-			banner:''
+			banner: ''
 		};
 	},
 
@@ -327,7 +325,7 @@ export default {
 		wx.setStorageSync('a', []);
 		this.banner = JSON.parse(decodeURIComponent(event.sureOrder));
 		if (this.banner.now_buy == 1) {
-			  (this.now_buy = 1),
+			(this.now_buy = 1),
 				(this.goods_sku_id = this.banner.goods_sku_id),
 				(this.goods_num = this.banner.goods_num),
 				(this.buy_num = this.banner.goods_num),
@@ -369,8 +367,8 @@ export default {
 					});
 				} else {
 					(this.goods = res.data.data.goods),
-					// quantity: res.data.goods.quantity,
-					(this.address = res.data.data.address),
+						// quantity: res.data.goods.quantity,
+						(this.address = res.data.data.address),
 						(this.total = res.data.data.total),
 						(this.totals = res.data.data.total.toFixed(2)),
 						(this.integral = res.data.data.score),
@@ -454,14 +452,15 @@ export default {
 			//     title: '请先选择收货地址', icon: 'none'
 			//   })
 			// }else{
-				var account;var account_type;
-				if(this.invoiceArr.content==undefined){
-					account=" "
-					account_type= ""
-				}else{
-					account = this.invoiceArr.content
-					account_type=this.invoiceArr.acc_type
-				}
+			var account;
+			var account_type;
+			if (this.invoiceArr.content == undefined) {
+				account = ' ';
+				account_type = '';
+			} else {
+				account = this.invoiceArr.content;
+				account_type = this.invoiceArr.acc_type;
+			}
 			if (this.now_buy == 1) {
 				var param = {
 					ct_id: this.ct_id,
@@ -470,7 +469,7 @@ export default {
 					score: this.selected_integral,
 					cp_id: this.discount,
 					quantity: this.buy_num,
-					invoiceArr:"",
+					invoiceArr: '',
 					account: account,
 					account_type: account_type,
 					goods_sku_id: that.goods_sku_id,
@@ -500,16 +499,15 @@ export default {
 					header: {
 						'content-type': 'application/json'
 					},
-					success: (res) => {
-							this.order_id=res.data.order_id
+					success: res => {
+						this.order_id = res.data.order_id;
 						ajax({
-							url:'goods/repay_other',
-							data:{
+							url: 'goods/repay_other',
+							data: {
 								order_id: res.data.order_id
 							},
-							success:(ress) => {
-									this.ewm= ress.data.code,
-									this.is_ewm=true
+							success: ress => {
+								(this.ewm = ress.data.code), (this.is_ewm = true);
 								var aa = wx.getFileSystemManager();
 								aa.writeFile({
 									filePath: wx.env.USER_DATA_PATH + '/test.png',
@@ -522,7 +520,7 @@ export default {
 												// wx.showToast({
 												//   title: '保存成功',
 												// })
-													this.is_save=true
+												this.is_save = true;
 											},
 											fail: function(err) {}
 										});
@@ -535,41 +533,54 @@ export default {
 				});
 			} else {
 				ajax({
-					url:'goods/downOrder', 
-					data:param, 
+					url: 'goods/downOrder',
+					data: param,
 					header: {
 						'content-type': 'application/json'
 					},
-					success:(res) => {
-					if (res.status == 2) {
-						console.log('res'+res)
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						});
-						return;
-					}
-
-					ajax({
-						url:'paygoods/pay',
-						data:{
-							order_id: res.data.data.order_id
-						},
-
-						success:(ress) => {
-						uni.requestPayment({
-						    provider: 'alipay',
-						    orderInfo: 'orderInfo', //微信、支付宝订单数据
-						    success: function (res) {
-						        console.log('success:' + JSON.stringify(res));
-						    },
-						    fail: function (err) {
-						        console.log('fail:' + JSON.stringify(err));
-						    }
-						});
+					success: res => {
+						if (res.status == 2) {
+							console.log('res' + res);
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+							return;
 						}
-					});
-				}
+
+						ajax({
+							url: 'paygoods/pay',
+							data: {
+								order_id: res.data.data.order_id
+							},
+
+							success: ress => {
+								console.log(ress);
+								uni.requestPayment({
+									provider: 'wxpay',
+									orderInfo: ress.data.data, //微信、支付宝订单数据
+									success: function(res) {
+										console.log('success:' + JSON.stringify(res));
+										uni.showToast({
+											title: '支付成功'
+										});
+										uni.redirectTo({
+											url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.data.order_id
+										});
+									},
+									fail: function(err) {
+										console.log('fail:' + JSON.stringify(err));
+										uni.showToast({
+											title: '支付失败'
+										});
+										uni.redirectTo({
+											url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.data.order_id
+										});
+									}
+								});
+							}
+						});
+					}
 				});
 			} // }
 		},
@@ -612,11 +623,11 @@ export default {
 
 			var int = this.integral / 100;
 			var integral = parseFloat(int.toFixed(2));
-				this.selected_integral= !this.selected_integral
+			this.selected_integral = !this.selected_integral;
 
 			if (this.selected_integral == true) {
 				if (this.flag_y == false) {
-						this.flag_n= false
+					this.flag_n = false;
 					var new_total = (this.totals - integral).toFixed(2);
 
 					if (new_total <= 0) {
@@ -626,11 +637,11 @@ export default {
 				}
 			} else {
 				if (this.flag_n == false) {
-					var new_total = (parseFloat(this.totals) + parseFloat(integral)).toFixed(2); 
+					var new_total = (parseFloat(this.totals) + parseFloat(integral)).toFixed(2);
 					this.jf();
 				}
 
-					this.flag_y= false
+				this.flag_y = false;
 			}
 		},
 
@@ -695,7 +706,7 @@ export default {
 		// },
 		jf: function() {
 			if (!this.address) {
-					this.address= ''
+				this.address = '';
 			}
 			var param = {
 				ct_id: this.ct_id,
@@ -707,18 +718,22 @@ export default {
 				goods_sku_id: this.goods_sku_id
 			};
 			var that = this;
-			ajax({url:'goods/OrderMoney', data:param,success:(res) => {
-					this.integral= res.data.data.use_integral,
-					this.totals= res.data.data.amount.toFixed(2),
-					this.price= res.data.data.prices,
-					this.transport_total= res.data.data.transport
-			}});
+			ajax({
+				url: 'goods/OrderMoney',
+				data: param,
+				success: res => {
+					(this.integral = res.data.data.use_integral),
+						(this.totals = res.data.data.amount.toFixed(2)),
+						(this.price = res.data.data.prices),
+						(this.transport_total = res.data.data.transport);
+				}
+			});
 		},
 		selectListOther: function(e) {
-				this.selected_other= !this.selected_other
+			this.selected_other = !this.selected_other;
 		},
 		closeEwm: function() {
-				this.is_ewm= false
+			this.is_ewm = false;
 			wx.redirectTo({
 				url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + this.order_id
 			});
@@ -729,10 +744,10 @@ export default {
 			});
 		},
 		explainFun: function() {
-				this.is_dzxy= true
+			this.is_dzxy = true;
 		},
 		hideExplain: function() {
-				this.is_dzxy=false
+			this.is_dzxy = false;
 		},
 		//获取协议
 		dzxyFun() {
@@ -768,7 +783,7 @@ export default {
 		},
 
 		bindRemarksAreaBlur(e) {
-				this.remarks= e.detail.value
+			this.remarks = e.detail.value;
 		}
 	}
 };

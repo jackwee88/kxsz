@@ -369,35 +369,26 @@ export default {
             var that = this;
             util.ajaxs("paygoods/repay", param, res => {
               console.log(res.data);
-              wx.requestPayment({
-                timeStamp: String(res.data.timeStamp),
-                nonceStr: res.data.nonceStr,
-                package: res.data.package,
-                signType: res.data.signType,
-                paySign: res.data.paySign,
-                success: function(payres) {
-                  console.log(payres); // wx.showToast({
-                  //   title: "付款成功",
-                  //   icon:'none'
-                  // })
+							uni.requestPayment({
+							  provider:'wxpay',
+								orderInfo:res.data,
+							  success: function(payres) {
+							    console.log(payres); // wx.showToast({
+							  
+							    wx.redirectTo({
+							      url:
+							        "/pages/onlinestore/orderdetails/orderdetails?order_id=" +
+							        e.currentTarget.dataset.order_id
+							    });
+							  },
+							  fail: function() {
 
-                  wx.redirectTo({
-                    url:
-                      "/pages/onlinestore/orderdetails/orderdetails?order_id=" +
-                      e.currentTarget.dataset.order_id
-                  });
-                },
-                fail: function() {
-                  // wx.showModal({
-                  //   title: '错误提示',
-                  //   content: '支付失败',
-                  //   showCancel: false
-                  // })
-                },
-                complete: function() {
-                  // complete
-                }
-              });
+							  },
+							  complete: function() {
+							    // complete
+							  }
+							});
+             
             });
           }
         }

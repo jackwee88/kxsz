@@ -1,1 +1,0 @@
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/hncjiaoxue_mulu/hncjiaoxue_mulu.wxml') } }));
