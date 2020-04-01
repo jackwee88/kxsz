@@ -1,6 +1,5 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
+	"pages": [{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -23,37 +22,20 @@
 			"style": {
 				"navigationBarTitleText": "积分规则",
 				"navigationBarBackgroundColor": "#008f00",
-				"navigationBarTextStyle": "white",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTextStyle": "white"
 			}
 		},
 		{
 			"path": "pages/my/huiyuantequan/huiyuantequan",
 			"style": {
-				"navigationBarTitleText": "我的特权",
-				// "navigationBarBackgroundColor": "#008800",
-				// "navigationBarTextStyle": "white",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "我的特权"
 			}
 		},
 		{
 			"path": "pages/online_Teach/onlineTeach",
 			"style": {
 				"navigationBarTitleText": "教材同步学习教学",
-				"enablePullDownRefresh": false,
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -65,90 +47,49 @@
 		{
 			"path": "pages/myPublished/myPublished",
 			"style": {
-				"navigationBarTitleText": "我的发表",
-				"app-plus": {
-					
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "我的发表"
 			}
 		},
 		{
 			"path": "pages/my/daySignin/daySignin",
 			"style": {
-				"navigationBarTitleText": "每日签到",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "每日签到"
 			}
 		},
 		{
 			"path": "pages/onlinestore/myOrder/myOrder",
 			"style": {
-				"navigationBarTitleText": "我的订单",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "我的订单"
 			}
 		},
 		{
 			"path": "pages/my/huiyuanxinxi/huiyuanxinxi",
 			"style": {
-				"navigationBarTitleText": "会员信息",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "会员信息"
 			}
 		},
 		{
 			"path": "pages/my/huiyuanjifen/huiyuanjifen",
 			"style": {
-				"navigationBarTitleText": "会员积分",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "会员积分"
 			}
 		},
 		{
 			"path": "pages/my/mycollect/mycollect",
 			"style": {
-				"navigationBarTitleText": "我的收藏",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "我的收藏"
 			}
 		},
 		{
 			"path": "pages/my/lstgjl/lstgjl",
 			"style": {
-				"navigationBarTitleText": "历史投稿记录",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "历史投稿记录"
 			}
 		},
 		{
 			"path": "pages/publishedDiary/publishedDiary",
 			"style": {
-				"navigationBarTitleText": "发表日记",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "发表日记"
 			}
 		},
 		{
@@ -175,12 +116,7 @@
 		{
 			"path": "pages/freeTeaching/freeTeaching",
 			"style": {
-				"navigationBarTitleText": "在线教学",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "在线教学"
 			}
 		},
 		{
@@ -213,34 +149,19 @@
 		{
 			"path": "pages/Copyright/Copyright",
 			"style": {
-				"navigationBarTitleText": "版权声明",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "版权声明"
 			}
 		},
 		{
 			"path": "pages/my/shengjihuiyuan/shengjihuiyuan",
 			"style": {
-				"navigationBarTitleText": "升级会员",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "升级会员"
 			}
 		},
 		{
 			"path": "pages/growthDiary/growthDiary",
 			"style": {
-				"navigationBarTitleText": "个人日记",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "个人日记"
 			}
 		},
 		{
@@ -252,23 +173,13 @@
 		{
 			"path": "pages/my/mydiscount/mydiscount",
 			"style": {
-				"navigationBarTitleText": "优惠券",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "优惠券"
 			}
 		},
 		{
 			"path": "pages/my/signature/signature",
 			"style": {
-				"navigationBarTitleText": "个性签名",
-				"app-plus": {
-					// "titleNView": {
-					// 	"titleSize": "28rpx"
-					// }
-				}
+				"navigationBarTitleText": "个性签名"
 			}
 		},
 		{
@@ -326,10 +237,7 @@
 		}, {
 			"path": "pages/ruler-buy/ruler-buy",
 			"style": {
-				"navigationBarTitleText": "书法尺购买",
-				"app-plus": {
-
-				}
+				"navigationBarTitleText": "书法尺购买"
 			}
 
 		}, {
@@ -355,7 +263,7 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "大脑开发"
 			}
-		},{
+		}, {
 			"path": "pages/brain/choice/choice",
 			"style": {
 				"navigationStyle": "custom",
@@ -529,7 +437,7 @@
 		}, {
 			"path": "pages/otherInfo/otherInfo",
 			"style": {
-				"navigationBarTitleText":"开心书写"
+				"navigationBarTitleText": "开心书写"
 			}
 		}, {
 			"path": "pages/addComment/addComment",
@@ -566,18 +474,16 @@
 			"style": {
 				"navigationBarTitleText": "开心书写"
 			}
+		}, {
+			"path": "pages/fenleiList/fenleiList",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
-	    ,{
-            "path" : "pages/fenleiList/fenleiList",
-            "style": {
-            	"navigationStyle":"custom"
-            }
-        }
-    ],
+	],
 
 
 	"globalStyle": {
-		// "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#ffffff",
 		"navigationBarTextStyle": "black"
@@ -595,27 +501,13 @@
 				"selectedIconPath": "/static/index/index_check.png",
 				"biaocount": 0
 			},
-			// {
-			// 	"pagePath": "pages/jctbxzjx/jctbxzjx",
-			// 	"text": "在线教学",
-			// 	"iconPath": "/static/index/zuopinzhengji.png",
-			// 	"selectedIconPath": "/static/index/zuopinzhengji_check.png",
-			// 	"biaocount": 1
-			// },
 			{
-			  "pagePath": "pages/fenleiList/fenleiList",
-			  "text": "分类",
-			  "iconPath": "/static/index/mulv.png",
-			  "selectedIconPath": "/static/index/mulvYes.png",
+				"pagePath": "pages/fenleiList/fenleiList",
+				"text": "分类",
+				"iconPath": "/static/index/mulv.png",
+				"selectedIconPath": "/static/index/mulvYes.png",
 				"biaocount": 1
-			}, 
-			// {
-			//   "pagePath": "pages/onlinestore/shopcart/shopcart",
-			//   "text": "购物车",
-			//   "iconPath": "/static/index/shop.png",
-			//   "selectedIconPath": "/static/index/shopYes.png",
-			// 	"biaocount": 1
-			// },
+			},
 			{
 				"pagePath": "pages/message/message",
 				"text": "消息",
@@ -632,14 +524,12 @@
 			}
 		]
 	},
-	"condition" : { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
-		"list": [
-			{
-				"name": "", //模式名称
-				"path": "", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
-			}
-		]
+	"condition": {
+		"current": 0,
+		"list": [{
+			"name": "",
+			"path": "",
+			"query": ""
+		}]
 	}
 }

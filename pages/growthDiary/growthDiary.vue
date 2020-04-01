@@ -110,8 +110,7 @@
                 :action="item.action"
                 :data-index="index"
               ></audio>
-              <view>
-              </view>
+              <view></view>
 
               <view class="thirdlineblock">
                 <view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
@@ -137,11 +136,7 @@
                   :data-image="item.picture_idss[0]"
                   :data-video="item.video_ids"
                 >
-                  <image
-                    class="shareicon img-share"
-                    src="../../static/index/zf.png" 
-										mode=""
-                  />
+                  <image class="shareicon img-share" src="../../static/index/zf.png" mode />
                   <text>转发</text>
                 </view>
                 <view
@@ -206,7 +201,7 @@
 
 <script>
 var util = require("../../utils/util.js");
-import {ajax} from '../../utils/public.js'
+import { ajax } from "../../utils/public.js";
 export default {
   data() {
     return {
@@ -217,7 +212,7 @@ export default {
       uid: "",
       jionNum: "320",
       pieceNum: "225",
-      modulecont:"",
+      modulecont: "",
       geqiancont: "#开心日记#开心日记！",
       daka: [],
       is_share: "",
@@ -460,23 +455,27 @@ export default {
       let parma = {
         uid: that.uid
       };
-      ajax({url:"/index/UserCenter",data: parma, success:(res) => {
-        let list = res.data.data.list;
-        var action = {
-          method: "pause"
-        };
+      ajax({
+        url: "/index/UserCenter",
+        data: parma,
+        success: res => {
+          let list = res.data.data.list;
+          var action = {
+            method: "pause"
+          };
 
-        for (var i = 0; i < list.length; i++) {
-          list[i].action = action;
-          list[i].poster = list[i].picture_idss[0];
-          list[i].name = list[i].nickname + "的音频";
+          for (var i = 0; i < list.length; i++) {
+            list[i].action = action;
+            list[i].poster = list[i].picture_idss[0];
+            list[i].name = list[i].nickname + "的音频";
+          }
+
+          that.setData({
+            user: res.data.data.user,
+            daka: list
+          });
         }
-
-        that.setData({
-          user: res.data.data.user,
-          daka: list
-        });
-      }});
+      });
     },
 
     praise(e) {
@@ -494,14 +493,14 @@ export default {
           const is_give = "daka[" + index + "].is_give";
           const thumbs_times = "daka[" + index + "].thumbs_times";
 
-          if (res.data.is_ok==true) {
-              this.daka[index].is_give= !daka[index].is_give,
-              this.daka[index].thumbs_times=daka[index].thumbs_times + 1,
-              this.is_ok= "y"
+          if (res.data.is_ok == true) {
+            (this.daka[index].is_give = !daka[index].is_give),
+              (this.daka[index].thumbs_times = daka[index].thumbs_times + 1),
+              (this.is_ok = "y");
           } else {
-              this.daka[index].is_give= !daka[index].is_give,
-              this.daka[index].thumbs_times=daka[index].thumbs_times - 1,
-              this.is_ok= "n"
+            (this.daka[index].is_give = !daka[index].is_give),
+              (this.daka[index].thumbs_times = daka[index].thumbs_times - 1),
+              (this.is_ok = "n");
           }
         }
       );
@@ -514,13 +513,9 @@ export default {
             var prevPage = pages[pages.length - 2]; //上一个页面
 
             if (that.type == 1) {
-
             } else if (that.type == 3 || that.type == 4) {
-
             } else if (that.type == 2) {
-
             }
-
           }
         } else {
           if (dy_id == that.p_id) {
@@ -528,43 +523,42 @@ export default {
             var prevPage = pages[pages.length - 2]; //上一个页面
 
             if (that.type == 1) {
-
             } else if (that.type == 3 || that.type == 4) {
-
             } else if (that.type == 2) {
-
             }
           }
         }
       }, 1000);
     },
-   previewImg: function(e) {
-     let src = e.currentTarget.dataset.src;
-     let pic_arr = e.currentTarget.dataset.effect_pic;
-   	var imglist=pic_arr.split(',')
-     wx.previewImage({
-       current: src,
-       urls: imglist
-     });
-   },
-		details(e) {
-			let param = {
-				dy_id: e.currentTarget.dataset.dy_id,
-				index: e.currentTarget.dataset.index,
-				browse_times: e.currentTarget.dataset.browse_times,
-				comment_count: e.currentTarget.dataset.comment_count,
-				thumbs_times: e.currentTarget.dataset.thumbs_times,
-				type: 4
-			};
-			// if (this.index_ == "") {
-			//   var index_ = -1;
-			// } else {
-			//   var index_ = this.index_;
-			// }
-			uni.navigateTo({
-				url: '../myPublished/myPublished?pulishedDetail=' + encodeURIComponent(JSON.stringify(param))
-			});
-		},
+    previewImg: function(e) {
+      let src = e.currentTarget.dataset.src;
+      let pic_arr = e.currentTarget.dataset.effect_pic;
+      var imglist = pic_arr.split(",");
+      wx.previewImage({
+        current: src,
+        urls: imglist
+      });
+    },
+    details(e) {
+      let param = {
+        dy_id: e.currentTarget.dataset.dy_id,
+        index: e.currentTarget.dataset.index,
+        browse_times: e.currentTarget.dataset.browse_times,
+        comment_count: e.currentTarget.dataset.comment_count,
+        thumbs_times: e.currentTarget.dataset.thumbs_times,
+        type: 4
+      };
+      // if (this.index_ == "") {
+      //   var index_ = -1;
+      // } else {
+      //   var index_ = this.index_;
+      // }
+      uni.navigateTo({
+        url:
+          "../myPublished/myPublished?pulishedDetail=" +
+          encodeURIComponent(JSON.stringify(param))
+      });
+    },
     // details(e) {
     //   const dy_id = e.currentTarget.dataset.dy_id;
     //   const index = e.currentTarget.dataset.index;
@@ -775,10 +769,7 @@ export default {
       }
 
       ctx.restore();
-    },
+    }
   }
 };
 </script>
-<style>
-@import "./growthDiary.css";
-</style>

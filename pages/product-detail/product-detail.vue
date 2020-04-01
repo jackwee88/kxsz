@@ -65,7 +65,7 @@
 				<text style="color: #333333;font-size:30rpx ;">10个团正在热拼，可直接参与</text>
 				<view @click="assmbleDetail()">
 					<text style="color: #666666;font-size:24rpx ;">查看全部</text>
-					<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
+					<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
 				</view>
 			</view>
 			<view class="team-buy-detail" v-for="(data, index) in teamlist.splice(0, 2)" :key="index">
@@ -98,7 +98,7 @@
 			<view><text style="color: #666666;font-size:26rpx ;">优惠券</text></view>
 			<navigator url="/pages/onlinestore/discountcenter/discountcenter">
 				<text style="color: #666666;font-size:26rpx ;">领取优惠券</text>
-				<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
+				<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
 			</navigator>
 		</view>
 		<!-- 售后售前 -->
@@ -115,14 +115,14 @@
 				<image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
 				<view class="jisu">七天无理由退换</view>
 			</view>
-			<view style="margin-left:120rpx ;"><image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" /></view>
+			<view style="margin-left:120rpx ;"><image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" /></view>
 		</navigator>
 		<!-- 地址 -->
 		<view class="address">
 			<text class="txt-address">地址</text>
 			<view class="choose-address">{{ detail.place_of_delivery }}</view>
 			<!-- <view class="choose-address">选择收货地址</view> -->
-			<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
+			<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
 		</view>
 
 		<!-- 		  <view class="comment-wrap">
@@ -136,7 +136,7 @@
 			<view class="comment">
 				<text class="choose-address">评价({{ evaluateList.total }})</text>
 				<text style="color: #A1A4A5;font-size: 28rpx;" @tap.stop="lookMore">查看全部</text>
-				<image src="../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
+				<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
 			</view>
 			<view v-if="evaluateList.total != 0">
 				<view class="comment-user">

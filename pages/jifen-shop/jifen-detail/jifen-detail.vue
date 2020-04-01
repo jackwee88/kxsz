@@ -33,14 +33,14 @@
       </view>
 
       <navigator class="btn-share">
-        <image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;" />
+        <image src="../../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;" />
         <text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
       </navigator>
     </view>
    <view class="address"  @tap="linkTo">
       <text class="txt-address">地址</text>
       <view class="choose-address">{{ address.provice }}{{ address.city }}{{ address.area }}{{ address.address }}</view>
-      <image src="../../../static/onlineStore/go%20(1).png" style="width: 16rpx;height: 24rpx;" />
+      <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
     </view>
     <view class="pic-txt-detail">
       <view>图文详情</view>

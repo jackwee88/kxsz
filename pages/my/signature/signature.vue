@@ -16,7 +16,7 @@
 					<!-- 没有个性签名是显示 -->
 					<view class="noshow" v-if="status == 3">
 						<view class="text">{{ userinfo.nickname }}</view>
-						<image class="icon wujieguo" src="../../../static/jctbxzjx/wujieguo.png"></image>
+						<image class="icon wujieguo" src="../../../static/my/wujieguo.png"></image>
 						<view class="tip">{{ tips }}</view>
 					</view>
 					<navigator v-if="status == 3" class="seedetail" @click="applySign">申请签名</navigator>
