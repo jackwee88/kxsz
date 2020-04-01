@@ -66,7 +66,7 @@
 				</swiper>
 			</view>
 
-			<view class="banner-title"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
+			<view class="banner-title" v-if="joinAssembleList.length != 0"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
 			<!-- 商品推荐 -->
 			<view class="recommend-footer">
 				<view class="recommend-list" v-for="(item, index) in joinAssembleList" :key="index">
@@ -233,7 +233,7 @@ export default {
 				success: res => {
 					const { count, list } = res.data.data;
 					this.flashSale = list[0].goods;
-					this.bannerList = this.joinAssembleList.concat(list)
+					this.bannerList = list
 					console.log(this.bannerList)
 					// 获取当前时间戳
 					let timeNoew = new Date().getTime() / 1000;

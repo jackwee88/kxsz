@@ -59,7 +59,6 @@ export default {
 			let param = {
 				id: e.p_id
 			};
-			console.log(param);
 			uni.navigateTo({
 				url: '../product-detail/product-detail?gd_id=' + e.p_id
 			});
