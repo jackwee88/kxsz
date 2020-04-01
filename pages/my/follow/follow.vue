@@ -5,23 +5,25 @@
 			<input type="text" :value="search_txt" placeholder="搜索关注" />
 		</view>
 		<view v-if="myFriendList.length == 0">暂无信息</view>
-		<view class="list" v-if="myFriendList.length>=1">
-			<view class="item" v-for="(item,index) in myFriendList" :key="index">
-				<view @click="gotoOtherInfo(item)">
-					<image :src="item.avatar" mode=""></image>
-				</view>
+		<view class="list" v-if="myFriendList.length >= 1">
+			<view class="item" v-for="(item, index) in myFriendList" :key="index">
+				<view @click="gotoOtherInfo(item)"><image :src="item.avatar" mode=""></image></view>
 				<view class="info_wrap">
 					<view class="left_side">
-						<view class="name">{{item.nickname}}</view>
-						<view class="account">开心号：{{item.number}}</view>
+						<view class="name">{{ item.nickname }}</view>
+						<view class="account">开心号：{{ item.number }}</view>
 					</view>
 					<view class="btn" v-if="item.type == 'only'" @tap="follow" :data-id="item.id" :data-index="index">
-						<image src="../../../static/my/ygz.png" class="ygz"  ></image>
+						<image src="../../../static/my/ygz.png" class="ygz"></image>
 						取消关注
 					</view>
 					<view class="btn had_btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index">
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
+					</view>
+					<view class="btn had_btn" v-if="item.type == 'mutual'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
+						<image src="../../../static/my/hxgz.png" class="ygz"></image>
+						相互关注
 					</view>
 				</view>
 			</view>
@@ -35,66 +37,74 @@ export default {
 	data() {
 		return {
 			search_txt: '',
-			myFriendList:[]
+			myFriendList: []
 		};
 	},
-	onLoad(){
-		this.getData()
+	onLoad() {
+		this.getData();
 	},
-	mounted() {
-		
-	},
+	mounted() {},
 	methods: {
-		getData(){
+		getData() {
 			ajax({
-			url: 'friend/myFriendList',
-			data: {},
-			method: 'POST',
-			success: (res)=> {
-				const{count,list} = res.data.data
-				this.myFriendList = list
-			},
-			error: function() {}
-		})
+				url: 'friend/myFriendList',
+				data: {},
+				method: 'POST',
+				success: res => {
+					const { count, list } = res.data.data;
+					this.myFriendList = list;
+				},
+				error: function() {}
+			});
 		},
-		
-		gotoOtherInfo:function(e){
-			let param ={uid:e.id,}
-				console.log(param)
+
+		gotoOtherInfo: function(e) {
+			let param = { uid: e.id };
+			console.log(param);
 			uni.navigateTo({
 				url: '../../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
 
-		
-		follow(e){
+		follow(e) {
 			// let type = e.type
-			const index = e.currentTarget.dataset.index
+			const index = e.currentTarget.dataset.index;
+			const type = e.currentTarget.dataset.type;
 			// console.log(type+'type')
 			ajax({
-			     url: 'friend/follow',
-			     data: {
-						friend_uid :e.currentTarget.dataset.id
-			     },
-			     method: 'POST',
-			     success: (res) =>{
-						 if(res.data.status==1){
-							 console.log(index)
-							 console.log(res.data.msg)
-							 this.myFriendList[index].type='none'	
-							 console.log(this.myFriendList[index].type)
-						 }else if(res.data.status==2){
-							 console.log(res.data.msg)
-							 this.myFriendList[index].type='only'
-							 console.log(this.myFriendList[index].type)
-						 }
-						 // this.getData()
-			     },
-			     error: function() {
-						 console.log("111")
-					 }
-			    })
-		},
+				url: 'friend/follow',
+				data: {
+					friend_uid: e.currentTarget.dataset.id
+				},
+				method: 'POST',
+				success: res => {
+					if (type==mutual) {
+						console.log(type+'有type')
+						if (res.data.status == 1) {
+							//取消关注
+							this.myFriendList[index].type = 'none';
+						} else if (res.data.status == 2) {
+							//关注成功
+							// this.myFriendList[index].type = 'mutual';
+							this.getData()
+						}
+					} else {
+						console.log(type+'没有type')
+						if (res.data.status == 1) {
+							this.myFriendList[index].type = 'none';
+						} else if (res.data.status == 2) {
+							// this.myFriendList[index].type = 'only';
+							this.getData()
+						}
+					}
+
+					// this.getData()
+				},
+				error: function() {
+					console.log('111');
+				}
+			});
+		}
 	}
 };
 </script>
@@ -126,40 +136,40 @@ export default {
 	}
 }
 .btn {
-			display: flex;
-			align-items: center;
-			line-height: 48rpx;
-			overflow: hidden;
-			word-break: break-all;
-			text-overflow: ellipsis;
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 1;
-			height: 48rpx;
-			padding: 0 18rpx;
-			font-size: 24rpx;
-			color: rgba(153, 153, 153, 1);
-			background: #fff;
-			border-radius: 26rpx;
-			border: 1px solid rgba(221, 221, 221, 1);
+	display: flex;
+	align-items: center;
+	line-height: 48rpx;
+	overflow: hidden;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	height: 48rpx;
+	padding: 0 18rpx;
+	font-size: 24rpx;
+	color: rgba(153, 153, 153, 1);
+	background: #fff;
+	border-radius: 26rpx;
+	border: 1px solid rgba(221, 221, 221, 1);
 
-			image {
-				width: 24rpx;
-				height: 24rpx;
-				margin-right: 10rpx;
-			}
-			.ygz {
-				height: 18rpx;
-			}
+	image {
+		width: 24rpx;
+		height: 24rpx;
+		margin-right: 10rpx;
+	}
+	.ygz {
+		height: 18rpx;
+	}
 
-			.hxgz {
-				height: 16rpx;
-			}
-		}
-		.had_btn {
-			color: #fff;
-			background: rgba(63, 174, 42, 1);
-		}
+	.hxgz {
+		height: 16rpx;
+	}
+}
+.had_btn {
+	color: #fff;
+	background: rgba(63, 174, 42, 1);
+}
 .list {
 	padding: 0 36rpx 0 44rpx;
 

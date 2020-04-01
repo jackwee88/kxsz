@@ -1,6 +1,21 @@
-let requestUrl = ''
+// let requestUrl = ''
+// if (process.env.NODE_ENV === 'development') {
+//   requestUrl = '/api/';
+// } else {
+//   requestUrl = 'http://kxsx.zcycs.com/api/';
+// }
+let requestUrl = '';
 if (process.env.NODE_ENV === 'development') {
-  requestUrl = '/api/';
+  switch (uni.getSystemInfoSync().platform) {
+    case 'android':
+      requestUrl = 'http://kxsx.zcycs.com/api/';
+      break;
+    case 'ios':
+      requestUrl = 'http://kxsx.zcycs.com/api/';
+      break;
+    default:
+      requestUrl = '/api/';
+  }
 } else {
   requestUrl = 'http://kxsx.zcycs.com/api/';
 }

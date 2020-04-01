@@ -5,11 +5,11 @@
       <view class="form">
         <view class="name form_item">
           <label>姓名:</label>
-          <input class="input"  data-value="name" :value="name" v-model="name" />
+          <input class="input"  data-value="name"  v-model="name" />
         </view>
         <view class="phone form_item">
           <label>联系电话:</label>
-          <input class="input"  data-value="tel" :value="tel" v-model="tel"/>
+          <input class="input"  data-value="tel"  v-model="tel"/>
         </view>
         <view class="area form_item">
           <icon class="righticon"></icon>

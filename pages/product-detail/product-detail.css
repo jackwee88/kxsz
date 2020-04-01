@@ -278,7 +278,15 @@ page {
 	border-radius: 40rpx;
 	background-color: pink;
 }
-
+.btn-assmeble{
+	background-color: #fa6400;
+	border-radius: 40rpx 40rpx 40rpx 40rpx;
+	width: 400rpx;
+	height: 80rpx;
+	color: #ffffff;
+	font-size: 32rpx;
+	margin-left: -20rpx;
+	}
 .team-user {
 	color: #333333;
 	font-size: 28rpx;

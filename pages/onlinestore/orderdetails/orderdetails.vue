@@ -309,16 +309,13 @@ export default {
             };
             var that = this;
             util.ajaxs("paygoods/repay", param, res => {
-              console.log(res.data);
-              wx.requestPayment({
-                timeStamp: String(res.data.timeStamp),
-                nonceStr: res.data.nonceStr,
-                package: res.data.package,
-                signType: res.data.signType,
-                paySign: res.data.paySign,
+              console.log(res.data.data);
+              uni.requestPayment({
+                provider:'wxpay',
+								orderInfo:res.data,
                 success: function(payres) {
                   console.log(payres);
-                  wx.showToast({
+                  uni.showToast({
                     title: "支付成功，正在查询订单",
                     icon: "none",
                     mask: true
@@ -328,11 +325,11 @@ export default {
                   }, 3000);
                 },
                 fail: function() {
-                  // wx.showModal({
-                  //   title: '错误提示',
-                  //   content: '支付失败',
-                  //   showCancel: false
-                  // })
+                  uni.showModal({
+                    title: '错误提示',
+                    content: '支付失败',
+                    showCancel: false
+                  })
                 },
                 complete: function() {
                   // complete
