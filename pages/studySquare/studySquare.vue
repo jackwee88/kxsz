@@ -6,7 +6,7 @@
         <view
           class="tabcon avtive"
           data-type="1"
-          @tap="changeOil"
+          @tap="changeOil(1)"
           style="background-color:#E78522"
         >成长日记</view>
         <view
@@ -22,7 +22,7 @@
         <view
           class="tabcon"
           data-type="3"
-          @tap="changeOil"
+          @tap="changeOil(3)"
           style="background-color:#2B37C1"
           v-if="type=3"
         >文字故事</view>
@@ -208,7 +208,7 @@ export default {
       page: 1,
       page_size: 10,
       count: 1,
-      type: 1,
+      fetchtype: 1,
       is_wait: "",
       comment_num: 0,
       release: [
@@ -224,7 +224,8 @@ export default {
       releaseFocus: false,
       releaseValue: "",
       item: "",
-      indeNum: ""
+      indeNum: "",
+      islock: false
     };
   },
 
@@ -249,42 +250,18 @@ export default {
     // 	wait: ''
     // });
   },
-  onPullDownRefresh: function() {
-    var that = this;
-    that.setData({
-      page: 1,
-      studylist: [],
-      count: 1
-    });
-    that.getData();
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
+  // onPullDownRefresh: function() {
+  //   var that = this;
+  //   that.setData({
+  //     page: 1,
+  //     studylist: [],
+  //     count: 1
+  //   });
+  //   that.getData();
+  // },
   onReachBottom: function() {
     let that = this;
-
+    if (this.islock) return;
     that.getData();
   },
   //转发
@@ -314,10 +291,10 @@ export default {
         success: function(res) {}
       };
     } else {
-      return {
-        title: "开心书写",
-        path: "pages/index/index?myshare=1&tourl=/pages/studySquare/studySquare" // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
-      };
+      // return {
+      //   title: "开心书写",
+      //   path: "pages/index/index?myshare=1&tourl=/pages/studySquare/studySquare" // 当打开分享链接的时候跳转到小程序首页，并设置参数positionId
+      // };
     }
   },
   methods: {
@@ -331,7 +308,6 @@ export default {
       var that = this;
       const index = e.currentTarget.dataset.index;
       const dy_id = e.currentTarget.dataset.dy_id;
-      console.log("123" + dy_id);
       ajax({
         url: "study/praiseStudy",
         data: {
@@ -360,7 +336,6 @@ export default {
     },
 
     gotoPublished(e) {
-      console.log("this.type" + this.type);
       let param = {
         dy_id: e.currentTarget.dataset.dy_id,
         index: e.currentTarget.dataset.index,
@@ -376,7 +351,6 @@ export default {
       });
     },
 gotoUserInfo: function(e) {
-			console.log(e.currentTarget.dataset.uid + '123');
 			let param = {
 				uid: e.currentTarget.dataset.uid
 			};
@@ -385,23 +359,23 @@ gotoUserInfo: function(e) {
 			});
 		},
     getData() {
-      const studylist = this.studylist;
+      // const studylist = this.studylist;
       if (this.count < this.page) {
         uni.showToast({
           title: "暂无更多信息"
         });
       } else {
+        this.islock = true;
         ajax({
           url: "study/studyList",
           data: {
             page: this.page,
             page_size: this.page_size,
-            type: this.type
+            type: this.fetchtype
           },
           success: (res) => {
-            console.log(res.data.data);
             const { list, count } = res.data.data;
-            this.studylist = list;
+            // this.studylist = list;
 						const studylist = this.studylist
             var action = {
               method: "pause"
@@ -417,11 +391,11 @@ gotoUserInfo: function(e) {
               list[i].action = action;
               list[i].name = list[i].nickname + "的音频";
             }
-
-            (this.page = this.page + 1),
-              (this.count = count > 1 ? res.data.data.count : 1);
-							this.studylist=studylist.concat(list)
-							console.log(this.type)
+            console.log(this.fetchtype)
+            this.page = this.page + 1
+            this.count = count > 1 ? res.data.data.count : 1
+            this.studylist=studylist.concat(list)
+            this.islock = false
           }
         });
       }
@@ -450,7 +424,6 @@ gotoUserInfo: function(e) {
     },
     // 点击发表评论
     formSubmit: function(e) {
-      console.log("form发生了submit事件，携带数据为：", e.detail.value);
 
       if (e.detail.value.input == "") {
         uni.showToast({
@@ -471,7 +444,6 @@ gotoUserInfo: function(e) {
           //隐藏输入框
           releaseValue: "" //清空输入框内容
         });
-        console.log(release);
       }
     },
 		
@@ -485,16 +457,15 @@ gotoUserInfo: function(e) {
 				url: '../growthDiary/growthDiary?uid=' + uid + '&pid=' + pid + '&index=' + index + '&type=1' + '&thumbs_times=' + thumbs_times
 			});
 		},
-    changeOil: function(e) {
+    changeOil: function(type) {
 			console.log('改变世界')
-      console.log(e.target.dataset.type);
       const that = this;
-      (this.type = e.target.dataset.type),
-        (this.page = 1),
-        (this.studylist = []),
-        (this.count = 1),
-        (this.show = false);
-      that.getData();
+      this.fetchtype = type
+      this.page = 1
+      this.studylist = []
+      this.count = 1
+      this.show = false
+      that.getData()
     },
     toWhere(e) {
       var url = e.currentTarget.dataset.url;
