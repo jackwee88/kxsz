@@ -113,7 +113,6 @@ export default {
 		};
 	},
 	onLoad(event) {
-		console.log(event);
 		const { dy_id, browse_times, comment_count, thumbs_times ,type,index} = JSON.parse(decodeURIComponent(event.pulishedDetail));
 		if (dy_id) {
 			this.dy_id = dy_id;
@@ -125,7 +124,6 @@ export default {
 			setTimeout(function() {
 				var pages = getCurrentPages();
 				var prevPage = pages[pages.length - 2];
-				 console.log(type+'type')
 				 if(type){
 					 if (type == 1) {
 					let times = browse_times
@@ -180,7 +178,6 @@ export default {
 				index: e.currentTarget.dataset.index,
 				comment_count: e.currentTarget.dataset.comment_count
 			};
-			console.log(e.index);
 			uni.navigateTo({
 				url: 'commentDetails/commentDetails?commentDetails=' + encodeURIComponent(JSON.stringify(param))
 			});
@@ -233,7 +230,6 @@ export default {
 						url: 'comment/comment',
 						data: { d_id: this.dy_id},
 						success: (res) => {
-							console.log(res.data.data);
 							let list = res.data.data;
 							list.if_input = false;
 							this.release = res.data.list;
@@ -257,7 +253,6 @@ export default {
 		},
 		//跳转用户详情
 		gotoUserInfo: function(e) {
-			console.log(e.currentTarget.dataset.uid+'123')
 			let param = {
 				uid: e.currentTarget.dataset.uid,
 		
@@ -289,31 +284,25 @@ export default {
 				success: res => {
 					const details = this.studyDetails;
 					if (res.data.data.is_ok == true) {
-						console.log('点赞');
 						this.studyDetails.is_give = !details.is_give, 
 						this.studyDetails.thumbs_times = details.thumbs_times + 1;
 						
 					} else {
-						console.log('取消点赞');
 						this.studyDetails.is_give = !details.is_give, 
 						this.studyDetails.thumbs_times = details.thumbs_times - 1;
 					}
 					var pages = getCurrentPages();
 					var index = that.index;
-					console.log(this.type)
-					var prepage = pages[pages.length - 2]; //上一页面指针 
-					console.log(prepage)
+					var prevPage = pages[pages.length - 2]; //上一页面指针 
 					if (that.type == 1) {
-					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
-					console.log('thumbstime+'+prepage.studylist[index].thumbs_times)
-					console.log('type'+this.type)
-					prepage.studylist[index].is_give = this.studyDetails.is_give
+					prevPage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					prevPage.studylist[index].is_give = this.studyDetails.is_give
 					} else if (that.type ==2) {
-					prepage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
-					prepage.studylist[index].is_give = this.studyDetails.is_give
+					prevPage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					prevPage.studylist[index].is_give = this.studyDetails.is_give
 					} else if (that.type == 3) {
-					prepage.loglist[index].thumbs_times = this.studyDetails.thumbs_times
-					prepage.loglist[index].is_give = this.studyDetails.is_give
+					prevPage.loglist[index].thumbs_times = this.studyDetails.thumbs_times
+					prevPage.loglist[index].is_give = this.studyDetails.is_give
 					}
 
 				},

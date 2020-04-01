@@ -309,12 +309,10 @@ export default {
             };
             var that = this;
             util.ajaxs("paygoods/repay", param, res => {
-              console.log(res.data.data);
               uni.requestPayment({
                 provider:'wxpay',
 								orderInfo:res.data,
                 success: function(payres) {
-                  console.log(payres);
                   uni.showToast({
                     title: "支付成功，正在查询订单",
                     icon: "none",
@@ -337,7 +335,6 @@ export default {
               });
             });
           } else if (ress.cancel) {
-            console.log("用户点击取消");
           }
         }
       });
@@ -389,7 +386,6 @@ export default {
             };
             var that = this;
             util.ajaxs("order/reminder", param, res => {
-              console.log(res.data);
               wx.showToast({
                 title: "已收到您的催单信息",
                 icon: "none",
@@ -481,7 +477,6 @@ export default {
               order_id: order_id
             };
             util.ajaxs("order/del", param, res => {
-              console.log(res.data); //删除订单
 
               wx.showToast({
                 title: "删除成功",

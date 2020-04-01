@@ -62,7 +62,6 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
 
-        console.log('height=' + res.windowHeight); // 计算主体部分高度,单位为px
 
         this.second_height= res.windowHeight - res.windowWidth / 750 * 300
       }

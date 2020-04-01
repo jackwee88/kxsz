@@ -173,7 +173,6 @@ export default {
     },
     //点击切换
     handleTaps: function(id) {
-      console.log(id);
       let that = this;
 
       if (id) {

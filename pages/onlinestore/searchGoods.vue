@@ -71,7 +71,6 @@ export default {
 				},
 				method:'POST',
 				success:(res)=>{
-					console.log(res.data)
 					const {count,list} = res.data.data
 					this.productList = list
 				}

@@ -183,7 +183,6 @@ export default {
       wx.getStorage({
         key: "refreshIds",
         success: function(res) {
-          console.log(res);
 
           if (res.data == 1) {
             that.deleteList();
@@ -368,12 +367,10 @@ export default {
             };
             var that = this;
             util.ajaxs("paygoods/repay", param, res => {
-              console.log(res.data);
 							uni.requestPayment({
 							  provider:'wxpay',
 								orderInfo:res.data,
 							  success: function(payres) {
-							    console.log(payres); // wx.showToast({
 							  
 							    wx.redirectTo({
 							      url:
@@ -412,14 +409,12 @@ export default {
             };
             var that = this;
             util.ajaxs("order/reminder", param, res => {
-              console.log(res.data);
               wx.showToast({
                 title: "催单成功",
                 mask: true
               });
             });
           } else if (ress.cancel) {
-            console.log("用户点击取消");
           }
         }
       });
@@ -526,7 +521,6 @@ export default {
               order_id: order_id
             };
             util.ajaxs("order/del", param, res => {
-              console.log(res.data); //删除订单
 
               wx.showToast({
                 title: "删除成功",

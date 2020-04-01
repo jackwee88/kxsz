@@ -105,7 +105,6 @@ export default {
         if (res.status == 1) {
           _this.catalogueitem= res.data.list
 					const list = res.data.list
-					console.log(list)
 					for(var i=0;i<list.length;i++){
 						if(list[i].default==1){
 							var pages = getCurrentPages(); //上一个页面实例对象
@@ -292,7 +291,6 @@ export default {
                   var pages = getCurrentPages(); //上一个页面实例对象
 
                   var prePage = pages[pages.length - 2]; //关键在这里
-                  // prePage.changeData(e.currentTarget.dataset.list)
 
                   prePage.address= addr,
 
@@ -301,17 +299,7 @@ export default {
 
                   wx.navigateBack({
                     delta: 1 // 回退前 delta(默认为1) 页面
-
-                  }); // prePage.setData({
-                  //   address: addr,
-                  //   totals: res.data.amount.toFixed(2),
-                  //   transport_total: res.data.transport
-                  // })
-                  // prePage.changeData(e.currentTarget.dataset.list)
-                  //设置数据
-                  // wx.navigateBack({
-                  //   delta: 1, // 回退前 delta(默认为1) 页面
-                  // })
+                  });
                 }
               });
             }

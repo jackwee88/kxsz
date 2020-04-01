@@ -53,105 +53,124 @@
 		</view>
 		<!-- 点击进入我的发表页 请求所有用户数据-->
 
-		<view class="works_list">
-			<view class="work_item" v-for="(item, index) in studylist" :key="index">
-				<view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
-					<view class="left_side">
-						<view class="avatar"><image :src="item.avatar" class="avatar" @tap.stop="gotoUserInfo" :data-uid="item.uid"></image></view>
-						<view class="date">
-							<view class="username">{{ item.nickname }}</view>
-							<view>{{item.createtime }}</view>
+		<view class="studylist">
+			<view class="studyitem" v-for="(item, index) in studylist" :key="index">
+				<view class="studylistflex">
+					<view class="user_info" @tap="gotoGrowthDairy" :data-uid="item.uid" :data-index="index" :data-thumbs_times="item.thumbs_times" :data-pid="item.dy_id">
+						<view class="left_side">
+							<view class="avatar"><image :src="item.avatar" class="avatar" @tap.stop="gotoUserInfo" :data-uid="item.uid"></image></view>
+							<view class="date">
+								<view class="username">{{ item.nickname }}</view>
+								<view>{{ item.createtime }}</view>
+							</view>
 						</view>
+						<text class="view_count">浏览{{ item.browse_times }}次</text>
 					</view>
-					<text class="view_count">浏览{{item.browse_times }}次</text>
-				</view>
-				<view
-					class="msg"
-					:data-dy_id="item.dy_id"
-					@tap="gotoPublished"
-					:data-browse_times="item.browse_times"
-					:data-p_id="item.dy_id"
-					:data-index="index"
-					:data-comment_count="item.comment_count"
-				>
-					{{ item.content }}
-				</view>
-				<!-- 				<view class="gallery">
-					<view v-for="(imageitem, imageIndex) in item.picture_arr" :key="imageIndex" class="imageList"><image :src="imageitem" mode=""></image></view>
-				</view> -->
-				<view class="gallery" @tap.stop="gotoPublished" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count">
-					<view class="case-li case-view-item">
-						<view style="position:relative;display:inline">
-							<image
-								v-if="item.video_ids"
-								style="width:30%;height:200rpx;"
-								:hidden="item.fullScreen"
-								class="case-picture"
-								:src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'"
-								mode="scaleToFill"
-							></image>
-							<image
-								v-if="item.video_ids"
-								:data-fullScreen="item.fullScreen"
-								class="bt"
-								mode="scaleToFill"
-								:data-src="item.video_ids"
-								:data-index="index"
-								@tap.stop="playVideo"
-								src="/static/img/index/play3.png"
-								style="width:60rpx;height:60rpx;position:absolute;top:-122rpx;left:73rpx;"
-							></image>
-						</view>
-
-						<image
-							v-for="(items, index2) in item.picture_arr"
-							:key="index2"
-							:src="items"
-							@tap.stop="previewImg"
-							:data-effect_arr="item.picture_arr"
-							:data-src="items"
-							mode="aspectFill"
+					<view class="studyitem-middle">
+						<text
+							class="impression"
+							:data-dy_id="item.dy_id"
+							@tap="gotoPublished"
+							:data-browse_times="item.browse_times"
+							:data-p_id="item.dy_id"
 							:data-index="index"
-						></image>
-						<!--前提一个播放的按钮-->
-					</view>
+							:data-comment_count="item.comment_count"
+						>
+							{{ item.content }}
+						</text>
 
-					<audio
-						v-if="item.voice_ids"
-						:src="item.voice_ids"
-						controls
-						class="audio"
-						:poster="item.poster"
-						:name="item.name"
-						:author="item.author"
-						:data-index="index"
-						@tap.stop="playorpause"
-						:action="item.action"
-					></audio>
-					<view><view></view></view>
-				</view>
-				<view class="actions">
-					<view class="item">
-						<image src="../../static/index/zf.png" mode=""></image>
-						<text></text>
+						<view>
+							<view style="position:relative;display:inline">
+								<image
+									v-if="item.video_ids"
+									style="width:30%;height:200rpx;margin-right:10rpx"
+									:hidden="item.fullScreen"
+									class="acticleimg"
+									:src="item.video_ids + '?spm=a2c4g.11186623.2.1.yjOb8V&x-oss-process=video/snapshot,t_0000,f_jpg,w_800,h_600,m_fast'"
+									mode="scaleToFill"
+								/>
+								<image
+									v-if="item.video_ids"
+									:data-fullScreen="item.fullScreen"
+									class="bt"
+									mode="scaleToFill"
+									:data-src="item.video_ids"
+									:data-index="index"
+									@tap="playVideo"
+									src="../../static/studySquare/play3.png"
+									style="width:60rpx;height:60rpx;position:absolute;top:-118rpx;left:78rpx;"
+								/>
+							</view>
+							<image
+								v-for="(items, index2) in item.picture_arr"
+								:key="index2"
+								class="acticleimg"
+								:src="items"
+								:data-src="items"
+								:data-effect_arr="item.picture_ids"
+								@tap="previewImg"
+								mode="aspectFill"
+							/>
+							<audio
+								v-if="item.voice_ids"
+								:src="item.voice_ids"
+								controls
+								loop
+								class="audio"
+								:poster="item.poster"
+								:name="item.name"
+								:author="item.author"
+								:data-index="index"
+								@tap.stop="playorpause"
+								:action="item.action"
+							></audio>
+							<view></view>
+						</view>
+
+						<view class="hr"></view>
+						<view class="thirdlineblock">
+							<view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
+								<image class="collecticon" v-if="item.is_give == true" src="../../static/index/collect.png" style="margin-top:6rpx;" />
+								<image class="collecticon" v-if="item.is_give == false" src="../../static/index/uncollect.png" />
+								<text>{{ item.thumbs_times }}</text>
+							</view>
+							<view
+								class="thirdline share"
+								:data-dy_id="item.dy_id"
+								open-type="share"
+								:data-nickname="item.nickname"
+								:data-image="item.picture_arr[0]"
+								:data-video="item.video_ids"
+							>
+								<image class="shareicon" src="../../static/index/fx.png" />
+								<text>分享</text>
+							</view>
+							<view
+								class="thirdline share"
+								@tap.stop="gotoPublished"
+								:data-dy_id="item.dy_id"
+								:data-browse_times="item.browse_times"
+								:data-p_id="item.dy_id"
+								:data-index="index"
+								:data-comment_count="item.comment_count"
+								open-type="share"
+							>
+								<image class="shareicon" src="../../static/index/message.png" />
+								<text>{{ item.comment_count }}</text>
+							</view>
+						</view>
 					</view>
-					<view
-						class="item"
-						@tap.stop="gotoPublished"
-						:data-dy_id="item.dy_id"
-						:data-browse_times="item.browse_times"
-						:data-p_id="item.dy_id"
-						:data-index="index"
-						:data-comment_count="item.comment_count"
-						:data-thumbs_times="item.thumbs_times"
-					>
-						<image src="../../static/index/pl.png" mode=""></image>
-						<text>{{ item.comment_count }}</text>
-					</view>
-					<view class="item" :data-thumbs_times="item.thumbs_times">
-						<image class="share l" v-if="item.is_give == true" :data-index="index" :data-dy_id="item.dy_id" @tap.stop="praise" src="../../static/index/collect.png"></image>
-						<image class="share l" v-if="item.is_give == false" :data-index="index" :data-dy_id="item.dy_id" @tap.stop="praise" src="../../static/index/uncollect.png"></image>
-						<text>{{ item.thumbs_times }}</text>
+					<view class="studyitem-bottom" v-if="item.if_input">
+						<!-- <text class='dianzanname'>{{item.dianzanname}},{{item.dianzanname}},{{item.dianzanname}}</text> -->
+						<view v-for="(item, index2) in release" :key="index2" class="shoppcall comment" :data-id="item.id">
+							<view class="publish">
+								<view class="publish_list comment">
+									<text class="publish_list_item red">{{ item.name }}:</text>
+									<text class="redtree_text">{{ item.textareaValue }}</text>
+								</view>
+							</view>
+						</view>
+						<input placeholder="请输入评论内容" :focus="if_false" v-if="item.if_input" class="input" />
 					</view>
 				</view>
 			</view>
@@ -434,10 +453,7 @@ export default {
 	},
 	onPullDownRefresh: function() {
 		var that = this;
-			this.page= 1,
-			this.producturl= [],
-			this.daily= [],
-			this.count= 1
+		(this.page = 1), (this.producturl = []), (this.daily = []), (this.count = 1);
 
 		if (that.modelType == 1) {
 			that.getIndexData();
@@ -447,7 +463,7 @@ export default {
 	},
 
 	onHide() {
-		this.preview= true
+		this.preview = true;
 	},
 	//下拉刷新
 	// onLoad() {
@@ -499,7 +515,7 @@ export default {
 	},
 	// onShow(e){
 	// 	let pages = getCurrentPages();
-	// 	console.log('get'+pages)
+	// 	('get'+pages)
 	// 		let currPage = pages[pages.length-1];
 	// 		if(currPage.data.times==undefined || currPage.data.times==''){
 
@@ -604,6 +620,7 @@ export default {
 					type: this.type
 				},
 				success: res => {
+					// uni.removeStorageSync('loginToken')
 					const { list, count } = res.data.data;
 					// for (var i = 0; i < list.length; i++) {
 					// 	list[i].isPlaying = false;
@@ -613,9 +630,7 @@ export default {
 					// 	list[i].name = list[i].nickname + '的音频';
 					// }
 
-					(this.page = this.page + 1), 
-					(this.count = res.data.count > 1 ? res.data.count : 1), 
-					(this.studylist = list);
+					(this.page = this.page + 1), (this.count = res.data.count > 1 ? res.data.count : 1), (this.studylist = list);
 				},
 				error: function() {}
 			});
@@ -658,9 +673,9 @@ export default {
 		previewImg(e) {
 			getApp().globalData.preview = false;
 			var src = e.currentTarget.dataset.src; //获取data-src  循环单个图片链接
-			
-			var str= e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
-			var imgList= str.split(',')
+
+			var str = e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
+			var imgList = str.split(',');
 			//图片预览
 			uni.previewImage({
 				current: src,
@@ -875,7 +890,7 @@ export default {
 			// this.setData({ flag: false })
 		},
 		hide: function() {
-				this.ifNewUser= 1
+			this.ifNewUser = 1;
 		},
 		goindex: function() {
 			var that = this;
@@ -1347,7 +1362,6 @@ export default {
 			line-height: 34rpx;
 		}
 
-
 		.actions {
 			display: flex;
 			justify-content: space-around;
@@ -1373,6 +1387,48 @@ export default {
 	}
 }
 
+.studylistflex {
+	float: left;
+}
+.user_info {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	height: 80rpx;
+	margin-bottom: 10rpx;
+
+	.left_side {
+		display: flex;
+		align-items: center;
+
+		.avatar {
+			width: 60rpx;
+			height: 60rpx;
+			margin-right: 20rpx;
+			border-radius: 50%;
+		}
+
+		.name {
+			margin-bottom: 10rpx;
+			font-size: 28rpx;
+			font-weight: 500;
+			color: rgba(50, 50, 50, 1);
+			line-height: 1;
+		}
+
+		.date {
+			font-size: 20rpx;
+			color: rgba(153, 153, 153, 1);
+			line-height: 1;
+		}
+	}
+
+	.view_count {
+		font-size: 20rpx;
+		color: rgba(153, 153, 153, 1);
+		line-height: 28rpx;
+	}
+}
 .works_list {
 	margin-top: 20rpx;
 	.work_item {

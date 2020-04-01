@@ -1,1 +1,0 @@
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/studySquare/phpublish/phpublish.wxml') } }));

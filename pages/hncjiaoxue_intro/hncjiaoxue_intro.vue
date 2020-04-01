@@ -250,7 +250,6 @@ export default {
     },
 
     showGoodsList(e) {
-      console.log(e.currentTarget.dataset);
 
       if (e.currentTarget.dataset.vpid && this.isFisrt) {
         this.setData({
@@ -279,7 +278,6 @@ export default {
         });
       } else {
         util.ajax("/api/videopacks/videoGoods", param, res => {
-          console.log(res);
           let list = res.data.list;
           that.setData({
             page: that.page + 1,

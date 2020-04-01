@@ -93,7 +93,6 @@ export default {
       url: "index/getProfile",
       data: {},
       success: res => {
-        console.log(res.data.data);
         let data = {
           nickname: res.data.nickname,
           avatar: res.data.avatar,
@@ -111,7 +110,6 @@ export default {
           uploadInfo: data
         });
 
-        console.log(res.data.province);
 
         if (res.data.province == "" || res.data.province == null) {
           that.uploadInfo.region = ["请选择省", "市", "区"];
@@ -128,7 +126,6 @@ export default {
 			this.$refs.region.show();
 		},
 		yearChange : function(e){
-		                console.log(e)
 		                this.timetext = e.detail.value;
 		            } ,
     getevalue() {
@@ -140,23 +137,19 @@ export default {
     },
 
     toCompanyInfo(e) {
-			console.log('company')
       uni.navigateTo({
         url: '../companyInfo/companyInfo?id=' + e.currentTarget.dataset.id
       });
     },
 
     toOther(e) {
-			console.log('partner')
       uni.navigateTo({
         url: '../otherInfo/otherInfo?id=' + e.currentTarget.dataset.id
       });
     },
     //地址选择
     bindRegionChange(e) {
-      console.log(e);
-      // console.log("picker发送选择改变，携带值为", e.detail.value);
-      // thhis.region = e.detail.value;
+
       this.uploadInfo.region = e.checkArr;
       this.region = e.checkArr;
     },
@@ -262,7 +255,6 @@ bindCityChange(e) {
       var that = this;
       ajax({
 				url:'partner/partnerCate', data:{}, success:(res) => {
-				  console.log(res.data.data);
 				    this.imgList= res.data.data.list
 				}
 			});
@@ -274,7 +266,6 @@ bindCityChange(e) {
         url: "partner/getIntroduction",
         data: {},
         success: res => {
-          console.log(res);
           this.detail = res.data.data;
         }
       });

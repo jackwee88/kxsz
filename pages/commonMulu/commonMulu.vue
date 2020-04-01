@@ -47,7 +47,6 @@
 			}
 		},
 		onLoad(event) {
-			console.log(event);
 			this.banner = JSON.parse(decodeURIComponent(event.name));
 			uni.setNavigationBarTitle({
 			title:this.banner.title

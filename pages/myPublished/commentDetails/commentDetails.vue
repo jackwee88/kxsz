@@ -102,9 +102,9 @@
 		 * 生命周期函数--监听页面加载
 		 */
 		onLoad(event) {
-			// console.log('123'+event.commentDetails)
+			// ('123'+event.commentDetails)
 			 this.banner = JSON.parse(decodeURIComponent(event.commentDetails));
-			// console.log("this.banner"+this.banner.d_id)
+			// ("this.banner"+this.banner.d_id)
 			if (this.banner.d_id) {
 				  this.d_id = this.banner.d_id,
 					this.id = this.banner.owner_uid,
@@ -172,7 +172,6 @@
 							page_size: that.page_size
 						},
 						success:(res)=>{
-							console.log(res.data.data)
 							const{main,count,list}= res.data.data
 							this.details = main
 							this.release = list
@@ -181,8 +180,8 @@
 							this.owner_id=main.uid
 							this.c_id=main.id
 							this.d_id=main.d_id
-							// console.log(res.data.data.main+'评论主内容')
-							// console.log(this.list+'全部评论')
+							// (res.data.data.main+'评论主内容')
+							// (this.list+'全部评论')
 						},
 					})
 }
@@ -254,7 +253,6 @@
 					param
 				, success:(res) => {
 					this.comment_content = '',
-					console.log(res.data.data)
 					uni.showModal({
 						title: '提示',
 						content: res.data.msg,

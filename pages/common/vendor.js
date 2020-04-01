@@ -7357,7 +7357,7 @@ function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
         if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
-            console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
+            ('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
         }
         var copies = vm.__next_tick_callbacks.slice(0);
@@ -7378,14 +7378,14 @@ function nextTick$1(vm, cb) {
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
         if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
-            console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
+            ('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
         if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
-            console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
+            ('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
         }
     }
@@ -7460,7 +7460,7 @@ var patch = function(oldVnode, vnode) {
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
       if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
-        console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
+        ('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
       }
@@ -8302,7 +8302,7 @@ Util = /*#__PURE__*/function () {
       if (this.__licationShow) {
         getFirstTime();
         this.__licationShow = false;
-        // console.log('这是 onLauch 之后执行的第一次 pageShow ，为下次记录时间做准备');
+        // ('这是 onLauch 之后执行的第一次 pageShow ，为下次记录时间做准备');
         this._lastPageRoute = route;
         return;
       }
@@ -8558,7 +8558,7 @@ Util = /*#__PURE__*/function () {
         data: optionsData,
         success: function success() {
           // if (process.env.NODE_ENV === 'development') {
-          //   console.log('stat request success');
+          //   ('stat request success');
           // }
         },
         fail: function fail(e) {
@@ -8663,7 +8663,7 @@ Stat = /*#__PURE__*/function (_Util) {_inherits(Stat, _Util);_createClass(Stat, 
     options, self) {
       this.self = self;
       // if (process.env.NODE_ENV === 'development') {
-      //   console.log('report init');
+      //   ('report init');
       // }
       setPageResidenceTime();
       this.__licationShow = true;

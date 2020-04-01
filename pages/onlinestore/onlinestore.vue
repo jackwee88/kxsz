@@ -69,6 +69,10 @@
 			<view class="banner-title" v-if="joinAssembleList.length != 0"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
 			<!-- 商品推荐 -->
 			<view class="recommend-footer">
+				<navigator url="./assmebleList/assmebleList" style="text-align: right;">
+					<text style="font-size: 32rpx;color:#999999 ;">更多</text>
+					<image src="../../static/index/qj.png" mode="" style="width: 8px;height: 12px;"></image>
+				</navigator>
 				<view class="recommend-list" v-for="(item, index) in joinAssembleList" :key="index">
 					<view class="uni-product" @tap.stop="gotoDetails(item.goods.p_id)" :data-id="item.goods.p_id">
 						<view class="image-view">
@@ -198,7 +202,6 @@ export default {
 					const { list, count } = res.data.data;
 					this.joinAssembleList = list;
 					this.bannerList = list
-					// console.log(count);
 				},
 				error: function() {}
 			});
@@ -232,15 +235,12 @@ export default {
 				data: {},
 				success: res => {
 					const { count, list } = res.data.data;
-					this.flashSale = list[0].goods;
-					this.bannerList = list
-					console.log(this.bannerList)
+					this.flashSale = list;
+					(this.bannerList)
 					// 获取当前时间戳
 					let timeNoew = new Date().getTime() / 1000;
 					if (timeNoew > list[0].endtime) {
-						console.log('秒杀结束');
 					} else if (timeNoew < list[0].createTime) {
-						console.log('秒杀未开始');
 					} else {
 						var lastTime = list[0].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
 						// 然后将秒转化成时间  (定时器每秒更新一次)
@@ -285,7 +285,6 @@ export default {
 				url: 'shop/goods',
 				data: {},
 				success: res => {
-					console.log(res.data.data);
 					const { count, list } = res.data.data;
 					this.productList = list;
 				}

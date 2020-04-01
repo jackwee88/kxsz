@@ -301,7 +301,6 @@ export default {
     },
     confirm: function() {
       // 提交
-      console.log(this.checkValue); //所有选中的项的value
     },
     click: function(e) {
       if (this.way == 1) {

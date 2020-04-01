@@ -184,7 +184,6 @@ export default {
         });
       } else {
         util.ajaxs("videopacks/videoList", param, res => {
-          console.log(res);
           let list = [];
 
           if (res.data.list != "") {
@@ -224,7 +223,6 @@ export default {
               browse
           });
         } else if (res.status == 2) {
-          console.log("跳转购买界面");
         }
       });
     },

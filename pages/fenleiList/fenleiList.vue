@@ -145,9 +145,7 @@ export default {
 					const {list}= res.data.data
 			    this.catalogue=list,
 			    this.currentId=list[0].id,
-					console.log(this.currentId)
 					this.tabcontitem = list[0].data
-					console.log(this.currentId)
 			  // this.getData();
 			}
 			});
@@ -161,7 +159,6 @@ export default {
 					const {list}= res.data.data
 			    this.catalogue=list,
 					this.tabcontitem = list[0].data
-					console.log(this.currentId)
 			}
 			});
 		},

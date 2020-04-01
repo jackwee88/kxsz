@@ -406,7 +406,7 @@ export default {
         that.price= res.data.total
       }
     }); // util.ajax('/api/index/getSystem', {type:5}, res => {
-    //   console.log()
+    //   ()
     //   that.setData({
     //     explain:res.data
     //   })
@@ -475,7 +475,6 @@ export default {
 
 
       if (this.now_buy == 1) {
-        console.log(this.remarks);
         var param = {
           ct_id: this.ct_id,
           p_id: this.goods[0].p_id,
@@ -491,7 +490,6 @@ export default {
 
         };
       } else {
-        console.log(this.remarks);
         var param = {
           ct_id: this.ct_id,
           p_id: this.goods[0].p_id,
@@ -693,7 +691,6 @@ export default {
         this.address= ''
       }
 
-      console.log(this.buy_num);
       var param = {
         ct_id: this.ct_id,
         p_id: this.goods[0].p_id,

@@ -141,7 +141,6 @@ export default {
   methods: {
     // 日期选择
     bindDateChange(e) {
-      console.log(e);
       // this.setData({
         this.birthtime = e.detail.value,
         this.birthtime_select= false

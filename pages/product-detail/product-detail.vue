@@ -231,66 +231,68 @@
         <view class="attr_name">{{ attrValueObj.group_name }}</view>
         <!-- 		// attrValueObj.item_id
         // data.value-->
-        <view class="attr_value_box">
-          <view
-            v-for="(value, valueIndex) in attrValueObj.spec_items"
-            :class="'attr_value ' + (value.selected ? 'attr_value_active' : '')"
-            @tap="selectAttrValue"
-            :data-value="value.spec_value"
-            :data-key="value.item_id"
-            :data-index="attrIndex"
-            :data-selectedvalue="attrValueObj.selectedValue"
-            :key="valueIndex"
-            :data-sec_index="valueIndex"
-            :data-item="value"
-          >{{ value.spec_value }}</view>
-        </view>
-      </view>
+				<view class="attr_value_box">
+					<view
+						v-for="(value, valueIndex) in attrValueObj.spec_items"
+						:class="'attr_value ' + (value.selected ? 'attr_value_active' : '')"
+						@tap="selectAttrValue"
+						:data-value="value.spec_value"
+						:data-key="value.item_id"
+						:data-index="attrIndex"
+						:data-selectedvalue="attrValueObj.selectedValue"
+						:key="valueIndex"
+						:data-sec_index="valueIndex"
+						:data-item="value"
+					>
+						{{ value.spec_value }}
+					</view>
+				</view>
+			</view>
 
-      <!-- 购买数量 -->
-      <view class="buyNum">
-        <view class="buyNumTitle">购买数量：</view>
-        <view class="buyNumRight">
-          <text
-            :class="'buyNumReduce ' + (buyQuantity >= 1 ? 'buyNumReducebj' : '')"
-            @tap="minusCount"
-            style="display:flex;align-item:center;justify-content:center;"
-          >-</text>
-          <text class="buyNumSum">{{ buyQuantity }}</text>
-          <text
-            :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')"
-            @tap="addCount"
-            style="display:flex;align-item:center;justify-content:center;"
-          >+</text>
-        </view>
-      </view>
+			<!-- 购买数量 -->
+			<view class="buyNum">
+				<view class="buyNumTitle">购买数量：</view>
+				<view class="buyNumRight">
+					<text :class="'buyNumReduce ' + (buyQuantity >= 1 ? 'buyNumReducebj' : '')" @tap="minusCount" style="display:flex;align-item:center;justify-content:center;">-</text>
+					<text class="buyNumSum">{{ buyQuantity }}</text>
+					<text :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')" @tap="addCount" style="display:flex;align-item:center;justify-content:center;">+</text>
+				</view>
+			</view>
 
-      <image src="../../static/my/close.png" class="close" @tap.stop="closeSku" />
-      <view class="weui-btn-area" v-if="sku_show">
-        <button class="weui-btn" @tap="submit">确定</button>
-      </view>
-    </scroll-view>
-    <view class="overlayer" v-if="visible">
-      <view class="bg"></view>
-      <view class="content_wrap">
-        <view class="close_wrap" @click="visible=!visible" style="text-align:right">
-          <image src="../../static/my/close.png" style="width:30px;height:30px" />
-        </view>
-        <view class="team-buy-detail" v-for="(item, index) in teamlist" :key="index">
-          <view class="assmebleleft">
-            <view class="circle-avator">
-              <image
-                mode="aspectFit"
-                :src="item.user.avatar"
-                style="width: 80rpx;height: 80rpx;border-radius: 40rpx;"
-              />
-            </view>
-            <view class="team-user">{{ item.user.nickname }}</view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
+			<image src="../../static/my/close.png" class="close" @tap.stop="closeSku" />
+			<view class="weui-btn-area" v-if="sku_show"><button class="weui-btn" @tap="submit">确定</button></view>
+		</scroll-view>
+		<view class="overlayer" v-if="visible">
+			<view class="bg"></view>
+			<view class="content_wrap">
+				<view class="close_wrap"><image src="../../static/my/close.png" mode="" @tap.stop="closeAssmeble"></image></view>
+				<view class="list" v-for="(item, index) in teamlist" :key="index">
+					<view class="item" data-index="index" data-orderid="item.assemeble_order_id">
+						<image :src="item.user.avatar" class="avatar"></image>
+
+						<view class="name">{{item.user.nickname}}</view>
+
+						<view class="num_n_time">
+							<view class="num">
+								差
+								<text>{{item.need_number}}</text>
+								人拼成
+							</view>
+
+							<view class="time" style="display: flex;flex-direction: row;align-items: center;">
+								<text>剩余</text>
+								<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="assembleHour" :minute="assmebleMinute" :second="assmebleSecond" :showDay="false"></uni-countdown>
+							</view>
+						</view>
+						<view class="cantuan" @tap="assmebleOrder">
+							参团
+							<image src="../../static/index/qj.png" mode=""></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
 </template>
 
 <script>
@@ -298,681 +300,645 @@ import { ajax } from "../../utils/public.js";
 var util = require("../../utils/util.js");
 import assmeble from "../assemble/assemble.vue";
 export default {
-  data() {
-    return {
-      evaluateList: {
-        total: 56,
-        count: 6,
-        list: [
-          {
-            avatar: "",
-            nickname: "",
-            content: ""
-          }
-        ]
-      },
-      assmebleTotal: 0,
-      visible: false,
-      //获取评论列表
-      // detail: {
-      // 	coupon_price: 0.0,
-      // 	create_time_text: '',
-      // 	html: {},
-      // 	icon: {},
-      // 	p_detail: '',
-      // 	p_name: '',
-      // 	price: '0.00',
-      // 	status: 1,
-      // 	stock: 1
-      // },
-      // detailIcon:{}
-      detail: {
-        sale_status: 1
-      },
-      html: {},
-      icon: {},
-      p_id: 0,
-      is_share: "",
-      collect_p: false,
-      buyQuantity: 1,
-      //购买数量
-      sku_arr: [],
-      //规格数组
-      sku_show: false,
-      //是否出现sku弹窗
-      valueStr: "",
-      //所选的规格名称
-      valueStrNum: "",
-      //所选的规格goods_sku_id
-      type: "",
-      //1立即购买，2加入购物车
-      goods_spec_id: "",
-      main_image: "",
-      userName: "",
-      attrValueList: "",
-      swiperImages: [],
-      productDetail: {},
-      hour: 0,
-      minute: 0,
-      second: 0,
-      assemble: 0,
-      assembleHour: 0,
-      assmebleSecond: 0,
-      assmebleMinute: 0,
-      teamlist: [
-        {
-          name: "与女无瓜",
-          num: "1"
-        },
-        {
-          name: "与女无瓜",
-          num: "1"
-        }
-      ],
-      banner: "",
-      pid: ""
-    };
-  },
-  onLoad(event) {
-    // this.banner = JSON.parse(decodeURIComponent(event.gd_id));
-    // console.log(this.banner);
-    // if(this.banner.p_id){
-    // 	this.pid = this.banner.id
-    // }else{
-    // 	this.pid = this.banner.id;
-    // }
-    this.pid = event.gd_id;
-    this.getData();
-    this.getAssemble();
-    this.getEvaluateList();
-  },
+	data() {
+		return {
+			evaluateList: {
+				total: 56,
+				count: 6,
+				list: [
+					{
+						avatar: '',
+						nickname: '',
+						content: ''
+					}
+				]
+			},
+			assmebleTotal: 0,
+			visible: false,
+			//获取评论列表
+			// detail: {
+			// 	coupon_price: 0.0,
+			// 	create_time_text: '',
+			// 	html: {},
+			// 	icon: {},
+			// 	p_detail: '',
+			// 	p_name: '',
+			// 	price: '0.00',
+			// 	status: 1,
+			// 	stock: 1
+			// },
+			// detailIcon:{}
+			detail: {},
+			html: {},
+			icon: {},
+			p_id: 0,
+			is_share: '',
+			collect_p: false,
+			buyQuantity: 1,
+			//购买数量
+			sku_arr: [],
+			//规格数组
+			sku_show: false,
+			//是否出现sku弹窗
+			valueStr: '',
+			//所选的规格名称
+			valueStrNum: '',
+			//所选的规格goods_sku_id
+			type: '',
+			//1立即购买，2加入购物车
+			goods_spec_id: '',
+			main_image: '',
+			userName: '',
+			attrValueList: '',
+			swiperImages: [],
+			productDetail: {},
+			hour: 0,
+			minute: 0,
+			second: 0,
+			assemble: 0,
+			assembleHour: 0,
+			assmebleSecond: 0,
+			assmebleMinute: 0,
+			teamlist: [
+				{
+					name: '与女无瓜',
+					num: '1'
+				},
+				{
+					name: '与女无瓜',
+					num: '1'
+				}
+			],
+			banner: '',
+			pid: ''
+		};
+	},
+	onLoad(event) {
+		// this.banner = JSON.parse(decodeURIComponent(event.gd_id));
+		// (this.banner);
+		// if(this.banner.p_id){
+		// 	this.pid = this.banner.id
+		// }else{
+		// 	this.pid = this.banner.id;
+		// }
+		this.pid = event.gd_id;
+		this.getData();
+		this.getEvaluateList();
+		this.getAssemble();
+	},
 
-  onShareAppMessage: function(res) {
-    if (res.from === "button") {
-      var p_name = res.target.dataset.p_name;
-    } else {
-      var p_name = "开心书写";
-    }
+	onShareAppMessage: function(res) {
+		if (res.from === 'button') {
+			var p_name = res.target.dataset.p_name;
+		} else {
+			var p_name = '开心书写';
+		}
 
-    var that = this;
-    return {
-      title: p_name,
-      path:
-        "pages/onlinestore/productDetail/productDetail?is_share=1&p_id=" +
-        that.p_id,
-      success: function(res) {}
-    };
-  },
-  onShow: function() {
-    //  if(this.data.valueStrNum){
-    //    this.setData({
-    //      sku_arr: this.data.detail.specData.spec_attr
-    //    })
-    //  }
-    this.setData({
-      sku_show: false,
-      valueStrNum: "",
-      valueStr: ""
-    });
-  },
-  mounted() {},
-  methods: {
-    setData(param) {
-      for (const key in param) {
-        const element = param[key];
-        this[key] = element;
-      }
-    },
-    assmebleOrder(e) {
-      uni.showToast({
-        title: "请先选择收货地址"
-      });
-      // uni.navigateTo({
-      // 	url:'../shoppingcart/shaddress/shaddress+'
-      // })
-      this.assembleOrder();
-    },
-    assmbleDetail: function() {
-      this.visible = true;
-    },
-    getData() {
-      ajax({
-        url: "goods/detail",
-        data: {
-          p_id: this.pid
-          // p_id: '1201'
-        },
-        method: "POST",
-        success: res => {
-          res.data.data.coupon_price = res.data.data.spec
-            ? res.data.data.spec[0].goods_price
-            : res.data.data.coupon_price;
-          res.data.data.image = res.data.data.spec
-            ? res.data.data.spec[0].spec_image
-            : res.data.data.image;
-          (this.detail = res.data.data),
-            (this.collect_p = res.data.data.if_collect);
-          this.main_image = res.data.data.image;
-          if (res.data.data.specData) {
-            const { spec_attr, spec_list } = res.data.data.specData;
-            this.sku_arr = spec_attr;
-          }
-          if (res.data.data.sale_status == 2) {
-            this.getflashtime();
-          }
-          this.goods_spec_id = res.data.data.spec[0].goods_spec_id;
-          this.valueStrNum = res.data.data.spec[0].spec_sku_id;
-        },
-        error: function() {}
-      });
-    },
-    // 获取拼团详情
-    getAssemble() {
-      ajax({
-        url: "assemble/wait",
-        method: "POST",
-        data: {
-          goods_id: this.pid
-        },
-        success: res => {
-          const { count, list } = res.data.data;
-          this.teamlist = list;
-          this.assmebleTotal = list.length;
-          if (this.assmebleTotal > 0) {
-            this.assemble = 1;
-          }
-          for (var i = 0; i < list.length; i++) {
-            let timeNoew = new Date().getTime() / 1000;
+		var that = this;
+		return {
+			title: p_name,
+			path: 'pages/onlinestore/productDetail/productDetail?is_share=1&p_id=' + that.p_id,
+			success: function(res) {}
+		};
+	},
+	onShow: function() {
+		//  if(this.data.valueStrNum){
+		//    this.setData({
+		//      sku_arr: this.data.detail.specData.spec_attr
+		//    })
+		//  }
+		this.setData({
+			sku_show: false,
+			valueStrNum: '',
+			valueStr: ''
+		});
+	},
+	mounted() {},
+	methods: {
+		setData(param) {
+			for (const key in param) {
+				const element = param[key];
+				this[key] = element;
+			}
+		},
+		assmebleOrder(e) {
+			uni.showToast({
+				title: '请先选择收货地址'
+			});
+			// uni.navigateTo({
+			// 	url:'../shoppingcart/shaddress/shaddress+'
+			// })
+			let param = {
+				ar_id: 338,
+				goods_sku_id: this.valueStrNum,
+				goods_spec_id: this.goods_spec_id,
+				p_id: this.pid,
+				quantity: 1,
+				type: 2,
+				assemble_order_id: e.currentTarget.dataset.orderid
+			};
+			ajax({
+				url: 'goods/assembleOrder',
+				data: param,
+				success: res => {}
+			});
+		},
+		assmbleDetail: function() {
+			this.visible = true;
+		},
+		getData() {
+			ajax({
+				url: 'goods/detail',
+				data: {
+					p_id: this.pid
+					// p_id: '1201'
+				},
+				method: 'POST',
+				success: res => {
+					res.data.data.coupon_price = res.data.data.spec ? res.data.data.spec[0].goods_price : res.data.data.coupon_price;
+					res.data.data.image = res.data.data.spec ? res.data.data.spec[0].spec_image : res.data.data.image;
+					(this.detail = res.data.data), (this.collect_p = res.data.data.if_collect);
+					this.main_image = res.data.data.image;
+					if (res.data.data.specData) {
+						const { spec_attr, spec_list } = res.data.data.specData;
+						this.sku_arr = spec_attr;
+					}
+					if (res.data.data.sale_status == 2) {
+						this.getflashtime();
+					}
+					this.goods_spec_id = res.data.data.spec[0].goods_spec_id;
+					this.valueStrNum = res.data.data.spec[0].spec_sku_id;
+				},
+				error: function() {}
+			});
+		},
+		// 获取拼团详情
+		getAssemble() {
+			ajax({
+				url: 'assemble/wait',
+				method: 'POST',
+				data: {
+					goods_id: this.pid
+				},
+				success: res => {
+					const { count, list } = res.data.data;
+					this.teamlist = list;
+					this.assmebleTotal = list.length;
+					if(this.assmebleTotal>0){
+						this.assemble = 1;
+					}
+					for (var i = 0; i < list.length; i++) {
+						let timeNoew = new Date().getTime() / 1000;
+						var lastTime = list[i].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						this.AssmebleChange(lastTime);
+					}
+				},
+				error: function() {}
+			});
+		},
+		getflashtime() {
+			ajax({
+				url: 'assemble/flashSale',
+				data: {},
+				success: res => {
+					const { count, list } = res.data.data;
+					this.flashSale = list[0].goods;
+					// 获取当前时间戳
+					let timeNoew = new Date().getTime() / 1000;
+					if (timeNoew > list[0].endtime) {
+					} else if (timeNoew < list[0].createTime) {
+					} else {
+						var lastTime = list[0].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
+						// 然后将秒转化成时间  (定时器每秒更新一次)
+						this.timeChange(lastTime);
+					}
+				}
+			});
+		},
+		closeAssmeble(){
+			this.visible=false
+		},
+		AssmebleChange(value) {
+			var lastTime = parseInt(value);
+			if (lastTime > 60) {
+				var middle = parseInt(lastTime / 60);
+				lastTime = parseInt(lastTime % 60);
+				if (middle > 60) {
+					var hour = parseInt(middle / 60);
+					middle = parseInt(middle % 60);
+					this.assembleHour = hour; //小时
+				}
+			}
+			var result = parseInt(lastTime);
+			this.assmebleSecond = result; //秒
+			if (middle > 0) {
+				var minute = parseInt(middle);
+				this.assmebleMinute = minute;
+			}
+			if (hour > 0) {
+				var hour = parseInt(hour);
+				this.assembleHour = hour;
+			}
+			return result;
+		},
+		timeChange(value) {
+			var lastTime = parseInt(value);
+			if (lastTime > 60) {
+				var middle = parseInt(lastTime / 60);
+				lastTime = parseInt(lastTime % 60);
+				if (middle > 60) {
+					var hour = parseInt(middle / 60);
+					middle = parseInt(middle % 60);
+					this.hour = hour; //小时
+				}
+			}
+			var result = parseInt(lastTime);
+			this.second = result; //秒
+			if (middle > 0) {
+				var minute = parseInt(middle);
+				this.minute = minute;
+			}
+			if (hour > 0) {
+				var hour = parseInt(hour);
+				this.hour = hour;
+			}
+			return result;
+		},
+		getEvaluateList() {
+			let that = this;
+			ajax({
+				url: 'evaluate/getEvaluateList',
+				data: { goods_id: this.pid },
+				success: res => {
+					this.evaluateList = res.data.data;
 
-            var lastTime = list[i].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
-            this.AssmebleChange(lastTime);
-          }
-        },
-        error: function() {}
-      });
-    },
-    getflashtime() {
-      ajax({
-        url: "assemble/flashSale",
-        data: {},
-        success: res => {
-          const { count, list } = res.data.data;
-          this.flashSale = list[0].goods;
-          // 获取当前时间戳
-          let timeNoew = new Date().getTime() / 1000;
-          if (timeNoew > list[0].endtime) {
-            console.log("秒杀结束");
-          } else if (timeNoew < list[0].createTime) {
-            console.log("秒杀未开始");
-          } else {
-            var lastTime = list[0].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
-            // 然后将秒转化成时间  (定时器每秒更新一次)
-            this.timeChange(lastTime);
-          }
-        }
-      });
-    },
-    AssmebleChange(value) {
-      var lastTime = parseInt(value);
-      if (lastTime > 60) {
-        var middle = parseInt(lastTime / 60);
-        lastTime = parseInt(lastTime % 60);
-        if (middle > 60) {
-          var hour = parseInt(middle / 60);
-          middle = parseInt(middle % 60);
-          this.assembleHour = hour; //小时
-        }
-      }
-      var result = parseInt(lastTime);
-      this.assmebleSecond = result; //秒
-      if (middle > 0) {
-        var minute = parseInt(middle);
-        this.assmebleMinute = minute;
-      }
-      if (hour > 0) {
-        var hour = parseInt(hour);
-        this.assembleHour = hour;
-      }
-      return result;
-    },
-    timeChange(value) {
-      var lastTime = parseInt(value);
-      if (lastTime > 60) {
-        var middle = parseInt(lastTime / 60);
-        lastTime = parseInt(lastTime % 60);
-        if (middle > 60) {
-          var hour = parseInt(middle / 60);
-          middle = parseInt(middle % 60);
-          this.hour = hour; //小时
-        }
-      }
-      var result = parseInt(lastTime);
-      this.second = result; //秒
-      if (middle > 0) {
-        var minute = parseInt(middle);
-        this.minute = minute;
-      }
-      if (hour > 0) {
-        var hour = parseInt(hour);
-        this.hour = hour;
-      }
-      return result;
-    },
-    getEvaluateList() {
-      let that = this;
-      ajax({
-        url: "evaluate/getEvaluateList",
-        data: { goods_id: this.pid },
-        success: res => {
-          this.evaluateList = res.data.data;
+					if (res.data.data.total != 0) {
+						let namee = res.data.data.list[0].nickname;
+						let userName = 'evaluateList.list[0].nickname';
 
-          if (res.data.data.total != 0) {
-            let namee = res.data.data.list[0].nickname;
-            let userName = "evaluateList.list[0].nickname";
+						if (namee.length == 1) {
+							//用户名为一个字的显示*
+							that.setData({
+								[userName]: '*'
+							});
+						} else if (namee.length == 2) {
+							//用户名为2个字
+							let newName = namee.slice(0, 1);
+							that.setData({
+								[userName]: newName + '*'
+							});
+						} else {
+							let startName = namee.slice(0, 1);
+							let endName = namee.slice(namee.length - 1, namee.length);
 
-            if (namee.length == 1) {
-              //用户名为一个字的显示*
-              that.setData({
-                [userName]: "*"
-              });
-            } else if (namee.length == 2) {
-              //用户名为2个字
-              let newName = namee.slice(0, 1);
-              that.setData({
-                [userName]: newName + "*"
-              });
-            } else {
-              let startName = namee.slice(0, 1);
-              let endName = namee.slice(namee.length - 1, namee.length);
+							if (namee.length == 3) {
+								//用户名称3个字的
+								that.setData({
+									[userName]: startName + '*' + endName
+								});
+							} else {
+								//用户名称4个字及以上
+								that.setData({
+									[userName]: startName + '**' + endName
+								});
+							}
+						}
+					}
+				}
+			});
+			util.ajax();
+		},
+		//
+		add(e) {
+			ajax({
+				url: 'cart/add',
+				data: {
+					p_id: this.pid,
+					goods_num: this.buyQuantity,
+					goods_sku_id: this.valueStrNum
+				},
+				success: res => {
+					uni.showToast({
+						title: res.data.msg
+					});
+					if (this.detail.specData) {
+						this.closeSku();
+					}
+				}
+			});
+		},
+		//打开sku弹窗
+		showSku(e) {
+			if (this.sku_arr.length > 0) {
+				(this.sku_show = true), (this.type = e.currentTarget.dataset.type);
+			} else {
+				if (e.currentTarget.dataset.type == 1) {
+					if (assmeble == 1) {
+						let param = {
+							ar_id: 338,
+							goods_sku_id: this.valueStrNum,
+							goods_spec_id: this.goods_spec_id,
+							p_id: this.pid,
+							quantity: 1,
+							type: 2,
+							assemble_order_id: e.currentTarget.dataset.orderid
+						};
+						ajax({
+							url: 'goods/assembleOrder',
+							data: param,
+							success: res => {}
+						});
+					} else {
+						this.buyNow();
+					}
+				} else {
+					this.add();
+				}
+			}
+		},
 
-              if (namee.length == 3) {
-                //用户名称3个字的
-                that.setData({
-                  [userName]: startName + "*" + endName
-                });
-              } else {
-                //用户名称4个字及以上
-                that.setData({
-                  [userName]: startName + "**" + endName
-                });
-              }
-            }
-          }
-        }
-      });
-      util.ajax();
-    },
-    //
-    add(e) {
-      ajax({
-        url: "cart/add",
-        data: {
-          p_id: this.pid,
-          goods_num: this.buyQuantity,
-          goods_sku_id: this.valueStrNum
-        },
-        success: res => {
-          uni.showToast({
-            title: res.data.msg
-          });
-          if (this.detail.specData) {
-            this.closeSku();
-          }
-        }
-      });
-    },
-    //打开sku弹窗
-    showSku(e) {
-      console.log(this.assemble + "你好");
-      if (this.sku_arr.length > 0) {
-        (this.sku_show = true), (this.type = e.currentTarget.dataset.type);
-      } else {
-        if (e.currentTarget.dataset.type == 1) {
-          if (this.detail.sale_status == 3) {
-            this.assembleOrder();
-          } else {
-            this.buyNow();
-          }
-        } else {
-          this.add();
-        }
-      }
-    },
+		//关闭sku弹窗
+		closeSku() {
+			var that = this;
+			this.sku_show = false;
+			var list = that.detail.specData.spec_attr;
+			list.forEach(function(v) {
+				v.spec_items.forEach(function(val) {
+					val.selected = false;
+				});
+			});
+			that.setData({
+				'detail.specData.spec_attr': list,
+				sku_arr: list,
+				// valueStrNum: '',
+				valueStr: '',
+				'detail.coupon_price': that.detail.spec[0].goods_price,
+				'detail.image': that.detail.spec[0].spec_image ? that.detail.spec[0].spec_image : that.detail.image
+			});
+		},
 
-    //关闭sku弹窗
-    closeSku() {
-      var that = this;
-      this.sku_show = false;
-      var list = that.detail.specData.spec_attr;
-      list.forEach(function(v) {
-        v.spec_items.forEach(function(val) {
-          val.selected = false;
-        });
-      });
-      that.setData({
-        "detail.specData.spec_attr": list,
-        sku_arr: list,
-        // valueStrNum: '',
-        valueStr: "",
-        "detail.coupon_price": that.detail.spec[0].goods_price,
-        "detail.image": that.detail.spec[0].spec_image
-          ? that.detail.spec[0].spec_image
-          : that.detail.image
-      });
-    },
+		toTop(e) {
+			var that = this;
+			that.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			});
+		},
+		//查看更多评论
+		lookMore() {
+			if (this.evaluateList.total == 0) return;
+			let that = this;
+			uni.navigateTo({
+				url: 'commentList/commentList?p_id=' + that.pid + '&collect_p=' + that.collect_p
+			});
+		},
 
-    toTop(e) {
-      var that = this;
-      that.pageScrollTo({
-        scrollTop: 0,
-        duration: 0
-      });
-    },
-    //查看更多评论
-    lookMore() {
-      if (this.evaluateList.total == 0) return;
-      let that = this;
-      uni.navigateTo({
-        url:
-          "commentList/commentList?p_id=" +
-          that.pid +
-          "&collect_p=" +
-          that.collect_p
-      });
-    },
-
-    /* 获取数据 */
-    distachAttrValue: function(commodityAttr) {
-      /**
+		/* 获取数据 */
+		distachAttrValue: function(commodityAttr) {
+			/**
 		      将后台返回的数据组合成类似
 		      {
 		      attrKey:'型号',
 		      attrValueList:['1','2','3']
 		      }
 		      */
-      // 把数据对象的数据（视图使用），写到局部内
-      var attrValueList = this.attrValueList; // 遍历获取的数据
+			// 把数据对象的数据（视图使用），写到局部内
+			var attrValueList = this.attrValueList; // 遍历获取的数据
 
-      for (var i = 0; i < commodityAttr.length; i++) {
-        for (var j = 0; j < commodityAttr[i].attrValueList.length; j++) {
-          var attrIndex = this.getAttrIndex(
-            commodityAttr[i].attrValueList[j].attrKey,
-            attrValueList
-          ); // ('属性索引', attrIndex);
-          // 如果还没有属性索引为-1，此时新增属性并设置属性值数组的第一个值；索引大于等于0，表示已存在的属性名的位置
+			for (var i = 0; i < commodityAttr.length; i++) {
+				for (var j = 0; j < commodityAttr[i].attrValueList.length; j++) {
+					var attrIndex = this.getAttrIndex(commodityAttr[i].attrValueList[j].attrKey, attrValueList); // ('属性索引', attrIndex);
+					// 如果还没有属性索引为-1，此时新增属性并设置属性值数组的第一个值；索引大于等于0，表示已存在的属性名的位置
 
-          if (attrIndex >= 0) {
-            // 如果属性值数组中没有该值，push新值；否则不处理
-            if (
-              !this.isValueExist(
-                commodityAttr[i].attrValueList[j].attrValue,
-                attrValueList[attrIndex].attrValues
-              )
-            ) {
-              attrValueList[attrIndex].attrValues.push(
-                commodityAttr[i].attrValueList[j].attrValue
-              );
-            }
-          } else {
-            attrValueList.push({
-              attrKey: commodityAttr[i].attrValueList[j].attrKey,
-              attrValues: [commodityAttr[i].attrValueList[j].attrValue]
-            });
-          }
-        }
-      }
+					if (attrIndex >= 0) {
+						// 如果属性值数组中没有该值，push新值；否则不处理
+						if (!this.isValueExist(commodityAttr[i].attrValueList[j].attrValue, attrValueList[attrIndex].attrValues)) {
+							attrValueList[attrIndex].attrValues.push(commodityAttr[i].attrValueList[j].attrValue);
+						}
+					} else {
+						attrValueList.push({
+							attrKey: commodityAttr[i].attrValueList[j].attrKey,
+							attrValues: [commodityAttr[i].attrValueList[j].attrValue]
+						});
+					}
+				}
+			}
 
-      for (var i = 0; i < attrValueList.length; i++) {
-        for (var j = 0; j < attrValueList[i].attrValues.length; j++) {
-          if (attrValueList[i].attrValueStatus) {
-            attrValueList[i].attrValueStatus[j] = true;
-          } else {
-            attrValueList[i].attrValueStatus = [];
-            attrValueList[i].attrValueStatus[j] = true;
-          }
-        }
-      }
+			for (var i = 0; i < attrValueList.length; i++) {
+				for (var j = 0; j < attrValueList[i].attrValues.length; j++) {
+					if (attrValueList[i].attrValueStatus) {
+						attrValueList[i].attrValueStatus[j] = true;
+					} else {
+						attrValueList[i].attrValueStatus = [];
+						attrValueList[i].attrValueStatus[j] = true;
+					}
+				}
+			}
 
-      this.setData({
-        attrValueList: attrValueList
-      });
-    },
-    getAttrIndex: function(attrName, attrValueList) {
-      // 判断数组中的attrKey是否有该属性值
-      for (var i = 0; i < attrValueList.length; i++) {
-        if (attrName == attrValueList[i].attrKey) {
-          break;
-        }
-      }
+			this.setData({
+				attrValueList: attrValueList
+			});
+		},
+		getAttrIndex: function(attrName, attrValueList) {
+			// 判断数组中的attrKey是否有该属性值
+			for (var i = 0; i < attrValueList.length; i++) {
+				if (attrName == attrValueList[i].attrKey) {
+					break;
+				}
+			}
 
-      return i < attrValueList.length ? i : -1;
-    },
-    isValueExist: function(value, valueArr) {
-      // 判断是否已有属性值
-      for (var i = 0; i < valueArr.length; i++) {
-        if (valueArr[i] == value) {
-          break;
-        }
-      }
+			return i < attrValueList.length ? i : -1;
+		},
+		isValueExist: function(value, valueArr) {
+			// 判断是否已有属性值
+			for (var i = 0; i < valueArr.length; i++) {
+				if (valueArr[i] == value) {
+					break;
+				}
+			}
 
-      return i < valueArr.length;
-    },
-    // 结果提交
-    submit: function() {
-      var that = this;
-      var flag = false;
+			return i < valueArr.length;
+		},
+		// 结果提交
+		submit: function() {
+			var that = this;
+			var flag = false;
 
-      for (var i = 0; i < this.detail.spec.length; i++) {
-        if (this.valueStrNum == this.detail.spec[i].spec_sku_id) {
-          this.goods_spec_id = this.detail.spec[i].goods_spec_id;
-          console.log(this.goods_spec_id);
-          flag = true;
-          break;
-        }
-      }
+			for (var i = 0; i < this.detail.spec.length; i++) {
+				if (this.valueStrNum == this.detail.spec[i].spec_sku_id) {
+					this.goods_spec_id = this.detail.spec[i].goods_spec_id;
+					flag = true;
+					break;
+				}
+			}
 
-      if (flag == false) {
-        wx.showToast({
-          title: "请选择完整的规格！",
-          icon: "loading",
-          duration: 1000
-        });
-        return;
-      } else if (!this.valueStr) {
-        wx.showToast({
-          title: "请选择完整的规格！",
-          icon: "loading",
-          duration: 1000
-        });
-        return;
-      } else {
-        if (that.type == 1) {
-          if (this.detail.sale_status == 3) {
-            this.assembleOrder();
-          } else {
-            that.buyNow();
-          }
-        } else {
-          that.add();
-        }
-      }
-    },
-    //收藏商品
-    collectP(e) {
-      let _this = this;
-      ajax({
-        url: "goods/goodsCollect",
-        data: {
-          p_id: this.pid
-        },
-        success: res => {
-          console.log(res.data.data);
-          uni.showToast({
-            title: res.data.msg,
-            icon: "none",
-            mask: true
-          });
-          this.collect_p = !_this.collect_p;
-        }
-      });
-    },
-    goindex: function() {
-      var that = this;
-      getApp().globalData.infoModel();
-    },
-    assembleOrder() {
-      let param = {
-        type: 1,
-        ids: this.pid,
-        now_buy: 1,
-        goods_num: this.buyQuantity,
-        goods_sku_id: this.valueStrNum,
-        goods_spec_id: this.goods_spec_id
-      };
-      uni.navigateTo({
-        url:
-          "sureOrder/sureOrder?sureOrder=" +
-          encodeURIComponent(JSON.stringify(param))
-      });
-      //   let param = {
-      //     p_id: this.pid,
-      //     type: 2,
-      //     quantity: 1,
-      //     ar_id: 338,
-      //     goods_sku_id: this.valueStrNum,
-      //     goods_spec_id: this.goods_spec_id,
-      //     assemble_order_id: e.currentTarget.dataset.orderid
-      //   };
-      //   ajax({
-      //     url: "goods/assembleOrder",
-      //     data: param,
-      //     success: res => {
-      //       if (res.data.status == 2) {
-      //         uni.showToast({
-      //           icon: "none",
-      //           title: res.data.msg
-      //         });
-      //         return;
-      //       }
-      //       this.getData();
-      //       this.getAssemble();
-      //     }
-      //   });
-    },
-    buyNow() {
-      ajax({
-        url: "index/getProfile",
-        success: res => {
-          var that = this;
-          if (!uni.getStorageSync("loginToken")) {
-            console.log("登录状态失效");
-            uni.navigateTo({
-              url: "../login/login"
-            });
-          } else {
-            let param = {
-              type: 1,
-              ids: this.pid,
-              now_buy: 1,
-              goods_num: this.buyQuantity,
-              goods_sku_id: this.valueStrNum,
-              goods_spec_id: this.goods_spec_id
-            };
-            uni.navigateTo({
-              url:
-                "sureOrder/sureOrder?sureOrder=" +
-                encodeURIComponent(JSON.stringify(param))
-            });
-            if (that.detail.specData) {
-              that.closeSku();
-            }
-          }
-        }
-      });
-    },
+			if (flag == false) {
+				wx.showToast({
+					title: '请选择完整的规格！',
+					icon: 'loading',
+					duration: 1000
+				});
+				return;
+			} else if (!this.valueStr) {
+				wx.showToast({
+					title: '请选择完整的规格！',
+					icon: 'loading',
+					duration: 1000
+				});
+				return;
+			} else {
+				if (that.type == 1) {
+					if (this.assemble == 1) {
+						let param = {
+							ar_id: 338,
+							goods_sku_id: this.valueStrNum,
+							goods_spec_id: this.goods_spec_id,
+							p_id: this.pid,
+							quantity: 1,
+							type: 2,
+							assemble_order_id: 0
+						};
+						ajax({
+							url: 'goods/assembleOrder',
+							data: param,
+							success: res => {
+								this.sku_show = false;
+							}
+						});
+					} else {
+						that.buyNow();
+					}
+				} else {
+					that.add();
+				}
+			}
+		},
+		//收藏商品
+		collectP(e) {
+			let _this = this;
+			ajax({
+				url: 'goods/goodsCollect',
+				data: {
+					p_id: this.pid
+				},
+				success: res => {
+					uni.showToast({
+						title: res.data.msg,
+						icon: 'none',
+						mask: true
+					});
+					this.collect_p = !_this.collect_p;
+				}
+			});
+		},
+		goindex: function() {
+			var that = this;
+			getApp().globalData.infoModel();
+		},
 
-    addCount(e) {
-      this.buyQuantity = parseInt(this.buyQuantity) + 1;
-    },
+		buyNow() {
+			ajax({
+				url: 'index/getProfile',
+				success: res => {
+					var that = this;
+					if (!uni.getStorageSync('loginToken')) {
+						uni.navigateTo({
+							url: '../login/login'
+						});
+					} else {
+						let param = {
+							type: 1,
+							ids: this.pid,
+							now_buy: 1,
+							goods_num: this.buyQuantity,
+							goods_sku_id: this.valueStrNum,
+							goods_spec_id: this.goods_spec_id
+						};
+						uni.navigateTo({
+							url: 'sureOrder/sureOrder?sureOrder=' + encodeURIComponent(JSON.stringify(param))
+						});
+						if (that.detail.specData) {
+							that.closeSku();
+						}
+					}
+				}
+			});
+		},
 
-    // 减少数量
-    minusCount(e) {
-      if (this.buyQuantity <= 1) {
-        return;
-      }
-      this.buyQuantity = parseInt(this.buyQuantity) - 1;
-      // this.setData({
-      // 	buyQuantity: parseInt(this.buyQuantity) - 1
-      // });
-    },
+		addCount(e) {
+			this.buyQuantity = parseInt(this.buyQuantity) + 1;
+		},
 
-    // 选择商品属性
-    selectAttrValue: function(e) {
-      var attrValueList = this.sku_arr;
-      var index = e.currentTarget.dataset.index; //属性索引
-      var key = e.currentTarget.dataset.key;
-      var value = e.currentTarget.dataset.value;
-      var sec_index = e.currentTarget.dataset.sec_index; //属性索引
-      this.selectValue(attrValueList, index, key, value, sec_index);
-    },
+		// 减少数量
+		minusCount(e) {
+			if (this.buyQuantity <= 1) {
+				return;
+			}
+			this.buyQuantity = parseInt(this.buyQuantity) - 1;
+			// this.setData({
+			// 	buyQuantity: parseInt(this.buyQuantity) - 1
+			// });
+		},
 
-    /* 选中 */
-    selectValue: function(attrValueList, index, key, value, sec_index) {
-      for (var j = 0; j < attrValueList[index].spec_items.length; j++) {
-        attrValueList[index].selectedValue = "";
-        if (attrValueList[index].spec_items[j].item_id == key) {
-          attrValueList[index].spec_items[j].selected = !attrValueList[index]
-            .spec_items[j].selected;
-        } else {
-          attrValueList[index].spec_items[j].selected = false;
-        }
-      }
+		// 选择商品属性
+		selectAttrValue: function(e) {
+			var attrValueList = this.sku_arr;
+			var index = e.currentTarget.dataset.index; //属性索引
+			var key = e.currentTarget.dataset.key;
+			var value = e.currentTarget.dataset.value;
+			var sec_index = e.currentTarget.dataset.sec_index; //属性索引
+			this.selectValue(attrValueList, index, key, value, sec_index);
+		},
 
-      attrValueList[index].selectedValue = value; //此时等于蓝色
-      // console.log(attrValueList)
-      this.sku_arr = attrValueList;
-      console.log(this.sku_arr);
-      var valueStr = "";
-      var valueStrNum = "";
+		/* 选中 */
+		selectValue: function(attrValueList, index, key, value, sec_index) {
+			for (var j = 0; j < attrValueList[index].spec_items.length; j++) {
+				attrValueList[index].selectedValue = '';
+				if (attrValueList[index].spec_items[j].item_id == key) {
+					attrValueList[index].spec_items[j].selected = !attrValueList[index].spec_items[j].selected;
+				} else {
+					attrValueList[index].spec_items[j].selected = false;
+				}
+			}
 
-      for (var i = 0; i < attrValueList.length; i++) {
-        for (var j = 0; j < attrValueList[i].spec_items.length; j++) {
-          if (attrValueList[i].spec_items[j].selected) {
-            valueStr += attrValueList[i].selectedValue + ",";
-            valueStrNum += attrValueList[i].spec_items[j].item_id + "_";
-          }
-        }
-      }
-      if (
-        valueStrNum.substr(valueStrNum.length - 1, valueStrNum.length) == "_"
-      ) {
-        valueStrNum = valueStrNum.substr(0, valueStrNum.length - 1);
-      }
+			attrValueList[index].selectedValue = value; //此时等于蓝色
+			this.sku_arr = attrValueList;
+			var valueStr = '';
+			var valueStrNum = '';
 
-      if (valueStr.substr(valueStr.length - 1, valueStr.length) == ",") {
-        valueStr = valueStr.substr(0, valueStr.length - 1);
-      }
-      var str = valueStrNum
-        .split("")
-        .reverse()
-        .join("");
-      for (var i = 0; i < this.detail.spec.length; i++) {
-        if (
-          valueStrNum == this.detail.spec[i].spec_sku_id ||
-          str == this.detail.spec[i].spec_sku_id
-        ) {
-          if (this.detail.spec[i].spec_image) {
-            this.detail.image = this.detail.spec[i].spec_image;
-          } else {
-            this.detail.image = this.main_image;
-          }
-          this.detail.coupon_price = this.detail.spec[i].goods_price;
-        }
-      }
+			for (var i = 0; i < attrValueList.length; i++) {
+				for (var j = 0; j < attrValueList[i].spec_items.length; j++) {
+					if (attrValueList[i].spec_items[j].selected) {
+						valueStr += attrValueList[i].selectedValue + ',';
+						valueStrNum += attrValueList[i].spec_items[j].item_id + '_';
+					}
+				}
+			}
+			if (valueStrNum.substr(valueStrNum.length - 1, valueStrNum.length) == '_') {
+				valueStrNum = valueStrNum.substr(0, valueStrNum.length - 1);
+			}
 
-      (this.valueStr = valueStr), (this.valueStrNum = valueStrNum);
-    }
-  }
+			if (valueStr.substr(valueStr.length - 1, valueStr.length) == ',') {
+				valueStr = valueStr.substr(0, valueStr.length - 1);
+			}
+			var str = valueStrNum
+				.split('')
+				.reverse()
+				.join('');
+			for (var i = 0; i < this.detail.spec.length; i++) {
+				if (valueStrNum == this.detail.spec[i].spec_sku_id || str == this.detail.spec[i].spec_sku_id) {
+					if (this.detail.spec[i].spec_image) {
+						this.detail.image = this.detail.spec[i].spec_image;
+					} else {
+						this.detail.image = this.main_image;
+					}
+					this.detail.coupon_price = this.detail.spec[i].goods_price;
+				}
+			}
+
+			(this.valueStr = valueStr), (this.valueStrNum = valueStrNum);
+		}
+	}
 };
 </script>
 
@@ -984,17 +950,91 @@ export default {
   box-sizing: border-box;
 }
 
-// .add {
-//   width: 210rpx;
-//   height: 67rpx;
-//   line-height: 67rpx;
-//   border: 0;
-//   color: #fff;
-//   font-size: 30rpx;
-//   border-radius: 33rpx;
-//   outline: none;
-//   background: linear-gradient(to right,#fe6200,#fe6400);
-// }
+.overlayer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	.bg {
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.content_wrap {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		min-height: 600rpx;
+		background-color: #fff;
+		border-top-left-radius: 30rpx;
+		border-top-right-radius: 30rpx;
+	}
+	.close_wrap {
+		padding: 20rpx;
+		text-align: right;
+		image {
+			display: inline-block;
+			width: 36rpx;
+			height: 36rpx;
+		}
+	}
+	.item {
+		display: flex;
+		align-items: center;
+		padding: 20rpx 14rpx 28rpx 32rpx;
+		.avatar {
+			width: 80rpx;
+			height: 80rpx;
+			margin-right: 34rpx;
+		}
+		.name {
+			flex: 1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			font-size: 28rpx;
+			color: rgba(51, 51, 51, 1);
+			line-height: 40rpx;
+		}
+		.num_n_time {
+			text-align: left;
+			margin-left: 30rpx;
+			.num {
+				font-size: 28rpx;
+				color: rgba(51, 51, 51, 1);
+				line-height: 40rpx;
+				// letter-spacing: 4rpx;
+				text {
+					color: #e02020;
+				}
+			}
+			.time {
+				font-size: 28rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 40rpx;
+			}
+		}
+		.cantuan {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 140rpx;
+			height: 70rpx;
+			margin-left: 24rpx;
+			font-size: 28rpx;
+			color: rgba(255, 255, 255, 1);
+			background: rgba(184, 224, 176, 1);
+			border-radius: 35rpx;
+			image {
+				width: 16rpx;
+				height: 24rpx;
+				margin-left: 10rpx;
+			}
+		}
+	}
+}
 .assmeble {
   background-color: #ffffff;
 }

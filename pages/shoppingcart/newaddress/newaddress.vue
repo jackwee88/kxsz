@@ -91,7 +91,6 @@ export default {
     let that = this;
     let ar_id = parseInt(options.ar_id);
     this.goods_sku_id = options.goods_sku_id;
-    console.log(this.goods_sku_id);
     if (options.list != undefined) {
       wx.setNavigationBarTitle({
         title: "编辑地址"
@@ -102,7 +101,6 @@ export default {
       } else {
         (this.type = 1), (that.ar_id = ar_id), (that.index = options.index);
       }
-      console.log("123+456");
       util.ajax({
         url: "address/onelist",
         data: {
@@ -170,7 +168,6 @@ export default {
     },
     //地区选择点击
     bindCityChange(e) {
-      console.log(e);
       // this.uploadInfo.province = e.checkArr[0];
       // this.uploadInfo.city = e.checkArr[1];
       // this.uploadInfo.area = e.checkArr[2];
@@ -194,7 +191,6 @@ export default {
      * 保存
      */
     save: function() {
-      console.log(this.region);
       let address = this.region[0] + this.region[1] + this.region[2] || "";
       address == "undefined" ? (address = "") : "";
       let that = this;
@@ -264,7 +260,6 @@ export default {
                           mobile: that.tel,
                           person: that.name
                         };
-                        console.log(obj);
                         (prevPages.address = obj),
                           (prevPages.totals = reslute.data.amount.toFixed(2)),
                           (prevPages.transport_total = reslute.data.transport),
@@ -272,7 +267,6 @@ export default {
                       }
                     }
 
-                    console.log(prevPages.data);
 
                     if (prevPage) {
                       prevPage.onLoad();

@@ -118,7 +118,6 @@
 		},
 		//上拉加载
 		onReachBottom() {
-			console.log("上拉");
 			let _self = this
 			_self.status = 'loading' //赋值加载中
 			uni.showNavigationBarLoading()
@@ -130,7 +129,6 @@
 		methods: {
 			//上拉
 			load: function() {
-				console.log(1);
 			},
 			//收藏点击
 			collect(e) {

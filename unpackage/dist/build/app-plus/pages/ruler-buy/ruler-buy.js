@@ -1,1 +1,0 @@
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/ruler-buy/ruler-buy.wxml') } }));

@@ -150,7 +150,6 @@ export default {
     },
 
     goodsdetails(e) {
-      console.log(e.currentTarget.dataset.p_id);
       const p_id = e.currentTarget.dataset.p_id;
       wx.navigateTo({
         url: '/pages/onlinestore/productDetail/productDetail?p_id=' + p_id
@@ -158,7 +157,6 @@ export default {
     },
 
     playVideo(e) {
-      console.log(e);
       this.setData({
         preview: false
       }); // var src = e.currentTarget.dataset.url;
@@ -179,7 +177,6 @@ export default {
             url: '/pages/hncjiaoxue_intro/hncjiaoxue_intro?vp_id=' + vp_id + '&title=' + title + '&vp_id=' + vp_id + '&index=' + index + "&browse=" + browse
           });
         } else if (res.status == 2) {
-          console.log("跳转购买界面");
         }
       });
     },

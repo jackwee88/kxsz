@@ -395,20 +395,17 @@ export default {
       });
     }
     util.ajaxs("index/getProfile", {}, res => {
-      console.log(res);
       this.info = res.data;
     });
   },
   mounted() {
     util.ajaxs("index/getProfile", {}, res => {
-      console.log(res);
       this.info = res.data;
     });
   },
   methods: {
     getData() {
       util.ajaxs("index/getProfile", {}, res => {
-        console.log(res);
         this.info = res.data;
       });
     },
@@ -424,7 +421,6 @@ export default {
 			});
 		},
     loginout() {
-      console.log("123");
       uni.removeStorageSync("loginToken");
       this.getData();
     }

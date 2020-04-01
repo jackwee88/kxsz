@@ -540,7 +540,6 @@ export default {
 					},
 					success: res => {
 						if (res.status == 2) {
-							console.log('res' + res);
 							uni.showToast({
 								title: res.msg,
 								icon: 'none'
@@ -555,12 +554,10 @@ export default {
 							},
 
 							success: ress => {
-								console.log(ress);
 								uni.requestPayment({
 									provider: 'wxpay',
 									orderInfo: ress.data.data, //微信、支付宝订单数据
 									success: function(res) {
-										console.log('success:' + JSON.stringify(res));
 										uni.showToast({
 											title: '支付成功'
 										});
@@ -569,7 +566,6 @@ export default {
 										});
 									},
 									fail: function(err) {
-										console.log('fail:' + JSON.stringify(err));
 										uni.showToast({
 											title: '支付失败'
 										});
