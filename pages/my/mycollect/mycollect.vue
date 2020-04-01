@@ -236,7 +236,6 @@ export default {
     },
     keywordFun: function(e) {
       var that = this;
-      console.log(e.detail.value);
       that.setData({
         type: that.type,
         page: 1,
@@ -336,7 +335,6 @@ export default {
     },
 
     goodsdetails(e) {
-      console.log(e.currentTarget.dataset.p_id);
       const p_id = e.currentTarget.dataset.p_id;
       wx.navigateTo({
         url: "/pages/product-detail/product-detail?p_id=" + p_id

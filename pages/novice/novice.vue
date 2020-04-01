@@ -83,7 +83,6 @@
 		},
 		methods:{
 			checkBind(){
-				console.log('123')
 				ajax({
 					url:'index/checkBind',
 					data:{

@@ -241,23 +241,23 @@
 		<view class="overlayer" v-if="visible">
 			<view class="bg"></view>
 			<view class="content_wrap">
-				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
+				<view class="close_wrap"><image src="../../static/my/close.png" mode="" @tap.stop="closeAssmeble"></image></view>
 				<view class="list" v-for="(item, index) in teamlist" :key="index">
 					<view class="item" data-index="index" data-orderid="item.assemeble_order_id">
-						<image src="../../static/reg/log.png" class="avatar"></image>
+						<image :src="item.user.avatar" class="avatar"></image>
 
-						<view class="name">1</view>
+						<view class="name">{{item.user.nickname}}</view>
 
 						<view class="num_n_time">
 							<view class="num">
 								差
-								<text>{data.num}</text>
+								<text>{{item.need_number}}</text>
 								人拼成
 							</view>
 
-							<view class="time">
+							<view class="time" style="display: flex;flex-direction: row;align-items: center;">
 								<text>剩余</text>
-								<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="1" :minute="12" :second="40" :showDay="false"></uni-countdown>
+								<uni-countdown backgroundColor="#ffffff" color="#999999" splitorColor="#999999" :hour="assembleHour" :minute="assmebleMinute" :second="assmebleSecond" :showDay="false"></uni-countdown>
 							</view>
 						</view>
 						<view class="cantuan" @tap="assmebleOrder">
@@ -351,7 +351,7 @@ export default {
 	},
 	onLoad(event) {
 		// this.banner = JSON.parse(decodeURIComponent(event.gd_id));
-		// console.log(this.banner);
+		// (this.banner);
 		// if(this.banner.p_id){
 		// 	this.pid = this.banner.id
 		// }else{
@@ -465,7 +465,6 @@ export default {
 					}
 					for (var i = 0; i < list.length; i++) {
 						let timeNoew = new Date().getTime() / 1000;
-
 						var lastTime = list[i].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
 						this.AssmebleChange(lastTime);
 					}
@@ -483,9 +482,7 @@ export default {
 					// 获取当前时间戳
 					let timeNoew = new Date().getTime() / 1000;
 					if (timeNoew > list[0].endtime) {
-						console.log('秒杀结束');
 					} else if (timeNoew < list[0].createTime) {
-						console.log('秒杀未开始');
 					} else {
 						var lastTime = list[0].endtime - timeNoew; //(当前时间距离秒杀结束的秒)
 						// 然后将秒转化成时间  (定时器每秒更新一次)
@@ -493,6 +490,9 @@ export default {
 					}
 				}
 			});
+		},
+		closeAssmeble(){
+			this.visible=false
 		},
 		AssmebleChange(value) {
 			var lastTime = parseInt(value);
@@ -605,7 +605,6 @@ export default {
 		},
 		//打开sku弹窗
 		showSku(e) {
-			console.log(this.assemble + '你好');
 			if (this.sku_arr.length > 0) {
 				(this.sku_show = true), (this.type = e.currentTarget.dataset.type);
 			} else {
@@ -744,7 +743,6 @@ export default {
 			for (var i = 0; i < this.detail.spec.length; i++) {
 				if (this.valueStrNum == this.detail.spec[i].spec_sku_id) {
 					this.goods_spec_id = this.detail.spec[i].goods_spec_id;
-					console.log(this.goods_spec_id);
 					flag = true;
 					break;
 				}
@@ -800,7 +798,6 @@ export default {
 					p_id: this.pid
 				},
 				success: res => {
-					console.log(res.data.data);
 					uni.showToast({
 						title: res.data.msg,
 						icon: 'none',
@@ -821,7 +818,6 @@ export default {
 				success: res => {
 					var that = this;
 					if (!uni.getStorageSync('loginToken')) {
-						console.log('登录状态失效');
 						uni.navigateTo({
 							url: '../login/login'
 						});
@@ -882,9 +878,7 @@ export default {
 			}
 
 			attrValueList[index].selectedValue = value; //此时等于蓝色
-			// console.log(attrValueList)
 			this.sku_arr = attrValueList;
-			console.log(this.sku_arr);
 			var valueStr = '';
 			var valueStrNum = '';
 
@@ -932,17 +926,91 @@ export default {
 	box-sizing: border-box;
 }
 
-// .add {
-//   width: 210rpx;
-//   height: 67rpx;
-//   line-height: 67rpx;
-//   border: 0;
-//   color: #fff;
-//   font-size: 30rpx;
-//   border-radius: 33rpx;
-//   outline: none;
-//   background: linear-gradient(to right,#fe6200,#fe6400);
-// }
+.overlayer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	.bg {
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.content_wrap {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		min-height: 600rpx;
+		background-color: #fff;
+		border-top-left-radius: 30rpx;
+		border-top-right-radius: 30rpx;
+	}
+	.close_wrap {
+		padding: 20rpx;
+		text-align: right;
+		image {
+			display: inline-block;
+			width: 36rpx;
+			height: 36rpx;
+		}
+	}
+	.item {
+		display: flex;
+		align-items: center;
+		padding: 20rpx 14rpx 28rpx 32rpx;
+		.avatar {
+			width: 80rpx;
+			height: 80rpx;
+			margin-right: 34rpx;
+		}
+		.name {
+			flex: 1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			font-size: 28rpx;
+			color: rgba(51, 51, 51, 1);
+			line-height: 40rpx;
+		}
+		.num_n_time {
+			text-align: left;
+			margin-left: 30rpx;
+			.num {
+				font-size: 28rpx;
+				color: rgba(51, 51, 51, 1);
+				line-height: 40rpx;
+				// letter-spacing: 4rpx;
+				text {
+					color: #e02020;
+				}
+			}
+			.time {
+				font-size: 28rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 40rpx;
+			}
+		}
+		.cantuan {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 140rpx;
+			height: 70rpx;
+			margin-left: 24rpx;
+			font-size: 28rpx;
+			color: rgba(255, 255, 255, 1);
+			background: rgba(184, 224, 176, 1);
+			border-radius: 35rpx;
+			image {
+				width: 16rpx;
+				height: 24rpx;
+				margin-left: 10rpx;
+			}
+		}
+	}
+}
 .assmeble {
 	background-color: #ffffff;
 }

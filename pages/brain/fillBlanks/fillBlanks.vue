@@ -330,7 +330,7 @@ export default {
         id: that.id
       };
       util.ajaxs("game/choiceList", param, res => {
-        console.log(res);
+        (res);
 
         if (res.status == 2) {
           if (res.msg == "今日答题数量已达上限") {
@@ -381,7 +381,7 @@ export default {
     },
     answerFun: function(e) {
       let val = e.detail.value;
-      console.log(val);
+      (val);
       this.setData({
         answer: val
       });
@@ -556,7 +556,7 @@ export default {
       innerAudioContext.loop = true;
       innerAudioContext.src = this.audio;
       innerAudioContext.onCanplay(() => {
-        console.log("可以播放");
+        ("可以播放");
       });
       this.innerAudioContext = innerAudioContext;
     },

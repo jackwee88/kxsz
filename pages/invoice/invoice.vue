@@ -171,7 +171,6 @@ export default {
     getData() {},
 
     bindPickerChange: function (e) {
-      console.log('picker发送选择改变，携带值为', e.detail.value);
       this.index= e.detail.value,
       this.way= e.detail.value,
       this.content= ''
@@ -328,7 +327,6 @@ export default {
       var pages = getCurrentPages(); //页面指针数组 
 
       var prepage = pages[pages.length - 2]; //上一页面指针 
-		  console.log(prepage)
       wx.setStorageSync('a', arr);
 
       if (this.no_invoice == false) {

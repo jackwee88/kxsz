@@ -104,7 +104,7 @@
               </view>
 
               <view class="hr"></view>
-              <view class="thirdlineblock clear">
+              <view class="thirdlineblock">
                 <view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
                   <image
                     class="collecticon"
@@ -119,7 +119,7 @@
                   />
                   <text>{{ item.thumbs_times }}</text>
                 </view>
-                <button
+                <view
                   class="thirdline share"
                   :data-dy_id="item.dy_id"
                   open-type="share"
@@ -129,7 +129,7 @@
                 >
                   <image class="shareicon" src="../../static/index/fx.png" />
                   <text>分享</text>
-                </button>
+                </view>
                 <view
                   class="thirdline share"
                   @tap.stop="gotoPublished"
@@ -391,7 +391,6 @@ gotoUserInfo: function(e) {
               list[i].action = action;
               list[i].name = list[i].nickname + "的音频";
             }
-            console.log(this.fetchtype)
             this.page = this.page + 1
             this.count = count > 1 ? res.data.data.count : 1
             this.studylist=studylist.concat(list)
@@ -458,7 +457,6 @@ gotoUserInfo: function(e) {
 			});
 		},
     changeOil: function(type) {
-			console.log('改变世界')
       const that = this;
       this.fetchtype = type
       this.page = 1

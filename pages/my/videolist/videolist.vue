@@ -160,7 +160,6 @@ export default {
               count: res.data.count > 1 ? res.data.count : 1,
               tabcontitem: tabcontitem.concat(res.data.list)
             });
-            console.log(res.data.list);
             wx.stopPullDownRefresh();
           }
         });

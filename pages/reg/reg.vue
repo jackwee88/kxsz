@@ -127,7 +127,6 @@
 					// this.school.push(list[i].school_name)
 					this.school=this.school.concat(list[i].school_name)
 				}
-				console.log(this.school)
 		    }});
 		
 		    if (wx.getStorageSync('wxPhone')) {
@@ -300,7 +299,6 @@ bindCityChange(e) {
       var second = that.second;
 
       if (second == 0) {
-        // console.log("Time Out...");
           this.selected= false,
           this.selected1= true,
           this.second= 60,

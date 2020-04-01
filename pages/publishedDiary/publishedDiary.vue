@@ -49,7 +49,7 @@
               <view class="image-plus-horizontal"></view>
               <view class="image-plus-vertical"></view>
             </view>
-            <view class="image-plus-video" @tap="uploadvideo"></view>
+            <view class="image-plus-video" ></view>
           </block>
           <!-- <block wx:if="{{videoUrl != ''}}">
         <video src="{{videoUrl}}" class="video"></video>
@@ -249,7 +249,6 @@ export default {
           // 可以指定来源是相册还是相机，默认二者都有
           success: res => {
             var imageSrc = res.tempFilePaths;
-            console.log(res);
             imageSrc.forEach(function(value, index, arrSelf) {
               wx.showToast({
                 title: "正在上传...",
@@ -293,9 +292,11 @@ export default {
                       wx.hideToast();
                     }
                   );
+									// setTimeout(function(){
+									// 	uni.navigateBack()
+									// },2000)
                 },
                 fail: function(errMsg) {
-                  console.log(errMsg);
                 }
               });
             });
@@ -348,7 +349,6 @@ export default {
             return false;
           }
 
-          console.log(res.tempFilePath); // that.setData({
           //   myvideosrc: res.tempFilePath
           // })
 
@@ -395,7 +395,6 @@ export default {
             },
             fail: function(errMsg) {
               wx.hideToast();
-              console.log(errMsg);
             }
           });
         }
@@ -459,7 +458,7 @@ export default {
         success() {
           wx.chooseLocation({
             success: res => {
-              // 用户选中地址 点击右上角 确定后  返回数据 res
+              // 用户选中地址 点击右上角 确定后  返回数据 res
               that.setData({
                 address: res.address,
                 lat: res.latitude,
@@ -518,7 +517,6 @@ export default {
           lat: that.lat,
           type: that.type
         };
-        console.log(param);
         util.ajaxs("study/diaryUpload", param, res => {
           wx.showToast({
             title: res.msg,
@@ -566,7 +564,6 @@ export default {
     },
 
     bindPickerChange(e) {
-      console.log(e);
       this.setData({
         index: e.detail.value
       });
@@ -578,7 +575,6 @@ export default {
         isPlaying: true,
         is_show: true
       });
-      console.log(that.resume);
 
       if (that.resume == true) {
         recorderManager.resume();
@@ -601,11 +597,9 @@ export default {
 
         recorderManager.start(options);
         recorderManager.onStart(() => {
-          console.log(22222, "recorder start");
         }); //错误回调
 
         recorderManager.onError(res => {
-          console.log(222222, res);
         });
       }
 
@@ -675,7 +669,6 @@ export default {
       recorderManager.stop();
       recorderManager.onStop(res => {
         that.voice_ids = res.tempFilePath;
-        console.log("停止录音", res.tempFilePath);
         const { tempFilePath } = res;
       });
       that.setData({
@@ -707,7 +700,7 @@ export default {
           },
           fail: function(errMsg) {
             wx.hideToast();
-            console.log(errMsg);
+            (errMsg);
           }
         });
         that.setData({
@@ -721,10 +714,9 @@ export default {
       var that = this;
       innerAudioContext.autoplay = true;
       (innerAudioContext.src = this.tempFilePath),
-        console.log(innerAudioContext.src);
+        (innerAudioContext.src);
       innerAudioContext.play();
       innerAudioContext.onPlay(() => {
-        console.log("开始播放");
       });
       wx.startRecord({
         success(res) {
@@ -745,7 +737,6 @@ export default {
       innerAudioContext.autoplay = false;
       (innerAudioContext.src = this.tempFilePath),
         innerAudioContext.onPause(() => {
-          console.log("暂停播放");
         });
       this.setData({
         isPlayings: true
@@ -837,10 +828,10 @@ export default {
                     signature: that.signature
                   },
                   success: function(res) {
-                    console.log(res);
+                    (res);
                     var imgUrl =
                       that.host + "/" + that.dir + "/" + filename + ".png";
-                    console.log(imgUrl);
+                    (imgUrl);
                     let param1 = {
                       dy_id: that.dy_id,
                       img: imgUrl
@@ -849,7 +840,6 @@ export default {
                     wx.hideToast();
                   },
                   fail: function(errMsg) {
-                    console.log(errMsg);
                   }
                 }); //   }
                 // })
@@ -930,7 +920,7 @@ export default {
             return false;
           }
 
-          console.log(res.tempFilePath); // that.setData({
+          (res.tempFilePath); // that.setData({
           //   myvideosrc: res.tempFilePath
           // })
 
@@ -977,7 +967,7 @@ export default {
             },
             fail: function(errMsg) {
               wx.hideToast();
-              console.log(errMsg);
+              (errMsg);
             }
           });
         }

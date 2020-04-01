@@ -69,7 +69,6 @@
 				     },
 				     method: 'POST',
 				     success: function(res) {
-							 console.log(res.data.data)
 							 uni.setStorageSync('loginToken',res.data.data)
 							 uni.switchTab({
 							          url: '../index/index'
@@ -88,9 +87,7 @@
 				     },
 				     method: 'POST',
 				     success: function(res) {
-							 console.log(res.data.data)
 							uni.setStorageSync('loginToken',res.data.data)
-							console.log(res.data.data)
 							uni.switchTab({
 							         url: '../index/index'
 							});
@@ -126,7 +123,6 @@
 					     },
 					     method: 'POST',
 					     success: function(res) {
-							console.log(res)
 					     },
 					     error: function() {}
 					    })

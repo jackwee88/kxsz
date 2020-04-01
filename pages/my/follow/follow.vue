@@ -1,10 +1,13 @@
 <template>
 	<view>
-		<view class="search_box">
+<!-- 		<view class="search_box">
 			<image src="../../../static/jctbxzjx/search.png" class="icon"></image>
 			<input type="text" :value="search_txt" placeholder="搜索关注" />
-		</view>
-		<view v-if="myFriendList.length == 0">暂无信息</view>
+		</view> -->
+		<view v-if="myFriendList.length == 0" class="none">    
+      <image src="../../../static/my/wujieguo.png" class="wujieguo" />
+      <view class="none none-text">您暂时还没有关注的人哦</view>
+    </view>
 		<view class="list" v-if="myFriendList.length >= 1">
 			<view class="item" v-for="(item, index) in myFriendList" :key="index">
 				<view @click="gotoOtherInfo(item)"><image :src="item.avatar" mode=""></image></view>
@@ -13,11 +16,11 @@
 						<view class="name">{{ item.nickname }}</view>
 						<view class="account">开心号：{{ item.number }}</view>
 					</view>
-					<view class="btn" v-if="item.type == 'only'" @tap="follow" :data-id="item.id" :data-index="index">
+					<view class="btn" v-if="item.type == 'only'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
 						取消关注
 					</view>
-					<view class="btn had_btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index">
+					<view class="btn had_btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
 					</view>
@@ -60,17 +63,14 @@ export default {
 
 		gotoOtherInfo: function(e) {
 			let param = { uid: e.id };
-			console.log(param);
 			uni.navigateTo({
 				url: '../../userInfo/otherInfo?infoDetail=' + encodeURIComponent(JSON.stringify(param))
 			});
 		},
 
 		follow(e) {
-			// let type = e.type
 			const index = e.currentTarget.dataset.index;
 			const type = e.currentTarget.dataset.type;
-			// console.log(type+'type')
 			ajax({
 				url: 'friend/follow',
 				data: {
@@ -78,30 +78,24 @@ export default {
 				},
 				method: 'POST',
 				success: res => {
-					if (type==mutual) {
-						console.log(type+'有type')
-						if (res.data.status == 1) {
-							//取消关注
-							this.myFriendList[index].type = 'none';
-						} else if (res.data.status == 2) {
-							//关注成功
-							// this.myFriendList[index].type = 'mutual';
-							this.getData()
-						}
-					} else {
-						console.log(type+'没有type')
+					if (type=='mutual') {
 						if (res.data.status == 1) {
 							this.myFriendList[index].type = 'none';
-						} else if (res.data.status == 2) {
-							// this.myFriendList[index].type = 'only';
+						} 
+					}if(type=='none'){
+						if(res.data.status==2){
 							this.getData()
 						}
 					}
-
-					// this.getData()
+					else {
+						if (res.data.status == 1) {
+							this.myFriendList[index].type = 'none';
+						} else if (res.data.status == 2) {
+							this.myFriendList[index].type = 'only';
+						}
+					}
 				},
 				error: function() {
-					console.log('111');
 				}
 			});
 		}
@@ -110,6 +104,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+	.wujieguo {
+	  margin-top: 30%;
+	  width: 200rpx;
+	  height: 200rpx;
+	}
+	.none {
+	  text-align: center;
+	}
+	
+	.none-text {
+	  margin-top: 28rpx;
+	  font-size: 32rpx;
+	  color: #b5b5b5;
+	}
 .search_box {
 	position: relative;
 	width: 502rpx;

@@ -272,7 +272,6 @@ export default {
 				url:'paygoods/repay', 
 				data:param, 
 				success:res => {
-				  console.log(res.data);
 				  wx.requestPayment({
 				    timeStamp: String(res.data.timeStamp),
 				    nonceStr: res.data.nonceStr,
@@ -280,7 +279,6 @@ export default {
 				    signType: res.data.signType,
 				    paySign: res.data.paySign,
 				    success: function (payres) {
-				      console.log(payres);
 				      wx.showToast({
 				        title: '支付成功，正在查询订单',
 				        icon: 'none',
@@ -302,7 +300,6 @@ export default {
 				}
 			});
           } else if (ress.cancel) {
-            console.log('用户点击取消');
           }
         }
 
@@ -363,7 +360,6 @@ export default {
 				url:'order/reminder', 
 				data:param, 
 				success:res => {
-				  console.log(res.data);
 				  wx.showToast({
 				    title: "已收到您的催单信息",
 				    icon: 'none',
@@ -470,7 +466,6 @@ export default {
 				url:'order/del', 
 				data:param, 
 				success:res => {
-				  console.log(res.data); //删除订单
 				
 				  wx.showToast({
 				    title: "删除成功",

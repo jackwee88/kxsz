@@ -56,7 +56,6 @@ export default {
   onLoad: function(options) {
     var that = this;
     util.ajaxs("index/getScore", {page:this.page,pagesize:this.pagesize}, res => {
-      console.log(res.data);
       that.jifen = res.data.list;
 			that.userdata= res.data.list;
 			that.page= that.page+1

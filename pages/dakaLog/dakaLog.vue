@@ -108,7 +108,6 @@ export default {
 	},
 	onload() {
 		var value = uni.getStorageSync('loginToken');
-		console.log(value + '123456');
 	},
 	onShow:function(){
 		// this.getuserData();
@@ -147,7 +146,6 @@ export default {
 		  var index = e.currentTarget.dataset.index;
 		  const dy_id = e.currentTarget.dataset.dy_id;
 		  var index_ = that.index_;
-			console.log(index+'index')
 		  util.ajaxs(
 		    "study/praiseStudy",
 		    {
@@ -159,12 +157,10 @@ export default {
 		      const thumbs_times = "logList[" + index + "].thumbs_times";
 		
 		      if (res.data.is_ok==true) {
-						console.log('点赞成功')
 		          this.logList[index].is_give= !logList[index].is_give,
 		          this.logList[index].thumbs_times=logList[index].thumbs_times + 1,
 		          this.is_ok= "y"
 		      } else {
-						console.log('取消点赞')
 		          this.logList[index].is_give= !logList[index].is_give,
 		          this.logList[index].thumbs_times=logList[index].thumbs_times - 1,
 		          this.is_ok= "n"
@@ -183,7 +179,6 @@ export default {
 			success: res => {
 				const details = res.data.data;
 				this.userinfo = details;
-				console.log(this.userinfo);
 			},
 			error: function() {}
 		}),
@@ -192,7 +187,6 @@ export default {
 				data: {},
 				method: 'pause',
 				success: (res) => {
-					// console.log(res);
 					const{count,list} = res.data.data
 					this.logList=list
 				},

@@ -488,7 +488,7 @@ export default {
         wx.navigateTo({
           url: "/pages/onlinestore/productDetail/productDetail?p_id=" + p_id
         });
-      } // console.log("e", e.currentTarget.dataset.cl_id)
+      } // ("e", e.currentTarget.dataset.cl_id)
       // var cl_id = e.currentTarget.dataset.cl_id
       // wx.navigateTo({
       //   url: '/pages/onlinestore/surevideo/surevideo?cl_id=' + cl_id,
@@ -509,7 +509,7 @@ export default {
         page_size: that.page_size,
         keyword: that.keyword
       };
-      const tabcontitem = that.tabcontitem; // console.log(that.data.count ,'dfdsgdsgsdgsd',that.data.page)
+      const tabcontitem = that.tabcontitem;
 
       if (that.count < that.page) {
         wx.showToast({

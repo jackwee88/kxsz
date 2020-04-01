@@ -123,7 +123,6 @@ export default {
       innerAudioContext.loop = true;
       innerAudioContext.src = this.audio;
       innerAudioContext.onCanplay(() => {
-        console.log("可以播放");
       });
       this.innerAudioContext = innerAudioContext;
     },

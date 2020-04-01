@@ -51,7 +51,7 @@ export default {
 		// 	     },
 		// 	     method: 'POST',
 		// 	     success: function(res) {
-		// 			console.log(res)
+		// 			(res)
 		// 	     },
 		// 	     error: function() {}
 		// 	    })
@@ -78,7 +78,6 @@ export default {
 			     },
 			     method: 'POST',
 			     success: function(res) {
-					console.log(res)
 			     },
 			     error: function() {}
 			    })
@@ -96,11 +95,10 @@ export default {
 					method: 'POST',
 					success: function(res) {
 						// const{count,list}=res.data.data
-						// // console.log(list)
+						// // (list)
 						// this.goodsList = list
-						// console.log(this.goodsList)
+						// (this.goodsList)
 						uni.setStorageSync('loginToken',res.data.data)
-						console.log(res)
 						uni.navigateTo({
 							url: '../../index/index'
 						})
@@ -113,9 +111,9 @@ export default {
 					    content: '您两次输入的密码不一致，请重新输入',
 					    success: function (res) {
 					        if (res.confirm) {
-					            console.log('用户点击确定');
+					            ('用户点击确定');
 					        } else if (res.cancel) {
-					            console.log('用户点击取消');
+					            ('用户点击取消');
 					        }
 					    }
 				})

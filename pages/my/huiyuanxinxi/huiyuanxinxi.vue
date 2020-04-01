@@ -152,7 +152,6 @@ export default {
         // 可以指定来源是相册还是相机，默认二者都有
         success: res => {
           var imageSrc = res.tempFilePaths;
-          console.log(res);
           imageSrc.forEach(function(value, index, arrSelf) {
             wx.showToast({
               title: "正在上传...",
@@ -182,7 +181,6 @@ export default {
                   that.host + "/" + that.dir + "/" + filename + ".png";
               },
               fail: function(errMsg) {
-                console.log(errMsg);
               }
             });
           });
@@ -220,7 +218,6 @@ export default {
     },
     //地区选择点击
     bindCityChange(e) {
-      console.log(e);
       this.uploadInfo.province = e.checkArr[0];
       this.uploadInfo.city = e.checkArr[1];
       this.uploadInfo.area = e.checkArr[2];

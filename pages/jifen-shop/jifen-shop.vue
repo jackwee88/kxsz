@@ -79,7 +79,6 @@ export default {
 			let param ={
 				goods_id:e.id,
 				}
-				console.log(param)
 			uni.navigateTo({
 				url: './jifen-detail/jifen-detail?productName=' + encodeURIComponent(JSON.stringify(param))
 			});

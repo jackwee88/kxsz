@@ -142,7 +142,6 @@ export default {
 	onLoad(event) {
 		this.userinfo = JSON.parse(decodeURIComponent(event.infoDetail));
 		this.id = this.userinfo.uid;
-		console.log(this.id)
 		this.getData()
 		this.getDakalog()
 	},
@@ -172,11 +171,9 @@ export default {
 			     },
 			     method: 'POST',
 			     success: (res) =>{
-						 console.log(res.data.msg)
 						 this.getData()
 			     },
 			     error: function() {
-						 console.log("111")
 					 }
 			    })
 		},
@@ -208,7 +205,6 @@ export default {
 		  var index = e.currentTarget.dataset.index;
 		  const dy_id = e.currentTarget.dataset.dy_id;
 		  var index_ = that.index_;
-			console.log(index+'index')
 		  util.ajaxs(
 		    "study/praiseStudy",
 		    {
@@ -220,12 +216,10 @@ export default {
 		      const thumbs_times = "loglist[" + index + "].thumbs_times";
 		
 		      if (res.data.is_ok==true) {
-						console.log('点赞成功')
 		          this.logList[index].is_give= !logList[index].is_give,
 		          this.logList[index].thumbs_times=logList[index].thumbs_times + 1,
 		          this.is_ok= "y"
 		      } else {
-						console.log('取消点赞')
 		          this.logList[index].is_give= !logList[index].is_give,
 		          this.logList[index].thumbs_times=logList[index].thumbs_times - 1,
 		          this.is_ok= "n"
@@ -236,7 +230,6 @@ export default {
 		previewImg: function(e) {
 		  let src = e.currentTarget.dataset.src;
 		  let pic_arr = e.currentTarget.dataset.effect_pic;
-			console.log(pic_arr)
 			var imglist=pic_arr.split(',')
 		  wx.previewImage({
 		    current: src,
@@ -262,7 +255,6 @@ export default {
 			  }
 			
 			    this.logList= list
-				console.log()
 			}});
 		}
 		

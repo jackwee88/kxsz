@@ -47,25 +47,18 @@
 					// status 标识当前连接状态
 					switch (status) {
 						case RongIMLib.ConnectionStatus.CONNECTED:
-							console.log('链接成功');
 							break;
 						case RongIMLib.ConnectionStatus.CONNECTING:
-							console.log('正在链接');
 							break;
 						case RongIMLib.ConnectionStatus.DISCONNECTED:
-							console.log('断开连接');
 							break;
 						case RongIMLib.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT:
-							console.log('其他设备登录, 本端被踢');
 							break;
 						case RongIMLib.ConnectionStatus.DOMAIN_INCORRECT:
-							console.log('域名不正确, 请至开发者后台查看安全域名配置');
 							break;
 						case RongIMLib.ConnectionStatus.NETWORK_UNAVAILABLE:
-							console.log('网络不可用, 此时可调用 reconnect 进行重连');
 							break;
 						default:
-							console.log('链接状态为', status);
 							break;
 					}
 				}
@@ -89,11 +82,9 @@
 							listTxet.push(list[i].content)
 						}
 						 _self.linkList=listTxet;
-						 console.log('获取历史消息成功', list);
 					},
 					onError: function(error) {
 						// 请排查：单群聊消息云存储是否开通
-						console.log('获取历史消息失败', error);
 					}
 				});
 			  }
@@ -101,11 +92,9 @@
 			//连接，登录
 			RongIMClient.connect(token, {
 				onSuccess: function(userId) {
-					console.log('连接成功, 用户 id 为', userId);
 					// 连接已成功, 此时可通过 getConversationList 获取会话列表并展示
 				},
 				onTokenIncorrect: function() {
-					console.log('连接失败, 失败原因: token 无效');
 				},
 				onError: function(errorCode) {
 					var info = '';
@@ -126,7 +115,7 @@
 							info = errorCode;
 							break;
 					}
-					console.log('连接失败, 失败原因: ', info);
+					('连接失败, 失败原因: ', info);
 				}
 			});
 			//获取历史消息
@@ -144,11 +133,10 @@
 						listTxet.push(list[i].content)
 					}
 					 _self.linkList=listTxet;
-					 console.log(_self.linkList);
+					 (_self.linkList);
 				},
 				onError: function(error) {
 					// 请排查：单群聊消息云存储是否开通
-					console.log('获取历史消息失败', error);
 				}
 			});
 			
@@ -169,16 +157,13 @@
 			RongIMClient.getInstance().clearUnreadCount(conversationType, id, {
 			    onSuccess: function(){
 			        // 清除未读消息成功
-					console.log('清除未读消息成功');
 			    },
 			    onError: function(error){
 			        // error => 清除未读消息数错误码
-					console.log('清除未读消息数错误码');
 			    }
 			});
 		},
 		beforeMount(){
-			console.log('挂载前');
 			RongIMClient.init(appkey, null, {
 				protobuf: Protobuf
 			})

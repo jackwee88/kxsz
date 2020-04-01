@@ -54,7 +54,6 @@
 			     },
 			     method: 'POST',
 			     success: function(res) {
-					console.log(res)
 			     },
 			     error: function() {}
 			    })
@@ -72,7 +71,6 @@
 				method: 'POST',
 				success: function(res) {
 					uni.setStorageSync('loginToken',res.data.data)
-					console.log(res)
 					// uni.navigateTo({
 					// 	url: '../../index/index'
 					// })
@@ -85,9 +83,7 @@
 				    content: '您两次输入的密码不一致，请重新输入',
 				    success: function (res) {
 				        if (res.confirm) {
-				            console.log('用户点击确定');
 				        } else if (res.cancel) {
-				            console.log('用户点击取消');
 				        }
 				    }
 			})

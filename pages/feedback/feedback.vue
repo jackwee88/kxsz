@@ -59,7 +59,6 @@ export default {
 				},
 				method:'POST',
 				success:(res)=>{
-					console.log(res.data.msg)
 					uni.showToast({
 						title:res.data.msg
 					})
@@ -76,7 +75,6 @@ export default {
 			data:{},
 			method:'POST',
 			success:(res)=>{
-				console.log(res)
 				const{list} = res.data.data
 				this.typeList = list
 			},

@@ -110,7 +110,6 @@ export default {
         'token': wx.getStorageSync("token")
       },
       success: function (res) {
-        console.log(res.data.data);
 
         if (res.data.status == 1) {
           that.setData({
@@ -201,7 +200,6 @@ export default {
 
     //选择上下册完毕后，点击确定
     yesBtn(e) {
-      console.log(e);
       wx.navigateTo({
         url: e.currentTarget.dataset.url
       });

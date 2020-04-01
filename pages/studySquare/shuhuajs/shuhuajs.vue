@@ -149,7 +149,6 @@ export default {
           success: res => {
             var tabcontitem = that.tabcontitem;
             let data = res.data.data;
-            console.log(data);
             that.setData({
               page: that.page + 1,
               count: data.count > 1 ? data.count : 1,
