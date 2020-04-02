@@ -99,7 +99,7 @@ this.getData()
 </script>
 
 <style style lang="less" scoped>
-@import './onlinestore.css';
+// @import './onlinestore.css';
 page,
 .container {
 	min-height: 100%;

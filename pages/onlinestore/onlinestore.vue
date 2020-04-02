@@ -57,7 +57,7 @@
 			<!-- 商品推荐 -->
 			<view class="recommend-banner">
 				<swiper previous-margin="96rpx" circular="true" next-margin="360rpx" style="height: 350rpx;">
-					<swiper-item class="flex" v-for="(item, index) in bannerList" :key="index">
+					<swiper-item class="flex" v-for="(item, index) in flashSale" :key="index">
 						<view class="banner-item" :data-id="item.goods.p_id" @tap.stop="gotoDetails(item.goods.p_id)">
 							<view class="banner-icon"><image :src="item.goods.icon" style="width: 248rpx;height: 242rpx;"/></view>
 							<view class="goods-price">¥{{ item.price }}</view>
