@@ -1,7 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "uni-countdown": "/components/uni-countdown/uni-countdown",
-    "screen-text-scroll": "/components/p-screenTextScroll/screenTextScroll"
-  }
-}

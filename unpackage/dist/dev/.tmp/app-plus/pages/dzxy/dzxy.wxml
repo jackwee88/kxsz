@@ -1,1 +1,0 @@
-<view><view class="title">{{dzxy}}</view><view class="content" style="padding-left:48rpx;padding-right:40rpx;"><rich-text nodes="{{article_article}}"></rich-text></view></view>

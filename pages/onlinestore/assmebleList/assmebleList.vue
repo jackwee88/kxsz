@@ -9,7 +9,7 @@
 				<image class="search" src="/static/onlineStore/ss@2x.png"  @click="searchGoods"/>
 				<input  placeholder-class="placeholder-class" class="input" v-model="input"/>
 			</view>
-			<navigator url=""><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
+			<navigator url="../../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
 		</view>
 					<!-- 商品推荐 -->
 					<view class="recommend-list" v-for="(item, index) in joinAssembleList" :key="index">

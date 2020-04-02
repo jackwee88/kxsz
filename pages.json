@@ -492,6 +492,18 @@
 							"navigationStyle":"custom"
 						}
         }
+        ,{
+            "path" : "pages/onlinestore/productDetail/productDetail",
+            "style" : {
+							"navigationBarTitleText":"商品详情"
+						}
+        }
+        ,{
+            "path" : "pages/goods_detail/goods_detail",
+            "style" : {
+							"navigationBarTitleText":"商品详情"
+						}
+        }
     ],
 
 

@@ -114,7 +114,7 @@
 
 <script>
 const util = require("../../utils/util");
-
+import {ajax} from '../../utils/public.js'
 export default {
   data() {
     return {
@@ -298,6 +298,7 @@ export default {
     },
 
     getData() {
+			console.log('123')
       const that = this;
       const param = {
         page: that.page,
@@ -309,7 +310,7 @@ export default {
           title: "暂无更多信息"
         });
       } else {
-        util.ajax({
+        ajax({
           url: "cart/index",
           data: param,
           success: res => {

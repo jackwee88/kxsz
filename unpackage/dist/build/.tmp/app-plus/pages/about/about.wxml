@@ -1,1 +1,0 @@
-<view class="about_page"><view><rich-text nodes="{{data}}"></rich-text></view><view class="Copyright">闽ICP备19004461号 版权由开心书写所有    2019-2029</view></view>

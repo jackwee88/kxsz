@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<view class="banner">
+<!-- 		<view class="banner">
 			<cover-view>banner</cover-view>
 			<image src="" style="width: 750rpx;height: 260rpx;" mode="aspectFit"></image>
-		</view>
+		</view> -->
 		<view class="jifen">
 			<image src="../../static/jifenshop/jf.png" style="width: 52rpx;height: 50rpx;"></image>
 			<text class="jifenTxt" style="color: #f7b500;font-size: 36rpx;font-weight: 500;">{{userdata[0].after}}积分</text>
@@ -87,6 +87,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 @import './jifen-shop.css';
 </style>

@@ -1,1 +1,0 @@
-<view><block wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="item" style="margin-top:40rpx;" data-id="{{item.id}}" data-event-opts="{{[['tap',[['toOther',['$event']]]]]}}" catchtap="__e">{{item.name}}</view></block></view>

@@ -105,9 +105,9 @@
                 backgroundColor="#ffffff"
                 color="#999999"
                 splitorColor="#999999"
-                :hour="item.assembleHour"
-                :minute="item.assmebleMinute"
-                :second="item.assmebleSecond"
+                :hour="assembleHour"
+                :minute="assmebleMinute"
+                :second="assmebleSecond"
                 :showDay="false"
               ></uni-countdown>
             </view>
@@ -313,9 +313,8 @@
 </template>
 
 <script>
-import { ajax } from "../../utils/public.js";
-var util = require("../../utils/util.js");
-import assmeble from "../assemble/assemble.vue";
+import { ajax } from "../../../utils/public.js";
+var util = require("../../../utils/util.js");
 export default {
   data() {
     return {
@@ -376,7 +375,16 @@ export default {
       assembleHour: 0,
       assmebleSecond: 0,
       assmebleMinute: 0,
-      teamlist: [],
+      teamlist: [
+        {
+          name: "与女无瓜",
+          num: "1"
+        },
+        {
+          name: "与女无瓜",
+          num: "1"
+        }
+      ],
       banner: "",
       pid: ""
     };
@@ -389,7 +397,7 @@ export default {
     // }else{
     // 	this.pid = this.banner.id;
     // }
-    this.pid = event.gd_id;
+    this.pid = event.p_id;
     this.getData();
     this.getEvaluateList();
     this.getAssemble();
@@ -485,29 +493,8 @@ export default {
             let timeNoew = new Date().getTime() / 1000;
             var lastTime = list[i].endtime - timeNoew;
 						 //(当前时间距离秒杀结束的秒)
-						 var lastTime = parseInt(lastTime);
-						 if (lastTime > 60) {
-						   var middle = parseInt(lastTime / 60);
-						   lastTime = parseInt(lastTime % 60);
-						   if (middle > 60) {
-						     var hour = parseInt(middle / 60);
-						     middle = parseInt(middle % 60);
-						     this.assembleHour = hour; 
-						 		this.teamlist[i]['assembleHour']=hour
-						   }
-						 }
-						 var result = parseInt(lastTime);
-						 this.assmebleSecond = result; //秒
-						 this.teamlist[i]['assmebleSecond']=result
-						 if (middle > 0) {
-						   var minute = parseInt(middle);
-						   this.assmebleMinute = minute;
-						 	this.teamlist[i]['assmebleMinute']=minute
-						 }
-						 if (hour > 0) {
-						   var hour = parseInt(hour);
-						   this.assembleHour = hour;
-						 }
+            this.AssmebleChange(lastTime);
+						console.log(lastTime)
           }
         },
         error: function() {}
@@ -536,10 +523,28 @@ export default {
       this.visible = false;
     },
     AssmebleChange(value) {
-			for(var i=0;i<this.teamlist.length;i++){
-				
-			}
-      
+      var lastTime = parseInt(value);
+      if (lastTime > 60) {
+        var middle = parseInt(lastTime / 60);
+        lastTime = parseInt(lastTime % 60);
+        if (middle > 60) {
+          var hour = parseInt(middle / 60);
+          middle = parseInt(middle % 60);
+          this.assembleHour = hour; 
+					// this.teamlist.push({hour:hour})//小时
+        }
+      }
+      var result = parseInt(lastTime);
+      this.assmebleSecond = result; //秒
+      if (middle > 0) {
+        var minute = parseInt(middle);
+        this.assmebleMinute = minute;
+      }
+      if (hour > 0) {
+        var hour = parseInt(hour);
+        this.assembleHour = hour;
+      }
+      console.log(this.teamlist)
     },
     timeChange(value) {
       var lastTime = parseInt(value);

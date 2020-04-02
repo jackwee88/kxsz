@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "升级会员",
-  "usingComponents": {
-    "w-picker": "/components/w-picker/w-picker"
-  }
-}

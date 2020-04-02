@@ -40,10 +40,9 @@
 .uni-product-title {
 	color: #333333;
 	font-size: 28rpx;
-	padding-bottom: 6rpx;
-	height: 75rpx;
+	/* padding-bottom: 60rpx; */
 	width: 300rpx;
-	max-height: 130upx;
+	max-height: 70rpx;
 	overflow: hidden;
 	word-break: break-all;
 	text-overflow: ellipsis;
@@ -69,6 +68,7 @@
 	justify-content: space-between;
 	display: flex;
 	width: 282rpx;
+	padding: 10rpx 0;
 }
 
 .image-view {

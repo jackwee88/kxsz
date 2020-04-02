@@ -1,1 +1,0 @@
-<view class="wrap"><view class="title">点击下方激活码即可复制，发送给好友，共享视频吧</view><view class="item-box"><block wx:for="{{dataList}}" wx:for-item="item" wx:for-index="index" wx:key="index"><text class="item item.status==0?'':'dis'" selectable="true" data-event-opts="{{[['tap',[['copy',['$0'],[[['dataList','',index,'code']]]]]]]}}" bindtap="__e">{{item.code}}</text></block></view></view>
