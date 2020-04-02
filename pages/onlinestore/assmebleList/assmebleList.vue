@@ -166,6 +166,9 @@ page,
 }
 /*頭部搜索*/
 .top_title {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	.input-wrap {
 		height: 60rpx;
 		background: rgba(239, 239, 239, 1);

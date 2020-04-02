@@ -46,7 +46,7 @@
 
 		<view class="section_title">
 			<text>作品赏析</text>
-			<navigator url="">
+			<navigator url="../studySquare/studySquare">
 				更多
 				<image src="../../static/index/qj.png" mode=""></image>
 			</navigator>
@@ -270,6 +270,7 @@ import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import '../public/rongyun.js';
 import { ajax } from '../../utils/public.js';
 import util from '../../utils/util.js';
+var _self;
 export default {
 	data() {
 		return {
@@ -328,6 +329,7 @@ export default {
 			content_t: '',
 			//内容
 			size: 14,
+			barHeight:25,
 			//宽度即文字大小
 			marqueeW: 0,
 			moveTimes: 8,
@@ -450,6 +452,8 @@ export default {
 
 		this.getData();
 		this.getHotGoods();
+		_self=this;
+		_self.getSystemStatusBarHeight()
 	},
 	onPullDownRefresh: function() {
 		var that = this;
@@ -466,25 +470,6 @@ export default {
 		this.preview = true;
 	},
 	//下拉刷新
-	// onLoad() {
-	// 	this.getData();
-	// 	this.getHotGoods();
-	// },
-	// onLoad: function(options) {
-	// 	var that = this;
-	// 	that.setData({
-	// 		page: 1,
-	// 		page_size: this.page_size,
-	// 		studylist: []
-	// 	});
-	// 	that.getData();
-	// 	var pages = getCurrentPages();
-	// 	var prevPage = pages[pages.length - 2];
-	// 	prevPage.setData({
-	// 		is_wait: '',
-	// 		wait: ''
-	// 	});
-	// },
 	onShow: function() {
 		if (getApp().globalData.preview == true) {
 			this.setData({
@@ -526,7 +511,15 @@ export default {
 	// },
 	methods: {
 		// 加载更多数据
-		getMoreStudyList() {},
+		getSystemStatusBarHeight:function(){
+		            // #ifdef APP-PLUS
+		            var height = plus.navigator.getStatusbarHeight();
+		            _self.barHeight = height;
+		            // #endif
+		            // #ifdef H5
+		            _self.barHeight = 0;
+		            // #endif
+		        },
 		load: function() {
 			let index = this.recomItem.length;
 			let id = this.recomItem[index - 1].id;
@@ -676,7 +669,6 @@ export default {
 
 			var str = e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
 			var imgList = str.split(',');
-			console.log(str)
 			//图片预览
 			uni.previewImage({
 				current: src,

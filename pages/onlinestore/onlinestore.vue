@@ -51,7 +51,7 @@
 				<view class="flex" style="margin-left: 20rpx;">
 					<text style="font-size: 24rpx;" @tap="xsmsDetails(flashSale.p_id)" :data-id="flashSale.p_id" :data-hour="hour" :data-minute="minute" :data-second="second">{{ flashSale.p_name }}</text>
 					<!-- <text class="red">时间仅剩</text> -->
-					<uni-countdown backgroundColor="#545458" color="#ffffff" :hour="hour" :minute="minute" :second="second" :showDay="false"></uni-countdown>
+					<!-- <uni-countdown backgroundColor="#545458" color="#ffffff" :hour="hour" :minute="minute" :second="second" :showDay="false"></uni-countdown> -->
 				</view>
 			</view>
 			<!-- 商品推荐 -->

@@ -127,16 +127,16 @@ export default {
 				 if(type){
 					 if (type == 1) {
 					let times = browse_times
-					prevPage.studylist[index].browse_times = ++times;
+					prevPage.$vm.studylist[index].browse_times = ++times;
 				} else if (type==2) {
 					let times = browse_times
-					prevPage.studylist[index].browse_times = ++times;
+					prevPage.$vm.studylist[index].browse_times = ++times;
 				} else if (type == 3) {
 					let times = browse_times
-					prevPage.logList[index].browse_times = ++times;
+					prevPage.$vm.logList[index].browse_times = ++times;
 				}else if(type == 4){
 					let times=browse_times
-					prevPage.daka[index].browse_times = ++times
+					prevPage.$vm.daka[index].browse_times = ++times
 				}
 				 }//上一个页面
 				
@@ -295,14 +295,17 @@ export default {
 					var index = that.index;
 					var prevPage = pages[pages.length - 2]; //上一页面指针 
 					if (that.type == 1) {
-					prevPage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
-					prevPage.studylist[index].is_give = this.studyDetails.is_give
+					prevPage.$vm.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					prevPage.$vm.studylist[index].is_give = this.studyDetails.is_give
 					} else if (that.type ==2) {
-					prevPage.studylist[index].thumbs_times = this.studyDetails.thumbs_times
-					prevPage.studylist[index].is_give = this.studyDetails.is_give
+					prevPage.$vm.studylist[index].thumbs_times = this.studyDetails.thumbs_times
+					prevPage.$vm.studylist[index].is_give = this.studyDetails.is_give
 					} else if (that.type == 3) {
-					prevPage.loglist[index].thumbs_times = this.studyDetails.thumbs_times
-					prevPage.loglist[index].is_give = this.studyDetails.is_give
+					prevPage.$vm.loglist[index].thumbs_times = this.studyDetails.thumbs_times
+					prevPage.$vm.loglist[index].is_give = this.studyDetails.is_give
+					}else if(that.type==4){
+						prevPage.$vm.daka[index].thumbs_times = this.studyDetails.thumbs_times
+						prevPage.$vm.daka[index].is_give = this.studyDetails.is_give
 					}
 
 				},

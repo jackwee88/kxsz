@@ -344,7 +344,7 @@
 		}, {
 			"path": "pages/jifen-shop/jifen-detail/jifen-detail",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "商品详情"
 			}
 		}, {
 			"path": "pages/userInfo/otherInfo",
