@@ -12,7 +12,7 @@
           <input class="input" data-value="tel" v-model="tel" />
         </view>
         <view class="area form_item">
-          <icon class="righticon"></icon>
+          <view type class="righticon"></view>
           <view @tap="toggleTab">
             <label>所在地区:</label>
             <view class="picker" v-if="region != ''">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
@@ -266,7 +266,6 @@ export default {
                           (prevPages.s = 1); //设置数据
                       }
                     }
-
 
                     if (prevPage) {
                       prevPage.onLoad();
