@@ -660,7 +660,7 @@ export default {
           if (this.detail.sale_status == 3) {
             this.assembleOrder();
           } else {
-            that.buyNow();
+            this.buyNow();
           }
         } else {
           this.add();
