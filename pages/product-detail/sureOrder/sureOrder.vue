@@ -378,6 +378,7 @@ export default {
   onLoad: function(event) {
     wx.setStorageSync("a", []);
     this.banner = JSON.parse(decodeURIComponent(event.sureOrder));
+    console.log(this.banner);
     if (this.banner.now_buy == 1) {
       this.now_buy = 1;
       this.goods_sku_id = this.banner.goods_sku_id;
@@ -405,8 +406,8 @@ export default {
     }
 
     if (that.type == 1) {
-      this.p_id = "";
-      that.idsthis.ct_id = "";
+      this.p_id = that.ids;
+      this.ct_id = "";
     } else if (that.type == 2) {
       this.p_id = "";
       this.ct_id = that.ids;
