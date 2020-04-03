@@ -82,7 +82,7 @@
           <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
         </view>
       </view>
-      <view class="team-buy-detail" v-for="(item, index) in teamlist" :key="index">
+      <view class="team-buy-detail" v-for="(item, index) in newlist" :key="index">
         <view class="assmebleleft">
           <view class="circle-avator">
             <image
@@ -330,6 +330,7 @@ export default {
           }
         ]
       },
+			newlist:[],
       assmebleTotal: 0,
       visible: false,
       //获取评论列表
@@ -382,13 +383,6 @@ export default {
     };
   },
   onLoad(event) {
-    // this.banner = JSON.parse(decodeURIComponent(event.gd_id));
-    // (this.banner);
-    // if(this.banner.p_id){
-    // 	this.pid = this.banner.id
-    // }else{
-    // 	this.pid = this.banner.id;
-    // }
     this.pid = event.gd_id;
     this.getData();
     this.getEvaluateList();
@@ -480,7 +474,13 @@ export default {
           if (this.assmebleTotal > 0) {
             this.assemble = 1;
           }
+					var newlist=[]
+					for(var i=0;i<list.length;i++){
+						
+					}
 					var str=""
+					var newlist=[]
+					newlist = this.teamlist.slice(0,2)					
           for (var i = 0; i < list.length; i++) {
             let timeNoew = new Date().getTime() / 1000;
             var lastTime = list[i].endtime - timeNoew;

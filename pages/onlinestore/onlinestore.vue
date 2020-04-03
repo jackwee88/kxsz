@@ -73,7 +73,7 @@
 					<text style="font-size: 32rpx;color:#999999 ;">更多</text>
 					<image src="../../static/index/qj.png" mode="" style="width: 8px;height: 12px;"></image>
 				</navigator>
-				<view class="recommend-list" v-for="(item, index) in joinAssembleList" :key="index">
+				<view class="recommend-list" v-for="(item, index) in joinAssembleList.slice(0,3)" :key="index">
 					<view class="uni-product" @tap.stop="gotoDetails(item.goods.p_id)" :data-id="item.goods.p_id">
 						<view class="image-view">
 							<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
