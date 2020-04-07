@@ -129,7 +129,7 @@
 
 						<view class="hr"></view>
 						<view class="thirdlineblock">
-							<view class="thirdline" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
+							<view class="thirdline share" :data-dy_id="item.dy_id" :data-index="index" @tap="praise">
 								<image class="collecticon" v-if="item.is_give == true" src="../../static/index/collect.png" style="margin-top:6rpx;" />
 								<image class="collecticon" v-if="item.is_give == false" src="../../static/index/uncollect.png" />
 								<text>{{ item.thumbs_times }}</text>
