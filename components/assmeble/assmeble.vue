@@ -1,45 +1,60 @@
-<template name='assmeble'>
-		<view class="overlayer" :visible='visible'>
-			<view class="bg"></view>
-			<view class="content_wrap">
+<template name="assmeble">
+	<view class="overlayer">
+		<view class="bg"></view>
+		<scroll-view class="content_wrap" scroll-y>
+			<view style="position: relative;">
 				<view class="close_wrap"><image src="../../static/my/close.png" mode=""></image></view>
-				<view class="list">
-					<view class="item">
-						<image src="../../static/reg/log.png" class="avatar"></image>
+				<view style="height: 30px;"></view>
+					<view class="list" v-for="(item, index) in teamlist" :key="index">
+						<view class="item">
+							<image src="../../static/reg/log.png" class="avatar"></image>
 
-						<view class="name">{{ data.name }}</view>
+							<view class="name">{{ item.name }}</view>
 
-						<view class="num_n_time">
-							<view class="num">
-								差
-								<text>{{ data.num }}</text>
-								人拼成
+							<view class="num_n_time">
+								<view class="num">
+									差
+									<text>{{ item.num }}</text>
+									人拼成
+								</view>
+
+								<view class="time">剩余23:59:59</view>
 							</view>
-
-							<view class="time">剩余23:59:59</view>
-						</view>
-						<view class="cantuan">
-							参团
-							<image src="../../static/index/qj.png" mode=""></image>
+							<view class="cantuan">
+								参团
+								<image src="../../static/index/qj.png" mode=""></image>
+							</view>
 						</view>
 					</view>
-				</view>
 			</view>
-		</view>
+		</scroll-view>
+	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
-		
+		return {
+			teamlist: [
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 },
+				{ name: '雨女无瓜', num: 2 }
+			]
+		};
 	},
 	props: {
-	  isVisible: {
-	    type: Boolean,
-	    default: true
-	  }
-	},
+		isVisible: {
+			type: Boolean,
+			default: true
+		}
+	}
 };
 </script>
 
@@ -60,14 +75,20 @@ export default {
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		min-height: 600rpx;
+		max-height: 600rpx;
 		background-color: #fff;
 		border-top-left-radius: 30rpx;
 		border-top-right-radius: 30rpx;
 	}
 	.close_wrap {
-		padding: 20rpx;
 		text-align: right;
+		height: 30px;
+		z-index: 100;
+		width: 98%;
+		position: fixed;
+		background-color: white;
+		padding-right: 20rpx;
+		border-radius: 20rpx;
 		image {
 			display: inline-block;
 			width: 36rpx;

@@ -48,9 +48,7 @@
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {
-                "ad" : {
-                    "csj" : {}
-                },
+                "ad" : {},
                 "payment" : {
                     "weixin" : {
                         "appid" : "wxecc334db6b9f83fd",

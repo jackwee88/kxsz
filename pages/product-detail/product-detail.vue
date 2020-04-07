@@ -272,42 +272,46 @@
     </scroll-view>
     <view class="overlayer" v-if="visible">
       <view class="bg"></view>
-      <view class="content_wrap">
-        <view class="close_wrap">
-          <image src="../../static/my/close.png" mode @tap.stop="closeAssmeble" />
-        </view>
-        <view class="list" v-for="(item, index) in teamlist" :key="index">
-          <view class="item" data-index="index" data-orderid="item.assemeble_order_id">
-            <image :src="item.user.avatar" class="avatar" />
-
-            <view class="name">{{item.user.nickname}}</view>
-
-            <view class="num_n_time">
-              <view class="num">
-                差
-                <text>{{item.need_number}}</text>人拼成
-              </view>
-
-              <view class="time" style="display: flex;flex-direction: row;align-items: center;">
-                <text>剩余</text>
-                <uni-countdown
-                  backgroundColor="#ffffff"
-                  color="#999999"
-                  splitorColor="#999999"
-                  :hour="assembleHour"
-                  :minute="assmebleMinute"
-                  :second="assmebleSecond"
-                  :showDay="false"
-                ></uni-countdown>
-              </view>
-            </view>
-            <view class="cantuan" @tap="assembleOrder">
-              参团
-              <image src="../../static/index/qj.png" mode />
-            </view>
-          </view>
-        </view>
-      </view>
+      <scroll-view class="content_wrap" scroll-y>
+				<view style="position: relative;">
+					<view class="close_wrap">
+					  <image src="../../static/my/close.png" mode @tap.stop="closeAssmeble" />
+					</view>
+					<view style="height: 30px;"></view>
+					<view class="list" v-for="(item, index) in teamlist" :key="index">
+					  <view class="item" data-index="index" data-orderid="item.assemeble_order_id">
+					    <image :src="item.user.avatar" class="avatar" />
+					
+					    <view class="name">{{item.user.nickname}}</view>
+					
+					    <view class="num_n_time">
+					      <view class="num">
+					        差
+					        <text>{{item.need_number}}</text>人拼成
+					      </view>
+					
+					      <view class="time" style="display: flex;flex-direction: row;align-items: center;">
+					        <text>剩余</text>
+					        <uni-countdown
+					          backgroundColor="#ffffff"
+					          color="#999999"
+					          splitorColor="#999999"
+					          :hour="assembleHour"
+					          :minute="assmebleMinute"
+					          :second="assmebleSecond"
+					          :showDay="false"
+					        ></uni-countdown>
+					      </view>
+					    </view>
+					    <view class="cantuan" @tap="assembleOrder">
+					      参团
+					      <image src="../../static/index/qj.png" mode />
+					    </view>
+					  </view>
+					</view>
+				</view>
+        
+      </scroll-view>
     </view>
   </view>
 </template>
@@ -986,15 +990,21 @@ export default {
     border-top-left-radius: 30rpx;
     border-top-right-radius: 30rpx;
   }
-  .close_wrap {
-    padding: 20rpx;
-    text-align: right;
-    image {
-      display: inline-block;
-      width: 36rpx;
-      height: 36rpx;
-    }
-  }
+	.close_wrap {
+		text-align: right;
+		height: 30px;
+		z-index: 100;
+		width: 98%;
+		position: fixed;
+		background-color: white;
+		padding-right: 20rpx;
+		border-radius: 20rpx;
+		image {
+			display: inline-block;
+			width: 36rpx;
+			height: 36rpx;
+		}
+	}
   .item {
     display: flex;
     align-items: center;
