@@ -313,11 +313,13 @@ export default {
         ajax({
           url: "cart/index",
           data: param,
-          success: res => {
-            var carts = that.carts;
+          success: (res) => {
+						const {list,count} =res.data.data;
+						const carts= this.carts
+						that.carts=list;
             (that.page = that.page + 1),
-              (that.count = res.data.count > 1 ? res.data.count : 1),
-              (that.carts = carts.concat(res.data.list));
+              (that.count = count > 1 ? count : 1),
+              (that.carts = carts.concat(list));
             uni.stopPullDownRefresh();
           }
         });
