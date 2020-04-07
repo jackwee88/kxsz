@@ -28,8 +28,8 @@
 				<text>第三方登录</text>
 			</view>
 			<view class="orderLoginBtn">
-				<image src="../../static/login/qq.png" mode="widthFix" class="qqlogin"></image>
-				<image src="../../static/login/weixin.png" mode="widthFix" class="weixinlogin"></image>
+				<image src="../../static/login/qq.png" mode="widthFix" class="qqlogin" @tap="qqLogin"></image>
+				<image src="../../static/login/weixin.png" mode="widthFix" class="weixinlogin" @tap="wxLogin"></image>
 			</view>
 		</view>
 	</view>
@@ -76,6 +76,85 @@
 				     },
 				     error: function() {}
 				    })
+			},
+			qqLogin(){
+				console.log('您使用的是qq登录')
+				uni.getProvider({
+			    service: 'oauth',
+			    success: function (res) {
+			        console.log(res.provider)
+			        if (~res.provider.indexOf('qq')) {
+			            uni.login({
+			                provider: 'qq',
+			                success: function (loginRes) {
+			                    console.log(JSON.stringify(loginRes));
+			                }
+			            });
+			        }
+			    }
+			});
+			},
+			wxLogin(){
+				console.log('您使用的是微信登录')
+				uni.getProvider({
+				    service: 'oauth',
+				    success: function (res) {
+				        console.log(res.provider)
+				        if (~res.provider.indexOf('weixin')) {
+				            uni.login({
+				              provider: 'weixin',
+				              success: function (loginRes) {
+				                console.log(loginRes.authResult);
+				                // 获取用户信息
+				                uni.getUserInfo({
+				                  provider: 'weixin',
+				                  success: function (infoRes) {
+				                    console.log('用户昵称为：' + infoRes.userInfo.nickName);
+														ajax({
+															url:'index/wxLogin',
+															// 参数（先获取手机号再授权）
+															// phone  // 手机号
+															// code  // 微信临时凭证
+															// user_info // 微信用户信息
+															// i_uid    // 活动邀请人
+															// scene  // 招商区域
+															data:{
+																phone:'infoRes.userInfo.openId',
+																code:'',
+																user_info:info.userInfo,
+																i_uid:infoRes.userInfo.openId,
+																scene:''
+															},
+															success:(res)=>{
+																if(res.data.status==''){
+																	uni.showToast({
+																		title:'登录成功'
+																	})
+																}
+															},fail:()=>{
+																console.log('登陆失败')
+															},
+															complete:()=>{
+																
+															}
+														})
+				                  },
+													fail:()=>{
+														uni.showToast({
+															title:'微信登录授权失败'
+														})
+													}
+				                });
+				              }
+				            });
+				        }
+				    },
+						fail: () => {
+							uni.showToast({
+								title:'微信登录授权失败'
+							})
+						}
+				});
 			},
 			phoneSmsLogin(){
 				ajax({

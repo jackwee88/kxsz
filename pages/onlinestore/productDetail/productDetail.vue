@@ -867,8 +867,7 @@ export default {
               goods_spec_id: this.goods_spec_id
             };
             uni.navigateTo({
-              url:
-                "sureOrder/sureOrder?sureOrder=" +
+							url:'../../product-detail/sureOrder/sureOrder?sureOrder='+
                 encodeURIComponent(JSON.stringify(param))
             });
             if (that.detail.specData) {

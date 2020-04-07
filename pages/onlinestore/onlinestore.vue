@@ -11,7 +11,6 @@
 			</view>
 			<navigator url="../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" mode="" class="icon2"></image></navigator>
 		</view>
-
 		<scroll-view class="list-scroll-content" scroll-y>
 			<view class="swiper-item">
 				<!-- 轮播 -->
@@ -419,6 +418,9 @@ page,
 		background: rgba(239, 239, 239, 1);
 		border-radius: 34rpx;
 		width: 70%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		.search {
 			width: 32rpx;
 			height: 34rpx;

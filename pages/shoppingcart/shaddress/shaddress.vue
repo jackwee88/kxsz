@@ -67,16 +67,7 @@ export default {
       quantity: '',
       p_id: '',
       ct_id: '',
-      catalogueitem: [//   {
-        //   name: '梁雨琪',
-        //   phone:'18695326545',
-        //   address:'福建省 厦门市 集美区 杏林湾营运中心1号楼福建省 厦门市 集美区 杏林湾营运中心1号楼 '
-        // },
-        //   {
-        //     name: '梁雨琪',
-        //     phone: '18695326545',
-        //     address: '福建省 厦门市 集美区 杏林湾营运中心1号楼福建省 厦门市 集美区 杏林湾营运中心1号楼 '
-        //   }
+      catalogueitem: [
       ],
       goods_sku_id: '',
       address: "",
@@ -110,9 +101,9 @@ export default {
 							var pages = getCurrentPages(); //上一个页面实例对象
 							
 							var prePage = pages[pages.length - 2]; //关键在这里
-							// prePage.changeData(e.currentTarget.dataset.list)
-							
-							prePage.address= list[i];
+		
+							prePage.$vm.address= list[i];
+							uni.setStorageSync('address',list[i])
 						}
 					}
         }
@@ -242,6 +233,19 @@ export default {
       this.onLoad();
     },
     defaultF: function (e) {
+			if(this.p_id==undefined){
+				this.p_id=''
+			}if(this.quantity==undefined){
+				this.quantity=1
+			}if(this.score==undefined){
+				this.score=''
+			}if(this.ct_id==undefined){
+				this.ct_id=''
+			}if(this.cp_id==undefined){
+				this.cp_id==''
+			}if(this.goods_sku_id==undefined){
+				this.goods_sku_id==''
+			}
       var params = {
         ar_id: e.currentTarget.dataset.ar_id,
         p_id: this.p_id,
@@ -292,10 +296,10 @@ export default {
 
                   var prePage = pages[pages.length - 2]; //关键在这里
 
-                  prePage.address= addr,
+                  prePage.$vm.address= addr,
 
-                  prePage.totals= res.data.amount.toFixed(2),
-                  prePage.transport_total= res.data.transport //设置数据
+                  prePage.$vm.totals= res.data.amount.toFixed(2),
+                  prePage.$vm.transport_total= res.data.transport //设置数据
 
                   wx.navigateBack({
                     delta: 1 // 回退前 delta(默认为1) 页面

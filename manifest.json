@@ -17,7 +17,10 @@
         /* 模块配置 */
         "modules" : {
             "VideoPlayer" : {},
-            "Payment" : {}
+            "Payment" : {},
+            "Push" : {},
+            "OAuth" : {},
+            "Share" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -52,6 +55,13 @@
                 "payment" : {
                     "weixin" : {
                         "appid" : "wxecc334db6b9f83fd",
+                        "UniversalLinks" : ""
+                    }
+                },
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wxecc334db6b9f83fd",
+                        "appsecret" : "453cfa66d1918b6a05df4d0bd43960f3",
                         "UniversalLinks" : ""
                     }
                 }

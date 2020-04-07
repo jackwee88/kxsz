@@ -37,11 +37,11 @@
         <text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
       </navigator>
     </view>
-   <view class="address"  @tap="linkTo">
+<!--   <view class="address"  @tap="linkTo">
       <text class="txt-address">地址</text>
       <view class="choose-address">{{ address.provice }}{{ address.city }}{{ address.area }}{{ address.address }}</view>
       <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
-    </view>
+    </view> -->
     <view class="pic-txt-detail">
       <view>图文详情</view>
       <view v-for="(item, index) in swiperImages" :key="index" class="detailPicture">
@@ -101,6 +101,7 @@ export default {
         this.goodsDetail = res.data.data;
         const { image_text } = res.data.data;
         this.swiperImages = image_text;
+				this.address=uni.getStorageSync('address')
       },
       error: function() {}
     });
@@ -113,21 +114,34 @@ export default {
 			});
 		},
     exchange() {
-      ajax({
-        url: "integral/placeOrder",
-        data: {
-          goods_id:this.id,
-          ar_id: this.address.ar_id
-        },
-        method: "POST",
-        success: res => {
-          uni.showToast({
-            title: res.data.msg,
-            duration: 1000
-          });
-        },
-        error: function() {}
-      });
+			// if(this.address.ar_id==undefined){
+			// 	uni.showToast({
+			// 		title:'请先填写收货地址'
+			// 	})
+			// }else{
+			// 	 ajax({
+   //      url: "integral/placeOrder",
+   //      data: {
+   //        goods_id:this.id,
+   //        ar_id: this.address.ar_id
+   //      },
+   //      method: "POST",
+   //      success: res => {
+   //        uni.showToast({
+   //          title: res.data.msg,
+   //          duration: 1000
+   //        });
+   //      },
+   //      error: function() {}
+   //    });
+			// }
+			let param={
+				goods_id:this.id
+			}
+    uni.navigateTo({
+			// url:"../../product-detail/sureOrder/sureOrder?sureOrder="+encodeURIComponent(JSON.stringify(param))
+        url:"../../shoppingcart/sureorder/sureorder?jifenorder="+encodeURIComponent(JSON.stringify(param))
+    });
     }
   }
 };
