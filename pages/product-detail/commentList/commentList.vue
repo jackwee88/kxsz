@@ -23,7 +23,7 @@
           <!-- <image src="{{item.avatar}}" class="userImg"> -->
           <!-- 这个是固定的logo -->
           <image
-            src="https://kxsx-front-pic.oss-cn-beijing.aliyuncs.com/kxsx/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20191031134814.png"
+            :src="item.avatar"
             class="userImg"
           />
           <view class="evaluateValueRight">
@@ -37,7 +37,7 @@
         <view class="evaluateDetailsImg">
           <view class="img-box">
             <!-- 有视频 -->
-            <view class="videoUrlImg" v-if="item.videoUrl">
+            <view class="videoUrlImg">
               <image
                 v-if="item.videoUrl"
                 style="width:90%;height:200rpx;margin-bottom:0rpx;border-radius: 10rpx;"
@@ -59,20 +59,23 @@
               />
             </view>
             <!-- 图片 -->
-            <view
-              class="evaluateDetailsImgList"
-              v-for="(items, index2) in item.image_array"
-              :key="index2"
-            >
-              <image
-                :src="items"
-                @tap="previewImg"
-                :data-effect_pic="item.image_array"
-                :data-src="items"
-                mode="aspectFill"
-                class="acticleimg"
-              />
-            </view>
+						<view v-if = "item.image_array.length > 0">
+							<view
+							  class="evaluateDetailsImgList"
+							  v-for="(items, index2) in item.image_array"
+							  :key="index2"
+							>
+							  <image
+							    :src="items"
+							    @tap="previewImg"
+							    :data-effect_pic="item.image_array"
+							    :data-src="items"
+							    mode="aspectFill"
+							    class="acticleimg"
+							  />
+							</view>
+						</view>
+            
             <view style="clear:both"></view>
           </view>
 
@@ -292,7 +295,8 @@ export default {
     previewImg: function(e) {
       let src = e.currentTarget.dataset.src;
       let pic_arr = e.currentTarget.dataset.effect_pic;
-      wx.previewImage({
+			let imgList = pic_arr.split(',')
+      uni.previewImage({
         current: src,
         urls: pic_arr
       });
