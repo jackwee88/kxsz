@@ -985,7 +985,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: 600rpx;
+    max-height: 600rpx;
     background-color: #fff;
     border-top-left-radius: 30rpx;
     border-top-right-radius: 30rpx;
