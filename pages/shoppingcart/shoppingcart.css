@@ -1,5 +1,7 @@
 /* pages/onlinestore/shopcart/shopcart.wxss */
-
+view {
+  box-sizing: border-box;
+}
 .shopcartlist {
   width: 100%;
   height: auto;
