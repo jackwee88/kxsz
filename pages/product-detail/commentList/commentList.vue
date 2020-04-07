@@ -22,10 +22,7 @@
           <!-- 这个是用户头像 -->
           <!-- <image src="{{item.avatar}}" class="userImg"> -->
           <!-- 这个是固定的logo -->
-          <image
-            :src="item.avatar"
-            class="userImg"
-          />
+          <image :src="item.avatar" class="userImg" />
           <view class="evaluateValueRight">
             <view class="evaluateName">{{item.nickname}}</view>
             <!-- 产品：{{item.goods_name}} -->
@@ -37,7 +34,7 @@
         <view class="evaluateDetailsImg">
           <view class="img-box">
             <!-- 有视频 -->
-            <view class="videoUrlImg">
+            <view class="videoUrlImg" v-if="item.videoUrl">
               <image
                 v-if="item.videoUrl"
                 style="width:90%;height:200rpx;margin-bottom:0rpx;border-radius: 10rpx;"
@@ -59,23 +56,24 @@
               />
             </view>
             <!-- 图片 -->
-						<view v-if = "item.image_array.length > 0">
-							<view
-							  class="evaluateDetailsImgList"
-							  v-for="(items, index2) in item.image_array"
-							  :key="index2"
-							>
-							  <image
-							    :src="items"
-							    @tap="previewImg"
-							    :data-effect_pic="item.image_array"
-							    :data-src="items"
-							    mode="aspectFill"
-							    class="acticleimg"
-							  />
-							</view>
-						</view>
-            
+            <view v-if="item.image_array.length > 0">
+              <view
+                class="evaluateDetailsImgList"
+                v-for="(items, index2) in item.image_array"
+                v-if="items != ''"
+                :key="index2"
+              >
+                <image
+                  :src="items"
+                  @tap="previewImg"
+                  :data-effect_pic="item.image_array"
+                  :data-src="items"
+                  mode="aspectFill"
+                  class="acticleimg"
+                />
+              </view>
+            </view>
+
             <view style="clear:both"></view>
           </view>
 
@@ -295,7 +293,7 @@ export default {
     previewImg: function(e) {
       let src = e.currentTarget.dataset.src;
       let pic_arr = e.currentTarget.dataset.effect_pic;
-			let imgList = pic_arr.split(',')
+      let imgList = pic_arr.split(",");
       uni.previewImage({
         current: src,
         urls: pic_arr

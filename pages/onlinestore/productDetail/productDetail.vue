@@ -69,7 +69,7 @@
       </view>
 
       <navigator class="btn-share">
-        <image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;" />
+        <image src="../../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;" />
         <text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
       </navigator>
     </view>
@@ -79,7 +79,7 @@
         <text style="color: #333333;font-size:30rpx ;">{{ assmebleTotal }}个团正在热拼，可直接参与</text>
         <view @click="assmbleDetail()">
           <text style="color: #666666;font-size:24rpx ;">查看全部</text>
-          <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+          <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
         </view>
       </view>
       <view class="team-buy-detail" v-for="(item, index) in teamlist" :key="index">
@@ -114,7 +114,7 @@
           </view>
           <view class="cantuan" @tap="assembleOrder" data-orderid="item.user_id">
             参团
-            <image src="../../static/index/qj.png" mode />
+            <image src="../../../static/index/qj.png" mode />
           </view>
         </view>
       </view>
@@ -127,25 +127,25 @@
       </view>
       <navigator url="/pages/onlinestore/discountcenter/discountcenter">
         <text style="color: #666666;font-size:26rpx ;">领取优惠券</text>
-        <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+        <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
       </navigator>
     </view>
     <!-- 售后售前 -->
     <navigator class="pre-sale">
       <view class="pre-detail">
-        <image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
+        <image src="../../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
         <view class="jisu">全场包邮</view>
       </view>
       <view class="pre-detail">
-        <image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
+        <image src="../../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
         <view class="jisu">极速发货</view>
       </view>
       <view class="pre-detail">
-        <image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
+        <image src="../../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
         <view class="jisu">七天无理由退换</view>
       </view>
       <view style="margin-left:120rpx ;">
-        <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+        <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
       </view>
     </navigator>
     <!-- 地址 -->
@@ -153,7 +153,7 @@
       <text class="txt-address">地址</text>
       <view class="choose-address">{{ detail.place_of_delivery }}</view>
       <!-- <view class="choose-address">选择收货地址</view> -->
-      <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+      <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
     </view>
 
     <!-- 		  <view class="comment-wrap">
@@ -167,7 +167,7 @@
       <view class="comment">
         <text class="choose-address">评价({{ evaluateList.total }})</text>
         <text style="color: #A1A4A5;font-size: 28rpx;" @tap.stop="lookMore">查看全部</text>
-        <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+        <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
       </view>
       <view v-if="evaluateList.total != 0">
         <view class="comment-user">
@@ -193,15 +193,15 @@
     <view class="oprate">
       <view class="oprate-content">
         <navigator class="oprate-icon">
-          <image src="../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;" />
+          <image src="../../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;" />
           <view class="oprate-txt">客服</view>
         </navigator>
         <navigator url="../shoppingcart/shoppingcart" class="oprate-icon">
-          <image src="../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;" />
+          <image src="../../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;" />
           <view class="oprate-txt">购物车</view>
         </navigator>
         <view class="oprate-icon">
-          <image src="../../static/onlineStore/sc.png" style="width: 36rpx;height: 34rpx;" />
+          <image src="../../../static/onlineStore/sc.png" style="width: 36rpx;height: 34rpx;" />
           <view class="oprate-txt">
             <view class="twobtncont">
               <text class="add" @click="collectP" v-if="collect_p == false">收藏商品</text>
@@ -265,7 +265,7 @@
         </view>
       </view>
 
-      <image src="../../static/my/close.png" class="close" @tap.stop="closeSku" />
+      <image src="../../../static/my/close.png" class="close" @tap.stop="closeSku" />
       <view class="weui-btn-area" v-if="sku_show">
         <button class="weui-btn" @tap="submit">确定</button>
       </view>
@@ -274,7 +274,7 @@
       <view class="bg"></view>
       <view class="content_wrap">
         <view class="close_wrap">
-          <image src="../../static/my/close.png" mode @tap.stop="closeAssmeble" />
+          <image src="../../../static/my/close.png" mode @tap.stop="closeAssmeble" />
         </view>
         <view class="list" v-for="(item, index) in teamlist" :key="index">
           <view class="item" data-index="index" data-orderid="item.assemeble_order_id">
@@ -303,7 +303,7 @@
             </view>
             <view class="cantuan" @tap="assembleOrder">
               参团
-              <image src="../../static/index/qj.png" mode />
+              <image src="../../../static/index/qj.png" mode />
             </view>
           </view>
         </view>
