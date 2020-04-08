@@ -313,7 +313,8 @@ export default {
 			remarks: '',
 			banner: '',
 			assemble: {},
-			assemble_order_id: ''
+			assemble_order_id: '',
+			goods_id:''
 		};
 	},
 
@@ -352,6 +353,7 @@ export default {
 			uni.navigateBack({});
 		} else {
 			this.ids = that.banner.ids;
+			console.log(this.ids)
 		}
 
 		if (that.type == 1) {
@@ -498,7 +500,6 @@ export default {
 					mark: this.remarks
 				};
 			}
-			console.log(this.assemble_order_id+'你好')
 			if(this.assemble_order_id!==''&&this.assemble_order_id!==undefined) {
 				let param = {
 					ar_id: this.address.ar_id,
@@ -523,7 +524,6 @@ export default {
 								data: {
 									order_id: res.data.data.order_id
 								},
-
 								success: ress => {
 									uni.requestPayment({
 										provider: 'wxpay',
@@ -612,7 +612,6 @@ export default {
 								data: {
 									order_id: res.data.data.order_id
 								},
-
 								success: ress => {
 									uni.requestPayment({
 										provider: 'wxpay',
@@ -627,8 +626,9 @@ export default {
 										},
 										fail: function(err) {
 											uni.showToast({
-												title: '支付失败'
+												title: '支付失败'+err.errMsg
 											});
+											console.log('fail:',JSON.stringify(err))
 											uni.redirectTo({
 												url: '/pages/onlinestore/orderdetails/orderdetails?order_id=' + res.data.data.order_id
 											});

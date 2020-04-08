@@ -487,12 +487,6 @@
             }
         }
         ,{
-            "path" : "pages/onlinestore/assmebleList/assmebleList",
-            "style" : {
-							"navigationStyle":"custom"
-						}
-        }
-        ,{
             "path" : "pages/onlinestore/productDetail/productDetail",
             "style" : {
 							"navigationBarTitleText":"商品详情"

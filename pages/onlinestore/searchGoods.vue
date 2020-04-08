@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class = "status-bar"></view>
+		<view class = "status_bar"></view>
 		<view class="top_title">
 			<navigator open-type="navigateBack">
 				<image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1"></image>
@@ -30,7 +30,25 @@
 								</view>
 							</view>
 						</view>
-
+					</view>
+					<view class="recommend-footer" v-if="assmeble==true">
+						<view class="recommend-list" v-for="(item, index) in productList" :key="index">
+							<view class="uni-product" @click="gotoDetails(item)">
+								<view class="image-view">
+									<!-- <image v-if="renderImage" class="uni-product-image" :src="item.image"></image></view> -->
+									<image :src="item.image" style="width:220rpx ;height: 200rpx;" mode="aspectFit"></image>
+								</view>
+								<view class="goods-detail">
+									<view class="uni-product-title">{{ item.p_detail }}</view>
+									<view class="uni-product-price">
+										<view style="font-size:28rpx ;">
+											价格:
+											<text class="goods-price" style="font-size: 32rpx;">￥{{ item.coupon_price }}</text>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
 					</view>
 	</view>
 </template>
@@ -41,20 +59,45 @@ export default {
 		return {
 			input: '',
 			productList:[],
+			joinAssembleList:[],
+			assmeble:false
 		};
 	},
 	components: {
 	},
 
 	onLoad(event) {
+		console.log(event.searchInput)
+		if(event.searchInput==undefined){
+			this.getData()
+			this.assmeble==true
+		}else{
 		this.search = JSON.parse(decodeURIComponent(event.searchInput));
 		this.input = this.search.input
 		this.searchGoods()
+		}
+		
 	},
 	mounted() {
 		
 	},
 	methods: {
+		getData() {
+			ajax({
+				url: 'assemble/joinAssemble',
+				data: {
+					page: this.page,
+					pagesize: this.pagesize
+				},
+				method: 'POST',
+				success: res => {
+					const { list, count } = res.data.data;
+					this.joinAssembleList = list;
+					this.bannerList = list
+				},
+				error: function() {}
+			});
+		},
 		gotoDetails: function(e) {
 			let param = {
 				id: e.p_id
@@ -149,11 +192,15 @@ page,
 }
 /*頭部搜索*/
 .top_title {
+	margin-bottom: 10rpx;
 	.input-wrap {
 		height: 60rpx;
 		background: rgba(239, 239, 239, 1);
 		border-radius: 34rpx;
 		width: 70%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		.search {
 			width: 32rpx;
 			height: 34rpx;

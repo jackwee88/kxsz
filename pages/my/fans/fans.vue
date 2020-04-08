@@ -20,7 +20,7 @@
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
 					</view>
-					<view class="btn" v-if="item.type == 'mutual'" 
+					<view class="had_btn" v-if="item.type == 'mutual'" 
 					@tap="follow" 
 					:data-id="item.id"
 					:data-type="item.type"
@@ -86,11 +86,10 @@ export default {
 			     method: 'POST',
 			     success: (res) =>{
 						 if(res.data.status==1){
-							 this.myFansList[index].type ='only'
+							 this.fansList[index].type ='only'
 						 }else if(res.data.status==2){
-							 this.myFansList[index].type = 'mutual'
+							 this.fansList[index].type = 'mutual'
 						 }
-						 this.getdata()
 			     },
 			     error: function() {
 					 }
@@ -153,7 +152,24 @@ export default {
 					line-height: 40rpx;
 				}
 			}
+  .had_btn {
+				display: flex;
+				align-items: center;
+				text-align: center;
+				height: 48rpx;
+				padding: 0 18rpx;
+				font-size: 24rpx;
+				color: rgba(153, 153, 153, 1);
+				background: rgba(255, 255, 255, 255);
+				border-radius: 26rpx;
+				border: 1px solid rgba(221, 221, 221, 1);
 
+				image {
+					width: 24rpx;
+					height: 24rpx;
+					margin-right: 10rpx;
+				}
+			}
 			.btn {
 				display: flex;
 				align-items: center;
@@ -171,7 +187,9 @@ export default {
 					margin-right: 10rpx;
 				}
 			}
+
 		}
 	}
 }
+
 </style>

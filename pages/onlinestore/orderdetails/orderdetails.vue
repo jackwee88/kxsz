@@ -308,7 +308,8 @@ export default {
               order_id: order_id
             };
             var that = this;
-            util.ajaxs("paygoods/repay", param, res => {
+            util.ajaxs("paygoods/appPay", param, res => {
+							console.log(res.data)
               uni.requestPayment({
                 provider:'wxpay',
 								orderInfo:res.data,

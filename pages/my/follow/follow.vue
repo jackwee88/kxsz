@@ -20,11 +20,11 @@
 						<image src="../../../static/my/ygz.png" class="ygz"></image>
 						取消关注
 					</view>
-					<view class="btn had_btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
+					<view class="had_btn" v-if="item.type == 'none'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
 						<image src="../../../static/my/add.png" class="ygz"></image>
 						关注
 					</view>
-					<view class="btn had_btn" v-if="item.type == 'mutual'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
+					<view class="btn" v-if="item.type == 'mutual'" @tap="follow" :data-id="item.id" :data-index="index" data-type="item.type">
 						<image src="../../../static/my/hxgz.png" class="ygz"></image>
 						相互关注
 					</view>
@@ -143,41 +143,7 @@ export default {
 		left: 90rpx;
 	}
 }
-.btn {
-	display: flex;
-	align-items: center;
-	line-height: 48rpx;
-	overflow: hidden;
-	word-break: break-all;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 1;
-	height: 48rpx;
-	padding: 0 18rpx;
-	font-size: 24rpx;
-	color: rgba(153, 153, 153, 1);
-	background: #fff;
-	border-radius: 26rpx;
-	border: 1px solid rgba(221, 221, 221, 1);
 
-	image {
-		width: 24rpx;
-		height: 24rpx;
-		margin-right: 10rpx;
-	}
-	.ygz {
-		height: 18rpx;
-	}
-
-	.hxgz {
-		height: 16rpx;
-	}
-}
-.had_btn {
-	color: #fff;
-	background: rgba(63, 174, 42, 1);
-}
 .list {
 	padding: 0 36rpx 0 44rpx;
 
@@ -240,6 +206,21 @@ export default {
 					height: 16rpx;
 				}
 			}
+			.had_btn {
+							display: flex;
+							align-items: center;
+							text-align: center;
+							height: 48rpx;
+							padding: 0 18rpx;
+							font-size: 24rpx;
+							color: #fff;
+							background: rgba(63, 174, 42, 1);
+							border-radius: 26rpx;
+							.ygz {
+								width: 24rpx;
+								height: 24rpx;
+							}
+						}
 		}
 	}
 }

@@ -153,7 +153,7 @@ export default {
     this.selectAllStatus = false;
   },
   onReachBottom: function() {
-    this.page = that.page; // carts: [],
+    // this.page = that.page; // carts: [],
     this.getData();
   },
   methods: {
