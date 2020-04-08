@@ -103,7 +103,7 @@
             v-for="(item, index) in goodsList"
             :key="index"
             :data-p_id="item.p_id"
-            @tap="goodsdetails"
+						@tap="goodsdetails"
           >
             <view class="leftitem leftitem_left">
               <image class="productimg" style="width:100%;height:100%;" :src="item.image" />
@@ -114,15 +114,15 @@
                 <text class="text-detail">{{item.p_detail}}</text>
               </view>
               <view
-                @tap.stop="collectP"
                 :data-index="index"
                 :data-p_id="item.p_id"
                 class="collects"
+								 @tap.stop="collectP"
               >
-                <image class="collectimg_active" src="/static/img/freeTeaching/shoucangyi.png" />
+                <image class="collectimg_active" src="/static/img/freeTeaching/shoucangyi.png"/>
                 <text class="collecttext_active">取消收藏</text>
               </view>
-              <navigator class="seedetail">查看详情</navigator>
+              <view class="seedetail" @tap="goodsdetails" :data-p_id="item.p_id">查看详情</view>
             </view>
           </view>
         </view>
@@ -335,12 +335,13 @@ export default {
     },
 
     goodsdetails(e) {
-      const p_id = e.currentTarget.dataset.p_id;
-      wx.navigateTo({
-        url: "/pages/product-detail/product-detail?p_id=" + p_id
+      const gd_id = e.currentTarget.dataset.p_id;
+			console.log(gd_id)
+      uni.navigateTo({
+        url: "/pages/product-detail/product-detail?gd_id=" + gd_id
       });
     },
-
+		
     collectF(e) {
       let _this = this;
 

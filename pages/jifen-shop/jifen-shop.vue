@@ -26,7 +26,7 @@
 								{{ item.total_sale }}
 								<text style="font-size:22rpx ;color: #999999;">积分</text>
 							</view>
-							<view style="font-size: 22rpx;color: #999999;">{{ item.see_time }}人兑换</view>
+							<view style="font-size: 22rpx;color: #999999;">{{ item.see_times }}人兑换</view>
 						</view>
 					</view>
 					</view>

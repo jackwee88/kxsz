@@ -196,7 +196,7 @@
           <image src="../../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;" />
           <view class="oprate-txt">客服</view>
         </navigator>
-        <navigator url="../shoppingcart/shoppingcart" class="oprate-icon">
+        <navigator url="../../shoppingcart/shoppingcart" class="oprate-icon">
           <image src="../../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;" />
           <view class="oprate-txt">购物车</view>
         </navigator>
