@@ -7,7 +7,7 @@
 		</view>
 
 		<view class="list">
-			<navigator url="" v-for="(item, index) in list" :key="index">
+			<navigator url="../onlinestore/kefu" v-for="(item, index) in list" :key="index">
 				<image :src="item.img" mode=""></image>
 
 				<view class="right_side">

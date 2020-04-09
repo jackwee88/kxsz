@@ -100,6 +100,36 @@ export default {
 				}
 			});
 		},
+		  getPhoneNumber: function(e) {
+		    var that = this;
+		    console.log(e, 11111)
+		    console.log(e.detail.errMsg == "getPhoneNumber:ok");
+		
+		    if (e.detail.errMsg == "getPhoneNumber:ok") {
+		      wx.login({
+		        success: function(res) {
+		
+		
+		          util.ajax('index/getUserPhone', {
+		            code: res.code,
+		            encryptedData: e.detail.encryptedData,
+		            iv: e.detail.iv,
+		          }, res => {
+		            that.setData({
+		              is_login: 'false',
+		              phone: res.data.phone
+		            })
+	
+		            console.log(res)
+		
+		          })
+		        }
+		      })
+		
+		
+		
+		    }
+		  },
 		wxLogin() {
 			console.log('您使用的是微信登录');
 			uni.getProvider({
@@ -111,6 +141,7 @@ export default {
 							success: function(loginRes) {
 								console.log(loginRes.authResult);
 								// 获取用户信息
+								
 								uni.getUserInfo({
 									provider: 'weixin',
 									success: function(infoRes) {

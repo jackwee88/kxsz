@@ -65,7 +65,7 @@
 					<view><view></view></view>
 				</view>
 				<view class="actions">
-					<view
+					<view v-show="false"
 						class="item"
 					>
 						<image src="../../static/index/zf.png" mode=""></image>

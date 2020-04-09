@@ -192,7 +192,7 @@
     <!-- 加入购物车  固定-->
     <view class="oprate">
       <view class="oprate-content">
-        <navigator class="oprate-icon">
+        <navigator class="oprate-icon" url="../kefu">
           <image src="../../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;" />
           <view class="oprate-txt">客服</view>
         </navigator>

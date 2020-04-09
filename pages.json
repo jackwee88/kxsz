@@ -498,6 +498,12 @@
 							"navigationBarTitleText":"商品详情"
 						}
         }
+        ,{
+            "path" : "pages/onlinestore/kefu",
+            "style" : {
+							"navigationBarTitleText":"咨询客服"
+						}
+        }
     ],
 
 

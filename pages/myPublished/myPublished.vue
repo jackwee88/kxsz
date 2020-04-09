@@ -28,7 +28,7 @@
 						<image class="collecticon" v-else src="../../static/index/uncollect.png" style="width: 45rpx;height: 42rpx;" />
 						<text>{{ studyDetails.thumbs_times }}</text>
 					</view>
-					<view class="smallicon-flex">
+					<view class="smallicon-flex" v-show="false">
 						<image src="../../static/index/fx.png" mode="widthFix" style="width: 45rpx;height: 42rpx;" />
 						<text>分享</text>
 					</view>

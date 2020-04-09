@@ -1,319 +1,279 @@
 <template>
-  <view>
-    <view class="status_bar">
-      <!-- 这里是状态栏 -->
-    </view>
-    <!-- 		<view class="top_title">
+	<view>
+		<view class="status_bar"><!-- 这里是状态栏 --></view>
+		<!-- 		<view class="top_title">
 			<navigator open-type="navigateBack" url=""><image src="/static/onlineStore/back@2x.png" mode="aspectFit" class="icon1" /></navigator>
 			<navigator url="../shoppingcart/shoppingcart"><image src="/static/index/gwc.png" class="icon2" /></navigator>
     </view>-->
-    <!-- 商品详情 -->
-    <!-- 		<cover-view class="team-position" v-if="assemble ===1">
+		<!-- 商品详情 -->
+		<!-- 		<cover-view class="team-position" v-if="assemble ===1">
 			<view class="team-num">{{assmebleTotal}}人团</view>
 			<view class="team-total">已拼{{}}件</view>
     </cover-view>-->
-    <!-- 商品详情 -->
-    <swiper :autoplay="true" :interval="3000" :duration="1000" class="detailPicture">
-      <block v-for="(item, index) in detail.icon" :key="index">
-        <swiper-item>
-          <view>
-            <image :src="item" style="width: 100%;height: 660rpx;" />
-          </view>
-        </swiper-item>
-      </block>
-    </swiper>
-    <!-- 限时秒杀 判断商品是否为秒杀商品-->
-    <view class="xsms" v-if="detail.sale_status == 2">
-      <view class="back-red">
-        <view class="back-red-txt">
-          <text style="color: #ffffff;font-size: 32rpx;">¥</text>
-          <text style="color: #ffffff;font-size: 52rpx;">{{ detail.sale_detail.price }}</text>
-          <view
-            style="color: #E5E5E5;font-size: 24rpx;"
-            class="origin-price"
-          >¥{{ detail.coupon_price }}</view>
-        </view>
-        <view class="cheap">已抢{{ detail.sale_detail.num }}件</view>
-      </view>
-      <view class="back-yello">
-        <text style="color: #E44A54;font-size: 32rpx; padding-left: 15rpx;">距结束</text>
-        <uni-countdown
-          backgroundColor="#F3F15B"
-          color="#e44a54"
-          splitorColor="#e44a54"
-          :hour="hour"
-          :minute="minute"
-          :second="second"
-          :showDay="false"
-        ></uni-countdown>
-      </view>
-    </view>
-    <!-- 商品价格 库存 -->
-    <view class="product-detail">
-      <view class="beij">
-        <text style="color: #e33944;font-size: 24rpx;">¥</text>
-        <text style="color: #e33944;margin-right: 12rpx;">{{ detail.countyprice }}</text>
-        <text
-          style="color: #A1A4A5;font-size: 28rpx;text-decoration: line-through;"
-        >¥{{ detail.coupon_price }}</text>
-      </view>
-      <view>
-        <text style="color: #A1A4A5;font-size: 28rpx;margin-right: 12rpx;">已售{{ detail.sale }}件</text>
-        <!-- <text style="color: #A1A4A5;font-size: 28rpx;">库存59</text> -->
-      </view>
-    </view>
-    <view class="product-title">
-      <view class="productTxt">
-        <text style="font-size: 30rpx;
-				color: #333333;font-weight: bolder;">{{ detail.p_name }}</text>
-      </view>
+		<!-- 商品详情 -->
+		<swiper :autoplay="true" :interval="3000" :duration="1000" class="detailPicture">
+			<block v-for="(item, index) in detail.icon" :key="index">
+				<swiper-item>
+					<view><image :src="item" style="width: 100%;height: 660rpx;" /></view>
+				</swiper-item>
+			</block>
+		</swiper>
+		<!-- 限时秒杀 判断商品是否为秒杀商品-->
+		<view class="xsms" v-if="detail.sale_status == 2">
+			<view class="back-red">
+				<view class="back-red-txt">
+					<text style="color: #ffffff;font-size: 32rpx;">¥</text>
+					<text style="color: #ffffff;font-size: 52rpx;">{{ detail.sale_detail.price }}</text>
+					<view style="color: #E5E5E5;font-size: 24rpx;" class="origin-price">¥{{ detail.coupon_price }}</view>
+				</view>
+				<view class="cheap">已抢{{ detail.sale_detail.num }}件</view>
+			</view>
+			<view class="back-yello">
+				<text style="color: #E44A54;font-size: 32rpx; padding-left: 15rpx;">距结束</text>
+				<uni-countdown backgroundColor="#F3F15B" color="#e44a54" splitorColor="#e44a54" :hour="hour" :minute="minute" :second="second" :showDay="false"></uni-countdown>
+			</view>
+		</view>
+		<!-- 商品价格 库存 -->
+		<view class="product-detail">
+			<view class="beij">
+				<text style="color: #e33944;font-size: 24rpx;">¥</text>
+				<text style="color: #e33944;margin-right: 12rpx;">{{ detail.countyprice }}</text>
+				<text style="color: #A1A4A5;font-size: 28rpx;text-decoration: line-through;">¥{{ detail.coupon_price }}</text>
+			</view>
+			<view>
+				<text style="color: #A1A4A5;font-size: 28rpx;margin-right: 12rpx;">已售{{ detail.sale }}件</text>
+				<!-- <text style="color: #A1A4A5;font-size: 28rpx;">库存59</text> -->
+			</view>
+		</view>
+		<view class="product-title">
+			<view class="productTxt">
+				<text
+					style="font-size: 30rpx;
+				color: #333333;font-weight: bolder;"
+				>
+					{{ detail.p_name }}
+				</text>
+			</view>
 
-      <navigator class="btn-share">
-        <image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;" />
-        <text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
-      </navigator>
-    </view>
-    <!-- 拼团 -->
-    <view class="team-buy" v-if="detail.sale_status===3 && assmebleTotal != 0">
-      <view class="youhuiquan">
-        <text style="color: #333333;font-size:30rpx ;">{{ assmebleTotal }}个团正在热拼，可直接参与</text>
-        <view @click="assmbleDetail()">
-          <text style="color: #666666;font-size:24rpx ;">查看全部</text>
-          <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
-        </view>
-      </view>
-      <view class="team-buy-detail" v-for="(item, index) in newlist" :key="index">
-        <view class="assmebleleft">
-          <view class="circle-avator">
-            <image
-              mode="aspectFit"
-              :src="item.user.avatar"
-              style="width: 80rpx;height: 80rpx;border-radius: 40rpx;"
-            />
-          </view>
-          <view class="team-user">{{ item.user.nickname }}</view>
-        </view>
-        <view class="assmebleright">
-          <view>
-            <view class="pingtuan">
-              差
-              <text style="font-size: 28rpx;color:#E02020;">{{ item.need_number }}</text>人拼成
-            </view>
-            <view class="timeSetting">
-              <text style="font-size: 28rpx;color: #999999;">剩余</text>
-              <uni-countdown
-                backgroundColor="#ffffff"
-                color="#999999"
-                splitorColor="#999999"
-                :hour="item.assembleHour"
-                :minute="item.assmebleMinute"
-                :second="item.assmebleSecond"
-                :showDay="false"
-              ></uni-countdown>
-            </view>
-          </view>
-          <view class="cantuan" @tap="assembleOrder" data-orderid="item.user_id">
-            参团
-            <image src="../../static/index/qj.png" mode />
-          </view>
-        </view>
-      </view>
-    </view>
-    <!-- 优惠券 -->
-    <view></view>
-    <view class="youhuiquan">
-      <view>
-        <text style="color: #666666;font-size:26rpx ;">优惠券</text>
-      </view>
-      <navigator url="/pages/onlinestore/discountcenter/discountcenter">
-        <text style="color: #666666;font-size:26rpx ;">领取优惠券</text>
-        <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
-      </navigator>
-    </view>
-    <!-- 售后售前 -->
-    <navigator class="pre-sale">
-      <view class="pre-detail">
-        <image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
-        <view class="jisu">全场包邮</view>
-      </view>
-      <view class="pre-detail">
-        <image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
-        <view class="jisu">极速发货</view>
-      </view>
-      <view class="pre-detail">
-        <image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
-        <view class="jisu">七天无理由退换</view>
-      </view>
-      <view style="margin-left:120rpx ;">
-        <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
-      </view>
-    </navigator>
-    <!-- 地址 -->
-    <view class="address">
-      <text class="txt-address">地址</text>
-      <view class="choose-address">{{ detail.place_of_delivery }}</view>
-      <!-- <view class="choose-address">选择收货地址</view> -->
-      <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
-    </view>
+			<navigator class="btn-share">
+				<image src="../../static/onlineStore/share.png" style="width:30rpx ;height: 28rpx;" />
+				<text style="color:#b3b3b3;font-size: 28rpx;">分享</text>
+			</navigator>
+		</view>
+		<!-- 拼团 -->
+		<view class="team-buy" v-if="detail.sale_status === 3 && assmebleTotal != 0">
+			<view class="youhuiquan">
+				<text style="color: #333333;font-size:30rpx ;">{{ assmebleTotal }}个团正在热拼，可直接参与</text>
+				<view @click="assmbleDetail()">
+					<text style="color: #666666;font-size:24rpx ;">查看全部</text>
+					<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+				</view>
+			</view>
+			<view class="team-buy-detail" v-for="(item, index) in newlist" :key="index">
+				<view class="assmebleleft">
+					<view class="circle-avator"><image mode="aspectFit" :src="item.user.avatar" style="width: 80rpx;height: 80rpx;border-radius: 40rpx;" /></view>
+					<view class="team-user">{{ item.user.nickname }}</view>
+				</view>
+				<view class="assmebleright">
+					<view>
+						<view class="pingtuan">
+							差
+							<text style="font-size: 28rpx;color:#E02020;">{{ item.need_number }}</text>
+							人拼成
+						</view>
+						<view class="timeSetting">
+							<text style="font-size: 28rpx;color: #999999;">剩余</text>
+							<uni-countdown
+								backgroundColor="#ffffff"
+								color="#999999"
+								splitorColor="#999999"
+								:hour="item.assembleHour"
+								:minute="item.assmebleMinute"
+								:second="item.assmebleSecond"
+								:showDay="false"
+							></uni-countdown>
+						</view>
+					</view>
+					<view class="cantuan" @tap="assembleOrder" data-orderid="item.user_id">
+						参团
+						<image src="../../static/index/qj.png" mode />
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 优惠券 -->
+		<view></view>
+		<view class="youhuiquan">
+			<view><text style="color: #666666;font-size:26rpx ;">优惠券</text></view>
+			<navigator url="/pages/onlinestore/discountcenter/discountcenter">
+				<text style="color: #666666;font-size:26rpx ;">领取优惠券</text>
+				<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+			</navigator>
+		</view>
+		<!-- 售后售前 -->
+		<navigator class="pre-sale">
+			<view class="pre-detail">
+				<image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
+				<view class="jisu">全场包邮</view>
+			</view>
+			<view class="pre-detail">
+				<image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
+				<view class="jisu">极速发货</view>
+			</view>
+			<view class="pre-detail">
+				<image src="../../static/onlineStore/right.png" style="width:28rpx ;height: 28rpx;" />
+				<view class="jisu">七天无理由退换</view>
+			</view>
+			<view style="margin-left:120rpx ;"><image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" /></view>
+		</navigator>
+		<!-- 地址 -->
+		<view class="address">
+			<text class="txt-address">地址</text>
+			<view class="choose-address">{{ detail.place_of_delivery }}</view>
+			<!-- <view class="choose-address">选择收货地址</view> -->
+			<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+		</view>
 
-    <!-- 		  <view class="comment-wrap">
+		<!-- 		  <view class="comment-wrap">
 		    <view class="comment-title">
 		      <text>宝贝评价({{evaluateList.total}})</text>
 		      <text class="cpmment-more" @tap.stop="evaluateList.total== 0 ? '' : 'lookMore'">查看全部<text class="more-icon">></text></text>
 		    </view>
 
     </view>-->
-    <view class="comment-wrap">
-      <view class="comment">
-        <text class="choose-address">评价({{ evaluateList.total }})</text>
-        <text style="color: #A1A4A5;font-size: 28rpx;" @tap.stop="lookMore">查看全部</text>
-        <image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
-      </view>
-      <view v-if="evaluateList.total != 0">
-        <view class="comment-user">
-          <image class="comment-img" :src="evaluateList.list[0].avatar" />
-          <text>{{ evaluateList.list[0].nickname }}</text>
-        </view>
-        <view class="comment-content">{{ evaluateList.list[0].content }}</view>
-      </view>
-    </view>
-    <view class="pic-txt-detail">
-      <view class="pic-txt">图文详情</view>
-      <view>
-        <image
-          :src="item"
-          style="width: 100%;"
-          v-for="(item, index) in detail.html"
-          :key="index"
-          mode="widthFix"
-        />
-      </view>
-    </view>
-    <!-- 加入购物车  固定-->
-    <view class="oprate">
-      <view class="oprate-content">
-        <navigator class="oprate-icon">
-          <image src="../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;" />
-          <view class="oprate-txt">客服</view>
-        </navigator>
-        <navigator url="../shoppingcart/shoppingcart" class="oprate-icon">
-          <image src="../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;" />
-          <view class="oprate-txt">购物车</view>
-        </navigator>
-        <view class="oprate-icon">
-          <image src="../../static/onlineStore/sc.png" style="width: 36rpx;height: 34rpx;" />
-          <view class="oprate-txt">
-            <view class="twobtncont">
-              <text class="add" @click="collectP" v-if="collect_p == false">收藏商品</text>
-              <text class="add" @click="collectP" v-else>取消收藏</text>
-            </view>
-          </view>
-        </view>
-        <view v-if="detail.sale_status==3">
-          <button size="mini" class="btn-assmeble" @tap="showSku" data-type="1">发起拼团</button>
-        </view>
-        <view v-if="detail.sale_status!=3">
-          <button size="mini" class="bth-gwc" @tap="showSku" data-type="2">加入购物车</button>
-          <button size="mini" class="btn-fastbuy" @tap="showSku" data-type="1">立即购买</button>
-        </view>
-      </view>
-    </view>
-    <scroll-view class="commodity_attr_list" v-if="sku_show" scroll-y="true">
-      <view class="sku-img-box">
-        <image :src="detail.image" class="sku-img" />
-        <view>
-          <view style="margin-bottom:10rpx;color:red;font-size:34rpx;">￥{{ detail.coupon_price }}</view>
-          <text v-if="valueStr">已选:{{ valueStr }}</text>
-          <text v-if="!valueStr">请选择商品规格</text>
-        </view>
-      </view>
-      <view class="attr_box" v-for="(attrValueObj, attrIndex) in sku_arr" :key="attrIndex">
-        <view class="attr_name">{{ attrValueObj.group_name }}</view>
-        <!-- 		// attrValueObj.item_id
-        // data.value-->
-        <view class="attr_value_box">
-          <view
-            v-for="(value, valueIndex) in attrValueObj.spec_items"
-            :class="'attr_value ' + (value.selected ? 'attr_value_active' : '')"
-            @tap="selectAttrValue"
-            :data-value="value.spec_value"
-            :data-key="value.item_id"
-            :data-index="attrIndex"
-            :data-selectedvalue="attrValueObj.selectedValue"
-            :key="valueIndex"
-            :data-sec_index="valueIndex"
-            :data-item="value"
-          >{{ value.spec_value }}</view>
-        </view>
-      </view>
-
-      <!-- 购买数量 -->
-      <view class="buyNum">
-        <view class="buyNumTitle">购买数量：</view>
-        <view class="buyNumRight">
-          <text
-            :class="'buyNumReduce ' + (buyQuantity >= 1 ? 'buyNumReducebj' : '')"
-            @tap="minusCount"
-            style="display:flex;align-item:center;justify-content:center;"
-          >-</text>
-          <text class="buyNumSum">{{ buyQuantity }}</text>
-          <text
-            :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')"
-            @tap="addCount"
-            style="display:flex;align-item:center;justify-content:center;"
-          >+</text>
-        </view>
-      </view>
-
-      <image src="../../static/my/close.png" class="close" @tap.stop="closeSku" />
-      <view class="weui-btn-area" v-if="sku_show">
-        <button class="weui-btn" @tap="submit">确定</button>
-      </view>
-    </scroll-view>
-    <view class="overlayer" v-if="visible">
-      <view class="bg"></view>
-      <scroll-view class="content_wrap" scroll-y>
-				<view style="position: relative;">
-					<view class="close_wrap">
-					  <image src="../../static/my/close.png" mode @tap.stop="closeAssmeble" />
+		<view class="comment-wrap">
+			<view class="comment">
+				<text class="choose-address">评价({{ evaluateList.total }})</text>
+				<text style="color: #A1A4A5;font-size: 28rpx;" @tap.stop="lookMore">查看全部</text>
+				<image src="../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
+			</view>
+			<view v-if="evaluateList.total != 0">
+				<view class="comment-user">
+					<image class="comment-img" :src="evaluateList.list[0].avatar" />
+					<text>{{ evaluateList.list[0].nickname }}</text>
+				</view>
+				<view class="comment-content">{{ evaluateList.list[0].content }}</view>
+			</view>
+		</view>
+		<view class="pic-txt-detail">
+			<view class="pic-txt">图文详情</view>
+			<view><image :src="item" style="width: 100%;" v-for="(item, index) in detail.html" :key="index" mode="widthFix" /></view>
+		</view>
+		<!-- 加入购物车  固定-->
+		<view class="oprate">
+			<view class="oprate-content">
+				<navigator class="oprate-icon"  url="../onlinestore/kefu">
+					<image src="../../static/onlineStore/kf.png" style="width: 36rpx;height: 34rpx;" />
+					<view class="oprate-txt">
+						客服
 					</view>
-					<view style="height: 30px;"></view>
-					<view class="list" v-for="(item, index) in teamlist" :key="index">
-					  <view class="item" data-index="index" data-orderid="item.assemeble_order_id">
-					    <image :src="item.user.avatar" class="avatar" />
-					
-					    <view class="name">{{item.user.nickname}}</view>
-					
-					    <view class="num_n_time">
-					      <view class="num">
-					        差
-					        <text>{{item.need_number}}</text>人拼成
-					      </view>
-					
-					      <view class="time" style="display: flex;flex-direction: row;align-items: center;">
-					        <text>剩余</text>
-					        <uni-countdown
-					          backgroundColor="#ffffff"
-					          color="#999999"
-					          splitorColor="#999999"
-					          :hour="assembleHour"
-					          :minute="assmebleMinute"
-					          :second="assmebleSecond"
-					          :showDay="false"
-					        ></uni-countdown>
-					      </view>
-					    </view>
-					    <view class="cantuan" @tap="assembleOrder">
-					      参团
-					      <image src="../../static/index/qj.png" mode />
-					    </view>
-					  </view>
+				</navigator>
+				<navigator url="../shoppingcart/shoppingcart" class="oprate-icon">
+					<image src="../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;" />
+					<view class="oprate-txt">购物车</view>
+				</navigator>
+				<view class="oprate-icon">
+					<image src="../../static/onlineStore/sc.png" style="width: 36rpx;height: 34rpx;" />
+					<view class="oprate-txt">
+						<view class="twobtncont">
+							<text class="add" @click="collectP" v-if="collect_p == false">收藏商品</text>
+							<text class="add" @click="collectP" v-else>取消收藏</text>
+						</view>
 					</view>
 				</view>
-        
-      </scroll-view>
-    </view>
-  </view>
+				<view v-if="detail.sale_status == 3"><button size="mini" class="btn-assmeble" @tap="showSku" data-type="1">发起拼团</button></view>
+				<view v-if="detail.sale_status != 3">
+					<button size="mini" class="bth-gwc" @tap="showSku" data-type="2">加入购物车</button>
+					<button size="mini" class="btn-fastbuy" @tap="showSku" data-type="1">立即购买</button>
+				</view>
+			</view>
+		</view>
+		<scroll-view class="commodity_attr_list" v-if="sku_show" scroll-y="true">
+			<view class="sku-img-box">
+				<image :src="detail.image" class="sku-img" />
+				<view>
+					<view style="margin-bottom:10rpx;color:red;font-size:34rpx;">￥{{ detail.coupon_price }}</view>
+					<text v-if="valueStr">已选:{{ valueStr }}</text>
+					<text v-if="!valueStr">请选择商品规格</text>
+				</view>
+			</view>
+			<view class="attr_box" v-for="(attrValueObj, attrIndex) in sku_arr" :key="attrIndex">
+				<view class="attr_name">{{ attrValueObj.group_name }}</view>
+				<!-- 		// attrValueObj.item_id
+        // data.value-->
+				<view class="attr_value_box">
+					<view
+						v-for="(value, valueIndex) in attrValueObj.spec_items"
+						:class="'attr_value ' + (value.selected ? 'attr_value_active' : '')"
+						@tap="selectAttrValue"
+						:data-value="value.spec_value"
+						:data-key="value.item_id"
+						:data-index="attrIndex"
+						:data-selectedvalue="attrValueObj.selectedValue"
+						:key="valueIndex"
+						:data-sec_index="valueIndex"
+						:data-item="value"
+					>
+						{{ value.spec_value }}
+					</view>
+				</view>
+			</view>
+
+			<!-- 购买数量 -->
+			<view class="buyNum">
+				<view class="buyNumTitle">购买数量：</view>
+				<view class="buyNumRight">
+					<text :class="'buyNumReduce ' + (buyQuantity >= 1 ? 'buyNumReducebj' : '')" @tap="minusCount" style="display:flex;align-item:center;justify-content:center;">-</text>
+					<text class="buyNumSum">{{ buyQuantity }}</text>
+					<text :class="'buyNumAdd ' + (buyQuantity >= 1 ? 'buyNumAdd' : '')" @tap="addCount" style="display:flex;align-item:center;justify-content:center;">+</text>
+				</view>
+			</view>
+
+			<image src="../../static/my/close.png" class="close" @tap.stop="closeSku" />
+			<view class="weui-btn-area" v-if="sku_show"><button class="weui-btn" @tap="submit">确定</button></view>
+		</scroll-view>
+		<view class="overlayer" v-if="visible">
+			<view class="bg"></view>
+			<scroll-view class="content_wrap" scroll-y>
+				<view style="position: relative;">
+					<view class="close_wrap"><image src="../../static/my/close.png" mode @tap.stop="closeAssmeble" /></view>
+					<view style="height: 30px;"></view>
+					<view class="list" v-for="(item, index) in teamlist" :key="index">
+						<view class="item" data-index="index" data-orderid="item.assemeble_order_id">
+							<image :src="item.user.avatar" class="avatar" />
+
+							<view class="name">{{ item.user.nickname }}</view>
+
+							<view class="num_n_time">
+								<view class="num">
+									差
+									<text>{{ item.need_number }}</text>
+									人拼成
+								</view>
+
+								<view class="time" style="display: flex;flex-direction: row;align-items: center;">
+									<text>剩余</text>
+									<uni-countdown
+										backgroundColor="#ffffff"
+										color="#999999"
+										splitorColor="#999999"
+										:hour="assembleHour"
+										:minute="assmebleMinute"
+										:second="assmebleSecond"
+										:showDay="false"
+									></uni-countdown>
+								</view>
+							</view>
+							<view class="cantuan" @tap="assembleOrder">
+								参团
+								<image src="../../static/index/qj.png" mode />
+							</view>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+	</view>
 </template>
 
 <script>
@@ -334,22 +294,11 @@ export default {
           }
         ]
       },
+			isvisible:false,
+
 			newlist:[],
       assmebleTotal: 0,
       visible: false,
-      //获取评论列表
-      // detail: {
-      // 	coupon_price: 0.0,
-      // 	create_time_text: '',
-      // 	html: {},
-      // 	icon: {},
-      // 	p_detail: '',
-      // 	p_name: '',
-      // 	price: '0.00',
-      // 	status: 1,
-      // 	stock: 1
-      // },
-      // detailIcon:{}
       detail: {},
       html: {},
       icon: {},
@@ -481,11 +430,11 @@ export default {
           }
 					var newlist=[]
 					for(var i=0;i<list.length;i++){
-						
+
 					}
 					var str=""
 					var newlist=[]
-					newlist = this.teamlist.slice(0,2)					
+					newlist = this.teamlist.slice(0,2)
           for (var i = 0; i < list.length; i++) {
             let timeNoew = new Date().getTime() / 1000;
             var lastTime = list[i].endtime - timeNoew;
@@ -497,7 +446,7 @@ export default {
 						   if (middle > 60) {
 						     var hour = parseInt(middle / 60);
 						     middle = parseInt(middle % 60);
-						     this.assembleHour = hour; 
+						     this.assembleHour = hour;
 						 		this.teamlist[i]['assembleHour']=hour
 						   }
 						 }
@@ -542,9 +491,9 @@ export default {
     },
     AssmebleChange(value) {
 			for(var i=0;i<this.teamlist.length;i++){
-				
+
 			}
-      
+
     },
     timeChange(value) {
       var lastTime = parseInt(value);
@@ -690,7 +639,9 @@ export default {
           that.collect_p
       });
     },
-
+		openKefu:function(){
+			this.isvisible=true
+		},
     /* 获取数据 */
     distachAttrValue: function(commodityAttr) {
       /**
@@ -838,7 +789,7 @@ export default {
         quantity: 1,
         type: 1,
         assemble_order_id: 0
-			} 
+			}
       uni.navigateTo({
         url:
           "sureOrder/sureOrder?sureOrder=" +
@@ -963,34 +914,34 @@ export default {
 </script>
 
 <style style lang="less" scoped>
-@import "./product-detail.css";
+@import './product-detail.css';
 .detailPicture {
-  width: 100%;
-  height: 660rpx;
-  box-sizing: border-box;
+	width: 100%;
+	height: 660rpx;
+	box-sizing: border-box;
 }
 
 .overlayer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  .bg {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .content_wrap {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-height: 600rpx;
-    background-color: #fff;
-    border-top-left-radius: 30rpx;
-    border-top-right-radius: 30rpx;
-  }
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	.bg {
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.content_wrap {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		max-height: 600rpx;
+		background-color: #fff;
+		border-top-left-radius: 30rpx;
+		border-top-right-radius: 30rpx;
+	}
 	.close_wrap {
 		text-align: right;
 		height: 30px;
@@ -1006,126 +957,126 @@ export default {
 			height: 36rpx;
 		}
 	}
-  .item {
-    display: flex;
-    align-items: center;
-    padding: 20rpx 14rpx 28rpx 32rpx;
-    .avatar {
-      width: 80rpx;
-      height: 80rpx;
-      margin-right: 34rpx;
-    }
-    .name {
-      flex: 1;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      font-size: 28rpx;
-      color: rgba(51, 51, 51, 1);
-      line-height: 40rpx;
-    }
-    .num_n_time {
-      text-align: left;
-      margin-left: 30rpx;
-      .num {
-        font-size: 28rpx;
-        color: rgba(51, 51, 51, 1);
-        line-height: 40rpx;
-        // letter-spacing: 4rpx;
-        text {
-          color: #e02020;
-        }
-      }
-      .time {
-        font-size: 28rpx;
-        color: rgba(153, 153, 153, 1);
-        line-height: 40rpx;
-      }
-    }
-    .cantuan {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 140rpx;
-      height: 70rpx;
-      margin-left: 24rpx;
-      font-size: 28rpx;
-      color: rgba(255, 255, 255, 1);
-      background: rgba(184, 224, 176, 1);
-      border-radius: 35rpx;
-      image {
-        width: 16rpx;
-        height: 24rpx;
-        margin-left: 10rpx;
-      }
-    }
-  }
+	.item {
+		display: flex;
+		align-items: center;
+		padding: 20rpx 14rpx 28rpx 32rpx;
+		.avatar {
+			width: 80rpx;
+			height: 80rpx;
+			margin-right: 34rpx;
+		}
+		.name {
+			flex: 1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			font-size: 28rpx;
+			color: rgba(51, 51, 51, 1);
+			line-height: 40rpx;
+		}
+		.num_n_time {
+			text-align: left;
+			margin-left: 30rpx;
+			.num {
+				font-size: 28rpx;
+				color: rgba(51, 51, 51, 1);
+				line-height: 40rpx;
+				// letter-spacing: 4rpx;
+				text {
+					color: #e02020;
+				}
+			}
+			.time {
+				font-size: 28rpx;
+				color: rgba(153, 153, 153, 1);
+				line-height: 40rpx;
+			}
+		}
+		.cantuan {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 140rpx;
+			height: 70rpx;
+			margin-left: 24rpx;
+			font-size: 28rpx;
+			color: rgba(255, 255, 255, 1);
+			background: rgba(184, 224, 176, 1);
+			border-radius: 35rpx;
+			image {
+				width: 16rpx;
+				height: 24rpx;
+				margin-left: 10rpx;
+			}
+		}
+	}
 }
 .assmeble {
-  background-color: #ffffff;
+	background-color: #ffffff;
 }
 .top_title {
-  .input-wrap {
-    height: 60rpx;
-    background: rgba(239, 239, 239, 1);
-    border-radius: 34rpx;
-    width: 70%;
-    .search {
-      width: 32rpx;
-      height: 34rpx;
-      margin-left: 50rpx;
-      margin-right: 22rpx;
-    }
-    .input {
-      font-size: 28rpx;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #333;
-      line-height: 60rpx;
-    }
-  }
-  .icon1 {
-    width: 18rpx;
-    height: 32rpx;
-  }
-  .icon2 {
-    height: 44rpx;
-    width: 44rpx;
-  }
+	.input-wrap {
+		height: 60rpx;
+		background: rgba(239, 239, 239, 1);
+		border-radius: 34rpx;
+		width: 70%;
+		.search {
+			width: 32rpx;
+			height: 34rpx;
+			margin-left: 50rpx;
+			margin-right: 22rpx;
+		}
+		.input {
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #333;
+			line-height: 60rpx;
+		}
+	}
+	.icon1 {
+		width: 18rpx;
+		height: 32rpx;
+	}
+	.icon2 {
+		height: 44rpx;
+		width: 44rpx;
+	}
 }
 .cantuan {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 140rpx;
-  height: 70rpx;
-  margin-left: 24rpx;
-  font-size: 28rpx;
-  color: rgba(255, 255, 255, 1);
-  background: rgba(184, 224, 176, 1);
-  border-radius: 35rpx;
-  image {
-    width: 16rpx;
-    height: 24rpx;
-    margin-left: 10rpx;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 140rpx;
+	height: 70rpx;
+	margin-left: 24rpx;
+	font-size: 28rpx;
+	color: rgba(255, 255, 255, 1);
+	background: rgba(184, 224, 176, 1);
+	border-radius: 35rpx;
+	image {
+		width: 16rpx;
+		height: 24rpx;
+		margin-left: 10rpx;
+	}
 }
 .overlayer {
-  z-index: 1000;
-  .bg {
-    background-color: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .content_wrap {
-    width: 80%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate3d(-50%, -50%, 0);
-  }
+	z-index: 1000;
+	.bg {
+		background-color: rgba(0, 0, 0, 0.7);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.content_wrap {
+		width: 80%;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate3d(-50%, -50%, 0);
+	}
 }
 </style>

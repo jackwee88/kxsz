@@ -88,7 +88,7 @@
 
 				<view class="actions">
 					<view
-						class="item"
+						class="item" 	v-show="false"
 					>
 						<image src="../../static/index/zf.png" mode=""></image>
 						<text></text>
