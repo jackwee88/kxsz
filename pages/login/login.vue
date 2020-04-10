@@ -40,6 +40,20 @@
 				<image src="../../static/login/weixin.png" mode="widthFix" class="weixinlogin" @tap="wxLogin"></image>
 			</view>
 		</view>
+		<!-- <view v-if="canIUse">
+		    <view class='header'>
+		        <image src='https://kxsx.kaifadanao.cn/assets/img/logoxcx.png'></image>
+		    </view>
+		
+		    <view class='content'>
+		        <view>申请获取以下权限</view>
+		        <text>获得你的公开信息(昵称，头像等)</text>
+		    </view>
+		     <button class='login-btn' type='primary' open-type="getUserInfo" lang="zh_CN" @click="getUserInfo" v-if="is_login=='true'">
+		        授权登录
+		    </button>
+		    <button  class='login-btn' open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" v-if="is_login=='true'">手机号登录</button>
+		</view> -->
 	</view>
 </template>
 
@@ -53,9 +67,20 @@ export default {
 			phone: '', //电话，账号
 			yzm: '', //验证码
 			password: '', //密码
-			second: '' //验证码需要的秒
+			second: '' ,//验证码需要的秒
+		  // canIUse: wx.canIUse('button.open-type.getUserInfo'),
+			canIUse: false,
+      is_login:'true'
 		};
 	},
+	onLoad: function() {
+				uni.login({
+					success: function(res) {
+						// 获取code
+						// console.log(JSON.stringify(res));
+					}
+				});
+},
 	methods: {
 		//短信登录、账号登录点击
 		orderLogin(id) {
@@ -100,36 +125,18 @@ export default {
 				}
 			});
 		},
-		  getPhoneNumber: function(e) {
-		    var that = this;
-		    console.log(e, 11111)
-		    console.log(e.detail.errMsg == "getPhoneNumber:ok");
-		
-		    if (e.detail.errMsg == "getPhoneNumber:ok") {
-		      wx.login({
-		        success: function(res) {
-		
-		
-		          util.ajax('index/getUserPhone', {
-		            code: res.code,
-		            encryptedData: e.detail.encryptedData,
-		            iv: e.detail.iv,
-		          }, res => {
-		            that.setData({
-		              is_login: 'false',
-		              phone: res.data.phone
-		            })
-	
-		            console.log(res)
-		
-		          })
-		        }
-		      })
-		
-		
-		
-		    }
-		  },
+    getPhoneNumber: function(e) {
+				console.log(e);
+				console.log('123131')
+				if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+ 
+				} else {
+ 
+				}
+ 
+				// 				console.log(JSON.stringify(e.encryptedData));
+				// 				console.log(JSON.stringify(e.iv));
+			},
 		wxLogin() {
 			console.log('您使用的是微信登录');
 			uni.getProvider({
@@ -141,31 +148,33 @@ export default {
 							success: function(loginRes) {
 								console.log(loginRes.authResult);
 								// 获取用户信息
-								
+								// this.getPhoneNumber()
 								uni.getUserInfo({
 									provider: 'weixin',
 									success: function(infoRes) {
 										console.log('用户昵称为：' + JSON.stringify(infoRes.userInfo));
+										var i_uid=0;
+										var scene = wx.getStorageSync('scene');
 										ajax({
-											url: 'index/wxLogin',
-											// 参数（先获取手机号再授权）
-											// phone  // 手机号
-											// code  // 微信临时凭证
-											// user_info // 微信用户信息
-											// i_uid    // 活动邀请人
-											// scene  // 招商区域
+											url: 'index/wxLogins',
 											data: {
-												phone: 'infoRes.userInfo.openId',
-												code: '',
-												user_info: infoRes.userInfo,
-												i_uid: infoRes.userInfo.openId,
-												scene: ''
+												// phone: '',
+												// code: '',
+											  openid:infoRes.userInfo.openId,
+												user_info: JSON.stringify(infoRes.userInfo),
+												i_uid: i_uid,
+												scene: scene
 											},
-											success: res => {
-												if (res.data.status == '') {
+											success: (res )=> {
+												console.log(res)
+												if (res.data.status == 2) {
 													uni.showToast({
 														title: '登录成功'
 													});
+													uni.switchTab({
+														url:'../index/index'
+													})
+													uni.setStorageSync('loginToken',res.data.data.token)
 												}
 											},
 											fail: () => {

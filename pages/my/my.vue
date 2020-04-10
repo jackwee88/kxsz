@@ -395,6 +395,7 @@ export default {
       });
     }
     util.ajaxs("index/getProfile", {}, res => {
+			console.log(res.data)
       this.info = res.data;
     });
   },

@@ -22,8 +22,8 @@
 		<view class="">
 			<view class="orderLoginView"><text>第三方登录</text></view>
 			<view class="orderLoginBtn">
-				<image src="../../../static/login/qq.png" mode="widthFix" class="qqlogin"></image>
-				<image src="../../../static/login/weixin.png" mode="widthFix" class="weixinlogin"></image>
+				<image src="../../../static/login/qq.png" mode="widthFix" class="qqlogin" @tap="qqLogin"></image>
+				<image src="../../../static/login/weixin.png" mode="widthFix" class="weixinlogin" @tap="wxLogin"></image>
 			</view>
 		</view>
 	</view>
@@ -82,6 +82,70 @@ export default {
 			     error: function() {}
 			    })
 }
+		},
+		wxLogin() {
+			console.log('您使用的是微信登录');
+			uni.getProvider({
+				service: 'oauth',
+				success: function(res) {
+					if (~res.provider.indexOf('weixin')) {
+						uni.login({
+							provider: 'weixin',
+							success: function(loginRes) {
+								console.log(loginRes.authResult);
+								// 获取用户信息
+								// this.getPhoneNumber()
+								uni.getUserInfo({
+									provider: 'weixin',
+									success: function(infoRes) {
+										console.log('用户昵称为：' + JSON.stringify(infoRes.userInfo));
+										var i_uid=0;
+										var scene = wx.getStorageSync('scene');
+										ajax({
+											url: 'index/wxLogins',
+											data: {
+												// phone: '',
+												// code: '',
+											  openid:infoRes.userInfo.openId,
+												user_info: infoRes.userInfo,
+												i_uid: i_uid,
+												scene: scene
+											},
+											success: (res )=> {
+												console.log(res)
+												if (res.data.status == 2) {
+													uni.showToast({
+														title: '登录成功'
+													});
+													uni.switchTab({
+														url:'../index/index'
+													})
+													uni.setStorageSync('loginToken',res.data.data.token)
+												}
+											},
+											fail: () => {
+												console.log('登陆失败');
+											},
+											complete: () => {}
+										});
+									},
+									fail: function(infoRes) {
+										uni.showToast({
+											title: infoRes.errMsg
+										});
+										console.log(失败)
+									}
+								});
+							}
+						});
+					}
+				},
+				fail: () => {
+					uni.showToast({
+						title: '微信登录授权失败'
+					});
+				}
+			});
 		},
 		submit() {
 			if(this.password===this.rePassword){
