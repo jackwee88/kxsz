@@ -1,6 +1,6 @@
 {
-    "name" : "io.dcloud.kxsxapp",
-    "appid" : "__UNI__2D1E073",
+    "name" : "开心书写",
+    "appid" : "__UNI__6A07983",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -61,7 +61,7 @@
                 "oauth" : {
                     "weixin" : {
                         "appid" : "wxecc334db6b9f83fd",
-                        "appsecret" : "453cfa66d1918b6a05df4d0bd43960f3",
+                        "appsecret" : "a0a2b03911b2445ac43e2e77b0f5f00e",
                         "UniversalLinks" : ""
                     }
                 }

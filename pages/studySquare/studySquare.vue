@@ -126,6 +126,7 @@
                   :data-nickname="item.nickname"
                   :data-image="item.picture_arr[0]"
                   :data-video="item.video_ids"
+									v-show="false"
                 >
                   <image class="shareicon" src="../../static/index/fx.png" />
                   <text>分享</text>

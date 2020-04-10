@@ -65,10 +65,11 @@
 				</swiper>
 			</view>
 
-			<view class="banner-title" v-if="joinAssembleList.length != 0"><text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
+			<view class="banner-title" v-if="joinAssembleList.length != 0">
+				<text style="font-size:48rpx;color:#3FAE2A ;">——将成团——</text></view>
 			<!-- 商品推荐 -->
 			<view class="recommend-footer">
-				<navigator url="./assmebleList/assmebleList" style="text-align: right;">
+				<navigator url="./searchGoods" style="text-align: right;" v-if="joinAssembleList.length != 0">
 					<text style="font-size: 32rpx;color:#999999 ;">更多</text>
 					<image src="../../static/index/qj.png" mode="" style="width: 8px;height: 12px;"></image>
 				</navigator>

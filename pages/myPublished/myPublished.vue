@@ -28,7 +28,7 @@
 						<image class="collecticon" v-else src="../../static/index/uncollect.png" style="width: 45rpx;height: 42rpx;" />
 						<text>{{ studyDetails.thumbs_times }}</text>
 					</view>
-					<view class="smallicon-flex">
+					<view class="smallicon-flex" v-show="false">
 						<image src="../../static/index/fx.png" mode="widthFix" style="width: 45rpx;height: 42rpx;" />
 						<text>分享</text>
 					</view>
@@ -75,6 +75,15 @@
 				<text class="send" @tap.stop="send">发送</text>
 			</view>
 		</scroll-view>
+		<view class="big-box" v-if="visible">
+			<view class="containerModal">
+					<view class="modalTitle">请绑定手机号再评论</view>
+				<view class="bindbtn" style="position: absolute;">
+					<view class="console" @tap="goconsole">取消</view>
+					<view class="confirm" @tap="bindPhone">去绑定</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -110,6 +119,8 @@ export default {
 			studyDetails: {},
 			picturelist: [],
 			commenlist: [],
+			mobile:'',
+			visible:false,
 		};
 	},
 	onLoad(event) {
@@ -214,42 +225,53 @@ export default {
 		send: function() {
 			let that = this;
 			ajax({
-				url: 'comment/commentAdd',
-				data: { content: this.comment_content, d_id: this.dy_id },
-				method: 'POST',
-				success: res => {
-					this.comment_content = '';
-					uni.showModal({
-						title: '提示',
-						content: res.data.msg,
-						showCancel: false,
-						duration: 1000,
-						success: function(res) {}
-					});
-					ajax({
-						url: 'comment/comment',
-						data: { d_id: this.dy_id},
-						success: (res) => {
-							let list = res.data.data;
-							list.if_input = false;
-							this.release = res.data.list;
-							this.comment_num = res.data.count;
-							
-							var pages = getCurrentPages();
-							var prevPage = pages[pages.length - 2]; //上一个页面
-							var index = this.index;
-							if (that.type == 1) {
-								prevPage.studyList[index].comment_count = 'daily[' + index + '].comment_count';
-							} else if (that.type == 2) {
-								var up = 'studyList[' + index + '].comment_count';
-							} else if (that.type == 3 || that.type == 4) {
-								var up = 'daka[' + index + '].comment_count';
+				url:'index/getProfile',
+				success:(res)=>{
+					this.mobile=res.data.data.mobile
+					if(this.mobile==''){
+						this.visible=true
+					}else{
+						ajax({
+							url: 'comment/commentAdd',
+							data: { content: this.comment_content, d_id: this.dy_id },
+							method: 'POST',
+							success: res => {
+								this.comment_content = '';
+								uni.showModal({
+									title: '提示',
+									content: res.data.msg,
+									showCancel: false,
+									duration: 1000,
+									success: function(res) {}
+								});
+								ajax({
+									url: 'comment/comment',
+									data: { d_id: this.dy_id},
+									success: (res) => {
+										let list = res.data.data;
+										list.if_input = false;
+										this.release = res.data.list;
+										this.comment_num = res.data.count;
+										
+										var pages = getCurrentPages();
+										var prevPage = pages[pages.length - 2]; //上一个页面
+										var index = this.index;
+										if (that.type == 1) {
+											prevPage.$vm.studyList[index].comment_count = 'daily[' + index + '].comment_count';
+										} else if (that.type == 2) {
+											var up = 'studyList[' + index + '].comment_count';
+										} else if (that.type == 3 || that.type == 4) {
+											var up = 'daka[' + index + '].comment_count';
+										}
+										var newp = ++that.comment_count; 
+									}
+								});
 							}
-							var newp = ++that.comment_count; 
-						}
-					});
+						});
+					}
 				}
-			});
+			})
+
 		},
 		//跳转用户详情
 		gotoUserInfo: function(e) {
@@ -273,7 +295,16 @@ export default {
 				urls: imgList // 需要预览的图片http链接列表
 			});
 		},
-		praise(e) {
+		goconsole(){
+			this.visible=false
+		},
+		bindPhone(){
+			this.visible=false
+			uni.navigateTo({
+				url:'../login/bindPhone/bindPhone'
+			})
+			},
+				praise(e) {
 			var that = this;
 			var index_ = that.index_;
 			ajax({
@@ -356,4 +387,28 @@ export default {
 .comment-item {
 	padding: 10rpx 0 20rpx 0;
 }
+
+	.bindbtn{
+		height: 100rpx;
+		background-color: #FFFFFF;
+		position: absolute;
+		bottom: 0;
+		display: flex;
+		flex-direction: row;
+		width: 600rpx;
+		border-radius: 0rpx 0rpx 20rpx 20rpx;
+		border-top: 1px solid #2f881e;
+	}
+	.console{
+		border-right: 2rpx solid #2F881E;
+		width: 300rpx;
+		height: 100rpx;
+		line-height: 100rpx;
+	}
+	.confirm{
+		width: 300rpx;
+		height: 100rpx;
+		line-height: 100rpx;
+	}
+
 </style>

@@ -269,34 +269,28 @@ export default {
             };
             var that = this;
             util.ajax({
-				url:'paygoods/repay', 
+				url:'paygoods/appPay', 
 				data:param, 
 				success:res => {
-				  wx.requestPayment({
-				    timeStamp: String(res.data.timeStamp),
-				    nonceStr: res.data.nonceStr,
-				    package: res.data.package,
-				    signType: res.data.signType,
-				    paySign: res.data.paySign,
-				    success: function (payres) {
-				      wx.showToast({
-				        title: '支付成功，正在查询订单',
-				        icon: 'none',
-				        mask: true
-				      });
-				      setTimeout(function () {
-				        that.onShow();
-				      }, 3000);
-				    },
-				    fail: function () {// wx.showModal({
-				      //   title: '错误提示',
-				      //   content: '支付失败',
-				      //   showCancel: false
-				      // })
-				    },
-				    complete: function () {// complete
-				    }
-				  });
+					console.log(res.data)
+					uni.requestPayment({
+						provider: 'wxpay',
+						orderInfo: res.data, //微信、支付宝订单数据
+						success: function(res) {
+							uni.showToast({
+								title: '支付成功',
+								icon: 'none',
+								mask: true
+							});
+						},
+						fail: function(err) {
+							uni.showToast({
+								title: '支付失败'+err.errMsg
+							});
+							console.log('fail:',JSON.stringify(err))
+
+						}
+					});
 				}
 			});
           } else if (ress.cancel) {

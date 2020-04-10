@@ -5,19 +5,33 @@
 //   requestUrl = 'http://kxsx.zcycs.com/api/';
 // }
 let requestUrl = '';
+// if (process.env.NODE_ENV === 'development') {
+//   switch (uni.getSystemInfoSync().platform) {
+//     case 'android':
+//       requestUrl = 'http://kxsx.zcycs.com/api/';
+//       break;
+//     case 'ios':
+//       requestUrl = 'http://kxsx.zcycs.com/api/';
+//       break;
+//     default:
+//       requestUrl = '/api/';
+//   }
+// } else {
+//   requestUrl = 'http://kxsx.zcycs.com/api/';
+// }
 if (process.env.NODE_ENV === 'development') {
   switch (uni.getSystemInfoSync().platform) {
     case 'android':
-      requestUrl = 'http://kxsx.zcycs.com/api/';
+      requestUrl = 'http://kaixin.xutavip.com/api/';
       break;
     case 'ios':
-      requestUrl = 'http://kxsx.zcycs.com/api/';
+      requestUrl = 'http://kaixin.xutavip.com/api/';
       break;
     default:
       requestUrl = '/api/';
   }
 } else {
-  requestUrl = 'http://kxsx.zcycs.com/api/';
+  requestUrl = 'http://kaixin.xutavip.com/api/';
 }
 const ajax = (opt) => {
 	opt = opt || {};
