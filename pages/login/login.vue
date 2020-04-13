@@ -109,19 +109,65 @@ export default {
 			});
 		},
 		qqLogin() {
-			console.log('您使用的是qq登录');
+			console.log('您使用的是微信登录');
 			uni.getProvider({
 				service: 'oauth',
 				success: function(res) {
-					console.log(res.provider);
-					if (~res.provider.indexOf('qq')) {
+					if (~res.provider.indexOf('weixin')) {
 						uni.login({
 							provider: 'qq',
 							success: function(loginRes) {
-								console.log(JSON.stringify(loginRes));
+								console.log(loginRes.authResult);
+								// 获取用户信息
+								// this.getPhoneNumber()
+								uni.getUserInfo({
+									provider: 'qq',
+									success: function(infoRes) {
+										console.log('用户昵称为：' + JSON.stringify(infoRes.userInfo));
+										var i_uid=0;
+										var scene = wx.getStorageSync('scene');
+										ajax({
+											url: 'index/qqLogins',
+											data: {
+												// phone: '',
+												// code: '',
+											  qq_openid:infoRes.userInfo.openId,
+												user_info: JSON.stringify(infoRes.userInfo),
+												i_uid: i_uid,
+												scene: scene
+											},
+											success: (res )=> {
+												if (res.data.status == 2) {
+													uni.showToast({
+														title: '登录成功'
+													});
+													uni.switchTab({
+														url:'../index/index'
+													})
+													uni.setStorageSync('loginToken',res.data.data.token)
+												}
+											},
+											fail: () => {
+												console.log('登陆失败');
+											},
+											complete: () => {}
+										});
+									},
+									fail: function(infoRes) {
+										uni.showToast({
+											title: infoRes.errMsg
+										});
+										console.log(失败)
+									}
+								});
 							}
 						});
 					}
+				},
+				fail: () => {
+					uni.showToast({
+						title: '微信登录授权失败'
+					});
 				}
 			});
 		},

@@ -115,7 +115,11 @@ audio {
   /* margin-right: 120rpx;
   margin-bottom: 20rpx; */
   flex: 1;
-  text-align: left
+  text-align: left;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 325rpx;
 }
 .thirdline image {
   background-size: 100% 100%;

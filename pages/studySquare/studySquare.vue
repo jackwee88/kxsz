@@ -141,7 +141,7 @@
                   :data-comment_count="item.comment_count"
                   open-type="share"
                 >
-                  <image class="shareicon" src="../../static/index/message.png" />
+                  <image class="shareicon" src="../../static/index/pl.png" />
                   <text>{{ item.comment_count }}</text>
                 </view>
               </view>

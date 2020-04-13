@@ -323,7 +323,7 @@ export default {
     },
     upload_video: function() {
       var that = this;
-      wx.chooseVideo({
+      uni.chooseVideo({
         sourceType: ["album", "camera"],
         compressed: true,
         maxDuration: 60,
@@ -526,7 +526,9 @@ export default {
           //   icon: 'none',
           //   duration: 1000
           // })
-
+					setTimeout(function(){
+						uni.navigateBack()
+					},2000)
           that.setData({
             // isCan:true,
             dy_id: res.data.dy_id
@@ -894,7 +896,7 @@ export default {
     },
     audioUpload: function() {
       var that = this;
-      wx.chooseVideo({
+      uni.chooseVideo({
         sourceType: ["album", "camera"],
         compressed: true,
         maxDuration: 60,

@@ -44,7 +44,7 @@
 		
 				<view class="gallery" @tap.stop="gotoPublished" :data-browse_times="item.browse_times" :data-p_id="item.dy_id" :data-index="index" :data-comment_count="item.comment_count">
 					<view class="case-li case-view-item">
-						<view style="position:relative;display:inline">
+						<view style="position:relative;">
 							<image
 								v-if="item.video_ids"
 								style="width:30%;height:200rpx;"
@@ -122,7 +122,7 @@
 			</view>
 		</view>
 
-		<view class="talk_btn">聊天</view>
+		<view class="talk_btn" v-show="false">聊天</view>
 	</view>
 </template>
 
@@ -393,7 +393,6 @@ export default {
 		}
 
 		.gallery {
-			display: flex;
 			flex-direction: row;
 			image {
 				width: 220rpx;

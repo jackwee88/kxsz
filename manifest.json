@@ -48,21 +48,30 @@
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "capabilities" : {
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [ "applinks:kaixin.xutavip.com" ]
+                    }
+                }
+            },
             /* SDK配置 */
             "sdkConfigs" : {
                 "ad" : {},
                 "payment" : {
                     "weixin" : {
                         "appid" : "wxecc334db6b9f83fd",
-                        "UniversalLinks" : ""
+                        "UniversalLinks" : "https://kaixin.xutavip.com/"
                     }
                 },
                 "oauth" : {
                     "weixin" : {
                         "appid" : "wxecc334db6b9f83fd",
                         "appsecret" : "a0a2b03911b2445ac43e2e77b0f5f00e",
-                        "UniversalLinks" : ""
+                        "UniversalLinks" : "https://kaixin.xutavip.com/"
+                    },
+                    "qq" : {
+                        "appid" : "101869262"
                     }
                 }
             },

@@ -33,7 +33,7 @@
 						<text>分享</text>
 					</view>
 					<view class="smallicon-flex">
-						<image src="../../static/index/messageicon.png" mode="widthFix" style="width: 40rpx;height: 40rpx;" />
+						<image src="../../static/index/pl.png" mode="widthFix" style="width: 40rpx;height: 40rpx;" />
 						<text>{{ comment_count }}</text>
 					</view>
 				</view>

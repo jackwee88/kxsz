@@ -364,8 +364,6 @@ export default {
 			}
 
 			.gallery {
-				display: flex;
-
 				image {
 					width: 220rpx;
 					height: 220rpx;
