@@ -53,7 +53,8 @@
                     "entitlements" : {
                         "com.apple.developer.associated-domains" : [ "applinks:kaixin.xutavip.com" ]
                     }
-                }
+                },
+                "idfa" : false
             },
             /* SDK配置 */
             "sdkConfigs" : {

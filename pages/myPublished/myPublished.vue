@@ -228,6 +228,7 @@ export default {
 				url:'index/getProfile',
 				success:(res)=>{
 					this.mobile=res.data.data.mobile
+					console.log(res.data.data)
 					if(this.mobile==''){
 						this.visible=true
 					}else{

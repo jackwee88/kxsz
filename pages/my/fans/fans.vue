@@ -55,7 +55,7 @@ export default {
 				url: 'friend/myFansList',
 				data: {
 					token:uni.getStorageSync('loginToken'),
-					keyword:this.keyword
+					keyword:''
 				},
 				method: 'POST',
 				success: res => {

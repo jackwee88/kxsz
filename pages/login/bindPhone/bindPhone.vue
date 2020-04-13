@@ -73,6 +73,10 @@ export default {
 					},
 					method: 'POST',
 					success: function(res) {
+						console.log(res)
+						uni.showToast({
+							title:res.data.msg
+						})
 						uni.setStorageSync('loginToken', res.data.data);
 						setTimeout(() => {
 							uni.navigateBack();
