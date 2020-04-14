@@ -172,12 +172,12 @@
 					<image src="../../static/onlineStore/gwc.png" style="width: 36rpx;height: 34rpx;" />
 					<view class="oprate-txt">购物车</view>
 				</navigator>
-				<view class="oprate-icon">
+				<view class="oprate-icon" @tap="collectP">
 					<image src="../../static/onlineStore/sc.png" style="width: 36rpx;height: 34rpx;" />
 					<view class="oprate-txt">
-						<view class="twobtncont">
-							<text class="add" @click="collectP" v-if="collect_p == false">收藏商品</text>
-							<text class="add" @click="collectP" v-else>取消收藏</text>
+						<view class="twobtncont" >
+							<text class="add"  v-if="collect_p == false">收藏商品</text>
+							<text class="add" v-else>取消收藏</text>
 						</view>
 					</view>
 				</view>
