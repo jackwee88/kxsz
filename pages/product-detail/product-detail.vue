@@ -337,7 +337,6 @@ export default {
   },
   onLoad(event) {
     this.pid = event.gd_id;
-		console.log(event.gd_id)
     this.getData();
     this.getEvaluateList();
     this.getAssemble();

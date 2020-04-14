@@ -45,13 +45,15 @@ export default {
 .status_bar {
 	height: var(--status-bar-height);
 	width: 100%;
-	background-color: #f8f8f8;
+	background-color: white;
+	position: fixed;
+	z-index: 99;
 }
 .top_title {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 20rpx 28rpx;
+	padding: 74rpx 28rpx 20rpx 28rpx;
 	margin-bottom: 26rpx;
 
 	text {

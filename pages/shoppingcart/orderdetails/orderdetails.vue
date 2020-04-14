@@ -272,7 +272,6 @@ export default {
 				url:'paygoods/appPay', 
 				data:param, 
 				success:res => {
-					console.log(res.data)
 					uni.requestPayment({
 						provider: 'wxpay',
 						orderInfo: res.data, //微信、支付宝订单数据
@@ -287,7 +286,6 @@ export default {
 							uni.showToast({
 								title: '支付失败'+err.errMsg
 							});
-							console.log('fail:',JSON.stringify(err))
 
 						}
 					});

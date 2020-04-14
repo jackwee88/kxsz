@@ -67,7 +67,6 @@ export default {
 	},
 
 	onLoad(event) {
-		console.log(event.searchInput)
 		if(event.searchInput==undefined){
 			this.getData()
 			this.assmeble==true
@@ -136,7 +135,9 @@ page,
 .status_bar {
   height: var(--status-bar-height);
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: white;
+  position: fixed;
+  z-index: 99;
 }
 .uni-product-title{
 	max-height: 130upx;

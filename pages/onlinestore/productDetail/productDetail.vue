@@ -82,7 +82,7 @@
           <image src="../../../static/onlineStore/go(1).png" style="width: 16rpx;height: 24rpx;" />
         </view>
       </view>
-      <view class="team-buy-detail" v-for="(item, index) in teamlist" :key="index">
+      <view class="team-buy-detail" v-for="(item, index) in newlist" :key="index">
         <view class="assmebleleft">
           <view class="circle-avator">
             <image
@@ -375,16 +375,8 @@ export default {
       assembleHour: 0,
       assmebleSecond: 0,
       assmebleMinute: 0,
-      teamlist: [
-        {
-          name: "与女无瓜",
-          num: "1"
-        },
-        {
-          name: "与女无瓜",
-          num: "1"
-        }
-      ],
+			newlist:[],
+      teamlist: [],
       banner: "",
       pid: ""
     };
@@ -488,13 +480,40 @@ export default {
           if (this.assmebleTotal > 0) {
             this.assemble = 1;
           }
-					var str=""
+    			var newlist=[]
+    			for(var i=0;i<list.length;i++){
+    
+    			}
+    			var str=""
+    			var newlist=[]
+    			newlist = this.teamlist.slice(0,2)
           for (var i = 0; i < list.length; i++) {
             let timeNoew = new Date().getTime() / 1000;
             var lastTime = list[i].endtime - timeNoew;
-						 //(当前时间距离秒杀结束的秒)
-            this.AssmebleChange(lastTime);
-						console.log(lastTime)
+    				 //(当前时间距离秒杀结束的秒)
+    				 var lastTime = parseInt(lastTime);
+    				 if (lastTime > 60) {
+    				   var middle = parseInt(lastTime / 60);
+    				   lastTime = parseInt(lastTime % 60);
+    				   if (middle > 60) {
+    				     var hour = parseInt(middle / 60);
+    				     middle = parseInt(middle % 60);
+    				     this.assembleHour = hour;
+    				 		this.teamlist[i]['assembleHour']=hour
+    				   }
+    				 }
+    				 var result = parseInt(lastTime);
+    				 this.assmebleSecond = result; //秒
+    				 this.teamlist[i]['assmebleSecond']=result
+    				 if (middle > 0) {
+    				   var minute = parseInt(middle);
+    				   this.assmebleMinute = minute;
+    				 	this.teamlist[i]['assmebleMinute']=minute
+    				 }
+    				 if (hour > 0) {
+    				   var hour = parseInt(hour);
+    				   this.assembleHour = hour;
+    				 }
           }
         },
         error: function() {}
@@ -544,7 +563,6 @@ export default {
         var hour = parseInt(hour);
         this.assembleHour = hour;
       }
-      console.log(this.teamlist)
     },
     timeChange(value) {
       var lastTime = parseInt(value);

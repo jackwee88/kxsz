@@ -3,7 +3,7 @@
 <!--pages/jctbxzjx/jctbxzjx.wxml-->
 <view>
 	<view class="status_bar"><!-- 这里是状态栏 --></view>
-  <view style="border-bottom:1rpx solid #e6e6e6;">
+  <view class="top_title">
     <view class="searchcont">
       <view class="search">
         <image class="searchicon" src="/static/img/shuhuajs/search.png"></image>
@@ -254,7 +254,12 @@ export default {
 .status_bar {
 	height: var(--status-bar-height);
 	width: 100%;
-	background-color: #f8f8f8;
+	background-color: white;
+	position: fixed;
+	z-index: 99;
+}
+.top_title{
+	padding: 74rpx 28rpx 0rpx 28rpx;
 }
 .goods{
 	display: flex;

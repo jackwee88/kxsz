@@ -1,12 +1,14 @@
 .status_bar {
 	height: var(--status-bar-height);
 	width: 100%;
+	background-color: white;
+	position: fixed;
+	z-index: 99;
 }
 
 .index_page {
 	padding: 0 28rpx;
 }
-
 .uni-image {
 	height: 358rpx;
 	width: 100%;

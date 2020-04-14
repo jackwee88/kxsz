@@ -249,7 +249,6 @@ export default {
 		},
 
 		getData() {
-			console.log('123');
 			const that = this;
 			const param = {
 				page: that.page,

@@ -309,7 +309,6 @@ export default {
             };
             var that = this;
             util.ajaxs("paygoods/appPay", param, res => {
-							console.log(res.data)
               uni.requestPayment({
                 provider:'wxpay',
 								orderInfo:res.data,

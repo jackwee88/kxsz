@@ -400,7 +400,6 @@ export default {
   },
   mounted() {
     util.ajaxs("index/getProfile", {}, res => {
-			console.log(res.data)
       this.info = res.data;
     });
   },
@@ -434,7 +433,9 @@ export default {
 .status_bar {
   height: var(--status-bar-height);
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: white;
+  position: fixed;
+  z-index: 99;
 }
 .page {
 }
@@ -442,7 +443,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20rpx 32rpx;
+	padding: 74rpx 32rpx 20rpx 32rpx;
   margin-bottom: 26rpx;
   text {
     font-size: 36rpx;

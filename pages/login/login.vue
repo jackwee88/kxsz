@@ -73,14 +73,14 @@ export default {
       is_login:'true'
 		};
 	},
-	onLoad: function() {
-				uni.login({
-					success: function(res) {
-						// 获取code
-						// console.log(JSON.stringify(res));
-					}
-				});
-},
+// 	onLoad: function() {
+// 				uni.login({
+// 					success: function(res) {
+// 						// 获取code
+// 						// console.log(JSON.stringify(res));
+// 					}
+// 				});
+// },
 	methods: {
 		//短信登录、账号登录点击
 		orderLogin(id) {
@@ -109,15 +109,13 @@ export default {
 			});
 		},
 		qqLogin() {
-			console.log('您使用的是微信登录');
 			uni.getProvider({
 				service: 'oauth',
 				success: function(res) {
-					if (~res.provider.indexOf('weixin')) {
+					if (~res.provider.indexOf('qq')) {
 						uni.login({
 							provider: 'qq',
 							success: function(loginRes) {
-								console.log(loginRes.authResult);
 								// 获取用户信息
 								// this.getPhoneNumber()
 								uni.getUserInfo({
@@ -157,7 +155,6 @@ export default {
 										uni.showToast({
 											title: infoRes.errMsg
 										});
-										console.log(失败)
 									}
 								});
 							}
@@ -166,23 +163,11 @@ export default {
 				},
 				fail: () => {
 					uni.showToast({
-						title: '微信登录授权失败'
+						title: 'qq登录授权失败'
 					});
 				}
 			});
 		},
-    getPhoneNumber: function(e) {
-				console.log(e);
-				console.log('123131')
-				if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
- 
-				} else {
- 
-				}
- 
-				// 				console.log(JSON.stringify(e.encryptedData));
-				// 				console.log(JSON.stringify(e.iv));
-			},
 		wxLogin() {
 			console.log('您使用的是微信登录');
 			uni.getProvider({
@@ -233,7 +218,6 @@ export default {
 										uni.showToast({
 											title: infoRes.errMsg
 										});
-										console.log(失败)
 									}
 								});
 							}

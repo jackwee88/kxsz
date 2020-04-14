@@ -1,5 +1,4 @@
 <template>
-	<!--页面路径 pages/index/index -->
 	<view class="index_page">
 		<view class="status_bar"><!-- 这里是状态栏 --></view>
 
@@ -1177,16 +1176,12 @@ export default {
 	font-size: 28rpx;
 	padding: 5rpx 0rpx;
 }
-.status_bar {
-	height: var(--status-bar-height);
-	width: 100%;
-	background-color: #f8f8f8;
-}
+
 .top_title {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 20rpx 0;
+	padding: 74rpx 0 20rpx 0;
 	margin-bottom: 26rpx;
 
 	text {

@@ -406,7 +406,6 @@ export default {
       uni.navigateBack({});
     } else {
       this.ids = that.banner.ids;
-      console.log(this.ids);
     }
 
     if (that.type == 1) {
@@ -690,7 +689,6 @@ export default {
                       uni.showToast({
                         title: "支付失败" + err.errMsg
                       });
-                      console.log("fail:", JSON.stringify(err));
                       uni.redirectTo({
                         url:
                           "/pages/onlinestore/orderdetails/orderdetails?order_id=" +

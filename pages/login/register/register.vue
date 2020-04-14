@@ -84,7 +84,6 @@ export default {
 }
 		},
 		wxLogin() {
-			console.log('您使用的是微信登录');
 			uni.getProvider({
 				service: 'oauth',
 				success: function(res) {
@@ -92,7 +91,6 @@ export default {
 						uni.login({
 							provider: 'weixin',
 							success: function(loginRes) {
-								console.log(loginRes.authResult);
 								// 获取用户信息
 								// this.getPhoneNumber()
 								uni.getUserInfo({
@@ -124,7 +122,6 @@ export default {
 												}
 											},
 											fail: () => {
-												console.log('登陆失败');
 											},
 											complete: () => {}
 										});
@@ -133,7 +130,6 @@ export default {
 										uni.showToast({
 											title: infoRes.errMsg
 										});
-										console.log(失败)
 									}
 								});
 							}

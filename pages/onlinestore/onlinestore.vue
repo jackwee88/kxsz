@@ -316,7 +316,9 @@ export default {
 .status_bar {
   height: var(--status-bar-height);
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: white;
+	position: fixed;
+	z-index: 99;
 }
 .flashgoods {
 	background-color: pink;
