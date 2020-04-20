@@ -422,6 +422,12 @@ export default {
       valueStrNum: "",
       valueStr: ""
     });
+		var token=uni.getStorageSync('loginToken')
+		if(!token){
+			uni.navigateTo({
+				url:'../../login/login'
+			})
+		}
   },
   mounted() {},
   methods: {

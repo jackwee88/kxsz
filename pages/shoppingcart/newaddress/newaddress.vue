@@ -212,7 +212,6 @@ export default {
         city: this.region[1],
         area: this.region[2],
         ar_id: this.ar_id,
-        goods_sku_id: this.goods_sku_id
       };
       var params = {
         ar_id: this.ar_id,
@@ -288,7 +287,7 @@ export default {
         });
       } else {
         util.ajax({
-          url: "address/add",
+          url: "Address/adds",
           data: param,
           success: res => {
             if (res.status == 1) {
@@ -300,10 +299,10 @@ export default {
 
               var prePage = pages[pages.length - 2]; //关键在这里
 
-              prePage.changeData();
+              // prePage.changeData();
 
               if (that.selected == true) {
-                params.ar_id = res.data.ar_id;
+                params.ar_id = res.data.address.ar_id;
                 params.goods_sku_id = that.goods_sku_id;
                 util.ajax({
                   url: "goods/OrderMoney",
@@ -345,10 +344,16 @@ export default {
                         delta: 1 // 回退前 delta(默认为1) 页面
                       });
                     }
-                  }
+                  },
+
                 });
               }
-            } else {
+            setTimeout(function(){
+							uni.navigateBack({
+								delta: 1 
+							})
+						},500)
+						} else {
               wx.showModal({
                 title: "错误提示",
                 content: res.msg,

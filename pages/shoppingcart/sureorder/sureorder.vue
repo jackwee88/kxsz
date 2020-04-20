@@ -201,77 +201,7 @@ export default {
 			error: function() {}
 		});
 	},
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
-	// onLoad:
-	// onLoad: function (options) {
-	//   uni.setStorageSync('a', []);
-
-	//   if (options.now_buy == 1) {
-	//     this.now_buy= 1,
-	//     this.goods_sku_id= options.goods_sku_id,
-	//     this.goods_num= options.goods_num,
-	//     this.buy_num= options.goods_num,
-	//     this.goods_spec_id= options.goods_spec_id
-	//   }
-
-	//   var that = this;
-	//   this.dzxyFun();
-
-	//   if (options.type && (options.type == 1 || options.type == 2)) {
-	//     that.type= options.type
-	//   }
-
-	//   if (!options.ids) {
-	//     uni.navigateBack({});
-	//   } else {
-	//     that.ids= options.ids
-	//   }
-
-	//   if (that.type == 1) {
-	//     that.p_id= that.ids,
-	//     that.ct_id= ''
-	//   } else if (that.type == 2) {
-	//     that.p_id= '',
-	//     that.ct_id= that.ids
-	//   }
-
-	//   var param = {
-	//     ct_id: that.ct_id,
-	//     p_id: that.p_id,
-	//     goods_sku_id: that.goods_sku_id,
-	//     goods_num: that.goods_num,
-	//     goods_spec_id: that.goods_spec_id
-	//   };
-	//   util.ajax({
-	//     url:'goods/settlement', data:param, success:res => {
-	//       if (res.data.send_status == false) {
-	//         uni.showToast({
-	//           title: '当前地址不在配送范围哦 ~',
-	//           icon: 'none'
-	//         });
-	//       }
-
-	//       that.goods= res.data.goods,
-	//       that.address= res.data.address,
-	//       that.total= res.data.total,
-	//       that.totals= res.data.total.toFixed(2),
-	//       that.integral= res.data.score,
-	//       that.transport_total= res.data.transport_total,
-	//       that.price= res.data.total
-	//     }
-	//   }); // util.ajax('/api/index/getSystem', {type:5}, res => {
-	//   //   ()
-	//   //   that.setData({
-	//   //     explain:res.data
-	//   //   })
-	//   // })
-	// },
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
+	
 	onShow: function() {
 		var that = this;
 	},
@@ -303,10 +233,9 @@ export default {
 	methods: {
 		// 地址
 		linkTo: function() {
-			// var i = '../shaddress/shaddress?quantity=' + this.data.buy_num + '&p_id=' + this.data.goods[0].p_id
 			uni.navigateTo({
 				url:
-					'../shaddress/shaddress'
+					'../shaddress/shaddress?jifenorderid='+this.id
 			});
 		},
 		changeData: function(list) {
@@ -330,6 +259,9 @@ export default {
 							title: res.data.msg,
 							duration: 1000
 						});
+						uni.navigateTo({
+							url:'../../onlinestore/myScoreOrder/myScoreOrder'
+						})
 					},
 					error: function() {}
 				});
@@ -386,15 +318,11 @@ export default {
 						new_total = 0.01;
 					}
 
-					this.jf(); // this.setData({
-					//   totals: new_total
-					// })
+					this.jf(); 
 				}
 			} else {
 				if (this.flag_n == false) {
-					var new_total = (parseFloat(this.totals) + parseFloat(integral)).toFixed(2); // this.setData({
-					//   totals: new_total
-					// })
+					var new_total = (parseFloat(this.totals) + parseFloat(integral)).toFixed(2); 
 
 					this.jf();
 				}
@@ -455,20 +383,14 @@ export default {
 			}
 
 			var param = {
-				ct_id: this.ct_id,
-				p_id: this.goods[0].p_id,
-				ar_id: this.address.ar_id,
-				score: this.selected_integral,
-				cp_id: this.discount,
-				quantity: this.buy_num,
-				goods_sku_id: this.goods_sku_id
+				province:this.address.provice
 			};
 			var that = this;
 			util.ajax({
-				url: 'goods/OrderMoney',
+				url: 'Address/getEmsCost',
 				data: param,
 				success: res => {
-					(that.integral = res.data.use_integral), (that.totals = res.data.amount.toFixed(2)), (that.price = res.data.prices), (that.transport_total = res.data.transport);
+					(that.transport_total = res.data.cost);
 				}
 			});
 		},

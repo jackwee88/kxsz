@@ -16,14 +16,14 @@
           <view class="shiyongicon dagou">
           <image v-if="item.default == 1" class="dagouicon" src="/static/img/onlinestore/greengou.png"></image>
           </view>
-          <view v-if="item.default != 1" class="shiyong" @tap="useF" :data-list="item">使用</view>
+          <view v-if="item.default != 1" class="shiyong" @tap="useF" :data-list="item" :data-ar_id="item.ar_id" :data-index="index">使用</view>
         </view>
       </view>
       <view class="bottom">
         <view class="moren" @tap="defaultF" :data-index="index" :data-ar_id="item.ar_id">
           <view class="rodio">
-            <icon v-if="item.default == 1" type="success" color="#48DB8D" size="15" @tap="defaultF" :data-index="index"></icon>
-            <icon v-else type="circle" size="15" @tap="defaultF" :data-index="index"></icon>
+            <icon v-if="item.default == 1" type="success" color="#48DB8D" size="15" @tap="defaultF" :data-index="index" :data-ar_id="item.ar_id"></icon>
+            <icon v-else type="circle" size="15" :data-index="index"></icon>
           </view>
           <text class="rodio-default" v-if="item.default == 1">已设为默认</text>
           <text v-else class="morentext" :data-list="item">设为默认</text>
@@ -72,7 +72,8 @@ export default {
       goods_sku_id: '',
       address: "",
       totals: "",
-      transport_total: ""
+      transport_total: "",
+			jifen:false
     };
   },
 
@@ -113,11 +114,25 @@ export default {
     if (options) {
       this.p_id= options.p_id,
       this.quantity= options.quantity,
-      this.cp_id= options.cp_id,
+      // this.cp_id= options.cp_id,
       this.score= options.score,
       this.ct_id= options.ct_id,
       this.goods_sku_id= options.goods_sku_id
+			if(options.p_id==undefined){
+				this.p_id=''
+			}if(options.quantity==undefined){
+				this.quantity=1
+			}if(options.score==undefined){
+				this.score=''
+			}if(options.ct_id==undefined){
+				this.ct_id=''
+			}if(options.goods_sku_id==undefined){
+				this.goods_sku_id==''
+			}
     }
+		if(options.jifenorderid){
+			this.jifen=true
+		}
   },
 
   /**
@@ -233,19 +248,8 @@ export default {
       this.onLoad();
     },
     defaultF: function (e) {
-			if(this.p_id==undefined){
-				this.p_id=''
-			}if(this.quantity==undefined){
-				this.quantity=1
-			}if(this.score==undefined){
-				this.score=''
-			}if(this.ct_id==undefined){
-				this.ct_id=''
-			}if(this.cp_id==undefined){
-				this.cp_id==''
-			}if(this.goods_sku_id==undefined){
-				this.goods_sku_id==''
-			}
+			let goods_sku_id = this.goods_sku_id
+			if(this.goods_sku_id==undefined){goods_sku_id=''}
       var params = {
         ar_id: e.currentTarget.dataset.ar_id,
         p_id: this.p_id,
@@ -253,7 +257,7 @@ export default {
         score: this.score,
         ct_id: this.ct_id,
         cp_id: this.cp_id,
-        goods_sku_id: this.goods_sku_id
+        goods_sku_id: goods_sku_id
       };
       let index = e.currentTarget.dataset.index;
       var that = this;
@@ -280,72 +284,100 @@ export default {
 
             if (list[index].default == true) {
               var addr = list[index];
-              util.ajax({
-                url:'goods/OrderMoney', 
-                data:params, 
-                success:res => {
-                  if (res.data.send_status == false) {
-                    wx.showToast({
-                      title: '当前地址不在配送范围哦 ~',
-                      icon: 'none'
-                    });
-                    return false;
-                  }
-
-                  var pages = getCurrentPages(); //上一个页面实例对象
-
-                  var prePage = pages[pages.length - 2]; //关键在这里
-
-                  prePage.$vm.address= addr,
-
-                  prePage.$vm.totals= res.data.amount.toFixed(2),
-                  prePage.$vm.transport_total= res.data.transport //设置数据
-
-                  wx.navigateBack({
-                    delta: 1 // 回退前 delta(默认为1) 页面
-                  });
-                }
-              });
+							if(this.jifen==true){
+								var pages = getCurrentPages(); //上一个页面实例对象
+								
+								var prePage = pages[pages.length - 2]; //关键在这里
+								
+								prePage.$vm.address= addr
+								wx.navigateBack({
+									delta:1
+								})
+							}else{
+								util.ajax({
+								  url:'goods/OrderMoney', 
+								  data:params, 
+								  success:res => {
+								    if (res.data.send_status == false) {
+								      wx.showToast({
+								        title: '当前地址不在配送范围哦 ~',
+								        icon: 'none'
+								      });
+								      return false;
+								    }
+								    var pages = getCurrentPages(); //上一个页面实例对象
+								
+								    var prePage = pages[pages.length - 2]; //关键在这里
+								
+								    prePage.$vm.address= addr,
+								    prePage.$vm.totals= res.data.amount.toFixed(2),
+								    prePage.$vm.transport_total= res.data.transport //设置数据
+								    wx.navigateBack({
+								      delta: 1 // 回退前 delta(默认为1) 页面
+								    });
+								  }
+								});
+							}
+              
             }
           }
         }
       });
     },
     useF: function (e) {
+			
+			let goods_sku_id = this.goods_sku_id
+			if(this.goods_sku_id==undefined){
+				goods_sku_id = ''
+			}
+			
+			let index = e.currentTarget.dataset.index
+			const addr = this.catalogueitem[index]
       var params = {
-        ar_id: e.currentTarget.dataset.list.ar_id,
+        ar_id: e.currentTarget.dataset.ar_id,
         p_id: this.p_id,
         quantity: this.quantity,
         score: this.score,
         ct_id: this.ct_id,
         cp_id: this.cp_id,
-        goods_sku_id: this.goods_sku_id
+        goods_sku_id:goods_sku_id
       };
-      util.ajax({
-        url:'goods/OrderMoney',
-        data: params, 
-        success:res => {
-          if (res.data.send_status == false) {
-            wx.showToast({
-              title: '当前地址不在配送范围哦 ~',
-              icon: 'none'
-            });
-            return false;
-          }
-
-          var pages = getCurrentPages(); //上一个页面实例对象
-
-          var prePage = pages[pages.length - 2]; //关键在这里
-
-          prePage.changeData(e.currentTarget.dataset.list);
-          prePage.totals= res.data.amount.toFixed(2),
-          prePage.transport_total= res.data.transport //设置数据
-
-          wx.navigateBack({
-            delta: 1 // 回退前 delta(默认为1) 页面
-          });
-        }
-      });
+			if(this.jifen==true){
+				var pages = getCurrentPages(); //上一个页面实例对象
+				
+				var prePage = pages[pages.length - 2]; //关键在这里
+				
+				prePage.$vm.address= addr
+				wx.navigateBack({
+					delta:1
+				})
+			}else{
+				util.ajax({
+				  url:'goods/OrderMoney',
+				  data: params, 
+				  success:res => {
+				    if (res.data.send_status == false) {
+				      wx.showToast({
+				        title: '当前地址不在配送范围哦 ~',
+				        icon: 'none'
+				      });
+				      return false;
+				    }
+				    var pages = getCurrentPages(); //上一个页面实例对象
+				
+				    var prePage = pages[pages.length - 2]; //关键在这里
+				
+				    prePage.$vm.address= addr,
+				    prePage.$vm.totals= res.data.amount.toFixed(2),
+				    prePage.$vm.transport_total= res.data.transport //设置数据
+				
+				    wx.navigateBack({
+				      delta: 1 // 回退前 delta(默认为1) 页面
+				    });
+				  }
+				});
+			}
+      
     },
 
     toTop(e) {

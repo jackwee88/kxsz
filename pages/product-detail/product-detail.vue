@@ -340,6 +340,12 @@ export default {
     this.getData();
     this.getEvaluateList();
     this.getAssemble();
+		var token=uni.getStorageSync('loginToken')
+		if(!token){
+			uni.navigateTo({
+				url:'../../login/login'
+			})
+		}
   },
 
   onShareAppMessage: function(res) {

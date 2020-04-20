@@ -114,27 +114,6 @@ export default {
 			});
 		},
     exchange() {
-			// if(this.address.ar_id==undefined){
-			// 	uni.showToast({
-			// 		title:'请先填写收货地址'
-			// 	})
-			// }else{
-			// 	 ajax({
-   //      url: "integral/placeOrder",
-   //      data: {
-   //        goods_id:this.id,
-   //        ar_id: this.address.ar_id
-   //      },
-   //      method: "POST",
-   //      success: res => {
-   //        uni.showToast({
-   //          title: res.data.msg,
-   //          duration: 1000
-   //        });
-   //      },
-   //      error: function() {}
-   //    });
-			// }
 			let param={
 				goods_id:this.id
 			}
