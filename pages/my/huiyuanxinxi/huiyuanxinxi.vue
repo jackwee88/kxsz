@@ -202,6 +202,7 @@ export default {
     },
     //性别选择点击
     bindSexChange(e) {
+			console.log(e.target.value)
       this.uploadInfo.gender = e.target.value;
     },
     //生日选择点击

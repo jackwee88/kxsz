@@ -2,6 +2,7 @@
 	height: var(--status-bar-height);
 	width: 100%;
 	background-color: white;
+	
 	position: fixed;
 	z-index: 99;
 }

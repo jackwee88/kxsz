@@ -670,6 +670,7 @@ export default {
 			var str = e.currentTarget.dataset.effect_arr; //获取data-effect_pic   图片列表
 			var imgList = str.split(',');
 			//图片预览
+			
 			uni.previewImage({
 				current: src,
 				// 当前显示图片的http链接
